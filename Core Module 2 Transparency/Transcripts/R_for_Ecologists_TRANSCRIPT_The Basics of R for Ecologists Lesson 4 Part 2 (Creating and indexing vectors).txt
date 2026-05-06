@@ -1,0 +1,72 @@
+00:00:07
+Hello everyone and welcome to part two of lesson four where we'll go over creating and indexing vectors. So of course you can type in values manually as we've been doing to create vectors. We can name a vector whatever we want to call it. Um, apples and then we can put in one, two, three, four, five, whatever values we want. And now we've created a vector of apples with these values in it. But there are some easier ways to do this. First of all, you can use the colon operator between two numbers. So we
+
+00:00:44
+could do apples 1 through five. And what this does is it creates a vector of all the values from 1 through 5, including 1 and five. So if we run that, we get the same thing as having to type out this whole thing. You can also create a repeating vector of numbers using the rep function. Up until now, the basic math functions we've been using only require one argument. And argument is the term for each piece of information that a function needs in order to do what it's supposed to do. The rep function can take two arguments.
+
+00:01:19
+What to repeat and how many times to repeat it. So for example, we can do rep x= 2 what we want repeated and then times= 10. That tells us take the value of two and repeat it 10 times. And when we do that we get a vector of 10 twos. Just like that. Now we could have also put in a another vector within this. So we could have done one, two, three. So here, notice that we just created a vector right inside this function. And that's what we want repeated. And we want this repeated 10 times. So now when we run
+
+00:02:02
+that, you'll see that this sequence of 1 2 3 1 2 3 gets repeated 10 times. So that's another way to create vectors. So let me just point out how assigning arguments inside functions works. When defining arguments in functions such as what we did here, we use the equals sign and we use this left-facing arrow sign when we assign values to regular variables. The difference between these two is that this assignment is only temporary. It only exists while running this function. So even though we've
+
+00:02:37
+assigned these values to to the x or the value of 10 to times, if we try to run x for example, you'll see object x not found. That's because that's a temporary variable assignment as an argument to a function. And even though you can use the equals to assign variables um outside of functions like this for example, this will still assign these same values to the vector of apples. It's generally good practice to keep the arrow notation for defining actual variables that remain defined
+
+00:03:12
+versus those that simply define arguments within functions where you can use the equal sign where actually where you can only use the equal sign. So you can't actually use the left facing arrow for argument assignments in functions. So that's just a quick aside so you can see the reason why it's a good idea to use the arrow when assigning variables and not use the equal sign. So the thing is another way to write out these functions is to ignore these these argument assignments al together and as
+
+00:03:41
+long as they're in the right order that the function expects you could even do oops you could even do this and so the rep function knows that the first value is always going to be what you want repeated and the second value will be the number of times. So doing that yields the same thing as having x= 2 and * 10. Another function that you can use to create vectors is the sequence function. The way that works, it's just seq and it has the arguments from. So we're telling it go from one then the
+
+00:04:18
+argument two to 20 and then by two. So here we're saying go from 1 to 20 by twos. And when we run this, you'll see that it begins with one and then adds two each time working its way up to 20 but not surpassing 20. So it stops at 19. Could have also done from let's raise that x from 0 to one by 0.1. If we run that, then we count up to one by tenths. So there's many different quick ways of creating vectors. And sometimes there's different ways of doing the same thing. We could, for example, say I kind of
+
+00:05:07
+already showed you this, but we say var 1 equals sequence one 10 one. So go from one to 10 by ones is the same thing as I won't assign it. I'll just run it like that. 1 through 10, of course, is the same thing as 1 through 10. And it would be the same thing as saying repeat 1 through 10 one time. Though these three different methods yield the same thing, it's fairly self-explanatory why that is. So just keep in mind that there are almost this is I guess a good analogy for for all of
+
+00:05:55
+R. There's always many different ways of doing the exact same thing. Sometimes there's a more efficient way of doing it. Sometimes there's a way that takes a little bit longer but makes the code easier to understand and over time you'll kind of get a sense for what what works best in what situation. All right, let's move on to vector indexing. Indexing refers to being able to select particular values or subsets of values from vectors. And indexing is done with square brackets and is pretty intuitive
+
+00:06:25
+once you start to get the hang of it. And it's a pretty fundamental aspect of Rh because you're going to be doing indexing of data frames as well. And indexing becomes a core core component of using R and working with data. Let's create a quick um actually let's let's get the the diameter diameter data from before. I think it was let's see I have it written down here. Dam centimeters is 12 18 32 8 23 26 21 18. Okay, it's made up of eight elements. Remember we were looking at this before.
+
+00:07:16
+And to extract the third element from this, all you have to do is diame centimeters and then use the square brackets. And we want element number three. So just put a three in there. And when we run this, we get the 32, which is the third element of this vector. And the brackets allow you to index any value within within that vector. But you can also access multiple values by supplying a vector of indices to the brackets. So if we wanted to extract the first, the third, and the fourth value, we would not put them in like that. We
+
+00:07:53
+would make them into a vector first inside. Oops, my computer's being a little slow. Create that vector of 1, three, and four. Put it inside the brackets. And then when we run that, we get the first, which is 12, the third, which is 32, and the fourth, which is 8. You can also extract the first three by saying 1 through three. And we can actually when you create vectors using the the colon, you don't need to use the concatenate function. So this would give us the first three values 12, 18, and
+
+00:08:34
+32. So just a quick test, just a a quick little quiz to see if you can get the hang of this. Let's say we want to extract the first two and the last two values of diameter centimeters. So just pause the video and try this yourself and then unpause and I'll show you the solution. All right. So diameter centimeter let's create a vector of 1 through 3 and 6 through 8. Now these individually using the colon don't need the concatenate function but because we're putting several different vectors
+
+00:09:14
+together we're creating one big vector so we need the concatenate function all around that. So now if we were to run just this. So just running the vector there we get the values 1 2 3 the first three and then 6 7 8 the last three. So now if we use this to index we'll get the first three values and the last three values. We can also index all values except certain ones by using the minus sign. So say that we want all the elements of diameters except for the fifth element minus five. And now if we run this, we
+
+00:09:54
+get everything except for the fifth one. And that minus sign, it does it all. And if we were if we wanted to supply a vector, then we can just apply the minus sign in front of the vector. So we could do let's say we don't want to include the second or the third values. And we so we create the the vector, put the minus sign in front of it, and now we get everything except for the second and the third values. And then, you know, I almost did this before, but just to to show you an error that might come
+
+00:10:24
+up for you at some point. Let's say we want the fifth and the sixth elements. If we don't create a vector out of that, we're going to get an error because it is saying incorrect number of dimensions because it thinks that we're trying to access a two-dimensional object by saying first dimension by the second dimension. But actually, vectors are only one dimensional. So really we need to create a vector out of this five and the six first before it will understand what we're trying to to get. There we
+
+00:10:56
+go. So just like when we were applying mathematical operators to these to these functions after you've indexed excuse me to these variables after you've indexed let's say values five and or elements five and six from dam centimeters if we rerun dam centimeters we still get all of the original values that we had to begin with. That's because we're just indexing certain values. we're not actually defining a variable with those new v values that we've indexed. So if we did want to define a new variable or
+
+00:11:32
+reassign our our extracted values to that same variable, we could just say diian centimeters is diame centimeters that's been indexed to only these values. So now when we assign it now if you look at dam centimeters you only get those two those values 23 and 26 which were the fifth and the sixth elements originally. It's important to be careful when doing this because now if you were to run this function again you'll actually get well in this case yeah you you get na which represent missing values and that's
+
+00:12:13
+because there is no fifth and sixth element of d centimeters anymore and so to prevent this from happening usually when you assign variables it's a good idea to always reassign to new variables so let's just copy this down here again so we can re redefine our original diame centimeters and let's say that the fifth element like we removed it before is just faulty. There's something wrong with that with that um data point and we want to remove it from the data. So then maybe we'll create a new new variable
+
+00:12:45
+called diame centimeters clean or fin or some some other way to know that that these data have been cleaned up or or uh it's the final data for analysis that you're going to be using. And then we can index this with minus5 to remove that fifth element. So now when we run this dam centimeters clean is now the original data set minus that fifth element. Diam centimeters on its own is still the original raw data set with that fifth element. And we can keep running this line as many times as
+
+00:13:22
+we want and nothing will change because you're always just reassigning all the values except for the fifth element from dime centimeters into dime centimeters clean. And so you can keep doing that and you'll always keep getting the same value. And that that prevents errors in the future when you rerun the code and you forgot that you already ran it once. And if we hadn't done this, if dam centimeters was was here, this would remove the fifth element. And now if we ran this code again by accident, there's
+
+00:13:49
+a new fifth element that it'll remove. So if we did that again, now you can see it's even shorter. And so we keep doing this and it'll keep removing values. But don't think too much about it. These are just kind of little seeds I'm planting along the way. Um you'll get the hang of it and you'll you'll kind of grow to have an intuitive understanding of what's going on with all of this. All right, so that's it for part two of the lesson on vectors. And quick summary is
+
+00:14:14
+we went over creating vectors more easily with the colon, with the rep, and with the sequence functions, and went over indexing vectors. Thank you for watching. And next, we'll go into the third and final part of the lesson on vectors to go over named vectors, logical indexing, and how to use indexing to change particular values within a vector. All right, see you then. Thanks a lot.
+

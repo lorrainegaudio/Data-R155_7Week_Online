@@ -1,0 +1,45 @@
+00:00:00
+welcome back to our programming 101 today we're going to talk about types of data right we're gonna understand the five most important types of data and there are others and will allude to that we're gonna talk about how to change the data type for a given variable so if a particular variable is incorrectly categorized in R as something and it should be something else we can change that and we're gonna learn about how to add a level to a factor and what I mean by that it's gonna make perfect sense as
+
+00:00:25
+we carry on so don't go away if you wanna learn about our programming then you have come to the right place on this YouTube channel we're creating our programming videos on everything we've got four variables here these are our four major types of data that we're talking about the first is name this is nominal data in R we're gonna call it a character it's text the next is height this is also categorical data but there's an order to it it's ordinal data in R we're gonna call that a factor
+
+00:00:59
+because we want to give it different levels next age here we've got age as a whole number right we're gonna call it in R we're gonna call that an integer and then next of course there's wait wait you could have any number between any of the whole numbers you can edit so weight can be 75 70 5.1 etc etc this is going to be a numeric variable right so let's have a look at how we can look at that structure and maybe make some changes to the way R has categorized this particular set of variables so the
+
+00:01:27
+data frame is an object in our environment called friends and we can ask our for the structure of that object by putting an STR type in the name of the object close brackets command enter and in the console we can see the scratch structure and next to each of the names of the variables we can see R as told us what it thinks that the type of data that particular variable is right so next to name we've got CHR that's character we're happy with that height it's called it a character but we
+
+00:01:55
+know that this is ordinal data we want this to be called a factor so we're going to change that age and weight are both called numerix now we said that numeric when R uses the term numeric it means a continuous dot a continuous variable we weren't aged to be an integer so wait we're going to leave it numeric age we're gonna change to integer so let's take a look at how to do that to change the data type for the variable height from a character to a factor we use the command or the function as
+
+00:02:24
+factor right and in the brackets we tell her what it should change right so we want to take we want to take the data frame friends and within which we want to extract the variable height and that line of code will do the trick except we need to assign it to something in other words we put our little arrow over there and we say friends height we're saying assign all of this to the variable frier height in the data frame friends in other words overwrite what is there at the moment and if we push enter
+
+00:03:02
+and rerun the first line of code asking for the structure we can see height is now a factor and similarly we can take the data frame friends extract the variable age and we want to say as integer friends age and that will change its run the first line of code again age into an integer so our variable height is a factor that means it's a categorical ordinal variable it's it's a categorical variable where the categories have an order okay what order does our think the category should be in
+
+00:03:42
+what we can I ask are we can say levels and friends height enter and in our console we'll see that our thinks that should be medium short tall it's just stuck them in alphabetical order we want it to be short medium and tall so let me show you how to make that change so to change the levels of the height variable this is what we do all right so again we start off with saying we we're working with the dot frame friends we're working with the variable height we're gonna assign to that now we don't say as
+
+00:04:11
+factor they say factor alright to leave out there's two open brackets again telic what you're working with friends height right now we can say and I'm next gonna push shift control one just so that we zoom in on just the source so you can see what I'm doing right I'm gonna push a comma and I'm gonna push enter now or it's just gonna continue to see this as one line of code I'm just doing that so you can see what I'm doing now we're gonna say levels equals c4 for
+
+00:04:40
+concatenation or combination of and now we put in the order that we want them to be in all right so the C stands for concatenation and that just means whatever's in brackets it wants to it needs to think of them together as one group and levels the word levels there is just the second argument that gets applied in this in this particular instruction or associated with this particular with this particular function okay I'm gonna push enter if we rerun this line of code over here asking for the
+
+00:05:21
+labels for that variable we can see that they're short medium and tall just the way we wanted them so at the beginning of this video I said we're going to talk about five kinds of variables and so far we've only talked about four the first kind of variable I want to talk about is called a logical right what this is how a logical works we can ask our question of it of one of the other variables right these other variables we think of them as something called a vector a vector is a connection of data that's of
+
+00:05:48
+the same type so now dot frame we could ask are which of of all of these these people in our data frame which of these are older than the age 23 and we could say we think of them as old for example right so in our code over here we could say the age variable friends age and push command enter we see in the console we can see we call that a vector right it's a collection of of data at the same time if we ask the question friends age and we said which of those are greater than 23 and we pushed command into it
+
+00:06:25
+for each of those data points it asks the question is this person older or younger than 23 true or false true or false true or false and it gives us a new via and this is illogical it's a true or false we can assign this right to a new variable right so we can assign this to brands and we're gonna call it old come on enter and we can see now we've got a new variable called old it is a logical it's a true or false and if we go and ask for class that's the way we ask of friends old it's gonna tell us that it's
+
+00:07:02
+a logical and again if we ask for the structure of the start of frame we can see old the new variable we've created it's called a logical now of course there are other types of data for example time and date data we're gonna look at those in other videos in the future these five types of data are the most important ones these are the ones you're gonna use most often so if you are serious about learning how to analyze data and you want to learn our programming then hit the subscribe
+
+00:07:26
+button now and hit the little bell notification if you want to get notified of future videos
+

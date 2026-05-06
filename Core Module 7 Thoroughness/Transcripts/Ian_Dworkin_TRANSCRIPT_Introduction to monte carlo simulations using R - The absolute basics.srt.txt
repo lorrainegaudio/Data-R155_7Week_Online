@@ -1,0 +1,160 @@
+1
+00:00:02,000 --> 00:01:13,000
+welcome to the screencast on teaching simulations the absolute Basics using R so the goal for today's screencast is to really just describe the basic ways and the basic idea of doing simulations uh of doing Monte Carlo simulations in particular that we will then uh use in later screencasts and in later lectures for doing statistical inference I.E generating Monte Carlo confidence intervals and uh generating sampling distributions under various n models uh as well as for doing simulations for power analyses for
+
+2
+00:00:38,000 --> 00:01:36,000
+complex models which which there may be no closed form approach for and we're using R to do this both because it's quite convenient for these sorts of simulations uh indeed it's quite powerful for these sorts of simulations and of course it has many statistical tools which we can rely on later so the first place to think is well what do I mean by simulate what what am I mean by this all I all mean by this is that we're generating some form of random data based on uh some knowledge of some
+
+3
+00:01:07,000 --> 00:02:00,000
+kind of distribution so for instance we'll start with in in this tutorial using a normally distributed variable so we assume we're sampling say from a population that's normally distributed with a particular mean and standard deviation and we're taking out a fixed number of samples and each time we do that we can estimate something like the mean and the variance like we would otherwise and if we wish we can repeat that over and over again and use those repeated measures of the means and
+
+4
+00:01:33,000 --> 00:02:42,000
+variances and whatever slope intercepts doesn't really matter for making inferences uh later on so here's a simple quick example we're going to create this variable called Norm do simulated and what we're doing here is we're going to uh take 100 we're going to extract essentially 100 samples from a distribution from a population that's a normally distributed population with a of five and a standard deviation of two we know it's a normal distribution because it's using Norm our Norm means
+
+5
+00:02:08,000 --> 00:03:12,000
+we're generating these random variables variates from from this distribution so we run that line and we can actually look at it just go norm. simulated and indeed we get 100 numbers that are from this distribution with a mean of five and 7 deviation of two now of course none of them are going to be exactly equal to five um because they're being sampled from this distribution so we can look at this in a couple of ways we can plot it we're going to plot uh first uh just the uh random numbers
+
+6
+00:02:40,000 --> 00:03:32,000
+here and so the first random number was some fairly low number looks like it's pretty close to one or so and then it bounces around you see it bouncing around because each time it's sampling independently from this distribution so for each of these hundred numbers they're independent of all the other draws so there's no relationship here so there's no sort of Markoff process here we are not relating each sample is completely independent all right then we can look at sort of a histogram of this and what
+
+7
+00:03:06,000 --> 00:03:59,000
+we'd expect and indeed what we we do see uh is that this distribution is centered near uh five which we expect is the mean that we simulated from from this you know this hypothetical population had a mean of five and we see that the mean of this distribution is close to five with a standard deviation well look at that a little bit more closely we're going to look at the histogram again just uh in in such a way so that we can actually plot it against what theoretical expectations would be so the in this
+
+8
+00:03:33,000 --> 00:04:34,000
+bottom plot um we've just altered it so we're looking at the density instead of the frequencies um but otherwise it's going to look identical um but what you see in red is the theoretical distribution for a normal distributed variable with mean of five and standard deviation of two and you can see that our histogram we could have done this as a density plot instead but you see that our histogram uh overlays our simulated data reasonably nicely which we would expect this is s from that distribution after
+
+9
+00:04:03,000 --> 00:05:03,000
+all okay so we can look at some summary statistics from the simulation we so we just look at the mean and standard deviation nothing particularly exciting here and we get a mean of about 5.02 which is pretty close to five and a standard deviation of 1.76 which is not too far from two it's certainly not spoton but not not too far at all okay so we do this once well let's repeat this experiment over and over again so we're repeatedly going to go back to that original population and randomly assemble 100 individuals and
+
+10
+00:04:34,000 --> 00:05:35,000
+each of those 100 individuals from that population is an independent draw so that doesn't doesn't depend on previous draws or future draws in any way so we do that just four times we just call it norm. simulated 1 through 4 so I'm just going to copy and paste those and let's look at the histograms for all four of those draws now what you see here is that we have these four uh uh histograms with each of the samples and they're all centered close to five which we expect because each of them
+
+11
+00:05:06,000 --> 00:06:00,000
+were drawn from the same distribution with a mean of five and standard deviation of two but of course these are different these are not the same draws so each time we've drawn these hundred numbers we've drawn a different 100 numbers essentially uh for four of them each of them is an independent draw um and in fact in this particular case it would have been equivalent to just draw 400 numbers from this distribution and divide it into four groups of 100 that would not for this particular instance have made a
+
+12
+00:05:33,000 --> 00:06:35,000
+difference or you know as compared to what we did here which is draw 100 numbers four times because they are independent draws from this okay so if we compare the means of each of these things we expect to and and indeed C the means are all going to be reasonably close to five in this case they're all slightly lower than five um but they're all quite close to close to but not exactly equal to five great so this is the basic IDE of the simulation we're just gener given some ideas of the distribution and some of
+
+13
+00:06:05,000 --> 00:07:04,000
+the properties like mean variance or whatever the parameters are for that distribution in this case for normal it's mean inv variance but it could be say shape and scale for a gamma distribution uh or um uh uh size and and probability for binomial distribution um we can repeat this process and generate these random samples as if we were going into this you know hypothetical population and drawing samples in this case drawing 100 samples at a time um so for each iteration or round of this simulation we've effectively
+
+14
+00:06:36,000 --> 00:07:26,000
+sampled 100 observations from the population right if we wanted to change the number of observations per duration we simply change that lowercase n so we instead of making n equals 100 we could make n equals a th000 to make as if we're sampling a thousand individuals at a time if we wanted to say oh no we generally our experiments are very small we only sample 10 individuals at a time we can make n equals 10 similarly we can change values to the mean or make it some function like a line you can change
+
+15
+00:07:01,000 --> 00:07:56,000
+standard deviation and of course you can change the type of probability distribution you're sampling from as well any of these things are possible to to do these um of course we don't want to have to write this uh write this line over and over and over again if we want to do this more than three or four times that becomes quite painful so we want to find an efficient way of Performing these different iterations um and there's a number of ways to do that we'll go through two in this tutorial one way to do it in R is
+
+16
+00:07:28,000 --> 00:08:22,000
+to use the replicate function which just repeats the function call n times now I want to make a point there's two because unfortunately of the naming there's two lowercase NS here one is the lowercase n associated with the replicate function in that case this is n equals 4 we're going to repeat this four times and that just refers to how many times to repeat the call to the fun uh the function and the function in this case is the rorm function the N equal 100 is like we saw above it's basically saying within the
+
+17
+00:07:55,000 --> 00:08:51,000
+call to the rorm functions how many samples are being drawn from that population um so despite that being a little bit confusing in both having lower case end I hope it's clear what those two different ends mean so we run that line and if what we can do is we can immediately look uh at all four of those together and I'll bring this over the naming is not quite as as nice but the same basic idea and again these four draws are all similar to each other and that they're centered near five but
+
+18
+00:08:23,000 --> 00:09:31,000
+they're four random draws and are different than the four random draws we saw before uh similar we can look at the means and standard deviations just like we did before uh and apparently gave some error here x is missing with oh that's my bad there we go sorry about that um let's just clear that and re rewrite that I don't know how I had that mistaken um there we go uh so and again here again we have four each of the four simulations they have a mean close to but not exactly five interestingly I
+
+19
+00:08:57,000 --> 00:09:58,000
+don't know why but all four of these just also all have a mean that's below five that just by a random chance um and similarly standard deviations are all close to but not equal to two Okay so let's do this again but uh repeat the sampling process the number of iterations from four times to 2,000 times and this is the real power of using this not do it for four times but do it for thousands of times so we can really get a good idea of what the distribution look like and so here the only thing that we've changed is go to
+
+20
+00:09:27,000 --> 00:10:22,000
+Nal 2000 we do it and may take uh a second or two to run not very long at all and now we can ask say about the spread of the means from our simulated trials so how much each time we go through this we get a th OBS or 100 observations we calculate the mean we're going to get 2,000 different means how much variation is there among those means so let's calculate that standard deviation among those sampled means and that standard deviation among sampled means at about 0.2 and that's useful to
+
+21
+00:09:55,000 --> 00:10:49,000
+think about because we can compare this to the expected standard error so if we about our distribution here uh that we are sampling from our distribution had a standard deviation of two and every time we sample we're sampling 100 numbers now if you remember your standard error of the mean is simply the standard deviation divided by the square root of the sample size well that's just going to be two divided by theare OT of 100 which is not surprisingly about 02 it's because that's really approximating the
+
+22
+00:10:22,000 --> 00:11:18,000
+same idea of the sampling uh of of the standard deviation of the sampling distribution which is what we want to get which is just another I find more more intuitive way thinking about what the standard error of the mean is um and we can we can actually plot this simulated sampling distribution for the means and take a take a quick look at it and I want make it clear that the spread here is going to be much less because we're not looking at the individual observations from each sample but instead we're calculating for the a
+
+23
+00:10:50,000 --> 00:11:45,000
+draw of 100 observations from a sample we calculate the mean from those 100 and then we repeat that thousands of times this case 2,000 times and so we're looking at the distribution of the sample means okay we can do this same process again but in this case we can use the for Loop and I just want to make sure it's clear because we will go back and forth sometimes one is more convenient than the other um and this for Loops can definitely be much more efficient uh computationally uh uh in terms of speed
+
+24
+00:11:20,000 --> 00:12:11,000
+in particular when the number of simulations or the number of parameters being estimated gets very large um so first we have to ask well how many iterations simulation do we want we're going to call this big case n here so we'll just say we'll do it like before we want n equal 2,000 so we're going to then after we've done that we're going to initialize a variable to store the means that we're going to generate I forgot right Store the store the means um and we'll just call that
+
+25
+00:11:45,000 --> 00:12:45,000
+simulated means and we're going to use the repeat function um which is just going to repeat na uh which is just an uh essentially missing data and big end time so that's 2,000 so we should get from running this a vector of length 2,000 and in each element we're just looking at the first six there's just missing data so basically here's a vector length 2,000 but essentially it has nothing in it yet we're going to now put stuff in it and we're going to use the for Loop to do this we're going to
+
+26
+00:12:15,000 --> 00:13:14,000
+repeat this from ials 1 so we're going to do the first iteration up to ials n Big N where that's 2,000 and we'll just um excuse me repeat this all those times and then we're doing exactly like we before before we simulate the data from that distribution calculate the means uh this line just to remove that simulated data the basic Point here is we just don't want to leave that simore data um variable in there after we're finished so we just remove it each time you actually don't need to do that it's
+
+27
+00:12:44,000 --> 00:13:35,000
+just a good clean practice to clean up after yourself um so we just run that it takes a second again it's very quick and we can look at the histogram and essentially we've done exactly the same simulation we've done before so the distribution should look pretty similar again these are um random so it'll be a little bit different it'll be pretty similar and we can look at the standard deviation again of this and it's about 02 and this is a standard deviation among those simulated means so it's
+
+28
+00:13:09,000 --> 00:14:10,000
+going to be close to point2 so like our Standard air okay now we can repeat this experiment uh this process with a lower sample size so let's do it again for we'll do it 2,000 iterations but instead of drawing sample of 100 we're just going to draw sample of 25 observations each time so we do that and I won't worry I'll let you guys do the histogram yourself but here that standard deviation of the of the sample means about point4 so we lowered the sample size and the effect of standard
+
+29
+00:13:40,000 --> 00:14:54,000
+error of the mean in other words you know the amount of sampling variation has increased a lot how about if we have a much larger sample size now in this case we'll have a sample size of a thousand instead of we started with 100 or did 25 just a moment ago but same idea let's do that what what do we expect to happen here uh we do it and and we run it and we get a much much smaller standard eror 06 so do we see a pattern here hopefully you do for these three different ones for sample size of 25 relatively
+
+30
+00:14:16,000 --> 00:15:19,000
+modest sample size um oops looks like I mixed these numbers up I apologize that should be four and five my apologies let's change that and run that again there we go um so if we look here which is the lowest sample size again our standard essentially standard of the mean is about 04 standard error of the mean for sample size of 100 is about 0.16 and then standard eror of the mean for sample size of a th000 is 06 and this reinforces the basic idea of sample size influencing the standard a right it's
+
+31
+00:14:51,000 --> 00:15:58,000
+this that's why um we have the square root of sample size uh uh being the the D denominator in the standard eror of the mean approximation Okay so we've now clear this up we've now learned about the basics of Monte Carlo methods we've now generated these Monte Carlo samples generated some value we interested in case even if it's just the mean and then repeated and made some uh gotten some sampling distributions which in the future we can use to make some kind of inferences okay but let's do something a
+
+32
+00:15:25,000 --> 00:16:27,000
+little bit more interesting let's let's do this for uh a regression um so we have this regression which is just Y is again Y is distributed normally where the mean is a plus b * X in other words the deterministic part the mean is the line the deterministic part of the line and then the stochastic part which is our standard deviation so our intercept will be five uh our our slope will be 7 we're going to make our X values a sequence of numbers from 2 to 20 we can think about this is some kind of dose response curve
+
+33
+00:15:55,000 --> 00:16:57,000
+where we're dosing our organisms with uh different doses of a drug and why is um say how big they get or some some how that influences how long it takes for them to develop something like that um and so what we get with is the the equation for that line is that deterministic part of our model and we can plot that and of course it's going to be a perfect fit because there's no variation right now which is fine but our response is going to be randomly sample it's conditioned on X but it still needs to be randomly sample
+
+34
+00:16:29,000 --> 00:17:20,000
+so we need to incorporate that random variation so let's say the standard deviation is two don't worry about where that's come from for the moment we'll talk about inferentially uh uh soon but for whatever minute for whatever reason we've expect it's it's two or I guess 2.5 actually looks like um so we all we do now is we're going to use R Norm just like before Here length is X so we're saying well how many gener one uh how many samples do we need to generate for
+
+35
+00:16:54,000 --> 00:17:52,000
+here well we'll just use uh we just want as many as we have um observations of X so we just use length of X here you could specify exactly what it was but this is just a more General way to do it and our mean all we have to say because we think about the equation we looked at before it's just the deterministic part of our model the Yore fixed is what we called it just the a plus b * X the equation for the line and then we have our standard deviation so that's great so we can run that
+
+36
+00:17:25,000 --> 00:18:29,000
+line and then we're going to plot the simulated data and we will actually plot so here we've got that simulated data the black line here is that line that we know we've known these parameters beforehand because we get to play God here for for a moment um but we can ask the question okay but maybe if we you know one of us gets you know if this is two people one person knows the parameters and the other one just gets this random random draws and has to estimate them we can say with this random draw of our new 100
+
+37
+00:17:57,000 --> 00:18:57,000
+observations that we called y do sim. one we can ask let's fit a regression using those new y variables y y observations y. sim1 as a function of our original X and we just run the linear model um I won't run through this summary and and Conference you can look at that yourself and see how similar they are I just want to actually plot the line the best estimated line for those simulated data and what you should hopefully observe here is again it's fitting this red line to these dots here
+
+38
+00:18:28,000 --> 00:19:29,000
+not to the ones up here because it has no knowledge of that it only has knowledge of these y observations down here and so this red line is the best estimate for those points which is not too far from our known values but it's not exact again because this is a simulation and we simulated those y's okay I don't want to go down there um so that's the basic idea and we can clearly use this um as uh an approach and what I'd like you to do uh as an exercise is write a for Loop that will run the same
+
+39
+00:18:58,000 --> 00:19:57,000
+model the same thing that we just did with this regression say 200 times and plot the lines from each of the simulations uh onto the same plot uh you don't actually need to plot the simulated data points just the the actual lines um in fact the easiest way of doing this is to when you're using the plot function use type equals n and it suppresses the plot of the points uh and I'll post the answers for this on Monday night uh thank you and this ends the uh screencast for the basics of
+
+40
+00:19:27,000 --> 00:19:30,000
+teaching simulations in r
+

@@ -1,0 +1,33 @@
+00:00:01
+hey everybody today we're using r to calculate in the normal distribution there are four basic functions that you're going to want to know first off is r norm and this is used to generate random values in a specified normal distribution in particular we can specify the mean and standard deviation if we leave out either one of those parameters r will default to natural values mu equals zero and sigma equals one so basically it favors the standard normal distribution here for instance i've generated a
+
+00:00:32
+thousand random values from that standard normal distribution with our norm our norm of a thousand and then gotten a rough plot with those with the q plot command in the ggplot2 package the next function that we should talk about is p norm and this is the cdf the cumulative distribution function of the normal distribution with the specified parameters again if you leave out mu or sigma r will default to mu equals zero and sigma equals 1. this is going to return the probability of randomly getting a value less than or
+
+00:01:03
+equal to x in that specified normal distribution i think a picture makes that much more clear we specify the x value r takes the shaded area here the region to the left of that x value underneath that bell curve as usual in r x can be a vector so for instance p norm 12 colon 16 comma 14 comma 0.8 is going to look in the normal distribution with mean 14 and standard deviation 0.8 and give back the probability of randomly getting a value less than or equal to 12 less than or equal to 13 14 15 and 16 respectively
+
+00:01:40
+q norm is the inverse of that function so instead of taking an x value and giving back a probability it's going to take a probability and give back an x value the picture is exactly the same as before but now the input and output are reversed here we feed q norm the shaded area p and it gives back the value on the x axis once again the inputs can be a vector so for instance q norm of .25.50.75 comma 14 comma 0.8 gives back the 25th 50th and 75th percentiles of that normal distribution finally is d norm this is the
+
+00:02:20
+probability density function this one is mostly a theoretical interest and doesn't really get used too much in r unless you need to draw a bell curve i have a whole video by the way on the geom function command in ggplot i'll throw a link up top if you're interested in exploring that a little bit more okay let's do a few examples suppose that flipper lengths of a certain kind of penguin are normally distributed with mean 192.9 and standard deviation 7.1 millimeters first off what's the probability of
+
+00:02:51
+randomly selecting a penguin with flipper length less than 200 millimeters so let's flip over to r and take care of this since we're given a flipper length and we need a probability in the normal distribution we're going to need a p norm command here that's our main our workhorse probability function so p norm first of all we feed it the value we're interested in 200 then the mean 192.9 and then the standard deviation 7.1 remember that p norm wants a standard deviation not a variance so you always
+
+00:03:25
+have to reach a problem carefully to make sure that's what you're actually being given of course standard deviation is just the square root of variance so it's not too hard to translate back and forth here we get about 84 to get the probability of randomly getting a penguin with a flipper longer than 200 millimeters we can subtract from one these are complementary probabilities so i'm just going to go with the up arrow and then 1 minus that same p norm so just under 16 what's the 90th percentile for flipper
+
+00:03:57
+lengths in these penguins here we're being being given a percentile a probability an area and we want to get back a flipper length essentially an x value so this is a q norm problem so q norm first we feed it the percentile that we're given notice that i'm writing that as a decimal so it's 0.90 rather than 90. and then those same parameters 192.9 comma 7.1 7.1 not 0.71 so about 202 millimeters so that makes sense given that the mean is 192.9 and the standard deviation is 7.1 finally let's simulate 500 random
+
+00:04:41
+selections from this population and plot the results we'll do it as a histogram so first off let's get those random values we'll save this vector as flippers since we're trying to generate random values it's our norm and the first argument here is the number of values we want 500 random values and once again we've got to put in the parameters same parameters as before so up here in the environment tab you can see that i now have a vector of length 500 with random values that are
+
+00:05:11
+all going to be kind of close to 193. let's plot these i'm going to use the q plot command in ggplot2 just out of habit i'm going to load up all of tidyverse that includes ggplot2 and since i'm just wanting a histogram of this single vector i'm going to use the q plot command ggplot would be a bit uh a bit overpowered for this so i just want to plot flippers and let's let's go ahead and put some boundary color on the bars with color equals eye parentheses quote black i
+
+00:05:43
+think i'll just leave it like that okay so right there already is a pretty reasonable histogram of those 500 randomly generated values from the normal distribution with mean 192.9 and standard deviation 7.1
+

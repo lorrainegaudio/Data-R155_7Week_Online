@@ -1,0 +1,138 @@
+00:00:00
+welcome back to our programming 101 we're going to be talking about data visualization and in particular we're going to be talking about how to use gg plot now to use gt plot you need to get your head around a different way of thinking about graphics but once you get familiar with this once you get comfortable with it you're going to absolutely love it alright so let's get stuck in if you want to learn about our programming then you have come to the right place on this youtube channel we're creating
+
+00:00:24
+our programming videos on [Music] everything so when we talk about the grammar of graphics we try to define certain parameters of a given data visualization and in this video i'm really going to talk about the top three these three data mapping and geometric geometric representation uh just briefly obviously the data we're going to tell are what data set we're using secondly the mapping this is where we take the values within any given variable and we tell our what to map them out on our canvas with respect to a given
+
+00:00:57
+aesthetic what do i mean by that i mean we might say this variable will be mapped out against the x-axis this variable will be mapped out against the y-axis this variable might be uh represent color or shape or size or something like that and then the geometry or the geometric representation is do we want this to be a line graph a dot plot a a bar chart a histogram we've got to tell our what kind of geometry to use okay and the best way to understand this really is to do a couple of examples and
+
+00:01:27
+you'll see exactly what i mean now the one thing to remember about r is that it's got built-in data sets and i'm going to be using those built-in data sets to do the data visualization that i'm going to do in in this video and in other videos so that you can back at home on your own computer replicate what it is that i'm doing but then also get creative and use the same data to produce a different and better and more interesting data visualizations plots and graphs okay so to see what data sets exists within
+
+00:01:53
+r of course we just type in the word data open and close brackets push enter and we get a list of all of the data sets that are built into order that you can use for practice okay and that's what we're going to use right so if we look at the data sets that are built into r we've got one here that's called bod biochemical oxygen right over there and if we go back into our source and we type in the word bod up will come the data set itself let's just make this a little bit bigger there it is time and
+
+00:02:19
+demand we see there's six rows two variables quite simple if we put a little question mark in front of the body right there and push ctrl enter in the help section over here we'll have a description of that data set including a description of each of the variables right i'm not going to get into that in this video because we're really interested in how to visualize this data and get into the graphics okay so let's get stuck right in okay so let's talk about ggplot right we're going to start off just by
+
+00:02:45
+typing in ggplot open brackets and then we said the first thing we want to define is the data so we say data is equal to and in this case the data is going to equal to bod right that's the data set that we're going to use the next thing we want to define is the mapping and i'm just going to go to the next line here but it's the same as carrying on it's just a matter of it looking a little bit neater and we can type in mapping is equal to and then we want to do aes for aesthetics and open brackets
+
+00:03:13
+right now that seems a little bit complicated you'll get used to it it's not that complicated once you you know once you've done this a few times it'll just be like uh it'll be like eating breakfast in the morning right mapping equals aesthetics and here we want to define x is equal to right and what were our variables that we had done here we had time and demand so we let's say x is equal to time comma and i'm just going to go down a line just so that we can see what's
+
+00:03:37
+going on here and y is equal to demand right now by convention usually our x-axis is our independent variable okay and our y-axis is our dependent variable in other words if we think demand is a function of time as time goes along demand goes up or down demand is dependent on time we usually put demand or the dependent variable as the y variable now if i pushed command enter at this point let me do that for you ctrl enter at least because i'm on a pc it has created a canvas with nothing on it right
+
+00:04:14
+but it has mapped out time as the x variable right and demand as the y variable now the next thing we can do i'm going to make a little bit of space over here is we want to tell it about the geometry so if i push plus okay because we're going to add something to this now push enter and i'm going to say geom point open close brackets i'm leaving what's inside the brackets blank for now right we're going to add some stuff to that in in just a minute but we're just going
+
+00:04:47
+to leave that blank for now and i push ctrl enter now it's going to redo the graph and it's going to pop little points at the various places that map out against time and demand right now we can put something in there we might want to say size is equal to five for example okay and it'll make each of those points a little bit bigger and we can add another layer to that and we might want to say geom line and we might say color is equal to red okay i'm just going to revise what i've
+
+00:05:28
+done there and then i'm actually going to do it again in a slightly different way just so that you can really get your head around these three components of data visualization these are the most important three components of data visualization after that you can create layers and add in themes and do all sorts of exciting things but you've got to get this right these are the most important three components of data visualization right so we've got we've said ggplot data is equal to vod we've defined the
+
+00:05:51
+data set then we've said mapping and we've said the aesthetic x is going to the x axis is going to map out against time the y axis is going to map out against demand and we've defined two geometries we've asked it to create points and lines and then within the within the brackets we've created a little bit of information about what you know the size and the color but that's less important right but that's i just showed you what you can do but that's almost besides the point right let's do
+
+00:06:18
+this entire process again and i'm going to build it up again i'm going to do a slight variation on what i've done that'll just get you a little bit more comfortable with the whole process okay so let's delete all of that and this time i'm going to say ggplot and i'm not going to say data equals bod but i'm just going to say dod and the reason is ggplot will assume that the first argument is the data frame right then i'm not going to say mapping is equal to i'm just
+
+00:06:49
+going to say aesthetics and open brackets because ggplot assumes that the next argument is the mapping and now i'm not going to say x is equal to time i'm just going to put in time and i'm just going to put in demand because gg plot is assuming that the first argument will be your x axis and your second argument will be your y axis all right and then i'm going to put plus because we want to add in some geometry and i'm going to add in germ point open and close brackets uh and then add
+
+00:07:24
+in another layer germ line we're going to close brackets command enter we're going to draw that graph right and now i'm going to say those dots a little bit small i'd like them to be a bit bigger size is equal to 3 let's say and i'd like the line to be red and when you put in if you want to just put in the word red you must put it in inverted commas right ctrl enter and we've got more or less the same graph that we drew a few minutes ago give it a second there it is okay that's
+
+00:07:59
+not too complicated we're going to do some other graphs and you can understand some of these parameters we're going to build things up a little bit more this is exciting times i hope you're enjoying this video there's more to come don't go away right now we're going to do a another graph using a different data set so let's jump in this if we type in the word data open and close brackets enter here's another data set called co2 carbon dioxide uptake in grass plants
+
+00:08:23
+i know nothing about grassy plants but let's have a look at that data set if i type in co2 command enter there we go it's got 84 rows i could do this i could do view open brackets co2 close brackets and we're going to then see it see that data set up here there it is we've got a couple of variables we've got plants we've got the type of plant we've got a treatment that was given and i believe this is children non-chilled concentration and uptake right i'm not going to get into a big discussion about
+
+00:08:54
+what each of these variables means you can do question marks co2 and read about that let's get straight into the data visualization now we said before that we can start off let me make a bit of space here we can start off with gg plot and we can type in co2 and that's the data frame that it's going to use there's another way to do this and it's kind of quite exciting you can type in co2 and then because we're working in the tidy verse we've got access to the pipe operator
+
+00:09:23
+right you've seen this before okay uh the percentage uh greater than percentage and the pipe operator means it'll take anything from the left hand side of the pipe operator and pipe it in as the first argument in to the whatever's to the right of it or in this case below it because i'm going to push enter right so if i push co2 pipe operator and then ggplot open brackets ggplot already knows what data say it's using so we don't need to say data equals co2 we don't even need to
+
+00:09:54
+say co2 co2 is piped into ggplot and we can carry on and we can make the first argument that we define the aesthetic does that make sense right then just so that i can remember what the different variables i've got i'm going to go right down into the console over here i'm just going to type in names co2 close brackets uh control enter and that's just going to give me a list of the different variables that i've got so i'm going to want to say my x variable in other words my independent variable
+
+00:10:21
+i'm going to say is concentration that's the concentration of co2 in the atmosphere i'm guessing and i want my y y variable to be uptake uptake of co2 right and i think that that you know that's the that's the dependent variable and then i'm gonna say i'm just gonna put an enter here just so that you can see what's going on but you could carry on to the right um the next thing i'm going to say is i want color to equal the variable treatment in other words i want as things get
+
+00:10:53
+plotted i want the color of individual plots to be a function of which treatment group that particular observation or row was in okay and then i'm going to add plus because i want to add in uh i want to add in a some geometry here and let's make the geometry that we create geom point again and we won't do anything with it at the moment we'll just push control enter right and then we've got the beginnings of a graph not bad but there's a lot we can do with this what i want you to see here
+
+00:11:27
+is that we've included color equals treatment as part of the arguments in the original line for ggplot in other words this fact that color is mapped out against treatment will apply to every layer that we produce gg if we put a line in here if we did there's different layers we can add here this parameter will always apply we could have put it in we could have put color equals treatment in here right as part of the aesthetic in here and then it wouldn't apply in the next layer but we wanted it to apply to apply to
+
+00:11:56
+all of them and you'll see why in just a second all right so let's say let's just say for argument sake we'd actually like these dots to be a little bit bigger um and we can also say we'd like them to be a little bit transparent so we can actually say alpha 0.5 that'll make them slightly transparent that's fine and then i'm going to add to that right another layer and this is called gm smooth and that's kind of quite a nice way of producing a linear model that'll map
+
+00:12:30
+over our gm point okay and just to let you know what's happened here it's drawn two smooth linear models through these two groups the children the non-child these these you know these treatment groups that were applied to the grass i don't you know i don't know much about grass and then around each of them it's drawn a uh the standard error you can see the overlap a little bit over there we might sort of say look actually what we want to use now we can add in some arguments into the gm smooth
+
+00:12:59
+we can say we want the method to equal a linear model and we want the standard error equals false so we don't want to draw the standard error let's see what that does and then we can create a facet wrap by type you might want to divide this out by type a little bit okay and we can see now we've got the quebec we've got mississippi uh these are the two types so we've done we've created two facets by type the colors are still being mapped against the children not shield in other words the
+
+00:13:49
+treatment groups uh we've we've got two layers we've got the we've got the points and we've got the the linear linear graph over that so we've got quite a lot of information all on one graph so far now we can add in a label if we want right labs and here you can you can add in labels for x and y but all i'm going to do is do the title and i'm going to say um creation of co 2 for example and then what i might do is add in a theme and i'm going to make it the black and
+
+00:14:30
+white theme which is kind of quite nice let's have a look at what that looks like okay voila quite a nice graph i'm going to use the same data to draw another graph using a slightly different approach okay now i'm going to use this again right the co2 data set i'm going to pipe it into ggplot and this time i'm going to set treatment as the mapping against the x-axis and uptake against the y-axis right then i'm going to add again again and that makes sense right because whether you get treated or don't get
+
+00:15:09
+treated with you know this this children not child could be seen as a independent variable right it's it's it's the the causative variable and it is a determinant of uh of of uptake in this case right now we add in the plus and we might we might want to create a box plot okay so gm box plot okay so we'll start off and have a look at what that looks like okay i spelt the word treatment wrong let me just put an r in there but now i've got up date instead of up take so sorry about that
+
+00:15:51
+okay now we've got a box plot right not bad but i'm sure there's a lot more we can do with this so let's take a look at what we can do to make this a little bit more pretty i'm going to layer on top of that a gm point um okay let's start off with that and have a look at what that looks like and now i'm going to add in some mapping just for the points right so now if i say aesthetic open brackets right and i want size to equal concentration and i want color to equal to equal plant
+
+00:16:42
+and you'll notice and i'm going to push ctrl enter now what's quite important about this is the mapping that i did under gm point here only applied to the points it didn't apply to the other layers of this particular graph right so you can stick in this mapping in the original ggplot set of attributes or in the geometries and that's quite important to notice now in this geometry germ point i've mapped out size against concentration color against plant but there might be some attributes
+
+00:17:13
+that don't map out against a variable they're just an attribute we want to be part of that particular geometry right so in this case alpha which is how transparent something is i'm going to add that in i'm going to say alpha is equal to 0.5 comma and then the rest of it can be i'll put push enter the rest of it can be like that right push ctrl enter okay and there's still more we can do why don't we flip this on its side code flip and i might want to give it a theme i like the black and white theme
+
+00:18:10
+and now i might want to say look why don't we get some more information out of this and do a facet wrap by type right so we've got let's take in a heading i'm going to call this hitting chilled versus non-chilled and that's the same data that we used before we've just now just organized it in a different way we've visualized it in a different way and we can zoom in on that and we've got a number of different attributes that are being represented here right we've got uh the type of plant
+
+00:19:08
+quebec and mississippi or i think the actual name of the the designation of the plant itself the concentration we've got uptake we've got treatment we've got a lot of attributes all summarized in one graphic absolutely beautiful now just so that you know you can you can export obviously you can just save it as an image save it as a pdf copy it to clipboard or you can use the gg save function in ggplot server to your hard drive but even better than that you can do this whole thing so that the
+
+00:19:37
+graphic gets embedded straight into a pdf or word document okay let's do one last graph again using data that's built in right and this is going to be the miles per gallon data set uh ctrl enter to have a look at that here it is quite a big data set so why don't we do this let's do view and have a look at that data frame here it is we've got a number of variables uh these are these are different cars and models and displacement is engine size and this is city and highway uh fuel
+
+00:20:21
+efficiency so it's miles per gallon right so we're going to think uh we might think that the engine size this displacement might be the x x variable or the the independent variable right it is the causative variable and the engine size may translate into better city and highway fuel efficiency so let's take a quick look at this right so we start off let's make some space here right miles per gallon and this i'm going to show you in a few seconds why it is that i think it's important
+
+00:20:53
+to pipe the data in as opposed to just going straight into gt plot so we're going to pipe it in to ggplot and in this case we're going to say our x-axis our x-axis our independent variable is going to be displacement and our y is going to be efficiency in city driving right and we're going to add into this aegean point okay and we'll start off with that and have a look at what that looks like okay and we see there seems to be a a relationship as as engine size gets bigger fuel efficiency goes down
+
+00:21:39
+but let's add a little bit to this let's say for these geom points uh we want to add in an aesthetic where we map color against the drive four wheel drive front wheel drive etc and the size of the dots to the transmission okay okay that's quite bright so why don't we push enter and say alpha equal to 0.5 just to make it a little bit easier to look at [Music] okay and we forgot to put a comma over there [Music] okay that's a little bit better we can see the green are the front wheel drives the reds are
+
+00:22:35
+the four wheel drives and the blues are the real rear wheel drives the size of each dot is a function of the transmission type now let's add a layer and now we're going to add in another geometry gm smooth this is a smooth linear model um and method is equal to linear model just that you can see if i didn't say method equals linear model if i left that alone it will do a smooth model and you can see the standard error is around it over there and if we add to this a facet wrap by here
+
+00:23:28
+and we're going to say the number of rows equal to one because i want them to all be on the same row so we can look at them okay we've got 1999 and 2008 compared to each other if we pop in this method is equal to linear model it might be a bit nicer okay now let's go back let's say look these are all outliers up here they're just muddying the water what if we said we want the city data to be filtered by only rows or observations that are less than 25 we could go up here because we're using
+
+00:24:05
+the pipe operators we could say filter and we would say city is less than 25 and then pipe operator and we're piping in some new data into our gg plot that now has a filter attached to it and there you go voila okay now we can add some labels plus labs for labels right we can say x is equal to engine size uh y is equal to miles per gallon or meter input commas per gallon per gallon fuel efficiency um now i'm going to add in a theme i like the black and white theme we could go actually there's another nice
+
+00:25:12
+one that i like it's this theme down here somewhere i think it's called minimal that's kind of nice as well um actually no let's go with black and white black and white for this enter let's have a look at that right and voila we've got again we've got multiple multiple aspects of our data being represented we're using size we're using color we're using facets and we're using both of our axes so we've got a lot of aspects of our data all being represented
+
+00:25:48
+in one very nice graphic okay i hope that was useful there's many many more things we can do with gt plot i'm not going to get into that in this video what i wanted to do here is is just introduce you to these ideas this idea of the grammar of graphics do a couple of examples using data that you have access to all of the data that i've used you've got that data you can you can do these exact same graphics on your computer at home and then play with it try different things try adding on
+
+00:26:16
+different filters try and use the variables in different ways and the more you play with it the more you experiment with it the better you're going to get at producing graphics that are consistent with your style the way you want to communicate um and you're going to get really good at it you're going to have a lot of fun so i hope that was useful more videos to come don't be a stranger take care don't do drugs always do your best don't ever change bye [Music] [Applause]
+
+00:26:40
+[Music] [Applause] [Music] [Applause] [Music]
+

@@ -1,0 +1,63 @@
+00:00:00
+so this is a video for beginners in ggplot I'm not going to get too fancy I'm going to walk you through the basics at the end of it you're going to understand how to create Graphics using what we call the grammar of Graphics uh it's a lovely way to create data visualization um I'm going to teach you how to do these Scatter Plots bar plots barcodes I'm not going to get into the detailed code of some of the more sophisticated Graphics but you're going to learn the principles and then if you
+
+00:00:23
+want to I'm going to at the end of the video tell you how you can access this page that I'm looking at at the moment uh you'll be able to see the codee that I use to create these things and I have these annotations that'll walk you through the details of the code so you can do this in your own time remember that all of the examples that I do I always use data sets that you have access to on your computer so you can replicate everything that I'm doing at home having said all of that let's Jump
+
+00:00:46
+Right In boom shakalaka on this YouTube channel we're creating our programming videos on everything 3 2 1 before we look at the code I want you to understand the output so that as we look at the code it makes sense to you that we're doing this in order to get that if that makes sense right so here's the plot that we're creating we've got penguins that live on some Island um and there's three types of penguins and they are designated with three different colors on this particular plot on the y-
+
+00:01:14
+AIS we've got body mass x-axis we've got flipper length Okay so each of these dots represents a penguin and the dot will tell you what its flipper length is what its body mass is and by its color it'll tell you what species it is and then we can also visually see here that there's a nice seemingly linear relationship between body mass and flipper length okay now let's take a look at the code that we used to get there first things first Library Palmer penguin that will get you access to the
+
+00:01:41
+data that we're looking at okay so install packages Palmer Penguins Library boom shakalaka you've got it now before we look at the detail of the code I want you to understand that there are three major things we have to Define and if you do that you've got a plot first of all you have to define the data and I'll just go through this you have to define the data second thing you have to Define is the mapping of Aesthetics in other words V various variables get mapped out against various Aesthetics your X and
+
+00:02:08
+your Y coordinates are Aesthetics color is a coordinate you could have shape for example uh fill there's a number of Aesthetics that uh it will use your data to kind of Define and then finally you have to define the geometry what kind of plot is going to be produced here everything else after that is window draing but those three things are super important for you to Define and if you get used to using them you get used to creating layers you could do you can have multiple geometries layered one on
+
+00:02:35
+top of the next when you get used to how to use this so it's really as a lovely way of doing coding um once you get used to it you'll absolutely love it let's go into the details that's in the code next right so as you can imagine we use the function ggplot we're talking about ggplot the first argument is data equals Penguins okay that's what the data set is called that we're calling now before we carry on I want you to note that I've said data equals penguins you don't
+
+00:03:00
+actually have to put the word data in there you could just write Penguins ggplot knows that the first argument is asking for data and that's very useful especially in the context of the Tidy verse where all of these packages like dly R all work together um and let me show you what I mean in this next I'm going to come back to this scatter plot but I just want to show you here I've said Penguins pipe operator and I'm piping this data in to ggplot so ggplot knows that it's the first AR you know
+
+00:03:30
+when you pipe out object from one line into the next it knows that that should be used as the first argument the nice thing about this is I could manipulate this on the way so I could say Penguins filter by select etc etc and then pipe that into ggplot and all of those parameters would be included uh just in in one big chunk of code without the need for creating new DOA objects so that's quite useful but let's go back to our scatter plot right so we've said dat equals Penguins now it's the mapping
+
+00:03:58
+this is the mapping right we've saying the x-axis must be mapped against flipper length right and you saw that down here flipper length x-axis Happy Days y- AIS body mass uh color is species okay and all of this makes perfect sense if you think about the plot that we created so it's not complicated this is what we call aesthetic mapping and then finally geometry here we go geom point this could there's multiple other geometries and I'm not going to get into that right now but you define the geometry there at
+
+00:04:26
+this point it would just create a plot that looks pretty much like what we got down there but we we've added a little bit more here so we've said Labs which is this is not you don't need this but it's a nice optional extra oh before we carry on G and point okay that's telling it that geometry it must use as a point it's going to create a scatter plot if you know we could use any other geometry we're going to see with box plots and bar bar plots just now that you use different geometries there but size is
+
+00:04:50
+equal to three that just means that the size of the dots is three you could make it four five any number you wanted Alpha is equal to 0.5 that's the transparency of uh the particular dot right so I've made it 0.5 is half transparent just so that where they overlap with each other you can sort of see that right then the next function Labs which means labels title equals flipper length versus body mass x equals flipper length in millimeters so you can see that what I've put here as the X label appears on
+
+00:05:20
+the plot as the X label right same with Y body massing grams then theme minimal that basically is this nice clean white background that it's got over here there are lots of interesting themes that you can use but theme minimal is nice and clean and it gives a nice professional look about it so I like theme minimal okay and that produces the plot that you see down there right next I'm going to just walk you through box plots and bar plots I'm not going to get into the details of the lollipops and the rges
+
+00:05:46
+there are lots of other plots you can create but what I'm wanting to get today is you used to this idea of Define the data uh Define the Aesthetics or the mapping of Aesthetics and defining the geometry if you get that right you're well on your way bom Shak like you're going to cook with gas okay so here we've got some box plots uh just looking at it again we've mapped color against species uh the xaxis is species the Y AIS is Bill length let's have a look at the code and I know this is a little bit
+
+00:06:14
+repetitive but it'll just help you get used to it here we've got Penguins piping it into GG plot so we don't need to define the data Aesthetics right so this is the mapping of Aesthetics x equal species that's the x-axis y equals Bill length y axis and fill equals color notice I've used the word fill here and not the word color the reason is that these are sort of big boxes or rectangles if I said color it would think that I meant the outline of that rectangle right so if I said uh color
+
+00:06:44
+equal species it would basically use these colors just to do the outline and not the inside right so fill equal species is important and then I Define the geometry geome box plot which is the kind of plot that we've done here Alpha equal 25 to make it a bit transparent just gives it a slightly softer look which I kind of like um notice that this is also important when we're working in the Tidy verse we use the pipe operator to pipe one object into the next line of code as soon as we're inside ggplot
+
+00:07:13
+we're not using pipe operators anymore but a plus sign because we're adding something on right so we do the mapping of the Aesthetics then we're adding on the geometry and then we're adding on the labels and then we're adding on the theme right so this is it's like R kind of sees this as one continuous line of code so pretty easy in fact let's just jump straight into barplot the exact same thing applies here right to find the data penguin to find the mapping of Aesthetics x equals species so you know
+
+00:07:43
+there they are um y equals body mass in grams now what's interesting here is what is it going to do with the body mass in grams is it going to count the number of observations is it going to give a total what is it supposed to do with that variable when it Maps it against the y- axis well we're going to have a look at that in just one second again fill equal species in other words the color that you put in inside the boxes will be mapped out against the whatever species you're dealing with
+
+00:08:10
+right here's where things are interesting GM bar that is so GM bar here is the geometry that we're going to use right um and it's been told to summarize the dot instead of counting it right so we've got stat equals summary so the statistics it must use is summary and it must use the mean function which is aver a um to Define what so it's basically going to give us the average body mass for each of these particular uh species okay Alpha is 0.5 so make it transparent gives it a softer look
+
+00:08:43
+labels theme we've talked about that boom shakalaka now for the lollipop plot and the ridge plot I'm not going to go into the code because it's a little bit more complicated but the same principles apply um i' and I've got specific videos that go into these particular plots if you're interested but it's also true that you can get get access to this particular page and you can copy this data stick it into into our studio and run it yourself and you can also have a look at all of the annotations that
+
+00:09:10
+explain exactly what's happening with each line of code so um you might find that useful if you want to get access to this particular page click on the link that's on the screen at the moment that'll take you to learn more 365 and you'll be able to get a free access to this hope you're doing well uh hope you enjoyed that hope you found it useful don't ever change don't do drugs always do B speak to you soon take care boom Shak okay [Music]
+

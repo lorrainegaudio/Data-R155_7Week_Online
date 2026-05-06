@@ -1,0 +1,111 @@
+00:00:02
+today we're going to talk about how to use bar charts to visualize categorical data in particular we're going to talk about how to use bar charts to visualize more than one categorical variable at a time so it's this is a super interesting little skill to have you're going to use a lot doing it is super duper easy and there's multiple ways we can do it we're going to explore all of them today right first of all we're working in our okay presumably if you're watching this
+
+00:00:24
+video i hope you know that in particular we're going to be using gg plot now gg plot was sometimes referred to as gt plot 2. ggplot is in my opinion by far the best way to visualize your data it's an amazing way it's a whole new way of thinking in terms of visualization you're going to love it it's not difficult you just got to get your head into the right space stick with me i'm going to take you there you're going to love this i promise you right let's get stuck right in
+
+00:00:47
+if you want to learn about our programming then you have come to the right place on this youtube channel we're creating our programming videos on everything and so first of all right at the top here you can see i've got uh installed packages tidy verse if you haven't done that before you need to do it when you say install package tidy verse it puts onto your computer a whole range of packages that we use and these are the most popular packages to use in terms of data manipulation and visualization and it includes d
+
+00:01:16
+player which gives us the pipe operators which we're going to talk about in just a second and of course it also includes ggplot you only do that once installed packages tidy versus you do once i've put a little hashtag in front of it saying which basically tells or don't run that code this is already done once you've installed it every time you work with the tidyverse or the package is there within at the beginning of your code you've got to say library or require tidyburst that's just saying look
+
+00:01:40
+in this particular source code we're going to be using these packages and then r knows what to do thereafter and that build it expands the vocabulary that you've got within r to be doing things with your data next of course here we've got data open and closed brackets and she want to show you this because if i push command enter and run that piece of code these are the data sets that are built into r that you can use to practice your coding and i'm going to be using a built-in data set today
+
+00:02:04
+which means that you've got access to this data and you can do exactly what i'm doing at home on your computer and practice and in actual fact make improvements on the visualization that i do all right so that's the best way to learn r is to practice and here we'll be looking at a data set down here called star wars in fact star wars a lot of these data sets are naturally or built into base r so when you've installed r and r studio you've got them star wars isn't in there but once you've installed the
+
+00:02:29
+tidy verse and you've called the title verse then of course it is there right so we're going to be talking about the star wars data set and if we go over here if we go here and i push question mark star wars come on enter it's down here that's this is telling us all about the star wars data set all the variables what they mean etc etc that's a nice little trick and of course if i push view with a capital v star wars we're going to see the data set itself right and we've said
+
+00:02:55
+we want to visualize two categorical variables right categorical variables are basically as opposed to numeric variables numeric variable on a number line one two three four five categorical variables are like hair color blonde brown hair white hair these are all the characters from the star wars universe so we've got luke skywalker at the top etc etc okay and then of course sex we've got males females and hermaphrodites in this case and they've got gender as well over there but we're just going to work with
+
+00:03:21
+sex and we're going to work with hair color today two categorical variables how do we visualize them both at the same time using bar charts let's have a look at some code now we're going to be talking about ggplot and of course ordinarily when you work with gt plot what you would usually say is you just start off with ggplot and you open brackets and the first argument is always data and you could say data is equal to star wars okay and then you could carry on and etc etc i don't like to work like that i always
+
+00:03:51
+say rather because we're working in the tidy burst we've got access to the pipe operators rather start off with your data set star wars and then use the little pipe operator here that's basically use the little pipe operator over there and that is going to tell our to take whatever's on the left-hand side of the pipe operator and pipe it into the right-hand side and use whatever was on the left get becomes the first argument in the new command on the right why that is useful let me show you why that's
+
+00:04:19
+useful and you can think of the pipe operator is basically saying and then right so we say star wars and then filter right so this is filter and it knows that we're filtering the star wars data set right because as i've just described that's how these pipe operators work filter and there are more elegant ways of doing this filtering and i'm going to show you how to do that in just a minute rows of the starter where hair color the variable hair color is equal to black or you see this little
+
+00:04:47
+vertical line here that means or or hair color is equal to or brown now we use two equal signs there not one because if it was one equal to sign you would be saying hair color is equal to black or and is equal to brown and we're actually asking a question if hair color is equal to black then use that row or if hair color is equal to brown then use that row does that make sense so two equals two signs together is really kind of asking a question is is a particular row of dot does a particular row of data
+
+00:05:21
+meet this criteria if it is then let's include it in the data set that we're going to use or and i use or instead of and because if we used and here we would be saying to our that both criteria have to apply for that particular of data to be extracted to be used to be part of the data set that we're using and that's not going to work if that wasn't and not in all we'd be saying we're only wanting star wars characters where their hair is black and brown and that's not the case we're
+
+00:05:48
+wanting star wars characters where their hair is black or brown if either criteria is met that row of data is kept that's how the filter works right so we've got star wars we're filtering it by these two criteria and then the next thing we want to do is we want to drop any uh missing data from the sex category there's not going to be missing data in the hair color category now because we've already filtered it by the fact that they need to have black or brown hair to be included so there's
+
+00:06:15
+no missing data everybody's going to have a hair color but in the sex category there might be rows of data or observations where the sex hasn't been included and it's just blank or it's described as missing or n a and in that case we want those rows of data to be dropped so we said drop in a for the variable six and then we're piping it into ggplot so can you see the reason i like to do it this way is because we want to manipulate the data a little bit we want to kind of tell our which components of this data
+
+00:06:45
+we want to use we want to filter out the rows that we want that we're interested in we want to drop the missing data there's things we want to do we want to wrangle with the starter before we start visualizing it now what a lot of people do in our programming is they create a new object right so and that's there's nothing wrong with that i just find it a little bit clumsy and i'll show you what that means you could say i'm going to create a data set called my data and that's equal to
+
+00:07:11
+star wars all of this and then stop there and then if we push enter we now have created an object called my data then then in in ggplot we could say ggplot data is equal to my data comma and carry on do i find that a little bit clumsy and if you're doing quite a lot of coding you actually can land up with a substantial number of objects and it all gets a bit confusing i prefer to just start with the dots that you're using and then pipe it into ggplot we don't need to tell ggplot what data we're
+
+00:07:51
+using why because it's been piped in in which case the first thing we want to tell ggplot is the aesthetics right this is where we tell we tell our the different variables that we've got how are they going to map out on our canvas with respect to our x-axis our y-axis colors fills shapes there's all sorts of things we can do with respect to aesthetics notice at this point in time we're not even telling our what kind of graphic we're going to create we're not saying it's going to be a line
+
+00:08:18
+graph or a pie chart or a bar plot we're just saying variables that we've got this is how we want them to map out against different aesthetics right the first aesthetic is always the x axis right so you could say x is equal to hair color right we want the x axis to be here you don't need to right because it assumes that the first argument in aesthetics is hair color next i'm going to say fill is equal to sex again we're just telling r that it's going to fill things up in
+
+00:08:48
+terms of the color that it uses to fill things up it's going to fill them up differently depending on the value that's in the the sex variable right now we've done that we put a plus sign so we stopped using the pipe operator because now we're working within ggplot and we say we want to add to this some of our geo so gm bar now we're saying this is the kind of graphic that we wanted to put onto the canvas and you can put different graphics on top of one another and we've got
+
+00:09:15
+position dodge and i'm going to show you what i mean by dodge there there's different things we can stick in there alpha equals 0.5 that just means how transparent the color is if you leave that at one i find it a bit bright in this particular case theme is black and white and actually what i'm going to do just now is i'm going to create this graphic and take away some of these things just so that you can see why i've got them in there i like to remove some of the grid lines
+
+00:09:37
+so i've got element equals equals element blank for these guys and then title you put a title at the top you can put a label for the x and the y axis okay i'm going to come back and talk about all of these little bits and pieces in a little bit more detail in a few seconds but let's run that let's run that code and see what we get here we've got our little graphic actually it might be easier to look at so here we've got hair color is our basically our x-axis right and we've got black and brown down
+
+00:10:03
+here these are bar charts so they're a count there's three females with black hair and there are nine males with black hair and there are six females with brown hair and there are a number on the exact and the y-axis yeah but i think that's probably about 10 males with blackheads so that's kind of like a reasonably good representation of what's happening in our data but i think there's other ways of doing this and i want to walk you through that in just a second so we've got position equals dodge
+
+00:10:33
+right over here that that was part of the code and that put the bars next to each other if we didn't put position equals dodge and we put position equals fill instead right let's run that okay can you see how now it basically it looks at what proportion of people with brown black hair are males or females right so it's basically both bars are going all the way to the top or up to 100 and and we could actually we're not going to do it in this video but we could put labels into these as to what percentage of
+
+00:11:12
+have black hair or brown hair and then if we didn't put anything there if this was left blank we just left this out completely would just be to stick one on top of the other um not next to each other like we did with the dodge and not all adding up to 100 like it did with the fill okay so those are the three ways that you can produce a bar chart using two categorical variables now i actually think there's a nicer way you can do this and that's using the facet facet wrap feature in ggplot so let's get into that
+
+00:11:49
+a little bit but before we do actually why don't i just talk you through a couple of these other little features that i've got in here and i'm going to make that a bit smaller so we can i'm actually going to make the code a bit smaller too so we can see what's happening in our graphic as i make a couple of changes like so first of all if i didn't put in the alpha equals 0.5 and i put it as alpha equals one which is the default by the way can you see how the i find that a little
+
+00:12:14
+bit bright i find like i i think it looks a little bit nicer at the 0.5 you can in r and we're not going to get it in get into it in this particular video but you can actually specify the colors specifically i'm using the default color that just pops in there but and in other videos i've talked about how to actually put in the exact color that you want for each of the variables the next thing i've got is theme black and white now let's say for example we didn't include that
+
+00:12:38
+if we stopped this code right there so i take away the plus sign and the code's going to run up until that point and nothing more you'll notice that we now have the default kind of gray in the background because we've got alpha equals naught comma five so that our graphics are slightly transparent we can see the grid lines we can see the gray in the background i don't really like that we've lost our labels it's not very nice let's go back put the plus sign in the theme equals black and white
+
+00:13:05
+basically that takes away that gray background and makes it nice and clean and white if we didn't have this if we didn't have these uh panel grid major and panel grid miner equals element blank if we didn't have those so i'm going to put in a little hashtag which basically will tell or not to run those lines of code then we are left with the lines but and i don't mind the lines so much except that you can see them when you're using alpha equals naught comma five right so i kind of think well
+
+00:13:33
+let's let's not see them and put it and let's just remove those grid lines and we're back to our and then of course we've got labs and then with labs we can say title put in the title x equals puts in the x the label for the x x-axis and y equals numbers the label for the y-axis right let's look at a slightly different way of doing the same thing okay if i run this next set of code i'm going to run the code first and then we're going to talk about it let me run it
+
+00:14:03
+and you'll see what pops up now can you see here this is kind of more or less the same thing but it looks a little bit neater we've got black hair sitting in a nice box on its own and brown hair sitting in a nice box on its own and we've got females and males as columns next to one another and i think this is a little bit neater i think it's a little bit nicer how did we get to this well let's have a quick look here again we're back to star wars and actually let me go into this code
+
+00:14:29
+because we want to talk about each element one at a time again we're starting with star wars we're piping it into a filter look at this remember up here to do this filter i said hair color is equal to black hair color is equal to brown and i use the o there and i said there's a slightly more elegant way of doing this this is much nicer look at this and this is especially useful if you've got lots and lots of categories that you want to include hair color is in okay percentage in percentage that
+
+00:14:56
+just basically says look take what's ever in this next string of the c means the concatenations sort of next collection of categories and look for where they apply inside hair color so we could add more to this we could say black brown blonde and just keep going and it's a much more elegant way than creating a new line of code for each color right so hair color in so that's our filter then again drop any missing values drop n a the n a means not available or missing so drop n a from the variable sex and then we're
+
+00:15:30
+going straight into gt plot now we're just saying let's make the x axis so this is the same as saying x equals x right we don't have to say the x because it's assumed as the default but let's put it in there the x-axis is sex so it's going to divide the x into males and females and we're going straight into our geom bar and i'm saying also fill the columns make the colors that you use also equal to 6 and again i've said alpha equals naught so where's the hair color in all of this
+
+00:16:02
+well this is where the facet wrap comes in we can say facet wrap create two facets do this entire exercise twice but in each of the facets do it only by hair color and in the case of hair color we're only going to be doing it by black and brown so facet wrap hair color and then all of this is exactly the same theme black and white we've got our panel grids i've said legend position equals none because i don't want it to be a legend on the side and then title x and y right and then we run that and it turns
+
+00:16:34
+into this i'm not going to get into too much detail i want you just to feel comfortable with the basics here to feel comfortable with the idea of creating graphics using ggplot i want you to practice using the star wars the star wars data set by the way is amazing it's lovely there's lots of different kinds of variables so it's a great data set to use to practice your visualization and of course you can go through my video and just replicate the code exactly and see if you can produce the exact
+
+00:17:01
+same visualization okay i hope you enjoyed that i hope you found it useful please make comments send me your thoughts questions etc etc have a great day don't do drugs always do your best don't ever change take care speak to you soon bye [Music]
+
