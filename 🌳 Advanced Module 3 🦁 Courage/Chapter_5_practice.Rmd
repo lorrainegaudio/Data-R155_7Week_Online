@@ -1,0 +1,115 @@
+---
+title: "Chapter 5 Practice"
+output: html_document
+---
+
+## Task 1
+
+🎯: Practice creating vectors and doing arithmetic. Understand R syntax.
+
+```{r}
+#  ⚡ 
+result <- 3+4 
+# number <,-42
+# ratio <- number / result
+```
+
+Error: unexpected ',' in "number <,"
+Error: object 'number' not found
+
+✍ Memo:  I accidentally had "," in there which it didn't recognize. 
+Then it couldn't run this because it didn't have a value for "number" yet. 
+
+```{r}
+#  ⚡  
+number <- 42
+
+ratio <- number / result
+
+# print(Ratio)
+```
+
+Error: object 'Ratio' not found
+
+✍ Memo: cases matter
+
+```{r}
+# ✅ Check the ratio value
+print(ratio)
+```
+
+🗣 R successfully calculated the ratio of `number` to `result`, which is 42 divided by 7, resulting in 6.
+
+## Task 2
+
+🎯: Create two vectors of different lengths and subtract them to see how recycling works.
+
+```{r eval=FALSE}
+# ⚡ 
+long <- c(6, 2, 8, 10, 3, 77)
+short <- c(88, 4, 20)
+difference <- long - short
+# ✅ 
+print(difference)
+```
+
+✍ Memo: I struggled to understand how R recycles vectors of different lengths during arithmetic operations. I asked ChatGPT what the pattern was, and it said the results are [1] -82  -2 -12 -78  -1  57 which is essentially 6-88, 2-4, 8-20, 88-10, 3-4, 77-20
+
+🗣 When subtracting a vector of unequal lengths, R recycles the shorter vector to match the length of the longer one.
+
+## Task 3
+
+
+🎯 How does the `paste()` function work?
+
+```{r eval=FALSE}
+# ⚡ 
+first_word<-"yellow"
+
+second_word<-"banana"
+sentence<-paste(first_word,second_word)
+sentence
+```
+
+✍ Memo: I wasn't expecting it to turn yellow!!! The sentence came out as "yellow banana"...neat!
+
+```{r eval=FALSE}
+class(sentence)
+```
+
+✍ Memo: Character...? Uh, what's that referring to??
+
+
+## Task 4
+
+🎯 Make a vector of class standings and then convert it to factor class.
+
+```{r}
+# ⚡
+standing<-c("Freshman","Sophomore","Junior","Senior","Freshman","Freshman")
+# ✅ 
+standing
+class(standing)
+```
+
+🗣 okay so it prints the words. It says class is character.
+
+```{r}
+# ⚡
+standing_f<-factor(standing)
+# ✅ 
+standing_f
+```
+```{r}
+# ✅
+mode(standing_f)
+typeof(standing_f)
+levels(standing_f)
+```
+
+✍ Memo:  The `mode()` says numeric, `typeof()` says integer?? but it PRINTS WORDS.
+I get that levels shows the categories. How is it storing numbers and then showing character labels?? This is confusing!
+
+👀 Memo:  I asked ChatGPT to explain  why a character vector changed to a factor class is stored as integer type, numeric mode and codes with text labels called levels. It clarified that factors are stored as integer codes with a separate set of text labels called levels, which explains why `typeof()` is "integer" even though printing shows words. It also confirmed that `levels()` displays the labels.
+
+

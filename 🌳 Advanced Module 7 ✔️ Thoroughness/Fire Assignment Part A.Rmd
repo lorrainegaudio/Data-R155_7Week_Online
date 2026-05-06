@@ -1,0 +1,597 @@
+---
+title: "Wildfire Signature Assignment"
+subtitle: "Part A: Data Exploration and Wrangling"
+author: "Lorraine Gaudio"
+date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
+team: "Spring 2026"
+output: 
+  bookdown::html_document2: # To create an HTML document from R Markdown
+    toc: true # Table of contents (TOC)
+    toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactivne scrolling
+    code_folding: show # Enables you to include R code but have it hidden by default. (Show hide button)
+    includes:
+      in_header: ../../assets/header.html
+      after_body: ../../assets/footer.html
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r eval=FALSE, include=FALSE}
+title: "Wildfire Signature Assignment"
+author: "Lorraine Gaudio"
+date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
+output: 
+   bookdown::pdf_document2:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+    citation_package: natbib
+    fig_caption: true
+    df_print: kable # Data frame printing
+    includes:
+      in_header: ../assets/header.tex
+    latex_engine: xelatex  # Use xelatex to support fontspec
+fontsize: 12pt
+geometry: margin=1in
+mainfont: "Garamond" # Sets the font of the entire document
+sansfont: "Gotham-Book.otf" # Set sans-serif font to Gotham Book
+monofont: "Courier New" # Set monospace font to Courier New
+documentclass: scrreprt
+linkcolor: boisestateblue # Customizes the color of hyperlinks
+urlcolor: magenta # Customizes the color of URLs
+citecolor: black # Customizes the color of citations
+bibliography: references.bib # Bibliography file
+biblio-style: apalike                 # ⟵ natbib needs a .bst style
+natbiboptions: "round,authoryear"     # round brackets, Author (Year)
+ 
+Or
+title: "Wildfire Signature Assignment"
+author: "Lorraine Gaudio"
+date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
+team: "Spring 2026"
+output: 
+  bookdown::html_document2: # To create an HTML document from R Markdown
+    toc: true # Table of contents (TOC)
+    toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactivne scrolling
+    code_folding: show # Enables you to include R code but have it hidden by default. (Show hide button)
+    includes:
+      in_header: ../assets/header.html
+      after_body: ../assets/footer.html
+```
+
+# Overview
+
+🔥 Idaho is well known for its wildfires. They play a ecological role, shaping our forests and grasslands while presenting significant hazards to communities and resources. In recent years, the Idaho landscape has experienced frequent and sometimes severe wildfire seasons due to both natural and human activity. While fires are part of the natural ecosystem, they have become more destructive as the climate warms. Wildfire preparedness and management is a continuing challenge for the state. For more information this [research at Boise State](https://www.boisestate.edu/coas/2024/12/04/boise-state-experts-provide-perspective-on-idaho-mountain-wildfires/).
+
+
+**How far could a new wildfire run in 8 hours? How many new wild fire ignitions will grow larger than 10 km (straight line) in 8 hours?**
+
+In this three-part Core Signature Assignment activity option, you can work in groups but each person submits their own work independently. 
+
+
+By the end of this Wildfire Signature Assignment you will be able to:
+
+1. 🧭 Organize – Set up a reproducible RStudio workflow (project, files, data, RData) that can be re-run on another machine.
+
+2. 🛠 Wrangle – Import the WHP sample data, create quantile-based hazard categories, and summarize areas and probabilities with tidy R code.
+
+3. 📈 Model – Specify and use lognormal models (p/q/d/r *lnorm* functions) to answer distance and tail-probability questions by hazard category.
+
+4. 🎲 Simulate – Build a multi-step Monte Carlo simulation (with `replicate()`) that mixes categories by area weights and estimates the chance of many fast-growing fires in a season.
+
+5. 🗣 Communicate – Knit a clear Rmd/Qmd notebook that explains assumptions, code choices, and results, with appropriate metadata and citations for data and help sources.
+
+6. 🪞 Reflect – Document troubleshooting, AI use, and learning-skill growth (curiosity, courage, tenacity, thoroughness, open-mindedness) through short memos embedded in the workflow.
+
+# Setting Up Your Notes
+
+To begin Wildfire guided activity, follow these steps:
+
+1. Open your course project for RStudio 
+
+For those of you who **have GitHub** and a course project, navigate to your course folder and open your course project. This will open RStudio. Click "Pull" in the Git pane to get the latest version of the course materials. After completing work, save, stage, commit, and push.
+
+If you **don't have GitHub** or a course project, just open RStudio and set your working directory to your course folder.
+
+2. Download `Fire-Assignment-PartA-StudentCopy.qmd` and save it in your course folder. 
+
+3. Download `whp_raw_sample.csv` and save it in your course folder next to `Fire-Assignment-PartA-StudentCopy.qmd`.
+
+4. Edit the YAML to show your name. 
+
+5. Follow along
+
+Read the background material below, then complete the tasks that follow. Replace each ____ placeholder (and any TODO comments) with working code or a short written answer. Run each section; be sure the requested objects appear in the Environment. 
+
+Use the template 🎯 Goal → ⚡ Code → ✅ Checks → 🗣 Comment to met the Complete criteria
+
+1. 🎯 **Goal** – In your own words, one sentence about what you are trying to do.
+
+2. ⚡ **Code** – Code that completes the task (replace each `____` with your own code).
+
+3. ✅ **Checks** – Code that convinces you your solution works (structure, counts, summaries, etc.).
+
+4.  🗣 **Comment** – 1–2 sentences either:
+  - data-focused (what you learned about the wildfire data), **or**
+  - code-focused (what the code does / why it works).
+
+**Supporting**
+
+- 📝 Format your document with headings, code chunks, and narrative text. Use proper grammar, spelling, and punctuation. Include a document title, author name, and 🕰 date in the heading of your report.
+
+- 👀 Cite resources (including referencing lessons, peers, instructor guidance, internet websites, AI summaries, the help file in R) in memos. State specifically what or who helped and in what ways. Always compose your own code (no copy and paste). 
+
+- 🚀 Code trials show how you explored ideas, asked questions independently of the assignment. Include code comments to explain your thinking.
+
+- 🪞 Reflect on learning process, connects ideas, discusses challenges, and describes improvement strategies.
+
+- 🧠 Growth mindset means you demonstrate effort, persistence, and a positive attitude toward learning new skills. You show courage.  
+
+- 💬 Prediction means you make hypotheses about what the code will do or what the data will look like before running it, and then reflect on whether your predictions were correct.
+
+- ✍️ Record what you tried, even if it didn’t work. This is proof of thoroughness and trustworthiness, prevents future duplication of errors, contextualizing successes, and exposes hidden discoveries (unanticipated effect).
+
+## Dataset
+
+Wildfire managers need tools that show where fires are more likely and how intense they could become. The U.S. Forest Service’s Wildfire Hazard Potential (WHP) is one such tool: a nationwide raster layer where each grid cell stores a unitless index of relative wildfire hazard (higher value = higher hazard). For this activity we use an Idaho-only WHP file prepared by Dr. Matt Williamson [SPASES Lab Page](https://www.spaseslab.com/). 
+
+Figure 1 shows the Idaho WHP raster created in R with the packages `terra` (raster operations), `sf` (vector data), `tidyverse` (data wrangling), `tidyterra` (ggplot helpers for rasters), and `tigris` (state/county boundaries). The GeoTIFF uses an Albers Equal Area projection (units: meters) with 240 × 240 m cells. Within Idaho, valid cells cover about 216,315 km²; cells outside the state within the file’s bounding box are NoData. WHP values in this subset range from 0 to 64,185.656; the median is about 397, and the upper tail is steep (e.g., 95th percentile ≈ 7,753, 99th ≈ 22,429). 
+
+**Formal dataset citation**
+
+Dillon, Gregory K.; Gilbertson-Day, Julie W. 2020. Wildfire Hazard Potential for the United States (270-m), version 2020. 3rd Edition. Forest Service Research Data Archive. [https://doi.org/10.2737/RDS-2015-0047-3](https://doi.org/10.2737/RDS-2015-0047-3).
+
+Idaho subset (whp_id.tif) prepared and provided by Matt Williamson, SPASES Lab, Boise State University.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, results = 'hide', fig.cap='Idaho Wildfire Hazard Potential (WHP), continuous index (unitless) from the USFS WHP v2020 raster, clipped to the Idaho boundary. Colors use a viridis gradient (dark purple = lower WHP; yellow = higher WHP); values span approximately 0–64,186. Raster resolution is 240 m in an Albers Equal Area projection; NoData cells are transparent. Red outline shows the TIGER/Line state boundary reprojected to the raster CRS. Idaho subset prepared by Matt Williamson (SPASES Lab, Boise State University); original dataset: Dillon & Gilbertson-Day (2020), USFS Research Data Archive (DOI: 10.2737/RDS-2015-0047-3).'}
+## **First Install R Packages: 'terra', 'tidyterra', 'tigris'
+library(terra)
+library(tidyverse)
+library(sf)
+library(tidyterra)
+library(tigris)
+
+terraOptions(progress = 0)           # terra: no text progress
+options(tigris_use_cache = TRUE)     # tigris: avoid re-download chatter
+
+
+whp_idaho <- rast("whp_id.tif") 
+
+
+state_bounds <- states() %>% ## download state cartographic boundaries form the TIGER shapefiles
+  filter(STUSPS %in% c("ID")) %>% ##filter for the ID state boundary
+  st_transform(., crs = crs(whp_idaho)) ## reproject to the raster projection
+
+plot_whp <- ggplot() + #open the ggplot environment
+  geom_spatraster(data = whp_idaho, mapping = aes(fill = WHP_ID)) + #use tidyterra to convert the data to an object that can be used in the geom
+  geom_sf(data = state_bounds, fill = "transparent", color = "red", lwd = 0.5) + #add the state boundaries
+  scale_fill_viridis_c(option = "C", na.value = "transparent") + #change the colorramp for the data and plot NA as transparent
+  theme_bw() #use a nicer theme
+plot_whp
+
+# a raster of wildfire hazard potential for Idaho
+
+```
+
+```{r eval=FALSE, message=FALSE, warning=FALSE, include=FALSE}
+# --- Assumes the packages in your script are already loaded ---
+# terra, tidyverse, sf, tidyterra, tigris
+
+# Alias for clarity
+whp <- whp_idaho
+
+# 1) BASIC METADATA -----------------------------------------------------------
+meta_tbl <- tibble(
+  name        = names(whp),
+  n_layers    = terra::nlyr(whp),
+  n_cells     = terra::ncell(whp),
+  is_factor   = is.factor(whp),
+  has_levels  = !length(terra::levels(whp)),  # should be FALSE now
+  crs_wkt     = terra::crs(whp, proj = TRUE),
+  is_lonlat   = terra::is.lonlat(whp),
+  res_x_m     = terra::res(whp)[1],          # your file shows 240; units are meters
+  res_y_m     = terra::res(whp)[2],
+  xmin        = terra::ext(whp)[1],
+  xmax        = terra::ext(whp)[2],
+  ymin        = terra::ext(whp)[3],
+  ymax        = terra::ext(whp)[4],
+  value_units = "WHP index (unitless)",
+  description = "Wildfire Hazard Potential (continuous index); Idaho subset"
+)
+```
+
+
+```{r eval=FALSE, message=FALSE, warning=FALSE, include=FALSE}
+# 2) SUMMARY STATS & QUANTILES -----------------------------------------------
+basic_stats <- terra::global(whp, fun = c("min","max","mean","sd"), na.rm = TRUE) |>
+  as_tibble() |>
+  mutate(across(everything(), as.numeric))
+
+probs <- c(0, .01, .05, .10, .25, .50, .75, .90, .95, .99, 1)
+
+
+vals <- terra::values(whp, mat = FALSE, na.rm = TRUE)
+quant_tbl <- tibble(
+  prob  = probs,
+  value = as.numeric(stats::quantile(vals, probs = probs, na.rm = TRUE))
+)
+```
+
+
+```{r eval=FALSE, message=FALSE, warning=FALSE, include=FALSE}
+# 3) AREA-WEIGHTED DECILES (robust to terra column names) ---------------------
+deciles <- seq(0, 1, 0.1)
+edges   <- as.numeric(stats::quantile(vals, probs = deciles, na.rm = TRUE))
+
+whp_decile <- terra::app(
+  whp,
+  fun = function(v) as.integer(cut(v, breaks = edges, include.lowest = TRUE, labels = FALSE))
+)
+names(whp_decile) <- "decile"
+
+# cell areas in km^2
+area_km2_rast <- terra::cellSize(whp, unit = "km")
+
+# Sum area by decile
+area_by_decile <- terra::zonal(area_km2_rast, whp_decile, fun = "sum", na.rm = TRUE) |>
+  as_tibble(.name_repair = "minimal")
+names(area_by_decile)[1:2] <- c("decile", "area_km2")  # <— robust renaming
+
+area_by_decile <- area_by_decile |>
+  mutate(area_acres = area_km2 * 247.105381,
+         area_pct   = round(100 * area_km2 / sum(area_km2), 3))
+
+# Add WHP range per decile (robust renaming again)
+min_by_dec <- terra::zonal(whp, whp_decile, fun = "min", na.rm = TRUE) |>
+  as_tibble(.name_repair = "minimal"); names(min_by_dec)[1:2] <- c("decile","whp_min")
+max_by_dec <- terra::zonal(whp, whp_decile, fun = "max", na.rm = TRUE) |>
+  as_tibble(.name_repair = "minimal"); names(max_by_dec)[1:2] <- c("decile","whp_max")
+
+decile_table <- area_by_decile |>
+  left_join(min_by_dec, by = "decile") |>
+  left_join(max_by_dec, by = "decile") |>
+  mutate(whp_range = paste0(whp_min, "–", whp_max)) |>
+  select(decile, whp_range, area_km2, area_acres, area_pct) |>
+  arrange(decile)
+
+```
+
+
+```{r eval=FALSE, message=FALSE, warning=FALSE, include=FALSE}
+# 4) AREA WITH MISSING DATA (if any) -----------------------------------------
+na_area_km2 <- {
+  na_r <- terra::ifel(is.na(whp), area_km2_rast, NA)
+  as.numeric(terra::global(na_r, "sum", na.rm = TRUE)[1,1])
+}
+na_tbl <- tibble(area_km2 = na_area_km2,
+                 area_acres = na_area_km2 * 247.105381)
+
+# 5) OPTIONAL: COUNTY-LEVEL MEANS (Idaho) ------------------------------------
+id_counties <- tigris::counties(state = "ID", cb = TRUE) |>
+  sf::st_transform(crs = terra::crs(whp))
+county_v <- terra::vect(id_counties)
+
+county_mean <- terra::extract(whp, county_v, fun = mean, na.rm = TRUE) |>
+  as_tibble() |>
+  bind_cols(sf::st_drop_geometry(id_counties) |> select(COUNTYFP, NAME)) |>
+  rename(mean_whp = 2, county_fips = COUNTYFP, county = NAME) |>
+  arrange(desc(mean_whp))
+
+# 6) WRITE TABLES -------------------------------------------------------------
+readr::write_csv(meta_tbl,      "whp_idaho_metadata.csv")
+readr::write_csv(basic_stats,   "whp_idaho_basic_stats.csv")
+readr::write_csv(quant_tbl,     "whp_idaho_quantiles.csv")
+readr::write_csv(decile_table,  "whp_idaho_area_by_decile.csv")
+readr::write_csv(county_mean,   "whp_idaho_county_mean.csv")
+readr::write_csv(na_tbl,        "whp_idaho_missing_area.csv")
+
+
+library(terra)
+library(sf)
+library(tigris)
+library(dplyr)
+library(readr)
+
+# --- 1) Sample raw WHP values (random, non-NA) -------------------------------
+set.seed(2025)
+N <- 150000
+
+samp_pts <- terra::spatSample(
+  whp_idaho,
+  size      = N,
+  method    = "random",
+  na.rm     = TRUE,
+  as.points = TRUE,
+  values    = TRUE      # attaches WHP_ID attribute to the points
+)
+
+# --- 2) Add county attributes to each sampled point --------------------------
+id_counties <- tigris::counties(state = "ID", cb = TRUE) |>
+  sf::st_transform(crs = terra::crs(whp_idaho))
+
+# spatial join (point -> county); keep only county name & FIPS
+pts_sf   <- sf::st_as_sf(samp_pts)
+pts_join <- sf::st_join(
+  pts_sf,
+  id_counties[, c("NAME","COUNTYFP")],
+  left     = TRUE,
+  largest  = TRUE
+)
+
+# --- 3) Optional: add per-cell area (km^2) as a weight -----------------------
+# (Equal-area CRS + uniform cell size => constant ~0.0576 km^2, but we compute it explicitly)
+area_km2_rast <- terra::cellSize(whp_idaho, unit = "km")
+cell_area_km2 <- terra::extract(area_km2_rast, samp_pts, ID = FALSE)[,1]
+
+# --- 4) Build the RAW tibble (no bins, no summaries) -------------------------
+whp_raw_labeled <- pts_join |>
+  sf::st_drop_geometry() |>
+  transmute(
+    whp          = WHP_ID,          # unitless WHP index
+    county       = NAME,            # county name
+    county_fips  = COUNTYFP,        # 3-digit county FIPS (Idaho state code = 16)
+    cell_area_km2 = cell_area_km2   # area weight per row (useful for probabilities)
+  )
+
+# Save for students (raw data only)
+write_csv(whp_raw_labeled, "whp_raw_sample.csv")
+
+head(whp_raw_labeled)
+```
+
+
+# Part A
+
+Explore and wrangling of the raw WHP sample data. 
+
+## Task 1
+
+**Load Data**
+
+Task instructions:
+
+1. Use **`readr`** to read the file `whp_raw_sample.csv` from your working directory.  
+
+2. Store the result in an object named **`county_raw`** in your Environment.  
+
+3. Run at least two **structural checks** to make sure the data imported correctly (for example: number of rows, variable names, a summary of key columns).  
+
+4. Write a short comment describing what kind of dataset `county_raw` is (size, what a row represents, high-level purpose).
+
+🎯 **Goal.** Write your own one-sentence goal here (e.g., what you want to load and understand).
+
+```{r eval=FALSE, message=FALSE, warning=FALSE}
+#⚡ Code: readr::read_csv
+____ # 1. e.g., load any needed package(s)
+____ # 2. e.g., read the CSV into county_raw
+```
+
+```{r eval=FALSE, message=FALSE, warning=FALSE}
+# ✅  Explore Data
+____ # 3. e.g., structure or glimpse of county_raw
+____ # e.g., check column names or a summary of whp / cell_area_km2
+```
+
+🗣 Comment (TODO).
+In 1–2 sentences, describe what county_raw represents (rows, key columns, why it might be useful).
+
+___
+
+### **Column meanings**
+
+**whp** – The Wildfire Hazard Potential value for a single sampled raster cell. This is a unitless, continuous index (higher = greater relative hazard). Values come directly from the WHP GeoTIFF.
+
+**county** – The county name (e.g., “Idaho”, “Twin Falls”) obtained by spatially joining each sampled cell to the TIGER/Line county boundary. Use for readable reports.
+
+**county_fips** – The county’s 3-digit FIPS code from TIGER/Line. *Option: To create the standard 5-digit FIPS for Idaho, prepend the state code 16: e.g., 049 → 16049. Need to use the 5-digit code when joining to external datasets (ACS, MTBS summaries, etc.).*
+
+**cell_area_km2** – The area (in square kilometers) represented by that raster cell, computed from the raster’s equal-area projection. With 240 m × 240 m cells this is ~0.0576 km²; small numeric differences reflect rounding. Summing this column by any grouping yields true area totals, and dividing by the statewide sum yields area shares.
+
+___
+
+## Task 2
+
+**Basic data audit summaries**
+
+Task instructions:
+
+1. Using `dplyr::summarize()` (or base R equivalents), compute and report the following for county_raw:
+
+- Total number of rows.
+
+- Number of missing values in `whp`.
+
+- Minimum value of `cell_area_km2`.
+
+- Maximum value of `cell_area_km2`.
+
+2. Store the summary tibble (or data frame) in a clearly named object (e.g., `county_summary`).
+
+🎯 Goal. Write your own one-sentence goal about what you are summarizing.
+
+```{r eval=FALSE, message=FALSE, warning=FALSE}
+# ⚡ Code: summarize key audit quantities for county_raw
+____ # 1/2. assign county_summary and use county_raw
+____ # 1. compute n_rows
+____ # 1. compute n_na_whp
+____ # 1. compute min_area
+____ # 1. compute max_area
+```
+
+✅ Checks: print the summary object and confirm the summary makes sense.
+
+🗣 Comment (TODO).
+In 1–2 sentences, interpret what these numbers say about the dataset quality or structure (missingness, range of area, etc.).
+
+## Task 3
+
+**Compute WHP quantile edges** (category cut points)
+
+Task instructions
+
+1. Use `stats::quantile()` on the `whp` column of `county_raw` to compute the quantiles for `prob` using `0, 0.25, 0.50, 0.75, 0.90, 0.95, 0.99, 1.00`.
+
+2. Store the result in an object named `e` (for “edges”).
+
+3. Use` na.rm = TRUE` so missing values are ignored.
+
+4. Look at `e` and make sure it has 8 ordered values that look reasonable for a right-skewed variable.
+
+📜 The SYNTAX: quantile(x, probs, na.rm)
+
+🎯 Goal.
+Write your own goal explaining quantiles/edges goal.
+
+```{r eval=FALSE, message=FALSE, warning=FALSE}
+# ⚡ Code: Base R stats::quantile 
+____ # 2. store WHP quantile edges in object e
+____ # 1. call quantile() on county_raw's whp column
+____ # 1. specify the probs vector
+____ # 3. include remove NA from calculation
+```
+
+```{r eval=FALSE, message=FALSE, warning=FALSE}
+# ✅  Verify
+____ # print e
+```
+
+🗣 Comment (TODO).
+In 1–2 sentences, describe what `e` represents and how these cut points will be used in later tasks.
+
+Task 3 might have been challenging! Consider other kinds of memos: 🪞 Reflect; 🧠 Growth mindset; 👀 Cite resources; 🚀 Code trials; ✍️ Record what you tried.
+
+___
+
+✅  Verify Option: Each element corresponds to a specific percentile:
+
+- `e[1]` = minimum WHP (0th percentile)
+
+- `e[2]` = 25th percentile
+
+- `e[3]` = 50th percentile (median)
+
+- `e[4]` = 75th percentile
+
+- `e[5]` = 90th percentile
+
+- `e[6]` = 95th percentile
+
+- `e[7]` = 99th percentile
+
+- `e[8]` = maximum WHP (100th percentile)
+
+
+___
+
+## Task 4
+
+**Add a categorical WHP risk label**
+
+Task instructions:
+
+1. Start from `county_raw`, create a new data frame called `county_cats`.
+
+2. Use `dplyr::mutate()` and `dplyr::case_when()` to add a new variable `Category` that assign a label based on `whp` and the edges in `e`.
+
+3. Use the following intervals (closed on the left (>=), open on the right (<), except the last, which is closed on both sides (>=; <=)):
+
+- If a row’s `whp` value is *at least* the minimum WHP AND *less than* the 25th percentile, label it "Very Low".
+
+- If `whp` is *at least* the 25th percentile AND *less than* the 50th percentile (median), label it "Low".
+
+- If `whp` is *at least* the 50th percentile AND *less than* the 75th percentile, label it "Moderate".
+
+- If `whp` is *at least* the 75th percentile AND *less than* the 90th percentile, label it "High".
+
+- If `whp` is *at least* the 90th percentile AND *less than* the 95th percentile, label it "Very High".
+
+- If `whp` is *at least* the 95th percentile AND *less than* the 99th percentile, label it "Extreme".
+
+- If `whp` is *at least* the 99th percentile AND *less than or equal to* the maximum WHP, label it "Ultra (Top 1%)".
+
+- If a value of `whp` does not fall in any of these ranges (e.g., `NA`), `Category` should be `NA`.
+
+4. Convert `Category` to an **ordered factor** so the levels follow the intended risk order.
+- `"Very Low"`, `"Low"`, `"Moderate"`, `"High"`, `"Very High"`, `"Extreme"`, `"Ultra (Top 1%)"`.
+
+🎯 Goal.
+Write your own sentence(s) goal for turning numeric WHP into ordered risk categories.
+
+
+```{r eval=FALSE, message=FALSE, warning=FALSE}
+# ⚡ Code:  dplyr::mutate + dplyr::case_when
+____ # 1. assign county_cats and pipe county_raw into it 
+____ # 2. use mutate() to create Category 
+____ # 3. with case_when() and e[ ] bounds
+____ # 4. convert Category to an ordered factor with the specified levels
+```
+
+```{r eval=FALSE, message=FALSE, warning=FALSE}
+# ✅  Verify: confirm Category looks right
+____ # e.g., count() or table()
+____ # optional: str() or glimpse()
+```
+
+🗣 Comment (TODO).
+Either: (a) explain briefly how the `case_when` logic translates WHP into categories, or (b) interpret what the distribution of categories says about Idaho’s wildfire hazard.
+
+Task 4 might have been challenging! Consider other kinds of memos: 🪞 Reflect; 🧠 Growth mindset; 👀 Cite resources; 🚀 Code trials; ✍️ Record what you tried.
+
+## Task 5
+
+**Aggregate area and compute category probabilities**
+
+1. Start from `county_cats`
+
+2. Use `dplyr::group_by()` with `Category`.
+
+3. Use `summarize()` to compute, for each `Category`:
+
+- `area_km2` equals the sum of `cell_area_km2`.
+
+- `n_cells` equals the number of grid cells using `n()`.
+
+- Use `.groups = "drop"` so that the result is ungrouped.
+
+4. Use `dplyr::mutate()` to create a new variable called `Probability` that is the `area_km2` divided by `sum(area_km2)`.
+
+5. Use `dplyr::select()` to keep only `Category`, `Probability`, `area_km2`, `n_cells` in this order.
+
+🎯 Goal.
+Write your own one-sentence goal for summarizing WHP categories into areas and probabilities.
+
+```{r , eval=FALSE, message=FALSE, warning=FALSE}
+# ⚡ Code: dplyr::group_by + dplyr::summarize + dplyr::mutate
+____ # 1. store prob_tbl and pipe county_cats into it
+____ # 2. group_by()
+____ # 3. summarize()
+____ # 4. mutate())
+____ # 5. select()
+```
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+# ✅  Verify: validate prob_tbl
+____ # print prob_tbl
+____ # check that probabilities sum to ~1
+```
+
+🗣 Comment (TODO).
+In 1–2 sentences, describe what `prob_tbl` tells you about the share of Idaho’s area in each hazard category and how that connects to “probability of a random ignition’s category.”
+
+# ---

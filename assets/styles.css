@@ -1,0 +1,212 @@
+/* For HTML */
+/* General Styles */
+body {
+    font-family: 'Garamond', serif;
+    line-height: 1.6;
+    margin: 0 20px;
+    color: #333333; /* Darker than #535455 */
+    text-align: justify; /* Justify text margins */
+    font-size: 18px; /* Increase body text size */
+}
+
+/* Darker comments in code chunks (Pandoc + highlight.js + Pygments) */
+pre.sourceCode code span.co,
+code.sourceCode span.co,
+pre code span.co,          /* Pandoc */
+pre code .hljs-comment,    /* highlight.js */
+pre code .c,               /* Pygments generic comment */
+pre code .c1,              /* Pygments single-line */
+pre code .cm,              /* Pygments multi-line */
+pre code span.comment {    /* Legacy/other */
+  color: #333 !important;  /* go darker if you want: #222 or #000 */
+  font-style: italic;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Gotham', sans-serif;
+    color: #0033A0; /* Boise State Blue */
+}
+
+a {
+    color: #D64309; /* Boise State Orange */
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+code {
+    background-color: #f4f4f4;
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-family: "Courier New", Courier, monospace;
+}
+
+pre {
+    background-color: #f4f4f4;
+    padding: 10px;
+    border-radius: 5px;
+    overflow-x: auto;
+}
+
+/* Rhomboid Banner Styles */
+header {
+    width: 75%; /* Control the width of the header */
+    height: 200px; /* Increase the height to accommodate the h1 */
+    background-color: #0033A0; /* Boise State Blue */
+    color: #ffffff; /* White text */
+    margin: 50px auto; /* Adjust margin for the skew effect */
+    overflow: hidden; /* Prevent content overflow due to skew */
+    position: relative;
+    z-index: 1; /* Ensures the header appears above other content */
+    transform: skew(-35deg); /* Apply a steeper skew to create the rhomboid shape */
+    display: flex;
+    align-items: center; /* Center the wrapper vertically */
+    justify-content: flex-start; /* Align the wrapper to the left */
+}
+
+/* Inner Wrapper to Prevent Text Skewing */
+.header-wrapper {
+    transform: skew(35deg); /* Reverse the skew for content inside */
+    padding-left: 80px; /* Adjust padding to align with the top left corner */
+    text-align: left; /* Align text to the left */
+    width: 100%; /* Ensure the wrapper takes the full width */
+    height: auto; /* Allow height to adjust to the content */
+    display: flex;
+    flex-direction: column; /* Stack the text vertically */
+    justify-content: center; /* Vertically center the content */
+}
+
+header h1 {
+    margin: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: #ffffff; /* Ensure h1 has the same color as the other text */
+    font-family: 'Gotham', sans-serif; /* Use Gotham font */
+    text-transform: uppercase; /* Transform text to uppercase */
+    font-weight: bold; /* Make the text bold */
+    font-size: 36px; /* Adjust font size as needed */
+    height: 50px; /* Set an explicit height */
+    visibility: visible; /* Ensure the h1 is visible */
+    display: block; /* Ensure the h1 is displayed */
+}
+
+header p {
+    margin: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: #ffffff; /* Ensure p tags have consistent color */
+    font-family: 'Gotham', sans-serif; /* Use Gotham font */
+    visibility: visible;
+    display: block;
+}
+
+/* Optional: Adding shadow for better visibility */
+header:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -1000px;
+    width: 2000px; 
+    height: 200px; /* Match the header height */
+    background-color: #0033A0; /* Boise State Blue */
+    z-index: -1;
+    transform: skew(35deg); /* Match the skew angle */
+}
+
+/* Orange Rectangle */
+.orange-rectangle {
+    position: absolute;
+    bottom: 0px; /* Adjust to move the rectangle vertically */
+    right: 0px; /* Adjust to move the rectangle horizontally */
+    background-color: #D64309; /* Boise State Orange */
+    color: #ffffff; /* White text */
+    padding: 5px 40px; /* Adjust padding for size */
+    font-family: 'Gotham', sans-serif; /* Matching the banner font */
+    text-transform: uppercase; /* Make text uppercase */
+    border-radius: 0px; /* Set border radius to 0 for sharp edges */
+    transform: skew(35deg); /* Apply skew to the entire rectangle */
+    transform-origin: top right; /* Ensure skew starts from the top right */
+    z-index: 2; /* Ensure it appears above other elements */
+}
+
+/* Footer Styles */
+footer {
+    width: 100%; /* Full width */
+    background-color: #0033A0; /* Boise State Blue */
+    color: #ffffff; /* White text */
+    padding: 20px 0; /* Padding for some spacing inside the footer */
+    text-align: center; /* Center the text */
+    position: relative;
+    z-index: 1; /* Ensure the footer appears above other elements */
+}
+
+.footer-wrapper {
+    width: 75%; /* Control the width of the content inside */
+    margin: 0 auto; /* Center the content horizontally */
+    font-family: 'Gotham', sans-serif; /* Matching the font used in the header */
+    font-size: 14px; /* Set a standard font size for the footer text */
+}
+
+footer p {
+    margin: 5px 0; /* Add some margin between the paragraphs */
+}
+
+/* Table of Contents */
+#TOC.tocify {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 5px;
+    font-family: 'Garamond', serif !important; /* Change font to Garamond */
+}
+
+#TOC.tocify .tocify-item {
+    display: block;
+    padding: 5px 0;
+    color: #D64309 !important; /* Change color to Boise State Orange */
+    text-decoration: none;
+    font-family: 'Garamond', serif !important; /* Change font to Garamond */
+}
+
+#TOC.tocify .tocify-item:hover {
+    background-color: #e9e9e9;
+}
+
+/* Highlighting Current Section */
+#TOC.tocify .tocify-item.active {
+    background-color: #D64309 !important; /* Boise State Blue */
+    color: #ffffff !important; /* White text for contrast */
+}
+
+/* Highlighting Next Section */
+#TOC.tocify .tocify-item.next {
+    background-color: #D64309 !important; /* Boise State Orange */
+    color: #ffffff !important; /* White text for contrast */
+}
+
+/* Tabbed Sections - Active Tab */
+.tabset > .tabset-pills > .nav > li.active > a,
+.tabset > .nav > li.active > a {
+    background-color: #D64309 !important; /* Boise State Orange for active tab */
+    color: #ffffff !important; /* White text for active tab */
+    font-family: 'Garamond', serif !important; /* Change font to Garamond */
+}
+
+/* Tabbed Sections - Inactive Tabs */
+.tabset > .tabset-pills > .nav > li > a,
+.tabset > .nav > li > a {
+    color: #0033A0 !important; /* Boise State Blue for inactive tabs */
+    font-family: 'Garamond', serif !important; /* Change font to Garamond */
+    background-color: #e9e9e9 !important; /* Light background for inactive tabs */
+    border-color: #e9e9e9 !important; /* Ensure border matches background for clean look */
+}
+
+/* Tabbed Sections - Hover Effect */
+.tabset > .tabset-pills > .nav > li > a:hover,
+.tabset > .nav > li > a:hover {
+    background-color: #535455 !important; /* Darker grey on hover */
+    color: #ffffff !important; /* White text on hover */
+}
+

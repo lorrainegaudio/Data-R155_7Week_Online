@@ -1,0 +1,187 @@
+---
+title: "Chapter 12 misc"
+author: "Lorraine Gaudio"
+date: "2026-03-17"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Overwrite with Factors
+
+🎯 Goal: Take a 100-row sample from `movielens`, then overwrite the numeric `rating` column with an ordered factor: "Bad" if `< 4`, "Good" if `>= 4`, using `case_when()` inside `mutate()`.
+
+💬 Prediction: Before: `rating` is numeric. After: `rating` is an ordered factor with levels `Bad < Good`. Row count stays 100; no `NA`s created.
+
+📜 SYNTAX reminder:
+`mutate(data, new_col = case_when(cond1 ~ value1, cond2 ~ value2, TRUE ~ default))`
+
+`name_data <- data %>% mutate(new_col = case_when(cond1 ~ value1, cond2 ~ value2, TRUE ~ default))`
+
+```{r , eval=FALSE}
+data("movielens")
+?movielens
+```
+
+```{r , eval=FALSE}
+set.seed(99)
+
+# Sample 100 movies from the movielens dataset
+smaller_movies <- movielens %>% 
+  sample_n(100) %>% 
+  select(title, rating)
+
+head(smaller_movies)
+```
+
+```{r , eval=FALSE}
+# ✅ Checks (before)
+names(smaller_movies)                # expect "title", "rating"
+class(smaller_movies$rating)         # expect "numeric"
+summary(smaller_movies$rating)       # quick distribution check
+```
+
+🎯 Goal: We'll apply `mutate()` to `smaller_movies` to recode the rating column to "Good" or "Bad".
+
+```{r , eval=FALSE}
+# ⚡ Overwrite numeric rating with an ordered factor via case_when()
+movies_overwrite <- smaller_movies %>%
+  mutate(
+    rating = factor(
+      case_when(
+        rating >= 4 ~ "Good",
+        rating < 2 ~ "Bad",
+        TRUE        ~ "Ok"
+      ),
+      levels = c("Bad", "Ok", "Good"),
+      ordered = TRUE
+    )
+  )
+```
+
+
+```{r , eval=FALSE}
+# ✅ Checks (after)
+names(movies_overwrite)              # still "title", "rating"
+```
+
+
+```{r , eval=FALSE}
+# ✅ Checks (after)
+is.ordered(movies_overwrite$rating)  # expect TRUE
+```
+
+
+```{r , eval=FALSE}
+# ✅ Checks (after)
+levels(movies_overwrite$rating)      # expect "Bad", "Ok", "Good"
+```
+
+
+```{r , eval=FALSE}
+# ✅ Checks (after)
+table(movies_overwrite$rating)       # counts in each level
+```
+
+🗣 Comment: Overwriting keeps the column name but replaces its contents and type (numeric → ordered factor). 
+
+🪞 Metacognition: `case_when()` reads cleaner than nested `ifelse()` for multi-branch recodes and makes me specify a default. In the future, I could keep the original numeric ratings (e.g., `rating_num`) and add a new labeled column instead of overwriting, to preserve provenance.
+
+
+```{r , eval=FALSE}
+# ⚡ Overwrite numeric rating with an ordered factor via case_when()
+movies_rename <- smaller_movies %>%
+  mutate(
+    rating_words = factor(
+      case_when(
+        rating >= 4 ~ "Good",
+        rating < 2 ~ "Bad",
+        TRUE        ~ "Ok"
+      ),
+      levels = c("Bad", "Ok", "Good"),
+      ordered = TRUE
+    )
+  )
+```
+
+### Bonus Example
+
+🎯 Goal: Create a new column rating_label in smaller_movies using `case_when()` that labels ratings `>= 4` as "Good" and the rest as "Bad". Keep the original numeric rating column.
+
+💬 Prediction: After running, the data will still have 100 rows, keep both `title` and `rating`, and add `rating_label` (character or factor). No `NA`s should appear.
+
+```{r , eval=FALSE}
+# ✅ Checks (before)
+names(smaller_movies)                # expect "title", "rating"
+class(smaller_movies$rating)         # expect "numeric"
+```
+
+```{r , eval=FALSE}
+# ⚡ Add a NEW column using case_when()
+smaller_movies %>%
+  mutate(
+    rating_label = case_when(
+      rating >= 4 ~ "Good",
+      TRUE        ~ "Bad"
+    )
+  ) -> movies_newcol
+```
+
+🧐 NOTICE: What is happening here `-> movies_newcol`?
+
+🛠Break Things! How can you reorganize this script? 
+
+```{r , eval=FALSE}
+# ✅ Checks (after)
+names(movies_newcol)                 # expect "title", "rating", "rating_label"
+class(movies_newcol$rating)          # expect "numeric"
+class(movies_newcol$rating_label)    # expect "character" or "factor"
+```
+🗣 The code used -> movies_newcol, which assigns right-to-left.
+
+🛠 Break Things! What happens with `head(movies_newcol) -> movies_newcol`?
+
+🪞 Metacognition: I’ll stick with the usual `<-` to make my code easier to read
+
+## Calculations
+
+🚗 Using `mtcars`, let's create a column `l_per_100km` that converts from US units (miles per gallon) to metric units (liters per 100km). 235.215 is the conversion factor between these units
+
+🎯 Goal: Identify the most fuel-efficient car in L/100 km terms.
+
+💬 Prediction: The new column `l_per_100km` will be added to `mtcars_units`, and the most fuel-efficient car will have the lowest value in this column.
+
+
+```{r , eval=FALSE}
+# ⚡ Code
+mtcars_units <- mtcars %>%
+  mutate(l_per_100km = round(235.215 / mpg, 1))
+```
+
+```{r , eval=FALSE}
+# ✅ Check
+head(mtcars_units)
+```
+
+👀 Check‑in: Which car is most fuel‑efficient in l/100 km terms?
+
+```{r , eval=FALSE}
+# Find the most fuel-efficient (smallest L/100km)
+best_idx <- which.min(mtcars_units$l_per_100km)
+best_car <- rownames(mtcars_units)[best_idx]
+best_value <- mtcars_units$l_per_100km[best_idx]
+```
+
+```{r , eval=FALSE}
+"best car"
+best_car
+```
+
+```{r , eval=FALSE}
+"best value"
+best_value
+```
+
+🪞 Metacognition: Unit conversions are easy to keep alongside original units with `mutate()` (don’t overwrite).

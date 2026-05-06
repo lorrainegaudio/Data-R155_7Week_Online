@@ -1,0 +1,268 @@
+---
+title: "Is AI Appropriate?"
+subtitle: "🧘 Human-Centered AI"
+author: "Lorraine Gaudio"
+date:   "`r paste(format(Sys.Date(), '%B %d, %Y'))`"
+team: "Summer 2026"
+output: 
+  html_document: # To create an HTML document from R Markdown
+    toc: false # Table of contents (TOC)
+    toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactivne scrolling
+    includes:
+      in_header: ../assets/header.html
+      after_body: ../assets/footer.html
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Overview
+
+In this activity, you will learn how to make a defensible decision about when AI help supports your learning and when it replaces the learning work you need to do to build coding skill. In R, getting “working code” is not the same thing as understanding why it works and AI can easily create the illusion of competence if you copy solutions. This matters because your long-term ability to work in data analytics depends on you being able to explain and reproduce your work. You will practice a “tenacity-first” approach: attempt first, document what happened, then seek help (including AI) in a way that keeps you accountable for understanding and verification.
+
+By the end of this activity, you will be able to:
+
+1. ⚖️ Distinguish between AI help and AI replacement in an R learning workflow;
+
+2. 🧗 Apply the Tenacity-First AI rule: attempt → document → ask → verify;
+
+3. 🚦 Evaluate whether AI use is appropriate, inappropriate, or conditional in realistic coding scenarios;
+
+4. 🎨 Create an original vignette that gives classmates enough context to evaluate AI use;
+
+5. 🔍 Propose a verification plan for checking AI-supported code, explanations, or debugging advice.
+
+# AI, Tenacity, and Human-Centered Learning
+
+In this course, you are the learner and decision-maker. AI is useful, fast, and sometimes wrong. A human-centered approach means:
+
+- You stay accountable for understanding what the code is doing and for verifying results.
+
+- AI supports your thinking instead of replacing it.
+
+- Learning is the product. Getting “working code” is not the same as learning how to produce it.
+
+When students use AI tools, they often engage in cognitive delegation: transferring mental labor (planning, interpreting, writing, debugging) to an artificial system. Delegation is not automatically bad. It becomes a problem when it prevents you from doing the mental work that builds skill.
+
+Tenacity and AI belong together: tenacity tells you when to persist, when to recalibrate, and when to seek help. AI is one possible form of help if you use it in a way that keeps the learning with you.
+
+## Tenacity-First AI rule
+
+**Before you ask AI**, do enough work to ask a *good* question.
+
+It’s appropriate to ask AI when you can provide:
+
+1. 🎯 Your goal (what you were trying to do)
+
+2. ⚡ The exact code you ran.
+
+3. ⚠️ The exact error message/output.
+
+4. 🧐 What you understand and do not understand.
+
+5. 🛠 What you tried to gain understanding (e.g., reading the error message, checking intermediate objects, searching documentation).
+
+If you can’t provide those details, you don’t have enough information yet to ask for help (AI or human). Do one more round of work first.
+
+AI use is not appropriate (1) when you are using it to avoid thinking, (2) avoid experimenting yourself, or (3) avoid reading and interpreting the error message.
+
+**After AI**, you must verify. 
+
+- rerun from the top of the script (or restart and rerun),
+
+- print or check the intermediate objects,
+
+- compare the AI suggestion with the chapter content,
+
+- explain your understanding in your own words
+
+## AI Help and Harm
+
+**AI is usually helpful when you use it as:**
+
+- A translator (turning an error message into plain English)
+
+- A debugging coach (suggesting systematic checks)
+
+- A concept tutor (explaining why something works)
+
+- A practice generator (creating additional examples for you to try)
+
+- A prompt for reflection (asking you questions that help you reason)
+
+**AI is usually harmful when you use it as:**
+
+- A replacement for your attempt
+
+- A copy-paste generator you run without understanding
+
+- A shortcut around practice
+
+- A confidence crutch (“I can’t do this, let the AI do it”)
+
+## Is AI appropriate here?
+
+### Vignette 1: 
+
+**“Object not found” after running code out of order**
+
+    While solving a Practice Space task, Maya runs `the_aftermath <- seven_eight - nine` and gets: 
+    Error: object 'seven_eight' not found. She feels embarrassed and immediately asks AI: “Fix my code.”
+
+**Is AI appropriate?**
+
+AI is only appropriate after Maya works through the Tenacity-First steps. This error is relatively straightforward. Tenacity-First means she first reads the error and asks: “Did I create `seven_eight` in this session?” If she doesn’t know, she checks the Environment or runs the earlier lines. If she’s still confused, AI is useful as a translator: “What does ‘object not found’ mean and what should I check first?”
+
+**Good AI use**: coaching her through a checklist.
+**Bad AI use**: having AI rewrite everything without her learning the pattern.
+
+### Vignette 2:
+
+**“Write my whole script for me”**
+
+    Jordan is tired. He asks AI: “Write the entire Module 1 script that creates objects, 
+    saves them, and prints results. Make it perfect.”
+
+**Is AI appropriate?**
+
+No. This is cognitive delegation that removes the core learning: typing code, running it, fixing errors, and noticing how objects appear in the Environment. It prevents skill-building and produces fragile learning. You’ll have code you can’t reproduce. Tenacity means doing the uncomfortable part: building the script yourself, line-by-line, and debugging.
+
+### Vignette 3:
+
+**Not getting anywhere**
+
+    Sam tries to install a package. It fails. He restarts RStudio, tries again, still fails.
+    He’s repeating the same steps and getting the same error.
+    He asks AI: “Here’s the error message ... and what I tried ... 
+    Give me a structured debugging plan.”
+
+**Is AI appropriate?**
+
+Yes. This is exactly what tenacity recommends: persist, then recalibrate. Sam has evidence, not guesses. AI can propose a decision tree (“Check internet permissions → check R version → try installing from a different repo → read the full error → restart session”) and explain the logic. Sam still must test each step and confirm results. AI is acting as a troubleshooting guide, not a replacement brain.
+
+___
+
+Use AI when it keeps you thinking, speeds up understanding, and helps you debug systematically. Avoid AI when it replaces the struggle that produces learning. Tenacity is not “do everything alone.” Tenacity is “do the learning work, then seek the right help in the right way.”
+
+# Discussion Activity
+
+Your main goal is to create one original vignette in Task 3 that a reader could use to make a defensible “AI appropriate?” decision.
+
+Tasks 1–2 are warm-ups. They give you language, examples, and decision rules you can reuse when you write your vignette.
+
+**How to work**
+
+1. **Review Tasks 1–2:** Skim the scenarios and jot short notes. Keywords are fine.
+
+2. **Identify decision rules:** Use Tasks 1–2 to identify 2–3 decision rules that help distinguish appropriate AI help from inappropriate AI replacement.
+
+3. **Complete the main task:** Use ideas from Tasks 1 and 2 to complete Task 3. Compose a vignette, evaluate whether AI is appropriate, and revise your condition/limit until it is specific enough for someone else to follow.
+
+4. **Write up:** Prepare your Task 3 vignette using the template. Keep it brief and focused. This is a participation check, not an essay.
+
+## Task 1
+
+**Sorting 5 micro-scenarios**
+
+Below are five micro-scenarios. Consider each one and decide:
+
+- Is AI appropriate? yes/no/depends
+- What should the student do first?
+- How should the student use the AI tool?
+- How should they verify the result?
+
+1. “I paste my error + code + what I tried and ask AI for a checklist.”
+
+2. “I ask AI to provide feedback on my R Script after I completed it independently. I plan to revise based on feedback."
+
+3. “I ask AI what `seq(from = 0, to = 10, by = 1)` returns and why. I paste the explanation into my memo.”
+
+4. “I ask AI to generate extra practice problems.”
+
+5. “I ask AI to write the script for Chapter 2.”
+
+**Goal:** Be able to explain why each item belongs in its category.
+
+## Task 2
+
+Answer one or both of the following vignettes. Include one reason and one condition/limit.
+
+### Vignette 4: “Explain what my output means”
+
+While working through a guided activity, Priya runs code that prints a number, and she doesn’t understand why it’s that number. She asks AI:
+
+> “Explain this output step-by-step using my variable names.”
+
+**Is AI appropriate?** Write a couple sentences explaining your answer.
+
+```{r eval=FALSE, include=FALSE}
+# Yes, with one condition.
+# This is AI as a tutor. It can be useful for Priya to actively check the explanation by rerunning smaller “code trials” (printing intermediate objects and confirming each step). If she accepts the explanation without verifying, she’s delegating understanding. Tenacity means "trust, but verify."
+```
+
+### Vignette 5: “Write my reflection”
+
+Devin hits three errors in a row and feels discouraged. After using AI to help him understand and solve the errors, he asks AI:
+
+> “Write my memo about what I learned and how I showed tenacity.”
+
+Is AI appropriate? Write a couple sentences explaining your answer.
+
+```{r eval=FALSE, include=FALSE}
+# Mostly no.
+# The memo is where your learning becomes visible to you. Outsourcing it removes the reflection that turns confusion into growth. Tenacity includes emotionally appropriate persistence: naming what happened, what you tried, what worked, and what you’ll do next time.
+# What is appropriate: asking AI to generate reflection prompts (questions) you answer yourself, like: “What did the error message literally say? What did you change? What did you learn about object creation and order?”
+```
+
+## Task 3
+
+**Write your own vignette**
+
+Write a short vignette from your own experience, or invent one, using the template below. Then evaluate whether AI is appropriate. Include one reason and one condition/limit. Revise your condition/limit until it is specific enough that a reader could follow it.
+
+Vignette template
+
+```markdown
+Name: [Name of person in vignette]
+
+Context: What task was [Name] doing?
+
+Action: Provide code snippet 1–3 lines or describe the action if not code.
+
+Problem: State the error message or result.
+
+Next Action: Did [Name] try something before asking for help?
+
+AI Prompt: How does [Name] engage with AI?
+
+```
+
+## Task 4
+
+Respond to at least one other person’s vignette. 
+
+```markdown
+Evaluate: AI appropriate? (Yes/No/Depends/Unsure)
+
+Reason: Explain your evaluation.
+
+Verification plan: How could [Name] check the AI output?
+```
+
+
+# Summary
+
+Practice responsible help-seeking while you learn to code. In this course, AI is acceptable when it helps you think and it is not acceptable when it replaces the work that builds skill.
+
+Going forward, use this rule-of-thumb: attempt → document → ask → verify. If you can’t show what you tried, you’re not ready to ask for help yet. If you do ask for help, you’re still responsible for verifying the result by rerunning code, checking intermediate objects, and explaining what changed in your own words. This is how you build confidence that lasts beyond this class.
+
+
+

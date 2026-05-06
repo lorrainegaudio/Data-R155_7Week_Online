@@ -1,0 +1,570 @@
+---
+title: "Chapter 14: Chaining"
+author: "Lorraine Gaudio"
+date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
+team: "Spring 2026"
+output: 
+  html_document: # To create an HTML document from R Markdown
+    toc: false # Table of contents (TOC)
+    toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactivne scrolling
+    includes:
+      in_header: ../assets/header.html
+      after_body: ../assets/footer.html
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r eval=FALSE, include=FALSE}
+title: "Chapter 14: Chaining"
+author: "by Lorraine Gaudio"
+date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
+output: 
+  pdf_document:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+    citation_package: natbib
+    fig_caption: true
+    df_print: kable # Data frame printing
+    includes:
+      in_header: ../assets/header.tex
+    latex_engine: xelatex  # Use xelatex to support fontspec
+fontsize: 12pt
+geometry: margin=1in
+mainfont: "Garamond" # Sets the font of the entire document
+sansfont: "Gotham-Book.otf" # Set sans-serif font to Gotham Book
+monofont: "Courier New" # Set monospace font to Courier New
+documentclass: scrreprt
+linkcolor: boisestateblue # Customizes the color of hyperlinks
+urlcolor: magenta # Customizes the color of URLs
+citecolor: black # Customizes the color of citations
+bibliography: references.bib # Bibliography file
+biblio-style: apalike                 # ⟵ natbib needs a .bst style
+natbiboptions: "round,authoryear"     # round brackets, Author (Year)
+# ---
+title: "Chapter 14: Chaining"
+author: "Lorraine Gaudio"
+date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
+team: "Spring 2026"
+output: 
+  html_document: # To create an HTML document from R Markdown
+    toc: false # Table of contents (TOC)
+    toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactivne scrolling
+    includes:
+      in_header: ../assets/header.html
+      after_body: ../assets/footer.html
+```
+
+# 📖 Welcome Back to R! 
+
+In Chapters 11, 12, and 13, we explored several functions from `dplyr` (`select()`, `filter()`, `mutate()`, `case_when()`, `group_by` and `summarize()`). You now know the key dplyr verbs one at a time. This week, we'll be putting `dplyr` verbs together in  more complex pipelines. The real power comes from *chaining* them so data flows logically from raw to insight in a single readable statement.
+
+To begin Lesson 11, follow these steps:
+
+1. Open your course project for RStudio 
+   
+2. Create a new file. From the file types we have used so far, pick which file type you want to use. (File > New File > ???).
+
+3. Type in the code provided in this document as you follow along with the video. Pause the video at anytime to answer assignment questions, dig deeper or add memo notes.
+
+**Lesson Overview**
+
+By the end of Chapter 14 you will be able to:
+
+1. ⚡ Remember – List the actions of main dplyr verbs: `select()`, `filter()`, `mutate()`, `group_by()`, `summarize()`, `arrange()`.
+
+2. 🔍 Understand – Describe how the pipe `%>%` passes results step‑by‑step.
+
+3. 🛠 Apply –   Build a multi‑verb pipeline to clean and summarize data.
+
+4. 📊 Analyze –  Inspect intermediate output to verify each step.
+
+5. 🧠️ Evaluate – Decide when a single pipeline is clearer than separate objects
+
+Keep these goals in mind as you move through each section.
+
+# 📦 Packages
+
+Install once (if needed): `install.packages("dplyr")`; `install.packages("dslabs")`
+
+Load the packages at the start of every session:
+
+```{r , eval=FALSE}
+library(dslabs)  # Data science labs package
+library(dplyr)   # Data manipulation package
+```
+
+# 🛠 Building a Pipeline 
+
+🎯 The GOAL: Find the average fuel consumption (liters/100 km) for cars in `mtcars` that use greater than 8 L/100 km, broken down by transmission and cylinders.
+
+## Start with the data
+
+We'll use the built‑in `mtcars` dataset.
+
+🎯 Goal. Load mtcars and confirm shape.
+
+```{r , eval=FALSE}
+data("mtcars")
+# ⚡ Test:
+mtcars %>%                       # rows = 32 cars, many columns
+  head(2)                        # preview first two rows
+
+head(mtcars, 2)  # base R version, same output
+```
+
+🗣 Data loaded correctly
+
+## Create a new variable with `mutate()`
+
+We'll calculate fuel consumption in liters per 100 kilometers (L/100 km). The formula is:
+
+$$\frac{\text{L}}{100\text{ km}} = \frac{235.215}{\text{MPG}}$$
+
+🎯 Goal. Add `l_100km` using the equation 235.215/`mpg` and round the value to one digit.
+
+💬 Prediction. Higher mpg → lower l_100km (inverse).
+
+```{r , eval=FALSE}
+# ⚡ Test:
+mtcars %>%
+  mutate(l_100km = round(235.215 / mpg, 1)) %>%
+  head(2)
+```
+
+
+```{r}
+# ✅ Verify:
+cor(mtcars$mpg, 235.215/mtcars$mpg) < 0
+```
+
+🗣 The inverse units are verified.
+
+## Keep only cars using greater than 8 L/100 km
+
+We'll only keep cars that use *at least* 8 L/100 km. Use `filter()` to keep those rows.
+
+🎯 Goal. Keep `l_100km >= 8`.
+
+```{r , eval=FALSE}
+# ⚡ Test:
+mtcars %>%
+  mutate(l_100km = round(235.215 / mpg, 1)) %>%
+  filter(l_100km >= 8) %>%
+  head()
+```
+
+## Select relevant columns
+
+🎯 Goal. Keep `cyl`, `am`, and `l_100km` columns.
+
+```{r , eval=FALSE}
+# ⚡ Test:
+mtcars2 <- mtcars %>%
+  mutate(l_100km = round(235.215 / mpg, 1)) %>%
+  filter(l_100km >= 8) %>%
+  select(cyl, am, l_100km) %>%
+  head()
+```
+
+```{r , eval=FALSE}
+# ✅ Verify:
+setequal(names(mtcars2 %>% select(cyl, am, l_100km)), c("cyl","am","l_100km"))
+```
+
+🗣 Columns trimmed.
+
+## Group and summarize
+
+Now we can group by `am` and `cyl`, then summarize to get the mean fuel consumption and count of cars in each group.
+
+🎯 Goal. Mean `l_100km` and `n` by `am`, `cyl`.
+
+```{r , eval=FALSE}
+# ⚡ Test:
+mtcars_summary <- mtcars %>%
+  mutate(l_100km = round(235.215 / mpg, 1)) %>%
+  filter(l_100km >= 8) %>%
+  select(cyl, am, l_100km) %>%
+  group_by(am, cyl) %>%
+  summarize(mean_l_100km = round(mean(l_100km), 2),
+            n = n(), .groups = "drop")
+mtcars_summary
+```
+
+🗣 Explan:
+
+Order Matters in dplyr Pipelines. You can't `summarize` groups before you define them with `group_by()`.
+
+- `group_by(am, cyl)` tells `dplyr` to treat each unique combination of `am` and `cyl` separately. `group_by()` divides your data into separate groups for analysis. It doesn't change how your data looks. It adds metadata that tells **subsequent functions** to operate on each group separately. It's like telling R: "For each combination of these variables, do the following..."
+
+- `summarize()` then runs `mean(l_100km)` *per group* and counts rows with `n()`.
+
+- `.groups = "drop"` prevents grouping in the final output.
+
+## Recode transmission for readability
+
+❓ Question: How might you check which combination of `am` + `cyl` is least fuel‑efficient?
+
+🎯 Goal. Label `am` as “Automatic/Manual” in a column "Transmission" and make it a factor with level order.
+
+```{r , eval=FALSE}
+# ⚡ Test: Recode transmission for readability Method 1
+mtcars_summary <- mtcars_summary %>%
+  mutate(Transmission = case_when(am == 0 ~ "Automatic", TRUE ~ "Manual"),
+    Transmission = factor(Transmission, levels = c("Automatic","Manual"))
+  )
+```
+
+```{r , eval=FALSE}
+# ✅ Verify:
+is.factor(mtcars_summary$Transmission)
+identical(levels(mtcars_summary$Transmission), c("Automatic","Manual"))
+```
+
+🗣 Labels set; order fixed.
+
+
+
+```{r, eval=FALSE}
+# ⚡ Test:✔ Pipeline complete! One readable flow from raw data to insight.
+mtcars_summary <- mtcars %>%
+  mutate(l_100km = round(235.215 / mpg, 1)) %>%
+  filter(l_100km >= 8) %>%
+  select(cyl, am, l_100km) %>%
+  group_by(am, cyl) %>%
+  summarize(mean_l_100km = round(mean(l_100km), 2),  
+            n = n(), .groups = "drop")%>%
+  mutate(am = case_when(am == 0 ~ "Automatic", TRUE ~ "Manual"),
+    am = factor(am, levels = c("Automatic","Manual"))
+  )
+mtcars_summary
+```
+
+
+🤔 Reflect: Explain why the highest mean_l_100km is the least fuel‑efficient combination. Create a memo to earn learning skill points. 
+
+## Readable Result
+
+🎯 Goal. Build one readable pipeline, then sort by the highest Mean l/100km (higher = less efficient) and keep the top row.
+
+```{r , eval=FALSE}
+mtcars_summary <- mtcars %>%
+  mutate(l_100km = round(235.215 / mpg, 1)) %>%
+  filter(l_100km >= 8) %>%
+  select(cyl, am, l_100km) %>%
+  group_by(am, cyl) %>%
+  summarize(mean_l_100km = round(mean(l_100km), 2),
+            n = n(), .groups = "drop")%>%
+  mutate(am = case_when(am == 0 ~ "Automatic", TRUE ~ "Manual"),
+    am = factor(am, levels = c("Automatic","Manual"))
+  ) %>%                                       # <-- close mutate() here
+  arrange(desc(mean_l_100km)) %>%             # sort highest (least efficient) first
+  slice(1) %>%                                # keep the single worst combo
+  rename(`Mean l/100km` = mean_l_100km,       # backticks for non-syntactic name
+         Count         = n,
+         Cylinder      = cyl,
+         Transmission  = am)
+
+mtcars_summary
+```
+
+
+🗣 Explain: `arrange()` sorts the data frame by `mean_l_100km` (aka `Mean l/100km`) in descending order, so the first row is the least fuel-efficient combination of `am` and `cyl`.
+
+Answer the ❓ Question: Which combination of `am` + `cyl` is least fuel‑efficient? 
+
+
+# Summary
+
+
+# Chapter Terms
+
+
+# 📝 Practice Space
+
+Replace each ____ placeholder (and any TODO comments) with working code or a short written answer. Run each section; be sure the requested objects appear in the Environment. When finished, save **BOTH** this script and your .RData workspace and upload to Canvas Assignment 11. Create detailed memos for yourself as you work through each task.
+
+Dataset: `dslabs::movielens`
+
+There are three tasks. **Task 2** is the main coding task. Drafting steps are *optional* but recommended to help you build the final pipeline and earn **learning skill** points on your process (🎯/❓ Goal → Prediction → ⚡ Code → ✅ Checks → 🗣/🪞 Reflection). In Task 2, only `Movie_Facts` is graded for **technical points**. Create a memo about any 👀 Resources you used. 📝 Format your document with section headings, in line text font, and add a date. If you run into issues, ✍️ Keep a record of what you tried and portray a 🧠 Growth mindset through tenacity and curiosity. Make a 💬Prediction on what you think the results will be. All these activites demonstrate learning skills.
+
+When you’re done, your workspace should contain `Movie_Facts` that is created by one end-to-end pipeline.
+
+## Task 0
+
+📦 Library it up!
+
+Make sure there is script in your document to load `dplyr` and `dslabs` packages so their functions / datasets load.
+
+## Task 1
+
+🧠 Quick Recall
+
+Explain how *three* `dplyr` verbs from Lessons 7-11 work.
+
+✍️ EXPLANATION: "___"
+
+✍️ EXPLANATION: "___"
+
+✍️ EXPLANATION: "___"
+
+## Task 2
+
+🛠 Pipeline
+
+**Use a single pipeline.**
+
+Option to draft it in steps outlined below. Only final pipeline is evaluated for **technical skills**. 
+
+Drafting steps are for your benefit and give you opportunity to check intermediate results, memo notes, and reflect to earn **learning skill** points. You choose if and when you record 🎯, ✅ , 🗣/🪞.  *You could pipe head() in for checks instead of having a separate code chunk.*
+
+What your final table must contain 
+
+A. Filtering (2.1) 
+
+1. Restrict to movies with non-missing rating and `year ≥ 1990`.
+
+2. Retain only `rating` and `year` columns where the row values are non-missing.
+
+B. The Columns: 
+
+1.  `decade` (2.2)
+
+(a) Calculate the `year` into decades with decimals (e.g., 1994 → 199.4). Hint: use the equation `year`/10.  
+
+(b) Round down to nearest 10 (e.g., 199.4 → 199). Hint: use `floor()`. Pass (a)'s equation through `floor()`.
+
+(c) Convert the count back to decade's starting year (e.g., (199 → 1990).  Hint: Multiply results by 10.  
+
+2. `rating_label` (2.3)
+
+(a) Use `case_when()` to create a new column `rating_label` that labels ratings less than 3 as "Bad" and ratings 3 or greater as "Good".
+
+(b) Make `rating_label` a factor with levels ordered so "Bad" comes before "Good".
+
+3. `mean_rating` (rounded to 2), (2.4)
+
+(a) Group by `decade` and `rating_label`
+
+(b) Summarize to get **mean** of `rating` rounded to 2 decimal places.
+
+4. `n` (row count) (2.5)
+
+(a) Count of movies in each group (`decade` and `rating_label`)
+
+(b) then ungrouped in the result.
+
+C. Ordering: 
+
+1. sort by `mean_rating` (descending) or by `n` (you choose; state which you picked in your memo).
+
+- Store as `Movie_Facts`.
+
+🚀 Explore and Play: add style when you rename the columns in the final output to be more readable (e.g., `Mean Rating`, `Count`). Or add any other enhancements like more levels to `rating_label` such as "Excellent". Be sure to point it out in a memo. 
+
+### Task 2.0
+
+Load packages and confirm `movielens` has `rating` and `year`.
+
+```{r}
+# ⚡ Code
+
+
+# ✅ Verify:
+
+```
+
+### Task 2.1
+
+Keep only rows `rating` and `year` columns when both are non-missing (Hint: use `!is.na()` and `filter()`). Restrict to movies with non-missing rating and `year ≥ 1990`.
+
+🎯
+
+```{r}
+# ⚡ Code.
+
+```
+```{r}
+# ✅ Verify: years are 1990 or greater
+
+```
+
+🗣/🪞
+
+### Task 2.2
+
+Add to the pipeline from Task 2.1, using `mutate`, use create the column `decade`
+
+(a) Calculate the `year` into decades with decimals (e.g., 1994 → 199.4). Hint: use the equation `year`/10.  
+
+(b) Round down to nearest 10 (e.g., 199.4 → 199). Hint: use `floor()`. Pass (a)'s equation through `floor()`.
+
+(c) Convert the count back to decade's starting year (e.g., (199 → 1990).  Hint: Multiply results by 10. 
+
+🎯
+
+```{r}
+# ⚡ Code.
+
+```
+
+
+```{r}
+# ✅ Verify:
+
+```
+
+🗣/🪞
+
+
+### Task 2.3
+
+Continue the same pipeline from Task 2.2, but now add to `mutate()`
+
+(a) Use `case_when()` to create a new column `rating_label` that labels ratings less than 3 as "Bad" and ratings 3 or greater as "Good".
+
+
+(b) Make `rating_label` a factor with levels ordered so "Bad" comes before "Good".
+
+
+🎯
+
+```{r}
+# ⚡ Code.
+
+```
+
+
+```{r}
+# ✅ Verify:
+
+```
+
+🗣/🪞
+
+
+### Task 2.4
+
+Continue the same pipeline to create`mean_rating` (rounded to 2), 
+
+(a) Group by `decade` and `rating_label`
+
+(b) Summarize to get **mean** of `rating` rounded to 2 decimal places. Because `NA`s are filtered out, `na.rm=TRUE` isn’t needed.
+
+
+🎯
+
+```{r}
+# ⚡ Code.
+
+```
+
+```{r}
+# ✅ Verify:
+
+```
+
+🗣/🪞
+
+### Task 2.5
+
+Continue the same pipeline to create `n` (row count) (2.5)
+
+(a) Count of movies in each group (`decade` and `rating_label`)
+
+(b) then ungroup the result. (`groups = "drop"`)
+
+🎯
+
+```{r}
+# ⚡ Code.
+
+```
+```{r}
+# ✅ Verify:
+
+```
+
+🗣/🪞
+
+
+### Task 2.6
+
+Finish the same pipeline with an arrange() step (choose to sort by mean_rating or by n). End by storing the result as Movie_Facts.
+
+C. Ordering: 
+
+1. sort by `mean_rating` (descending) or by `n` (you choose; state which you picked in your memo).
+
+🎯
+
+```{r}
+# ⚡ Code.
+
+```
+```{r}
+# ✅ Verify:
+
+```
+
+🗣/🪞
+
+
+
+
+## Task 3
+
+📝 Write a short paragraph reflecting on when might **separate objects** be clearer than a single long pipeline?
+
+✍️ EXPLANATION: "___"
+
+**OR** 
+
+
+📝 Write a short paragraph reflecting on what `n` is counting in `Movie_Facts`. Is it individual movies or individual ratings? Explain. 
+
+✍️ EXPLANATION: "___"
+
+
+# Save and Upload
+
+1. You will be submitting **both** the "your choice" Document and the workspace file. The workspace file saves all the objects in your environment that you created in this lesson. You can save the workspace by running the following command in a code chunk of the script document document:
+
+```{r , eval=FALSE}
+save.image("Assignment11_Workspace.RData")
+```
+
+Or you can click the "Save Workspace" button in the Environment pane. 
+
+💾 **Always save the R documents before closing.**
+
+2. Find the assignment in this week's module in Canvas and upload **both** the file with your script and the workspace file.
+
+# Today you practiced:
+
+- Connected `dplyr` verbs with the pipe to form readable workflows.
+
+- Built a pipeline that mutated, filtered, selected, grouped, summarized, and recoded in one statement.
+
+- Reflected on the complexity of piping many steps
+
+
+
+

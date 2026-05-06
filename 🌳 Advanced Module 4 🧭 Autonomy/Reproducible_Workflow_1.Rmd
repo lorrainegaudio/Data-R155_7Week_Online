@@ -1,0 +1,436 @@
+---
+title: "Reproducible Workflow"
+author: "by Lorraine Gaudio"
+date:   "`r paste('Activity generated on', format(Sys.Date(), '%B %d, %Y'))`"
+team: "Fall 2025"
+output: 
+  html_document: # To create an HTML document from R Markdown
+    toc: true # Table of contents (TOC)
+    toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactive scrolling
+    code_folding: show # Enables you to include R code but have it hidden by default. (Show hide button)
+    includes:
+      in_header: ../assets/header.html
+      after_body: ../assets/footer.html
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r eval=FALSE, include=FALSE}
+title: "Reproducible Workflow"
+author: "by Lorraine Gaudio"
+date:   "`r paste('Activity generated on', format(Sys.Date(), '%B %d, %Y'))`"
+output: 
+  pdf_document:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+    citation_package: natbib
+    fig_caption: true
+    df_print: kable # Data frame printing
+    includes:
+      in_header: ../assets/header.tex
+    latex_engine: xelatex  # Use xelatex to support fontspec
+fontsize: 12pt
+geometry: margin=1in
+mainfont: "Garamond" # Sets the font of the entire document
+sansfont: "Gotham-Book.otf" # Set sans-serif font to Gotham Book
+monofont: "Courier New" # Set monospace font to Courier New
+documentclass: scrreprt
+linkcolor: boisestateblue # Customizes the color of hyperlinks
+urlcolor: magenta # Customizes the color of URLs
+citecolor: black # Customizes the color of citations
+bibliography: references.bib # Bibliography file
+biblio-style: apalike                 # ⟵ natbib needs a .bst style
+natbiboptions: "round,authoryear"     # round brackets, Author (Year)
+ 
+Or
+title: "Reproducible Workflow"
+author: "by Lorraine Gaudio"
+date:   "`r paste('Activity generated on', format(Sys.Date(), '%B %d, %Y'))`"
+team: "Fall 2025"
+output: 
+  html_document: # To create an HTML document from R Markdown
+    toc: true # Table of contents (TOC)
+    toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactive scrolling
+    code_folding: show # Enables you to include R code but have it hidden by default. (Show hide button)
+    includes:
+      in_header: ../assets/header.html
+      after_body: ../assets/footer.html
+```
+
+# Class Activity (Part One) 
+
+A reproducible workflow enables someone else to run your analysis on a different computer and obtain the same results. Today, you will package your data, containing minimal transforms, into a small, portable project using the appropriate file formats for the target audiences (R users vs. non-R users). This activity is offered as an optional opportunity to earn technical skill points.
+
+**Lesson Overview**
+
+By the end of this activity you will be able to:
+
+1. ⚡ Remember – common save formats and their trade-offs.
+
+2. 🔍 Understand – why Projects + relative paths support portability.
+
+3. 📍 Apply – a minimal Lesson-6 transform and save results to data_clean/.
+
+4. 📊 Analyze – object structure after saving and re-loading.
+
+5. 🛠️ Evaluate – which format to share with R vs. non-R users.
+
+6. 🧰 Create – a runnable, documented mini-pipeline that another student can execute in Part 2.
+
+Keep these goals in mind as you move through each section.
+
+## What you'll do
+
+**Part one** (40 min): 
+
+1. Create a new RStudio Project and folders (optional)
+
+2. Load a raw dataset (built-in or your own CSV)
+
+3. Apply a minimal transform (e.g., from Lesson 6)
+
+4. Save the cleaned dataset as .rds (for R users) and .csv (for non-R users)
+
+**Part two** (preview): 
+
+We'll swap your .rds (and .csv) + 01_save_data.Rmd with a peer. Your peer will clone your structure, re-run your script, load your .rds, and verify that object names, dimensions. They’ll document any issues and fixes and offer suggestion on other minimal transformations. (No action needed now.)
+
+1. Load your peer's .rds to verify it works
+
+2. Explore the object structure
+
+3. Apply a minimal transform (e.g., from Lesson 6-7)
+
+4. Save the cleaned dataset as .rds (for R users) and .csv (for non-R users)
+
+## Points Rubric
+
+This optional activity could earn you up to 2 technical skill points!
+
+| Task | Points |
+|-------|--------|
+| Create a new RStudio Project and folders | 0.0 |
+| Load a raw dataset (built-in or your own CSV) | 0.25 |
+| Apply a minimal transform (e.g., from Lesson 6) | 1.50 |
+| Save the cleaned dataset as .rds (for R users) and .csv (for
+ non-R users) | 0.5 |
+| Total | 2 |
+
+## ❓ What is an .rds?
+
+It’s a single, compressed R object saved to disk (serialization). It preserves the object's classes, factors, dates, list-columns, attributes. This allows you to share data and workflows with collaborators. The purpose of this activity is to practice saving a data frame from your R session as different kinds of shareable files. This is an essential step in a reproducible R workflow.
+
+See this quick format guide for when to use .rds, .RData, .csv, and .xlsx.
+
+1) .rds
+
+- Use when: you want a single object saved exactly as-is, for fast, reliable re-use inside R projects.
+
+- Pros: preserves types/attributes; fast; compact; explicit (you assign the name on load).
+
+- Cons: R-specific; not human-readable; one object per file.
+
+2) .RData (created with `save()`/`load()`)
+
+- Use when: you want to snapshot many objects together.
+
+- Pros: multiple objects; same fidelity as `.rds`.
+
+- Cons: `load()` dumps objects into your workspace by their old names (less explicit/reproducible); R-only.
+
+3) .csv
+
+- Use when: you need a simple, universal text file to share with anyone (Python, Excel, Stata, etc.).
+
+- Pros: human-readable; portable; tiny dependency surface.
+
+- Cons: loses metadata (factors, classes); can mangle types (e.g., character vs numeric); can’t store list-columns; larger than .rds for complex data.
+
+4) .xlsx (Excel workbook)
+
+- Use when: a stakeholder requires Excel (multi-sheet handoff, lightweight manual review).
+
+- Pros: multi-sheet; familiar to non-coders.
+
+- Cons: manual edits reduce reproducibility; type guessing can break things (dates, leading zeros); heavier dependencies; not ideal for scripted pipelines.
+
+**Rule of thumb**: use .rds for your internal, scripted workflow; export .csv (or .xlsx only if asked) for sharing with *non-R users*; use .RData sparingly for multi-object checkpoints.
+
+# Mini reproducible workflow
+
+Below is a starter pattern you can run on any machine with R + RStudio.
+
+## Setup (5 min)
+
+Create a new RStudio Project and folders (optional), move your raw data to the correct folder, and create a new R Markdown file.
+
+### Make a Project & folders
+
+Step one: Create a new RStudio Project (File > New Project > New Directory > New Project).
+
+Step two: Name it something relevant (e.g., "`save_rds_activity`") within the folder of this course. This will create a new folder nested inside your course folder and a new .Rproj file.
+
+Step three: 🎯 Create folders: data, scripts, output.
+
+```{r}
+# ⚡ Create folders
+dirs <- c("data_raw", "data_clean")
+invisible(lapply(dirs, dir.create, showWarnings = FALSE))
+```
+
+✅ This creates folders, (`data_raw` and `data_clean`) if they don't already exist, and suppresses warnings if they do. 👀 Check your file explorer or finder to verify the folders are there. 
+
+### R Markdown
+
+Step one: Create a new R Markdown file (File > New File > R Markdown).
+
+Step two: Name it and save it as `01_save_data.Rmd`. Save it in the Project root (same level as data_clean/).
+
+## Load Raw data (5 min)
+
+Choose ONE path
+
+You need to choose a "raw" dataset for this activity. You can use (A) a built-in/package dataset or (B) a CSV on your computer (place it in data_raw/). 
+
+Ideally, you will use the dataset you will be using for your signature assignment. If you do not have a dataset ready for your signature assignment, consider using a dataset from dslabs for this activity.  
+
+```{r}
+# Option A — use a package dataset
+# dslabs package
+library(dslabs)  # For more datasets
+utils::data(package = "dslabs")$results[, "Item"]
+```
+
+🎯 If you choose a dataset from dslabs, you can load it with data("dataset_name").
+
+```{r}
+# ⚡ load dataset from dslabs
+data("movielens")
+# ✅  Verify
+head(movielens)
+```
+
+🎯 I use `mtcars` for an example in this activity of how to use a built-in dataset. 
+
+```{r}
+# ⚡ Example "import" step (pretend mtcars is your raw data)
+mtcars_df <- mtcars
+# ✅  Verify
+mtcars_df[1:6 , c(1, 4)]   
+```
+
+If you choose a CSV dataset from your own computer, read it in with `read.csv()` or `readr::read_csv()`. Place the raw data file in the data_raw folder you created above. As an example of loading and external dataset, 🎯 I'll load `signature_assignment_example.csv` from the `data_raw` folder.
+
+```{r}
+# Option B — use your own CSV (put it in data_raw/)
+# ⚡ Example load dataset from your computer
+example_df <- read.csv(file.path("data_raw", "signature_assignment_example.csv"))
+# ✅
+example_df[1:6 , c(1:2,19)]  # show first 6 rows and a few columns
+```
+
+🗣 The dataset loaded successfully.
+
+## Clean/transform in scripts (15 min)
+
+Make a transformation or two to the dataset. Your example can do minimal transformations. Apply any steps you would like to practice from Lesson 6.
+
+### mtcars example transformations
+
+```{r}
+# Step one: explore the data
+mtcars_df[1:6 , c("mpg", "cyl")]
+
+```
+
+
+🎯 I add a new column called "model" that contains the row names. 
+
+```{r}
+# ⚡ keep model names as a column
+mtcars_df[ , "model"] <- rownames(mtcars_df)
+```
+
+```{r}
+# ✅ Verify:
+mtcars_df[1:6 , c("model", "mpg", "cyl")]
+```
+
+
+🗣 The change was successful. rownames(mtcars_df) collects the rownames as a vertex then mtcars_df[ , "model"] assigns the vertex to a new column called "model".
+
+🎯 I remove the row names.
+
+```{r}
+# ⚡ remove row names
+rownames(mtcars_df) <- NULL
+
+```
+
+```{r}
+# ✅ Verify: 
+mtcars_df[1:6 , c("model", "mpg", "cyl")]
+```
+
+🗣 The change was successful. The rownames(mtcars_df) <- NULL command successfully removed the row names.
+
+### Signature assignment example transformations
+
+```{r}
+# Step one: explore the data
+example_df[1:6, c("id", "humans_versus_AI_control")]
+```
+
+🎯 I want to make two different types of columns for the AI Competency results section. I would like to have the numeric values in one column and the words in another column. This will make it easier to analyze.
+
+```{r}
+# What are my options
+unique(example_df$humans_versus_AI_control) # An example column
+```
+
+
+🎯 Using ifelse() and overwriting values from lesson 6, I will create a new column called `humans_versus_AI_control_num` that contains numeric values for the `humans_versus_AI_control` column. I will then overwrite the values in the original column so that it only contains the words. 
+
+1) 🎯 Create a numeric column with ifelse()
+
+```{r}
+# ⚡ Create numeric column for humans_versus_AI_control
+example_df[ , "humans_versus_AI_control_num"] <-
+  ifelse(example_df[ , "humans_versus_AI_control"] == 
+           "1. No Awareness", 1L,
+  ifelse(example_df[ , "humans_versus_AI_control"] == 
+           "2. Awareness",    2L,
+  ifelse(example_df[ , "humans_versus_AI_control"] == 
+           "3. Aquire",       3L,
+  ifelse(example_df[ , "humans_versus_AI_control"] == 
+           "4. Deepen",       4L,
+  ifelse(example_df[ , "humans_versus_AI_control"] == 
+           "5. Create",       
+         5L, NA_integer_)))))
+```
+```{r}
+# ✅ Verify: 
+example_df[1:6 , c("id", "humans_versus_AI_control", "humans_versus_AI_control_num")]
+```
+
+🗣 A new column called `humans_versus_AI_control_num` was successfully created.
+
+2) 🎯 Overwrite the original column to keep only the words.
+
+```{r}
+# ⚡ Overwrite original column to keep only the words
+example_df[ example_df[ , "humans_versus_AI_control"] == 
+              "1. No Awareness" , "humans_versus_AI_control"] <- "No Awareness"
+example_df[ example_df[ , "humans_versus_AI_control"] == 
+              "2. Awareness"    , "humans_versus_AI_control"] <- "Awareness"
+example_df[ example_df[ , "humans_versus_AI_control"] == 
+              "3. Aquire"       , "humans_versus_AI_control"] <- "Aquire"
+example_df[ example_df[ , "humans_versus_AI_control"] == 
+              "4. Deepen"       , "humans_versus_AI_control"] <- "Deepen"
+example_df[ example_df[ , "humans_versus_AI_control"] == 
+              "5. Create"       , "humans_versus_AI_control"] <- "Create"
+```
+
+```{r}
+#✅ Verify: 
+example_df[1:6 , c("id", "humans_versus_AI_control", "humans_versus_AI_control_num")]
+```
+
+3) 🎯 I select only the columns I want to keep for my final dataset to share.
+
+```{r}
+# ⚡ Select only the columns I want to keep
+example_df_clean <- example_df[ , c("id", "humans_versus_AI_control", "humans_versus_AI_control_num")]
+```
+
+```{r}
+# ✅ Verify: 
+example_df_clean[1:6, ]
+```
+
+# Save cleaned data (5 min)
+
+We’ll save the cleaned object twice: once as .rds (for R pipelines) and once as .csv (for sharing).
+
+## RDS
+
+🎯 `file.path()` builds correct paths on Windows/Mac/Linux and keeps your code portable inside an RStudio Project.
+
+```{r}
+# ⚡ Create a file save path
+rds_path <- file.path("data_clean", "dataset_clean.rds")
+```
+
+This creates a path to save the cleaned dataset as `dataset_clean.rds` in the `data_clean` folder. You can change `dataset` to something relevant to your dataset.
+
+```{r}
+# ⚡/ ✅   
+saveRDS(mtcars_df, rds_path) # change mtcars_df to the name of your cleaned dataset
+```
+👀 Check your Files pane (RStudio) to verify the folders are there.
+
+
+## CSV
+
+```{r}
+# ⚡ Create a file save path
+csv_path <- file.path("data_clean", "dataset_clean.csv")
+```
+
+```{r}
+# ✅ CSV for non-R users
+write.csv(mtcars_df, csv_path)
+
+```
+
+## Submission (2 min)
+
+Upload the folowing files to Module 6 → Class Activity 6.
+
+- 01_save_data.Rmd (the R Markdown you used for this activity)
+
+- data_clean/dataset_clean.rds
+
+- data_clean/dataset_clean.csv
+
+## Today you practiced: 
+
+- worked inside an RStudio Project with relative paths,
+
+- loaded a raw dataset (package or CSV),
+
+- performed a minimal, documented transform (Lesson 6 skill),
+
+- saved a clean dataset for two audiences: .rds for R users and .csv for non-R users,
+
+- verified your results by reloading/checking structure.
+
+This gives you a portable, re-runnable mini-pipeline that your collaborator can execute in Part Two.
+
+
+### P.S. How to load rds
+
+
+```{r, eval=FALSE}
+# ✅ 
+cars <- readRDS("mtcars_clean.rds")  # adjust file path as needed
+```
+
+

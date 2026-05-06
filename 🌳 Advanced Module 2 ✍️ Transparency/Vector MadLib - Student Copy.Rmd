@@ -1,0 +1,355 @@
+---
+title: "🤪 Vector MadLib"
+author: "YOUR NAME"
+date:   "`r format(Sys.Date(), '%B %d, %Y')`"
+output: 
+  html_document: # To create an HTML document from R Notebook
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# How to Use This Notebook
+
+Work through this notebook from top to bottom.
+
+1. Replace every blank `__` with your own values or code.
+2. Run each code chunk after you complete it.
+3. Do not rename the required objects.
+4. Write short comments where prompted.
+5. After all vectors are created, run the Story section.
+6. If something errors, fix it and briefly document what happened.
+
+# Vectors
+
+A **Vector** is a one-dimensional object that stores an ordered sequence of elements of the same basic type (for example, all numeric, all character, or all logical). Vectors are the core building block of many R objects, and I create them with functions like `c()`; you can subset them by position or by logical conditions.
+
+
+## Numeric vector
+
+🎯  Create a vector called `numeric` using your pick of six **real numbers** (length = 6)
+
+```{r}
+# ⚡ 
+numeric <- c( __ , __ , __ , __ , __ , __) # length = 6
+```
+
+```{r}
+## ✅  print stored vector
+numeric
+```
+
+🎯  Use `length()` to verify that `numeric` contains six values.
+
+```{r}
+## ✅ Check the length of your vector
+_____(numeric)
+```
+
+🗣 Comment: Describe what kind of values are stored in the **numeric vector**.
+
+> [Replace this text with your comment]
+
+
+## Integer vector
+
+🎯 Create a vector called `integer` using four **whole numbers**, your pick. (length = 4)
+
+```{r}
+# ⚡ 
+integer <- c(__L, __L, __L, __L) # length = 4
+```
+
+```{r}
+## ✅  print stored vector
+integer
+```
+
+🎯  Use `length()` to verify that `integer` contains exactly four values.
+
+```{r}
+## ✅ Check the length of your vector
+_____(integer)
+```
+
+🗣 Comment: Describe what makes this vector an **integer vector**.
+
+> [Replace this text with your comment]
+
+## Logical vector
+
+A logical vector can be created several ways. For this task, you will create the vector using **logical operators**.
+
+
+🎯  Create a vector called `logical` using only **logical operators** (length = 4).
+
+```{r}
+# ⚡
+logical <- c( __ , __ , __ , __ ) # length = 4
+```
+
+```{r}
+## ✅  print stored vector
+logical
+```
+
+🎯  Use `class()` to verify that the object `logical` has the class `logical`. Use `length()` to verify there are four elements in the `logical` object.
+
+```{r}
+## ✅ Check the length and class of your vector
+_____(logical)
+_____(logical)
+```
+
+🗣 Comment: Explain one comparison you used and why it returns `TRUE` or `FALSE`.
+
+> [Replace this text with your comment]
+
+## Character vectors
+
+Make each character vector with words or phrases of your choice. 💡 **Tip:** character values need quotation marks.
+
+### Name Vector
+
+🎯  Create a vector called `name`. Use any people names, real or fictional (length = 6); Element duplication is recommended.
+
+```{r}
+# ⚡ 
+name <- c( __ , __ , __ , __ , __ , __ ) # length = 6
+```
+
+```{r}
+## ✅  print stored vector
+name
+```
+
+### Team Name
+
+🎯  Create a vector called `group_name` → imaginary team/group names (length = 4)
+
+```{r}
+# ⚡ 
+group_name <- c( __ , __ , __ , __ ) # length = 4
+```
+
+```{r}
+## ✅  print stored vector
+group_name
+```
+
+### Social Handle
+
+🎯  Create a vector called `at_handle` → any made-up social media handles (length = 4)
+
+```{r}
+# ⚡ 
+at_handle <- c( __ , __ , __ , __ ) # length = 4
+```
+
+```{r}
+## ✅  print stored vector
+at_handle
+```
+
+### Item
+
+🎯  Create a vector called `item` → any kind of thing or object (length = 6). Element duplication is recommended.
+
+```{r}
+# ⚡ 
+item <- c( __ , __ , __ , __ , __ , __ ) # length = 6
+```
+
+```{r}
+## ✅  print stored vector
+item
+```
+
+### Activity
+
+🎯  Create a vector called `activity` → something you do (length = 4).
+
+```{r}
+# ⚡ 
+activity <- c( __ , __ , __ , __ ) # length = 4
+```
+
+```{r}
+## ✅  print stored vector
+activity
+```
+
+### Location
+
+🎯  Create a vector called `location` → any place, real or imagined (length = 4)
+
+```{r}
+# ⚡ 
+location <- c( __ , __ , __ , __ ) # length = 4
+```
+
+```{r}
+## ✅  print stored vector
+location
+```
+
+### Rally Cry
+
+🎯  Create a vector called `call_to_action` → a catch phrase or statement (length = 4)
+
+```{r}
+# ⚡
+call_to_action <- c(__, __, __, __) # length = 4
+```
+
+```{r}
+## ✅  print stored vector
+call_to_action
+```
+
+### Emotion
+
+🎯  Create a vector called `emotion` → a mood or feeling (length = 6). Element duplication is recommended.
+
+```{r}
+# ⚡ 
+emotion <- c(__, __, __, __, __, __)
+```
+
+```{r}
+## ✅  print stored vector
+emotion
+```
+
+### Retro Game
+
+🎯  Create a vector called `retro_game` → any game titles (length = 4)
+
+```{r}
+# ⚡
+retro_game <- c(__, __, __, __)
+```
+
+```{r}
+## ✅  print stored vector
+retro_game
+```
+
+### Social Media
+
+🎯  Create a vector called `social_media_platform` → any virtual community  (length = 3)
+
+_A social media platform is a website or application that allows users to create and share content or participate in social networking._
+
+```{r}
+# ⚡
+social_media_platform <- c(__, __, __) # length 3
+```
+
+### Character Vector Check
+
+```{r}
+# ✅ Check lengths
+length(name)
+length(group_name)
+length(at_handle)
+length(item)
+length(activity)
+length(location)
+length(call_to_action)
+length(emotion)
+length(retro_game)
+length(social_media_platform)
+```
+
+🗣 Comment: Describe one issue that can happen if character values are missing quotation marks.
+
+> [Replace this text with your comment]
+
+## Factor class
+
+**Convert one character vector to factor class**
+
+A factor is R’s way of storing categorical data. In this activity, you will choose one character vector you already created and convert it into a factor object called `story_factor`.
+
+➤  Step 1: Check the Class
+
+🎯 Select a character vector (e.g., `name`, `item`, `emotion`) and use a function `class()` to check the class of the vector.
+
+```{r}
+# ✅ Check the class before conversion
+class( __ )
+```
+
+➤  Step 2: Change Class to Factor
+
+🎯 Use `as.factor()` to convert your chosen character vector into a new object called `story_factor`.
+
+```{r}
+# ⚡
+story_factor <- as.factor(x = __)
+```
+
+➤  Step 3: Check the Class
+
+🎯 Verify that `story_factor` has factor class, then inspect its levels.
+
+```{r}
+# ⚡ 
+class(story_factor)
+levels(story_factor)
+```
+
+🗣 Comment: Explain which vector you converted, how the class changed, and what the levels show.
+
+> [Replace this text with your comment]
+
+
+# Story
+
+```{r}
+# Function to pick a random element from a vector
+pick <- function(x) sample(x, 1)
+
+# ---------- Story 1 ----------
+story1 <- paste(
+  "After a long week,", pick(name), "unplugged by trying", pick(activity),
+  "with", pick(group_name), "at their favorite spot,", paste0(pick(location), "."),
+  "Vibe rating:", paste0(pick(numeric), "."),
+  "The ", pick(activity), "was going so well, but then a crucial missing", paste0(pick(item), " was discovered."),
+  "Going with the flow was", ifelse(pick(logical), "reasonable.", "unreasonable."),
+  "Reminding each other", paste0(pick(call_to_action), "."),
+  "They made a plan for Episode", paste0(pick(integer), ","),
+  "closing with a", paste0(pick(emotion), " mood.")
+)
+
+print(story1)
+# ---------- Story 2 ----------
+# Using the factor object to pick one category
+selected_factor_value <- pick(story_factor)
+
+story2 <- paste(
+  "On a mission for a fashion comeback,", pick(name), "found", pick(item),
+  "at", pick(location), "that screamed Y2K.",
+  "They spent a total of", paste0(pick(numeric), " dollars"),
+  "but they", ifelse(pick(logical), "remembered", "forgot"), "to get a receipt!",
+  "After posting a 'before' shot on", paste0(pick(social_media_platform), ","),
+  "the post went viral", ifelse(pick(logical), "by midnight.", "by the next day."),
+  "The random category pulled from the factor vector was", paste0(selected_factor_value, "."),
+  "Their retro level was officially", paste0(pick(retro_game), " status,"),
+  "and they immediately upcycled the item online for", paste0(pick(numeric), " dollars"),  
+  "and sold in", pick(integer), "minutes.", 
+  "The community response was so strong, they had this final message for their followers:", 
+  paste0(pick(call_to_action), ".")
+)
+
+print(story2)
+```
+
+# Transparency Reflection
+
+In 3–5 sentences, explain one thing you checked, fixed, or learned while completing this activity. If you used an outside resource, including AI, name the resource and explain what it helped you understand.
+
+> Replace this text with your reflection.

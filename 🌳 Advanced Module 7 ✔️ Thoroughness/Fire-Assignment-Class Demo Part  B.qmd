@@ -1,0 +1,191 @@
+---
+title: "Wildfire"
+author: "Lorraine Gaudio"
+date: today
+format: html
+---
+
+# Introduction
+
+Idaho is well known for its wildfires. They play a ecological role, shaping our forests and grasslands while presenting significant hazards to communities and resources. In recent years, the Idaho landscape has experienced frequent and sometimes severe wildfire seasons due to both natural and human activity. While fires are part of the natural ecosystem, they have become more destructive as the climate warms. Wildfire preparedness and management is a continuing challenge for the state.
+
+Wildfire managers need tools that show where fires are more likely and how intense they could become. The U.S. Forest Service’s Wildfire Hazard Potential (WHP) is one such tool: a nationwide raster layer where each grid cell stores a unitless index of relative wildfire hazard (higher value = higher hazard).
+
+How far could a new wildfire run in 8 hours? How many new wild fire ignitions will grow larger than 10 km (straight line) in 8 hours?
+
+# Probability Calculations
+
+We model the 8-hour straight-line distance of new ignitions in High wildfire hazard categories.
+
+```{r}
+#| echo: false
+# install.packages(c("gt", "tibble", "webshot2"))
+
+library(gt)
+library(tibble)
+
+# Data ------------------------------------------------------------
+tbl_data <- tribble(
+  ~Category,          ~Probability, ~`Mean (km)`, ~`SD (km)`, ~`Mean log`, ~`SD log`,
+  "Very Low",                  25,          2.0,         1.0,       0.582,     0.472,
+  "Low",                       25,          3.0,         1.0,       1.046,     0.325,
+  "Moderate",                  25,          4.5,         1.5,       1.451,     0.325,
+  "High",                      15,          7.0,         2.0,       1.907,     0.280,
+  "Very High",                  5,         12.0,         3.0,       2.455,     0.246,
+  "Extreme",                    4,         18.0,         4.0,       2.866,     0.220,
+  "Ultra (Top 1%)",             1,         28.0,         6.0,       3.310,     0.212
+)
+
+# Table -----------------------------------------------------------
+tbl_gt <- tbl_data |>
+  gt() |>
+  fmt_number(
+    columns = c(Probability),
+    decimals = 0
+  ) |>
+  fmt_number(
+    columns = c(`Mean (km)`, `SD (km)`),
+    decimals = 1
+  ) |>
+  fmt_number(
+    columns = c(`Mean log`, `SD log`),
+    decimals = 3
+  ) |>
+  cols_align(
+    align = "left",
+    columns = c(Category)
+  ) |>
+  cols_align(
+    align = "center",
+    columns = c(Probability, `Mean (km)`, `SD (km)`, `Mean log`, `SD log`)
+  ) |>
+  opt_table_font(
+    font = c("Georgia", "Times New Roman", "serif")
+  ) |>
+  tab_style(
+    style = cell_text(weight = "bold", size = px(22)),
+    locations = cells_column_labels(everything())
+  ) |>
+  tab_style(
+    style = cell_text(size = px(20)),
+    locations = cells_body(columns = everything(), rows = everything())
+  ) |>
+  tab_options(
+    table.background.color = "white",
+    table.border.top.style = "none",
+    table.border.bottom.style = "none",
+
+    column_labels.background.color = "white",
+    column_labels.border.top.style = "none",
+    column_labels.border.bottom.color = "#cfcfcf",
+    column_labels.border.bottom.width = px(2),
+
+    table_body.hlines.color = "#d9d9d9",
+    table_body.hlines.width = px(1),
+    table_body.vlines.style = "none",
+
+    data_row.padding = px(14),
+    column_labels.padding = px(14)
+  )
+# Table
+tbl_gt
+```
+
+
+## Tail probability
+
+**TASK 1**
+
+❓ Question a: If a new ignition starts in a **High-hazard area**, what is the probability that its 8-hour straight-line spread is at least 10 km?
+
+🎯 Compute the exact probability that a new ignition in a High-hazard area spreads at least 10 km in 8 hours using the `plnorm()` function. Use the **High** row’s **Mean log** and **SD log** in **Table 1**. Set the `lower.tail` equal to FALSE. Store the result as `p_high_exact`.
+
+```{r}
+# ⚡ Test: single lognormal, single threshold
+p_high_exact <- plnorm(10, meanlog = 1.907, sdlog = 0.280, lower.tail = FALSE)
+```
+
+The value 0.0788567 indicates a 7.9% chance that a new ignition in a High-hazard area will spread at least 10 km in 8 hours.
+
+## 95th percentile
+
+**TASK 2**
+
+❓ Question b: We’ll treat distances above the 95th percentile as ‘extreme fast runs’. For ignitions in High-hazard areas, what 8-hour distance is only exceeded 5% of the time? In other words, what is the 95th percentile run length?
+
+🎯 Compute the distance such that there is a 95% chance the 8-hour spread is no more than this value and a 5% chance it exceeds it. Use `qlnorm()`. Set the probability to 0.95 and use the parameters in the **High** row’s **Mean log** and **SD log** in **Table 1**.
+
+```{r}
+# ⚡ Test
+q95_high <- qlnorm(0.95, meanlog = 1.907, sdlog = 0.280)
+```
+
+```{r}
+# ✅  Verify
+q95_high
+```
+
+🗣 Based on this model, about 95% of new ignitions in High-hazard areas are expected to spread no more than roughly 10.7 km in 8 hours, and only about 5% of wildfires would be expected to spread farther than 10.7 km in 8 hours.
+
+## Density
+
+**TASK 3**
+
+❓ Question c: Under our High-hazard lognormal model, how concentrated is the distribution locally around the shorter 3 km run versus the longer 10 km distance in 8 hours? *Note: Higher density indicates a higher likelihood of the value in a small neighborhood around that point.*
+
+🎯 Compute the density at 3 km and 10 km using `dlnorm()`. Use the High row’s Mean log and SD log in Table 1.
+
+
+```{r}
+# ⚡ Test
+
+d_3  <- dlnorm(3,  meanlog = 1.907, sdlog = 0.280)
+d_10 <- dlnorm(10, meanlog = 1.907, sdlog = 0.280)
+```
+
+```{r}
+# ✅  Compare heights
+d_3; d_10  
+```
+
+🗣 The density at 10 km $\mathcal{f_{high}}(10) \approx 0.0525$) is higher than at 3 km ($\mathcal{f_{high}}(3) \approx 0.00736$), which implies that values in a small neighborhood around 10 km are more likely than values in a small neighborhood around 3 km under the High-hazard lognormal model.
+
+## Replication
+
+**TASK 4**
+
+❓ Question d: If we simulate 450 new ignitions in High-hazard areas this season, about how many would we expect to classify as ‘fast-growing’ (≥10 km in 8 hours)?
+
+🎯 Generate a large vector of simulated 8-hour distances for the **High** category using `rlnorm()`. Look up the **High** row’s **Mean log** and **SD log** in **Table 1**, and store the result as `High_Lognorm`. Set the number of ignitions per season to 450.
+
+```{r}
+set.seed(2025)
+# ⚡ Test
+High_Lognorm <- rlnorm(n = 450, meanlog = 1.907, sdlog = 0.280)
+```
+
+```{r}
+# ✅  Verify
+summary(High_Lognorm)
+```
+
+🗣 We use `rlnorm()` and not `plnorm()`, `qlnorm()`, or `dlnorm()` because `rlnorm()` generates random numbers from a lognormal distribution. When data is skewed ...
+
+
+🎯 Use `sum()` to find the count of new ignitions in the simulation where the wildfire is classified as ‘fast-growing’.
+
+```{r}
+# ⚡ Test 
+fast_growing_count <- sum(High_Lognorm >= 10)
+```
+
+
+```{r}
+# ✅ Verify 
+fast_growing_count
+```
+
+
+🗣 Based on the simulation, we would expect approximately 30 new ignitions in High-hazard areas to be classified as ‘fast-growing’ (spreading 10 km or more in 8 hours) this season.
+
+

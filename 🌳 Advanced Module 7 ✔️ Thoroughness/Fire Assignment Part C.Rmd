@@ -1,0 +1,544 @@
+---
+title: "Wildfire Signature Assignment"
+subtitle: "Part C: Monte Carlo simulation"
+author: "Lorraine Gaudio"
+date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
+team: "Spring 2026"
+output: 
+  bookdown::html_document2: # To create an HTML document from R Markdown
+    toc: true # Table of contents (TOC)
+    toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactivne scrolling
+    code_folding: show # Enables you to include R code but have it hidden by default. (Show hide button)
+    includes:
+      in_header: ../../assets/header.html
+      after_body: ../../assets/footer.html
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r eval=FALSE, include=FALSE}
+title: "Wildfire Signature Assignment"
+author: "Lorraine Gaudio"
+date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
+output: 
+   bookdown::pdf_document2:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+    citation_package: natbib
+    fig_caption: true
+    df_print: kable # Data frame printing
+    includes:
+      in_header: ../assets/header.tex
+    latex_engine: xelatex  # Use xelatex to support fontspec
+fontsize: 12pt
+geometry: margin=1in
+mainfont: "Garamond" # Sets the font of the entire document
+sansfont: "Gotham-Book.otf" # Set sans-serif font to Gotham Book
+monofont: "Courier New" # Set monospace font to Courier New
+documentclass: scrreprt
+linkcolor: boisestateblue # Customizes the color of hyperlinks
+urlcolor: magenta # Customizes the color of URLs
+citecolor: black # Customizes the color of citations
+bibliography: references.bib # Bibliography file
+biblio-style: apalike                 # ⟵ natbib needs a .bst style
+natbiboptions: "round,authoryear"     # round brackets, Author (Year)
+ 
+Or
+title: "Wildfire Signature Assignment"
+author: "Lorraine Gaudio"
+date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
+team: "Spring 2026"
+output: 
+  bookdown::html_document2: # To create an HTML document from R Markdown
+    toc: true # Table of contents (TOC)
+    toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactivne scrolling
+    code_folding: show # Enables you to include R code but have it hidden by default. (Show hide button)
+    includes:
+      in_header: ../assets/header.html
+      after_body: ../assets/footer.html
+```
+
+# Overview
+
+🔥 Idaho is well known for its wildfires. They play a ecological role, shaping our forests and grasslands while presenting significant hazards to communities and resources. In recent years, the Idaho landscape has experienced frequent and sometimes severe wildfire seasons due to both natural and human activity. While fires are part of the natural ecosystem, they have become more destructive as the climate warms. Wildfire preparedness and management is a continuing challenge for the state. For more information this [research at Boise State](https://www.boisestate.edu/coas/2024/12/04/boise-state-experts-provide-perspective-on-idaho-mountain-wildfires/).
+
+
+**How far could a new wildfire run in 8 hours? How many new wild fire ignitions will grow larger than 10 km (straight line) in 8 hours?**
+
+In this three-part Core Signature Assignment activity option, you can work in groups but each person submits their own work independently. 
+
+
+By the end of this Wildfire Signature Assignment you will be able to:
+
+1. 🧭 Organize – Set up a reproducible RStudio workflow (project, files, data, RData) that can be re-run on another machine.
+
+2. 🛠 Wrangle – Import the WHP sample data, create quantile-based hazard categories, and summarize areas and probabilities with tidy R code.
+
+3. 📈 Model – Specify and use lognormal models (p/q/d/r *lnorm* functions) to answer distance and tail-probability questions by hazard category.
+
+4. 🎲 Simulate – Build a multi-step Monte Carlo simulation (with `replicate()`) that mixes categories by area weights and estimates the chance of many fast-growing fires in a season.
+
+5. 🗣 Communicate – Knit a clear Rmd/Qmd notebook that explains assumptions, code choices, and results, with appropriate metadata and citations for data and help sources.
+
+6. 🪞 Reflect – Document troubleshooting, AI use, and learning-skill growth (curiosity, courage, tenacity, thoroughness, open-mindedness) through short memos embedded in the workflow.
+
+# Setting Up Your Notes
+
+To begin Part C of the Wildfire guided activity, follow these steps:
+
+1. Open your course project for RStudio 
+
+For those of you who **have GitHub** and a course project, navigate to your course folder and open your course project. This will open RStudio. Click "Pull" in the Git pane to get the latest version of the course materials. After completing work, save, stage, commit, and push.
+
+If you **don't have GitHub** or a course project, just open RStudio and set your working directory to your course folder.
+
+2. Download `Fire-Assignment-PartC-StudentCopy.qmd` and save it in your course folder.
+
+3. No additional dataset download is required for Part C. Use the table and parameter values provided in the activity.
+
+4. Edit the YAML to show your name.
+
+5. Follow along
+
+Read the background material below, then complete the tasks that follow. Replace each ____ placeholder (and any TODO comments) with working code or a short written answer. Run each section; be sure the requested objects appear in the Environment. 
+
+Use the template 🎯 Goal → ⚡ Code → ✅ Checks → 🗣 Comment to met the Complete criteria
+
+1. 🎯 **Goal** – In your own words, one sentence about what you are trying to do.
+
+2. ⚡ **Code** – Code that completes the task (replace each `____` with your own code).
+
+3. ✅ **Checks** – Code that convinces you your solution works (structure, counts, summaries, etc.).
+
+4.  🗣 **Comment** – 1–2 sentences either:
+  - data-focused (what you learned about the wildfire data), **or**
+  - code-focused (what the code does / why it works).
+
+**Supporting**
+
+- 📝 Format your document with headings, code chunks, and narrative text. Use proper grammar, spelling, and punctuation. Include a document title, author name, and 🕰 date in the heading of your report.
+
+- 👀 Cite resources (including referencing lessons, peers, instructor guidance, internet websites, AI summaries, the help file in R) in memos. State specifically what or who helped and in what ways. Always compose your own code (no copy and paste). 
+
+- 🚀 Code trials show how you explored ideas, asked questions independently of the assignment. Include code comments to explain your thinking.
+
+- 🪞 Reflect on learning process, connects ideas, discusses challenges, and describes improvement strategies.
+
+- 🧠 Growth mindset means you demonstrate effort, persistence, and a positive attitude toward learning new skills. You show courage.  
+
+- 💬 Prediction means you make hypotheses about what the code will do or what the data will look like before running it, and then reflect on whether your predictions were correct.
+
+- ✍️ Record what you tried, even if it didn’t work. This is proof of thoroughness and trustworthiness, prevents future duplication of errors, contextualizing successes, and exposes hidden discoveries (unanticipated effect).
+
+# Part C
+
+
+`rlnorm` + `replicate()` 
+
+❓ Question e: In a season with 450 new ignitions **statewide**, what is the probability we see at least 50 fast-growing events (≥10 km in 8 hours) when ignitions can occur in any hazard category according to their statewide area weights?
+
+___
+
+
+Let there be $L$ hazard categories indexed by $i = 1, 2, \ldots, L$ with:
+
+- statewide area weights $p_j$ such that $\sum_{j=1}^{L} p_j = 1$.
+
+- lognormal spread model in category $j$: 
+
+$ X | \text{category} = j \sim \text{Lognormal}(\text{meanlog}_j, \text{sdlog}_j). $
+
+Consider a season with $N = 450$ new ignitions **statewide**. For each ignition $i = 1, 2, \ldots, N$:
+
+1. Draw a hazard category 
+
+$$ C_i \in \{1, 2, \ldots, L\}, \space \space P(C_i = j) = p_j. $$
+
+independently across ignitions.
+
+2. Conditional on $C_i = j$, draw an 8-hour straight-line spread distance $X_i$ as
+
+$$ X_i | C_i = j \sim \text{Lognormal}(\text{meanlog}_j, \text{sdlog}_j). $$
+
+independently across ignition given their categories.
+
+Define the indicator variable for a 'fast-growing' ignition (≥ $k = 10$ km in 8 hours) as
+
+$$ I_i = \begin{cases} 1 & \text{if } X_i \geq k \\ 0 & \text{if } X_i < k \end{cases} \quad i = 1,\dots,450.$$
+
+Then, the total number of 'fast-growing' ignitions in the season, $S$, is given by
+
+$$ T = \sum_{i=1}^{450} I_i $$
+
+We are interested in the probability that a season has at least 5 fast-growing events:
+
+$$ P(T \geq 50). $$
+
+and is approximated by Monte Carlo simulation.
+
+$$
+\widehat{P(T \ge 50)}
+\;\approx\;
+\frac{1}{S} \sum_{s=1}^{S} \mathbf{1}\{T^{(s)} \ge 50\},
+$$
+
+where $T^{(s)}$ is the simulated count of fast-growing ignitions in season $s$, and $S$ is the total number of simulated seasons.
+
+___
+
+
+## Task 1
+
+**Create category labels**
+
+**Task instructions**
+
+1. Using **Table 1**, create a character vector named **`labels`** that contains the seven wildfire hazard categories in the same order as the **Category** column.
+
+2. Make sure the spelling and capitalization of each label exactly matches Table 1.
+
+3. Check that the vector prints correctly.
+
+🎯 **Goal.**  
+Write your own sentence(s) goal for creating a vector of category labels.
+
+```{r, eval=FALSE}
+# ⚡ Test: vector of category labels
+____  # create vector <- c( ... ) using the Category names from Table 1
+```
+
+```{r, eval=FALSE}
+# ✅  Verify: inspect labels
+
+____ # display labels
+
+```
+
+🗣 Comment (TODO).
+Why do you think we create the vector of category labels? How is it used in the next steps? Explain briefly why matching the order and spelling of these labels will matter later.
+
+
+## Task 2
+
+**Create category probabilities**
+
+**Task instructions**
+
+1. Using the Probability column in Table 1 (as proportions that sum to 1), create a numeric vector **`prob`**.
+
+2. The entries of `prob` must be in the same order as `labels`.
+
+3. Check that the probabilities sum to 1 (within rounding error).
+
+🎯 Goal.
+Write your own sentence(s) goal for building vector.
+
+
+```{r, eval=FALSE}
+# ⚡ Test: vector of category probabilities
+____ # create vector <- c( ... ) using the Probability column from Table 1
+
+```
+
+```{r, eval=FALSE}
+# ✅  Verify: : confirm they form a valid distribution
+____ # display vector
+____ # check that sum() is 1
+```
+
+
+## Task 3
+
+**Create lognormal parameter vectors**
+
+**Task instructions**
+
+1. From Table 1, read off the Mean log values for each category in the same order as `labels` and store them in a vector **`meanlog`**.
+
+2. Similarly, read off the SD log values and store them in a vector **`sdlog`**.
+
+3. Check that both vectors line up with **`labels`** (same length, same order).
+
+🎯 Goal.
+Write your own sentence(s) goal for vectors.
+
+```{r, eval=FALSE}
+# ⚡ Test: vectors of lognormal parameters
+____ # create vector 1 <- c( ...) from the Mean log column
+____ # create vector 2 <- c( ...) from the SD log column
+```
+
+```{r, eval=FALSE}
+# ✅  Verify: inspect and compare
+____ # display vector 1
+____ # display vector 2
+____ # check length of labels vector, with vector 1 and 2.
+```
+
+🗣 Comment (TODO).
+Describe any pattern you see.
+
+## Task 4
+
+**Set global simulation constants**
+
+Task instructions
+
+1. Let **`N`** be the number of ignitions per season (use the value given in the problem statement).
+
+2. Choose a large number **`S`** of simulated seasons (as specified in the assignment).
+
+3. Set the “fast-growing” threshold **`k`** in km (use the value given in the problem statement).
+
+4. Store these three values in objects `N`, `S`, and `k`.
+
+🎯 Goal.
+Write your own sentence(s) goal for setting up the core constants. 
+
+```{r, eval=FALSE}
+# ⚡ Test: number of ignitions, seasons, and fast threshold
+____ # set N to the number of ignitions per season 
+____ # set S to the number of simulated seasons
+____ # set k to the fast-run distance threshold in km 
+```
+
+```{r, eval=FALSE}
+# ✅  Verify: inspect constants
+____ # display N
+____ # display S
+____ # display k
+```
+
+
+## Task 5
+
+**Sample categories for one season**
+
+**Task instructions**
+
+1. Simulate one season of ignitions by drawing `N` categories according to their probabilities.
+
+2. Use `sample.int()` (or `sample()`) to draw indices from `1:length(labels)` with replacement and probability vector `prob`.
+
+3. Store the category indices in a vector named **`idx`**.
+
+4. Use `table()` with `labels[idx]` to see how many ignitions fall into each category.
+
+🎯 Goal.
+Write your own sentence(s) goal for simulating a single season’s mix of categories.
+
+```{r, eval=FALSE}
+# ⚡ Test: sample category indices for one season
+____ # create idx using sample.int() (or sample()) with size = N, prob = prob
+```
+
+```{r, eval=FALSE}
+# ✅  Verify: examine realized category mix
+
+____ # inspect the first few indices
+____ # use table() to see counts per category
+```
+
+🗣 Comment (TODO).
+Compare your simulated category counts to the theoretical proportions from prob.
+
+## Task 6
+
+**Draw distances for one season**
+
+**Task instructions**
+
+1. For the same season, convert each category index in `idx` to an 8-hour distance using a lognormal model.
+
+2. Use `rlnorm()` to draw `N` distances.
+
+3. Use `meanlog[idx]` and `sdlog[idx]` so that each ignition uses the parameters for its own category.
+
+4. Store the distances in a vector **`d`**.
+
+5. Inspect the first few values and a summary of `d`.
+
+🎯 Goal.
+Write your own sentence(s) goal for turning category indices into distances for one season.
+
+```{r, eval=FALSE}
+# ⚡ Test: simulate distances for one season
+____ # store d, use rlnorm() with n = N, meanlog = meanlog[idx], sdlog = sdlog[idx]
+```
+```{r, eval=FALSE}
+# ✅  Verify: examine distances
+
+____ # show head()
+____ # summarize d 
+```
+
+🗣 Comment (TODO).
+Describe what you notice about the distribution of distances across all categories.
+
+## Task 7
+
+**Count fast runs for one season**
+
+**Task instructions**
+
+1. Using the vector `d`, mark which ignitions are “fast-growing” using the condition `d >= k`.
+
+2. Store the logical vector in **`fast_flags_one`**.
+
+3. Use `sum()` on `fast_flags_one` to count fast ignitions and store the result as **`fast_count_one`**.
+
+4. Compute `mean()` of `fast_flags_one` to get the fraction of fast ignitions.
+
+🎯 Goal.
+Write your own sentence(s) goal for counting fast-growing ignitions.
+
+```{r, eval=FALSE}
+# ⚡ Test: count fast runs in one season
+____ # create fast_flags_one as a logical vector using d >= k
+____ # compute fast_count_one using sum() of fast_flags_one
+```
+```{r, eval=FALSE}
+# ✅  Verify: inspect count and proportion
+____ # display fast_count_one
+____ # optionally compute mean() of fast_flags_one to get proportion
+
+```
+
+🗣 Comment (TODO).
+Comment on how many fast runs you saw in this particular simulated season.
+
+## Task 8
+
+**Bundle one-season logic in a single block**
+
+Braces `{ ... }` group several lines together so they act as one expression and return the final result.
+
+**Task instructions**
+
+1. Combine the one-season computation into a single block that:
+
+- samples `idx` for one season,
+
+- simulates distances `d`,
+
+- returns the count of fast ignitions.
+
+2. Wrap the block in braces `{}` and assign the result to **`fast_count_one`**.
+
+3. Run the block and confirm it returns a single number (the fast count).
+
+🎯 Goal.
+Write your own sentence(s) goal for packaging the one-season simulation into one code block.
+
+```{r, eval=FALSE}
+# ⚡ Test: bundled one-season simulation returning a single fast count
+____ <- { #store vector and start block
+____ # sample idx for one season
+____ # simulate distances d using meanlog, sdlog with brackets and idx
+____ # return the count of d values that are greater than or equal to k
+} #end block
+```
+```{r, eval=FALSE}
+# ✅  Verify: confirm the block works
+____ # display fast_count_one
+```
+
+🗣 Comment (TODO).
+Explain why having this one-season block is useful when you move to many seasons. 
+
+
+Task 8 might have been challenging! Consider other kinds of memos: 🪞 Reflect; 🧠 Growth mindset; 👀 Cite resources; 🚀 Code trials; ✍️ Record what you tried.
+
+## Task 9
+
+**Use `replicate()` to simulate many seasons**
+
+**Task instructions**
+
+1. Use `replicate()` to repeat your one-season block `S` times.
+
+2. Store the resulting vector of counts in **`counts_fast_mix`**.
+
+3. Compute the expected number of fast runs per season as the mean of `counts_fast_mix`.
+
+4. Estimate the probability that a season has at least 50 fast-growing events by computing the fraction of seasons where the count is ≥ 50.
+
+🎯 Goal.
+Write your own sentence(s) goal for simulating many seasons and estimating the chance of at least 50 fast fires.
+
+```{r, eval=FALSE}
+# ⚡ Test: many-season simulation with replicate()
+set.seed(2025)
+____ # store resulting vector, use replicate() 
+____ # with n = number of seasons
+____ # and expr = { ... one-season block ... } as before
+)
+```
+```{r, eval=FALSE}
+# ⚡ Test:  Answer Question
+# summarize seasonal fast counts and estimate probabilities
+____ # inspect summary() of counts_fast_mix
+____ # compute mean() for expected fast runs
+____ # compute mean() for Monte Carlo estimate of P(T >= 50)  
+```
+
+🗣 Comment (TODO).
+Interpret both the expected fast count and the estimated probability of at least 50 fast fires in words.
+
+Task 9 might have been challenging! Consider other kinds of memos: 🪞 Reflect; 🧠 Growth mindset; 👀 Cite resources; 🚀 Code trials; ✍️ Record what you tried.
+
+## Task 10
+
+**Visualize the distribution of seasonal fast counts**
+
+**Task instructions**
+
+1. Use `ggplot2::geom_histogram()` (or base `hist()`) to plot a histogram of `counts_fast_mix`.
+
+2. If you use `ggplot2`, you could first build a small data frame with one column (`fast_count`).
+
+3. Clearly label the axes and choose a reasonable bin width.
+
+4. Draw a vertical line at 50 to mark the threshold and visually highlight seasons with ≥ 50 fast fires.
+
+5. Relate the shape of the histogram to your numeric summaries from Task 9.
+
+🎯 Goal.
+Write your own sentence(s) goal for plotting the distribution of fast fires per season.
+
+```{r, eval=FALSE}
+# ⚡ Test: histogram of seasonal fast counts
+
+____ # load ggplot2 if you choose to use it
+____ # create a data frame with a column fast_count = counts_fast_mix
+
+____ # build a histogram of fast_count (e.g., ggplot(...) + geom_histogram(...))
+____ # Add a vertical line at the threshold of 50 fast fires
+``` 
+
+```{r, eval=FALSE}
+# ✅  Verify: inspect histogram
+____ # display the histogram
+```
+
+🗣 Comment (TODO).
+In one sentence, explain how the histogram supports (or challenges) your numeric estimate of the probability of ≥ 50 fast fires.
+
+# ---

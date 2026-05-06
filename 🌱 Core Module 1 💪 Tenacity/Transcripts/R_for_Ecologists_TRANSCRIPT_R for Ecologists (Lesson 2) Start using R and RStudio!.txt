@@ -1,0 +1,93 @@
+00:00:01
+(soft instrumental music) - Hi everyone, and welcome to Lesson 2, where we will get started with doing some of the basics in R, and RStudio. So to get started first open RStudio, after you have gotten it installed, and this is the first thing that you will see. You've got the console on the left that interprets and runs all of the R code. On the right, you have a few other panels with various tabs with various information and resources that we'll talk about later in the course. So first I'm going to just increase the font size a bit,
+
+00:00:43
+just so that you can see this a little better. Let's try that, that's a little better. Yeah, we'll just do that just in case you have a lower resolution or poor internet connection, so you can still see what I'm typing. So, as I mentioned in the console, this is what interprets all of the R code, and that all of this text here is just what pops up the first time, whenever you open RStudio and it's a clean slate, it just gives you the R version and a bunch of other information,
+
+00:01:10
+that doesn't matter, you can ignore it. But the console in the simplest form R works as a calculator. So, we could say 2 + 3, type it right in and hit "Enter" or "Return," and we get our output right here, in this case, our output is 5. Let's do 5 x 7 and we get 35. Now the [1] before it, just so you know, refers to the index of the value that pops up, so if you had a result, that had many, many different numbers, and they wrapped around the screen to the next row, then this number would appear on the next row,
+
+00:01:51
+showing the index of that next value. For now, just ignore that. It really doesn't doesn't matter for us at all. What's important is what comes after that. So in this case, it's 35, for 5 times 7. Now, R also uses the order of operations, so you can use parentheses to... Let's see 4 times 5 minus no, let's do times 3 minus 1. And R, it keeps track of the order of operations. Now, the problem with this, is that we have to keep typing this, over and over again, each time we want our to calculate something.
+
+00:02:34
+If we do 2 + 3, again, see each time you have to go back, and rewrite what you wrote before. However, we can fix that problem using scripts. So, if we go to File, New File, R Script. Now we have a 4th window open in RStudio, and this is our script file. And this works very much like a text editor, so you can say, putting some of the commands we put in before, whoop! Didn't mean to type that down here. 2 + 3 5 x 7 Now you'll notice that when you hit "Enter," it just starts a new line,
+
+00:03:14
+it doesn't actually run or output the code, the result down here. To run the code, we select what we want to run, and we can click "Run," and that will send whatever code we highlighted down here, Run it, and this is our output, or we can just keep our cursor on the line that we want to Run and also click "Run," and it will also send that code down here. Another shortcut that you can use, that's a lot simpler and easier than having to click "Run" each time is just Command + Enter for Macs,
+
+00:03:50
+or Control + Enter for PCs. And you'll notice that, when I hit Control + Enter, it jumped to the next line. So, if you have a bunch of lines of code that you want to run consecutively one after another, and see the output of each one, you can just keep "Command" held down, or "Control" held down, and then just keep pressing, "Enter" or "Return" to get all of those results, and again, they all get thrown down here where we can see the output. Now, before we go on,
+
+00:04:20
+let's actually open an R script file, that I have already made a ready for this lesson, to do that, let's actually open the project that we downloaded, the course files that we downloaded from the course website and open the project file from those course files. So we'll go to File, Open Project, and then navigate to where you downloaded the course materials and open this file, "Essentials of R for Ecologists.Rproj" Give it a moment. Great, so now we have the, up here, it should say in the upper right,
+
+00:05:12
+"Essentials of R for Ecologists" this is the project that we've opened, And we'll talk more about what actual RStudio projects are later in the course. But for now, this is just an easy way to organize all the files that we're gonna be dealing with, and that I'll be showing you through this course, and one of the advantages of projects is that it creates a root directory, right, where this file is located. So, now we have easy access in this little "Files" tab here,
+
+00:05:37
+to all the different files in the course, that we can open just by clicking here. So, let's start by opening that folder. We just had less than one previously, it was a PowerPoint file. And now we can open "Lesson 2 intro NOTES" which is an R script. When we open that, we can see it right here. Now what I've done, for all of the lessons that I'm gonna be going through, is I've created these sort of blank templates for each lesson, where you can put in your notes as we go along,
+
+00:06:12
+I'm gonna be typing code into each of these different sections of the lesson and talking about different things, and you can use this to follow along, to typing your own code and your own comments. One important thing to remember, that will be very useful for doing this, is using the "#" or hash or pound sign to designate comments or commented code in your script. So if we don't do that, let's say we write, "Here are some notes" And now if we try to run that, you'll get an error,
+
+00:06:56
+because our thinks that this is actual R code, that you're trying to run. So instead, if you just put a little "#" hash or pound sign before it, just like I did with all of these other section titles, when you run it, it'll still pop up down here, but our won't interpret it as actual code. So you can use that from now on to take notes, and enter in code as we go along. All right, so let's move on now. We went over some of the basic math and logic operator, we haven't done logic operators yet,
+
+00:07:33
+So some of the basic math operators, again, you know, you can just do the basic 2 + 3 6 + 8 you know, you've got 2 x 8 you can raise numbers to powers, so 2 raised to the third is 8. You can divide. Aside from the basic math operators, you can also use some logic operators. So, for example, we could say is 3 less than 3 and we get "FALSE" is 3 equal to 3 and note that I'm using two equal signs to designate a logic operator, as opposed to trying to assign a value, which I'll talk about in a bit.
+
+00:08:25
+Does 3 equals 3 it does, You can do 4 greater than or equal to 4 it is, it's "TRUE" And I'm just copying and pasting that, is 4 greater than 4 it is not, "FALSE" and then you can say, you can also use the naught operator, which is the exclamation point. So you could say is 2 != 3 "TRUE" 2 does not equal 3, thankfully. And finally we can use some "&," "OR" operators. So we could say is 3, oops, is 3 greater than 2 and 5 greater than 7,
+
+00:09:27
+"FALSE" And so with "&" operator, both of these statements have to be "TRUE" for this whole thing to be "TRUE," but if we use the "OR" operator, which is the, I think it's called the pipe symbol, and it's usually located above the "Enter" or "Return" key. And it's just this vertical line. It's not a slash vertical line, so that's the "OR" operator. So if either of these are true, then that would come out as "TRUE," and it does.
+
+00:09:59
+and so note that, in all of these cases, and maybe you noticed up here, I kind of changed the space between, between the numbers and the operators. R is actually not space sensitive at all. So if you say 4 + 4, that will give you the exact same result with no error as 4 space, space, space, space, space, space, + space, space, space, space, space, space 4, that will give you the exact same result. It's a little bit of a blessing and a curse. It's a blessing cause you won't get errors by accidentally
+
+00:10:36
+having the wrong number of spaces, but it also means you just have to be a little bit more careful in making sure your code looks nice. And we'll talk a little bit more about good coding practices and making sure your code looks looks good, but just keep that in mind that sometimes crunching everything together, like this might not look as, as easy to understand or see as maybe adding appropriate spaces where it seems to make sense, but that's for the most part, that's up to you. Okay, let's go on to assigning variables.
+
+00:11:08
+And this will be one of the most important things that you learn, because you'll be using it constantly, almost every other operation in R involves assigning a value to something. And to do that, you use this arrow operator, a "Less Than" sign, and then the "Dash" and we can name a variable, whatever we want. So let's just say, we call it variable 1 and you can think of it "variable1 equals 3," but it's a little bit better to think of it as, since that's an arrow, you can say,
+
+00:11:48
+take the value of 3 and put it into variable1, the same thing Works with the equal sign, but I'll talk about later, why it's a good idea to not use the equal sign, because you want to save that for a different type of assignment operation. For now, anytime you're assigning a variable or anything, use this arrow operator. So, what does variable assigning actually mean? Well, we put that 3 into "variable1" so now if we just run "variable1" if we just run that outcome is 3.
+
+00:12:24
+So, by running this variable, it outputs, whatever its current value is in this case 3. And remember that we can also run code and then selecting code and then doing Command + Enter, or Control + Enter, So, instead of just writing this out again, and then running the whole line, we could have just re-selected that, and ran it and would have gotten the 3. But notice that when we run "variable1" with the assigning operator and 3 there's no output. And that's because everything that's going on
+
+00:13:00
+is behind the scenes. We're telling our to store this value of 3 into "variable1," we're not actually telling R to show us what is in "variable1." we're just assigning something. And so whenever you assign something, you won't actually get an output here. You can name variables, whatever you want. As long as they don't begin with numbers, and I believe that underscores and periods are the only non-character, or number symbols that you can use for creating variable names,
+
+00:13:35
+but they also can't start with a number. But otherwise you can, whoops! You can name a variable what ever you want, it doesn't matter. Of course you want variable names to make sense, so this probably is a terrible variable name. And there's certain best practices when naming variables and how to do it. I'll go over that more over time. But for now, just know that you can create your own variable names and in store values in them, okay? So let's name, let's create. "my_var1" put a value of 2 in it,
+
+00:14:16
+"my_var2" put a value of 3 in it, And then "sum_of_vars is my_var1 + my_var2" So, you can store these values, and then the great thing about variables is you can then use them together with any other operator that we've gone over so far, to calculate results. So here we have, my_var1 is 2 and my_var2 is 3 and make sure you remember it. If you've got an error it's 'cause you probably didn't run these two lines first, and then run that line, and now let's double-click to select "sum_of_vars"
+
+00:15:01
+and run that, and we get the result is 5, because my_var1 is 2 and my_var2 is 3. and add them together you get 5. Great, okay! Pretty straightforward. I promise this will get a little bit more exciting, and relevant to data analysis, but just going over the basics to make sure that that is all clear to you. Okay. And again, to sort of, I mentioned this before, 'cause I thought it was better to say it at the beginning of the lesson. Commenting is a very important and useful thing to be able to do when you're writing your R scripts.
+
+00:15:39
+And when you're following along in these lessons, comments, allow your code, allow you to put in English essentially, or any other languages that you speak, or use frequently that isn't R you can put that in right into the, put your comments and ideas, thoughts, explanations for what type of coding you're doing, why you're doing it, any notes about what we're doing here. So for example, we could say. "# variables can contain numbers, letters, "and periods or underscores."
+
+00:16:29
+The other thing I forgot to mention actually, is also that "# variables are case sensitive" So if you did "my_Var1" notice the capital V and you try to run that, you'll get an error, "'my_Var' not found" because that is actually a separate variable name, because that V is capital. So that's another important thing to keep note. So this is one way to add your notes as we go along, I'll keep mentioning this throughout the course, but it's good to get into a good commenting habit early on.
+
+00:17:10
+So as you start to analyze your data, and write out longer R scripts, it's a really good idea to try to explain every step of the way as you're going, try to describe why you're doing a particular analysis, why you're running a particular line of code, why it's relevant to what you're doing, because just like field or lab notes. It's amazing, how what seems really obvious, and clear to you right now, as you're typing the code even a week or two later, coming back to the code after having done
+
+00:17:43
+a lot of other work or field work, who knows what, you come back to the code and you're like, "Gosh, why did I add my_var1 and my_var2 "I can't remember what the point of this was?" Well, of course that's silly, but you know, things get a little more complex in a bit as you'll see, and it becomes really relevant and important to understand and follow your progress along the way. So, I can't stress the importance of commenting enough, Well commented code makes all the difference.
+
+00:18:11
+All right, I'll leave that there, I could talk about this forever, but again, in summary, that's it for this basic intro, I quickly talked about sort of the four different sections of RStudio, I guess I didn't go into detail, but you know, this is where we can see the files. And then there's other tabs that allow us to see plots and visualize things. And I'll talk about some more of these later. Up here, I didn't mention this, this is the "Environment," and so as we were saving variables along the way,
+
+00:18:39
+those variables were appearing here in the "Environment" where we can actually see what the value of each of these variables are. And so the "Environment" stores, all of the, the information that you're working with in R session, and this is where you can see it. And when we are working with data frames, or larger tables of data, we can actually click on the variables here to have a nice little visual display, to more easily explore our data. But for now, since these are single values,
+
+00:19:10
+you can just see what they are right there. And that's about it. So thanks for watching, and in the next lesson, I'm just going to wrap up this intro, by showing you how to change to useful, and important settings in RStudio to make RStudio a more effective, and enjoyable user experience. So with that, thank you so much, and see you in the next lesson. (soft instrumental music)
+

@@ -1,0 +1,141 @@
+---
+title: "Wildfire"
+subtitle: "Part A: Explore and Wrangle"
+author: "YOUR NAME"
+date: today
+format: html
+---
+
+# Introduction
+
+Idaho is well known for its wildfires. They play a ecological role, shaping our forests and grasslands while presenting significant hazards to communities and resources. In recent years, the Idaho landscape has experienced frequent and sometimes severe wildfire seasons due to both natural and human activity. While fires are part of the natural ecosystem, they have become more destructive as the climate warms. Wildfire preparedness and management is a continuing challenge for the state.
+
+Wildfire managers need tools that show where fires are more likely and how intense they could become. The U.S. Forest Service’s Wildfire Hazard Potential (WHP) is one such tool: a nationwide raster layer where each grid cell stores a unitless index of relative wildfire hazard (higher value = higher hazard).
+
+How far could a new wildfire run in 8 hours? How many new wild fire ignitions will grow larger than 10 km (straight line) in 8 hours?
+
+# Explore and Wrangle
+
+The data analyst's first step is to load the data and explore and modify it. 
+
+## Library and Load Data
+
+**Task 1**
+
+🎯 **Goal.** ____________________________
+
+```{r}
+#| message: false
+#| warning: false
+#⚡ Code
+____ # 1. e.g., load any needed package(s)
+____ # 2. e.g., read the CSV into county_raw
+```
+
+
+```{r}
+#| message: false
+#| warning: false
+#⚡ Code
+county_raw <- readr::read_csv("_______________________")
+```
+
+
+```{r, eval=FALSE}
+# ✅  Verify 
+dplyr::glimpse(county_raw)
+
+nrow(county_raw)
+```
+
+🗣 **Comment**  ____________________________
+
+
+## Audit Check
+
+**Task 2**
+
+🎯 **Goal.** ____________________________
+
+```{r}
+# ⚡ Code: summarize key audit quantities for county_raw
+____ # 1/2. assign county_summary and use county_raw
+____ # 1. compute n_rows
+____ # 1. compute n_na_whp
+____ # 1. compute min_area
+____ # 1. compute max_area
+
+# ✅ Verify
+
+knitr::kable(county_summary)
+```
+
+🗣 **Comment**  ____________________________
+
+## Compute WHP quantile edges
+
+**Task 3**
+
+🎯 **Goal.** ____________________________
+
+```{r}
+# ⚡ Code: Base R stats::quantile 
+____ # 2. store WHP quantile edges in object e
+____ # 1. call quantile() on county_raw's whp column
+____ # 1. specify the probs vector
+____ # 3. include remove NA from calculation
+
+```
+```{r}
+# ✅  Verify
+e
+```
+
+🗣 **Comment**  ____________________________
+
+## Category Label
+
+**Task 4**
+
+🎯 **Goal.** ____________________________
+
+```{r}
+# ⚡ Code:  dplyr::mutate + dplyr::case_when
+____ # 1. assign county_cats and pipe county_raw into it 
+____ # 2. use mutate() to create Category 
+____ # 3. with case_when() and e[ ] bounds
+____ # 4. convert Category to an ordered factor with the specified levels
+```
+
+```{r}
+# ✅  Verify: confirm Category looks right
+____ # e.g., count() or table()
+____ # optional: str() or glimpse()
+```
+
+🗣 **Comment**  ____________________________
+
+
+## Summary Table
+
+**Task 5**
+
+🎯 **Goal.** ____________________________
+
+
+```{r}
+# ⚡ Code: dplyr::group_by + dplyr::summarize + dplyr::mutate
+____ # 1. store prob_tbl and pipe county_cats into it
+____ # 2. group_by()
+____ # 3. summarize()
+____ # 4. mutate())
+____ # 5. select()
+```
+
+```{r}
+# ✅  Verify: validate prob_tbl
+____ # print prob_tbl
+____ # check that probabilities sum to ~1
+```
+
+🗣 **Comment**  ____________________________

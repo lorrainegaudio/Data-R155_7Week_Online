@@ -1,0 +1,123 @@
+---
+title: "Chapter 5 Overview"
+author: "Lorraine Gaudio"
+#date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
+output: 
+  html_document: # To create an HTML document from R Markdown
+    toc: false # Table of contents (TOC)
+    toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactivne scrolling
+    includes:
+      in_header: ../assets/header.html
+      after_body: ../assets/footer.html
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Chapter 5 Overview
+
+---
+title: "Module 5: Filtering Rules + Data Dictionaries + dplyr Subsetting"
+output: html_document
+---
+
+# Module 5: Filtering Rules + Data Dictionaries + dplyr Subsetting
+
+Hi everyone,
+
+This module is where you learn to **filter data like an analyst**, not like someone guessing until the output “looks right.” You’ll translate real screening rules (inclusion/exclusion criteria) into correct, readable code—first using Base R brackets, then using `dplyr` verbs that make the same logic easier to read.
+
+You’ll also see a professional reality: **analysis is only as trustworthy as its documentation**. If someone can’t interpret your variables—or can’t re-run your workflow—your results don’t travel.
+
+---
+
+## What you’ll do in this module
+By the end of Module 5, you will be able to:
+
+- Filter rows in a data frame using multi-condition rules (AND / OR / membership).
+- Prevent the most common filtering mistake: **operator precedence bugs** caused by missing parentheses.
+- Build and revise a **data dictionary** so a dataset is interpretable to someone else (or future-you).
+- Use `dplyr` to subset data with shorter, more readable code using `select()` and `filter()`.
+- Produce a clean, shareable report by knitting a formatted HTML (and revising formatting in the Capstone).
+
+---
+
+## Learning objectives
+By the end of this module, the successful student will be able to:
+
+- Apply bracket subsetting to extract rows and columns using the pattern  
+  <span style="font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace; color:#111; background-color:#f3f4f6; padding:0.1em 0.25em; border-radius:4px;">df[rows, cols]</span>.
+- Create and interpret logical tests on columns using relational operators and `$`.
+- Combine multiple screening conditions using  
+  <span style="font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace; color:#111; background-color:#f3f4f6; padding:0.1em 0.25em; border-radius:4px;">&</span> (AND),  
+  <span style="font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace; color:#111; background-color:#f3f4f6; padding:0.1em 0.25em; border-radius:4px;">|</span> (OR), and  
+  <span style="font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace; color:#111; background-color:#f3f4f6; padding:0.1em 0.25em; border-radius:4px;">%in%</span> (membership).
+- Use negation to invert a test and clearly explain what changed.
+- Diagnose and fix a precedence bug by adding grouping parentheses.
+- Construct readable filters with clear comments and verification checks (CLO2).
+- Create and update a data dictionary using targeted subassignment  
+  <span style="font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace; color:#111; background-color:#f3f4f6; padding:0.1em 0.25em; border-radius:4px;">x[i, j] &lt;- value</span> (🌳 Advanced).
+- Use `dplyr` to subset data with  
+  <span style="font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace; color:#111; background-color:#f3f4f6; padding:0.1em 0.25em; border-radius:4px;">select()</span>,  
+  <span style="font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace; color:#111; background-color:#f3f4f6; padding:0.1em 0.25em; border-radius:4px;">filter()</span>, and the pipe  
+  <span style="font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace; color:#111; background-color:#f3f4f6; padding:0.1em 0.25em; border-radius:4px;">%&gt;%</span>.
+- Produce a shareable knitted report with professional headings and formatting (CLO1, CLO4).
+
+---
+
+## Why this module is important
+Filtering is where analysts quietly ruin results. The most common mistakes aren’t dramatic errors—they’re **plausible-looking wrong subsets** caused by missing parentheses, reversed conditions, or misunderstood “OR” logic. This module trains you to write filtering rules you can defend, verify, and explain.
+
+The Advanced work (data dictionary + peer review) targets a second professional failure mode: **undocumented data**. If variable meanings, coding, and missing values aren’t recorded, your analysis becomes impossible to reuse. That is not “extra.” It’s a baseline expectation in research and analytics—and it directly supports your readiness for the Signature Assignment (CLO4).
+
+---
+
+## Strategies for success (do these every time)
+- **Build filters in pieces:** create each condition first, then combine them.
+- **Use parentheses aggressively:** if you mix AND and OR, assume you need grouping.
+- **Verify after every filter:** check row counts and sanity-check a few records.
+- **Knit early, not at the deadline:** most “submission disasters” are formatting + missing chunks.
+- **Memo your reasoning:** what you expected, what happened, and what you changed (short, but real).
+
+---
+
+## Assignments and tasks
+
+### DUE BY **Thursday, March 5, 2026** at 11:59 p.m. Mountain Time
+- **05.00** Module 5 Overview
+- **05.01** &, |, and %in% Guided Activity (🌱 Core; 1 hr 30 min)
+- **05.02** &, |, and %in% Supplemental Readings and Multimedia (Optional; time varies)
+
+### DUE BY **Sunday, March 8, 2026** at 11:59 p.m. Mountain Time
+- **05.03** Data Dictionary Guided Activity (🌳 Advanced; 30 min)
+- **05.04** Data Dictionary Small Group Discussion (🌳 Advanced; 30 min; initial post)
+- **05.05** &, |, and %in% Practice Space (🌱 Core; 30 min)
+
+### DUE BY **Monday, March 9, 2026** at 11:59 p.m. Mountain Time
+- **05.06** &, |, and %in% Practice Space HTML Submission (🌱 Core)
+- **05.07** &, |, and %in% Practice Space HTML Submission (🌳 Advanced)
+
+### DUE BY **Thursday, March 12, 2026** at 11:59 p.m. Mountain Time
+- **05.08** In-Person Class
+- **05.09** Data Dictionary 🗺️ Small Group Activity 2nd post (🌳 Advanced; 30 min; reply post)
+- **05.10** dplyr Subsetting Guided Activity (🌱 Core; 1 hr 30 min)
+- **05.11** dplyr Subsetting Supplemental Readings and Multimedia (Optional; time varies)
+
+### DUE BY **Sunday, March 15, 2026** at 11:59 p.m. Mountain Time
+- **05.12** dplyr Subsetting Practice Space (🌱 Core; 30 min)
+
+### DUE BY **Monday, March 16, 2026** at 11:59 p.m. Mountain Time
+- **05.13** dplyr Subsetting Practice Space HTML Submission (🌱 Core)
+- **05.14** In-Person Class
+- **05.15** Module Capstone ✍️ (🌳 Advanced; 30 min) — Quarto activity + formatting revision of your dplyr Practice Space notebook
+- **05.16** Module Survey (Optional)
+
+---

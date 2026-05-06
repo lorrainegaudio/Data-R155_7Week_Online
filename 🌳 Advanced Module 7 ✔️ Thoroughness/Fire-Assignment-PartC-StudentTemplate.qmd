@@ -1,0 +1,253 @@
+---
+title: "Wildfire"
+subtitle: "Part C: Monte Carlo"
+author: "YOUR NAME"
+date: today
+format: html
+---
+
+# Introduction
+
+Idaho is well known for its wildfires. They play a ecological role, shaping our forests and grasslands while presenting significant hazards to communities and resources. In recent years, the Idaho landscape has experienced frequent and sometimes severe wildfire seasons due to both natural and human activity. While fires are part of the natural ecosystem, they have become more destructive as the climate warms. Wildfire preparedness and management is a continuing challenge for the state.
+
+Wildfire managers need tools that show where fires are more likely and how intense they could become. The U.S. Forest Service’s Wildfire Hazard Potential (WHP) is one such tool: a nationwide raster layer where each grid cell stores a unitless index of relative wildfire hazard (higher value = higher hazard).
+
+How far could a new wildfire run in 8 hours? How many new wild fire ignitions will grow larger than 10 km (straight line) in 8 hours?
+
+
+# `rlnorm` + `replicate()` 
+
+❓ Question e: In a season with 450 new ignitions **statewide**, what is the probability we see at least 50 fast-growing events (≥10 km in 8 hours) when ignitions can occur in any hazard category according to their statewide area weights?
+
+## Create category labels
+
+**TASK 1**
+
+🎯 **Goal.** ____________________________
+
+```{r}
+# ⚡ Test: vector of category labels
+____  # create vector <- c( ... ) using the Category names from Table 1
+```
+
+```{r}
+# ✅  Verify: inspect labels
+
+____ # display labels
+```
+
+🗣 Comment (TODO).
+
+
+## Create category probabilities
+
+**TASK 2**
+
+🎯 **Goal.** ____________________________
+
+```{r}
+# ⚡ Test: vector of category probabilities
+____ # create vector <- c( ... ) using the Probability column from Table 1
+```
+
+```{r}
+# ✅  Verify: : confirm they form a valid distribution
+____ # display vector
+____ # check that sum() is 1
+```
+
+## Create lognormal parameter vectors
+
+**TASK 3**
+
+🎯 **Goal.** ____________________________
+
+
+```{r}
+# ⚡ Test: vectors of lognormal parameters
+____ # create vector 1 <- c( ...) from the Mean log column
+____ # create vector 2 <- c( ...) from the SD log column
+```
+
+```{r}
+# ✅  Verify: inspect and compare
+____ # display vector 1
+____ # display vector 2
+____ # check length of labels vector, with vector 1 and 2.
+```
+
+🗣 Comment (TODO).
+
+
+## Set global simulation constants
+
+**TASK 4**
+
+🎯 **Goal.** ____________________________
+
+```{r}
+# ⚡ Test: number of ignitions, seasons, and fast threshold
+____ # set N to the number of ignitions per season 
+____ # set S to the number of simulated seasons
+____ # set k to the fast-run distance threshold in km 
+```
+
+```{r}
+# ✅  Verify: inspect constants
+____ # display N
+____ # display S
+____ # display k
+```
+
+## Sample categories for one season
+
+**TASK 5**
+
+🎯 **Goal.** ____________________________
+
+
+```{r}
+# ⚡ Test: sample category indices for one season
+____ # create idx using sample.int() (or sample()) with size = N, prob = prob
+```
+
+
+```{r}
+# ✅  Verify: examine realized category mix
+
+____ # inspect the first few indices
+____ # use table() to see counts per category
+```
+
+🗣 Comment (TODO).
+
+
+## Draw distances for one season
+
+**TASK 6**
+
+🎯 **Goal.** ____________________________
+
+
+```{r}
+# ⚡ Test: simulate distances for one season
+____ # store d, use rlnorm() with n = N, meanlog = meanlog[idx], sdlog = sdlog[idx]
+```
+
+```{r}
+# ✅  Verify: examine distances
+
+____ # show head()
+____ # summarize d 
+```
+
+🗣 Comment (TODO).
+
+
+## Count fast runs for one season
+
+**TASK 7**
+
+🎯 **Goal.** ____________________________
+
+
+```{r}
+# ⚡ Test: count fast runs in one season
+____ # create fast_flags_one as a logical vector using d >= k
+____ # compute fast_count_one using sum() of fast_flags_one
+```
+```{r}
+# ✅  Verify: inspect count and proportion
+____ # display fast_count_one
+____ # optionally compute mean() of fast_flags_one to get proportion
+```
+
+🗣 Comment (TODO).
+
+
+## Bundle one-season logic in a single block
+
+**TASK 8**
+
+
+🎯 **Goal.** ____________________________
+
+```{r}
+# ⚡ Test: bundled one-season simulation returning a single fast count
+____ <- { #store vector and start block
+____ # sample idx for one season
+____ # simulate distances d using meanlog, sdlog with brackets and idx
+____ # return the count of d values that are greater than or equal to k
+} #end block
+```
+```{r}
+# ✅  Verify: confirm the block works
+____ # display fast_count_one
+```
+
+🗣 Comment (TODO).
+
+
+
+## Simulate many seasons
+
+**TASK 9**
+
+🎯 **Goal.** ____________________________
+
+```{r}
+# ⚡ Test: many-season simulation with replicate()
+set.seed(2026)
+____ # store resulting vector, use replicate() 
+____ # with n = number of seasons
+____ # and expr = { ... one-season block ... } as before
+)
+```
+```{r}
+# ⚡ Test:  Answer Question
+# summarize seasonal fast counts and estimate probabilities
+____ # inspect summary() of counts_fast_mix
+____ # compute mean() for expected fast runs
+____ # compute mean() for Monte Carlo estimate of P(T >= 50)  
+```
+
+🗣 Comment (TODO).
+
+
+# Visualize the distribution of seasonal fast counts
+
+**TASK 10**
+
+🎯 **Goal.** ____________________________
+
+```{r}
+# ⚡ Test: histogram of seasonal fast counts
+
+____ # load ggplot2 if you choose to use it
+____ # create a data frame with a column fast_count = counts_fast_mix
+
+____ # build a histogram of fast_count (e.g., ggplot(...) + geom_histogram(...))
+____ # Add a vertical line at the threshold of 50 fast fires
+```
+
+```{r}
+# ✅  Verify: inspect histogram
+____ # display the histogram
+```
+
+🗣 Comment (TODO).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,149 @@
+---
+title: "GitHub"
+author: "Lorraine Gaudio"
+date: "2026-02-04"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Comprehensive Data Wrangling for STEM Student Performance Research
+Welcome to the repository! This guide will help you get started with using Git, GitHub, and RStudio for collaborating on our project. For more detailed instructions, you can refer to Happy Git with R.
+
+What is Git and GitHub?
+Git: A version control system that helps you track changes and collaborate with your team. It is a collection of individual commands you execute in the shell.
+
+Repository: A set of files stored by a provider. GitHub is a repository hosting service for your Git-based projects online, allowing others access to your project in nearly real time.
+
+Initial Setup
+Step 1: Register a GitHub Account
+Go to GitHub and register for a free account.
+Choose a username that is short, professional, memorable, timeless, all lower case, and uses hyphens to separate words.
+Step 2: Install or Upgrade R and RStudio
+Download and install the latest version of R and RStudio from Posit.
+Step 3: Install Git
+Windows: Install Git Bash from Git for Windows. Accept the defaults during installation.
+
+Ensure Git is installed at C:/Program Files/Git/bin/git.exe.
+Linux: Use your distribution’s package manager.
+
+Ubuntu/Debian: sudo apt-get install git
+Fedora/RedHat: sudo yum install git
+Alternatively, download from Git SCM.
+macOS: Install Xcode command line tools.
+
+In Terminal, run: git --version or git config and follow the prompts to install.
+Step 4: Introduce Yourself to Git
+• Open the shell (Terminal on macOS, Git Bash on Windows) and run:
+
+git config --global user.name "Your Name"
+git config --global user.email example@boisestate.edu
+• Use the email associated with your GitHub account. Verify your settings:
+
+git config --global –list
+• Set the initial default branch to main:
+
+git config --global init.defaultBranch main
+Step 5: Set Up SSH Keys
+SSH keys provide better security. To generate SSH keys, run:
+
+ssh-keygen -t rsa -b 4096
+Follow the prompts to create your keys. By default, they’ll be saved in ~/.ssh/id_rsa (private key) and ~/.ssh/id_rsa.pub (public key). Add your public key to GitHub:
+
+Go to GitHub > Settings > SSH and GPG keys.
+Click “New SSH key”.
+Copy the public key from ~/.ssh/id_rsa.pub and paste it into the key field.
+Give your device a title. Test the connection:
+ssh -T git@github.com
+Step 6: Connect Git and GitHub
+6.1 Create a Repository on GitHub
+Go to GitHub and log in.
+Click the “New” button near “Repositories”.
+Fill in the repository details: o Repository template: No template o Repository name: myrepo o Description: “My first repo” o Public o Initialize with a README file
+Click “Create repository”.
+6.2 Clone the Repository in Shell
+git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY.git
+cd myrepo
+ls
+head README.md
+git remote show origin
+6.3 Make a Local Change and Push to GitHub
+Add a line to README.md:
+echo "A line I wrote on my local computer" >> README.md
+git status
+Commit and push to GitHub:
+git add README.md
+git commit -m "A commit from my local computer"
+git push
+Step 7: Connect RStudio to GitHub
+7.1 Create a Repository on GitHub
+Go to GitHub and log in.
+Click the “New” button near “Repositories”.
+Fill in the repository details: o Repository template: No template o Repository name: myrepo o Description: “My second repo” o Public o Initialize with a README file
+Click “Create repository”.
+7.2 Clone the Repository in RStudio
+Open RStudio.
+Go to File > New Project > Version Control > Git.
+Paste the repository URL from GitHub.
+Accept the default (project name and GitHub repo name must match).
+Pay attention to where you save your project locally.
+Open the project in a new session.
+Notice the README.md file on your computer.
+7.3 Make a Local Change in RStudio
+Open README.md in RStudio.
+Add a line to README.md: “A line I wrote in RStudio”
+Commit and push the changes: o Click the Git tab. o Check the “Staged” box for README.md. o Click Commit. o Type the message “Commit from R”. o Click Commit. o Push the changes. o Confirm in GitHub. You are now set up to use Git and GitHub with RStudio for our project.
+Step 8: Connect this Repository to a RStudio Project
+To collaborate effectively on this repository, follow these steps to connect the repository to your RStudio project.
+
+8.1 Clone the Repository to Your Local Machine
+Go to the GitHub Repository: Navigate to the GitHub page of this repository.
+
+Clone the Repository:
+
+Click the green "Code" button.
+Select "HTTPS" or "SSH" (SSH is preferred for better security).
+Copy the repository URL.
+Open RStudio: Start RStudio on your local machine.
+
+Create a New Project:
+
+Go to File > New Project > Version Control > Git.
+Paste the copied repository URL into the "Repository URL" field.
+Choose a local directory to store the repository.
+Click "Create Project".
+8.2 Verify the Repository
+Check the Files: Ensure that all files from the repository are present in your RStudio project. You should see the README.md file and other project files.
+
+Open the Project: You are now working within the cloned repository in RStudio. Any changes you make here can be tracked and pushed back to GitHub.
+
+8.3 Pull the Latest Changes
+Fetch and Pull:
+Go to the Git tab in RStudio.
+Click the blue "Pull" button to fetch and merge the latest changes from the GitHub repository.
+Resolve any merge conflicts if they arise.
+8.4 Make Local Changes and Commit
+Edit Files: Make any necessary changes to the project files in RStudio.
+
+Save Changes: Save your changes in RStudio.
+
+Commit Changes:
+
+Go to the Git tab.
+Stage the files you have changed by checking the boxes next to the file names.
+Click the "Commit" button.
+Write a meaningful commit message describing the changes.
+Click "Commit".
+8.5 Push Changes to GitHub
+Push Changes:
+
+After committing your changes, click the green "Push" button in the Git tab.
+This will push your committed changes to the GitHub repository.
+Verify Changes: Go to the GitHub repository page and verify that your changes have been pushed successfully.
+
+8.6 Collaborate with the Team
+Regularly Pull Updates: Frequently pull the latest changes from the GitHub repository to ensure your local copy is up to date.
+Commit Often: Make regular commits to track your progress and changes.
+Communicate: Use commit messages and GitHub issues to communicate with your team about changes and tasks. By following these steps, you can effectively collaborate with our team using GitHub and RStudio.

@@ -1,0 +1,1631 @@
+---
+title: "Signature Assignment"
+subtitle: "Descriptive Statistics"
+author: "Lorraine Gaudio"
+date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
+team: "Spring 2026"
+output: 
+  html_document: # To create an HTML document from R Markdown
+    toc: false # Table of contents (TOC)
+    toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactivne scrolling
+    includes:
+      in_header: ../assets/header.html
+      after_body: ../assets/footer.html
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r eval=FALSE, include=FALSE}
+title: "Signature Assignment"
+subtitle: "Descriptive Statistics"
+author: "Lorraine Gaudio"
+date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
+output: 
+  pdf_document:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+    citation_package: natbib
+    fig_caption: true
+    df_print: kable # Data frame printing
+    includes:
+      in_header: ../assets/header.tex
+    latex_engine: xelatex  # Use xelatex to support fontspec
+fontsize: 12pt
+geometry: margin=1in
+mainfont: "Garamond" # Sets the font of the entire document
+sansfont: "Gotham-Book.otf" # Set sans-serif font to Gotham Book
+monofont: "Courier New" # Set monospace font to Courier New
+documentclass: scrreprt
+linkcolor: boisestateblue # Customizes the color of hyperlinks
+urlcolor: magenta # Customizes the color of URLs
+citecolor: black # Customizes the color of citations
+bibliography: references.bib # Bibliography file
+biblio-style: apalike                 # ⟵ natbib needs a .bst style
+natbiboptions: "round,authoryear"     # round brackets, Author (Year)
+# ---
+title: "Signature Assignment"
+subtitle: "Descriptive Statistics"
+author: "Lorraine Gaudio"
+date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
+team: "Spring 2026"
+output: 
+  html_document: # To create an HTML document from R Markdown
+    toc: false # Table of contents (TOC)
+    toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactivne scrolling
+    includes:
+      in_header: ../assets/header.html
+      after_body: ../assets/footer.html
+```
+
+Overview
+
+This Signature Assignment asks you to build a **Data Understanding Notebook** in Quarto using the `penguins` dataset. The notebook is a working analytical document where you load data, identify variable types, choose appropriate descriptive statistics, and explain what those statistics show. This activity asks you to 🎯 plan your approach, ✅ monitor whether your code and interpretations make sense, and 🗣 revise your thinking when something is unclear or incorrect. That process is part of self-regulated learning: using metacognitive strategies to guide your own understanding.
+
+This activity is also designed to help you practice writing words around code. In this course, explaining your code and output in plain English is a learning strategy that helps you rehearse key ideas, strengthen your memory, and check whether you truly understand what the code is doing. Each part builds on previous sections, so you return to earlier ideas and use them again in a new context. This repetition helps you develop fluency.
+
+Learning how to create a **Data Understanding Notebook** is something you can use in real analytical settings. Researchers do not begin with conclusions. They begin by getting to know the data: what each variable represents, what kind of values it contains, which summaries make sense, and what early patterns or problems deserve attention. This notebook reflects that real workflow. It helps you practice persistence on difficult tasks, document your thinking, and build habits that matter in real analytical settings where clear reasoning, reproducible work, and thoughtful interpretation are expected.
+
+This activity is designed to be open-ended. You have the freedom to choose which variables to describe and which descriptive statistics to use. The goal is not to get a "right answer" but to make informed choices and explain your reasoning. You will learn how to connect the reading to the data, make decisions about which summaries fit which kinds of variables, and explain why those summaries make sense.
+
+By the end of the Descriptive Statistics activity you will be able to:
+
+-   Define key data science terms related to data collection and data types.
+
+-   Calculate and interpret common descriptive statistics such as counts, mode, median, mean, variance, and standard deviation.
+
+-   Report descriptive statistics using inline R code in a Quarto document.
+
+-   Understand the importance of choosing appropriate descriptive statistics based on the type of data and research question.
+
+-   Produce a well-structured and formatted HTML document summarizing the descriptive statistics of a dataset.
+
+# Part 1
+
+Part 1 builds the foundation for the full report. In this section, you will set up your Quarto file, inspect the `penguins` dataset, and begin deciding which descriptive statistics fit which kinds of variables. Your goal is to connect the reading to the penguins dataset. You will build on this in Part 2 where you explain why a summary method makes sense for that kind of data.
+
+## Task 1: Set up notebook
+
+### **Step 1**
+
+The first step to creating a **Data Understanding Notebook** is to set up your Quarto document. This will be the working document where you will write your notes, run code, and create a reproducible report.
+
+-   For those of you who **have GitHub** and a course **project**, (1) navigate to your course folder and (2) open your course project. This will open RStudio. (3) Click "Pull" in the Git pane to get the latest version of the course materials. *After completing work: save, stage, commit, and push.*
+
+-   If you **don't have GitHub** or a course project, just open RStudio and set your working directory to your course folder.
+
+### **Step 2** Open a new Quarto document
+
+`File` > `New File` > `Quarto Document`
+
+Enter the document title and your name.
+
+-   Data Understanding Notebook
+
+-   YOUR NAME
+
+### ** Step 3** YAML Header
+
+Modify your YAML header to custom design your new Quarto document. Update the title, author, date, and table of contents in the YAML header.
+
+```{r echo=FALSE, results='asis'}
+cat("```yaml
+---
+title: \"Data Understanding Notebook\"
+subtitle: \"Descriptive Statistics\"
+author: \"YOUR NAME\"
+date: today
+toc: true
+toc-depth: 2
+number-sections: true
+format: html
+---
+```")
+```
+
+Save it as `descriptive_statistics.qmd`.
+
+### Headings
+
+Use the section headings, like those shown below, to create the structure of your notebook. You can copy and paste the section headings into your new Quarto document.
+
+``` markdown
+
+# Purpose of this notebook
+
+# Load Packages and Data
+
+# Variables and Data Types
+
+# Count-Based Summaries
+
+# Median
+
+# Mean
+
+# Measures of Spread
+
+## Standard Deviation
+
+## Range
+
+## Interquartile Range
+
+## Five Number Summary
+
+# Early Takeaways
+```
+
+Work through the sections under each heading.
+
+💡 **Tip:** Render to HTML often to see the results.
+
+## Task 2: Notebook Purpose Statement
+
+Your Data Understanding Notebook needs to start with a purpose statement. Place the short paragraph below under the first heading, explaining the purpose of this notebook. Include the research question that you will be exploring, a brief description of the dataset, and link to the dataset references.
+
+### **Step 1**: Write a purpose statement
+
+> This document is an exploratory data analysis notebook used to understand the dataset `penguins` and prepare for later analysis. It is data for three penguin species observed in the Palmer Archipelago, Antarctica, collected by Dr. Kristen Gorman with Palmer Station LTER. **How do penguin body measurements differ by species, sex, and island in the Palmer Archipelago?**
+
+### **Step 2**: Create a link
+
+Create a link to the dataset references in the reading. To include a link to the dataset references, you can use this inline syntax:
+
+``` markdown
+[Dataset References](https://allisonhorst.github.io/palmerpenguins/reference/penguins.html)
+```
+
+This will create a hyperlink in your HTML document that readers can click to access the dataset references. It will look like this:
+
+[Dataset References](https://allisonhorst.github.io/palmerpenguins/reference/penguins.html)
+
+## Task 3: Load 📦 Packages
+
+Under the heading "Load Packages and Data", you can write a short goal statement citing the necessary packages and data for your analysis. It's helpful to jot down a quick note with a link about anything you might need to cite later if you decide to publish your work.
+
+<https://education.rstudio.com/blog/2020/07/palmerpenguins-cran/>
+
+Then, follow the steps below to load the packages and data.
+
+🎯 install the released version of `palmerpenguins` from CRAN with:
+
+```{r eval=FALSE}
+# ⚡ Install once (if needed): 
+# install.packages("dplyr")
+
+# install.packages("palmerpenguins")
+```
+
+🎯 Load the packages
+
+```{r message=FALSE, warning=FALSE}
+library(dplyr)   # glimpse, %>%, count
+```
+
+```{r message=FALSE, warning=FALSE}
+# ⚡
+library(palmerpenguins)
+data(package = 'palmerpenguins')
+```
+
+## Foundations
+
+Before we continue through more tasks, you will benefit from learning about what data represents, what kind of variable you are working with, and what a summary value actually means. These foundation sections introduce key terms.
+
+As you work through the next section, **Variables and Data Types**, you will think about the kinds of data in `penguins`. This understanding will help you make informed choices on how to best describe your data.
+
+### Data Collection
+
+**Data** is a collection of facts, such as numbers, words, measurements, observations, or even just descriptions of things. Data can be qualitative (descriptive) or quantitative (numerical). It can be collected through various methods such as surveys, experiments, or observations.
+
+**Population**: A population is a collection of objects or individuals that we want to study. It can be finite or infinite. The unknown population number is called a *parameter*.
+
+-   **Census**: A census is a complete enumeration of all the elements in a population. It is used to collect data from the entire population.
+
+**Sample**: A sample is a subset of the population that we actually observe or measure. It is used to make inferences about the population. We use samples because it is often impractical or impossible to collect data from the entire population. The known sample number is called a *statistic*.
+
+-   Population Size **N**: The number of elements in the population.
+
+-   Sample Size **n**: The number of elements in the sample.
+
+### Data Types
+
+Your data set is most likely a sample from a larger population and not a census of the entire population.
+
+1.  **Unordered sample**: A sample where the order of the elements does not matter. For example, if we have a population of 5 elements and we take a sample of 3, the set `{1, 2, 3}` **is** the same as `{3, 2, 1}`.
+
+🎯 Create the vector `heights_sample` to store the set values: $5.9ft$, $6.1ft$, $5.8ft$, $6.0ft$, $5.7ft$. This is a sample of heights of *5 individuals* from a population of all individuals in a city.
+
+```{r}
+# ⚡
+heights_sample <- c(5.9, 6.1, 5.8, 6.0, 5.7) # heights in feet
+```
+
+The order has no inherent meaning.
+
+2.  **Ordered sample**: A sample where the order of the elements does matter. Time series data, growth measurements, finishing positions in a race, and data sorted from smallest to largest for calculating quantiles or medians are examples of ordered samples.
+
+🎯 If we take 5 samples of the height of *one* youth as they grow up, we have an ordered sample.
+
+```{r}
+# ⚡
+growth_data <- c(42, 45, 48, 51, 54)  # Heights in inches by age
+```
+
+🗣 The order of the values matters because they represent measurements taken at different ages. The first value (42) corresponds to the height at the youngest age, and the last value (54) corresponds to the height at the oldest age. The set `{42, 45, 48, 51, 54}` is **NOT** the same as `{45, 54, 48, 42, 51}`.
+
+Data that can be divided into categories or groups is called **categorical data**. For example, the colors of cars in a parking lot (red, blue, green, etc.). In R, categorical data is often represented as factors. Factors can be ordered or unordered.
+
+🎯 A list of placements in a race is an ordered sample because the order of the placements matters. The first place finisher is different from the second place finisher, and so on.
+
+```{r}
+# ⚡
+race_positions <- c("Kim", "Alex", "Jordan", "Taylor")  # Order indicates ranking
+```
+
+🗣 The set `{Kim, Alex, Jordan, Taylor}` is **NOT** the same as `{Taylor, Jordan, Alex, Kim}`.
+
+**Ordinal data** is about whether your data values have a meaningful natural ranking order, the intervals between categories aren't necessarily equal. Other examples include Likert scale or types of other hierarchical values like academic hierarchies.
+
+`heights_sample` and `growth_data` are **numerical data**. This is data that can be measured or counted. Numerical data can be further classified into:
+
+-   **Discrete data**: Numerical data that can take on only specific values. For example, the number of cylinders in a car (4, 6, 8, etc.). In R, discrete data is often represented as integers. In R, we store a vector of counts or whole numbers by including an "L" after the number to indicate that it is an integer (e.g., `c(1L, 2L, 3L)`).
+
+-   **Continuous data**: Numerical data that can take on any value within a range. For example, the height of individuals in a population (e.g., `heights_sample` and `growth_data`).
+
+------------------------------------------------------------------------
+
+When describing data, you will need to choose the appropriate statistical method based on the type of sample data you have.
+
+1.  Check the type of sample data
+
+2.  Apply the appropriate descriptive statistics
+
+In your Data Understanding Notebook, you will inspect the `penguins` dataset and identify the types of variables in each column. This will help you decide which descriptive statistics to use for summarizing the data later in the report.
+
+**Inspect the penguins data**, identify what kind of variable each column contains, and explain why that matters for descriptive statistics later in the report.
+
+## Task 4: Dataset overview
+
+Under the heading **Variables and Data Types**, you will explore the data types in the penguins dataset.
+
+Inspect the penguins data, identify what kind of variable each column contains, and explain why that matters for descriptive statistics later in the report.
+
+🎯 State the number of rows and columns.
+
+```{r}
+# ⚡
+glimpse(penguins)  # dplyr::glimpse() Checks the structure of the dataset
+colnames(penguins)  # List the column names; alt: names(penguins)
+```
+
+💡 **Tip:** Look carefully at what `glimpse()` returns. Identify the column names, the number of rows and columns, and the class of each variable (e.g., `<fct>` = factor).
+
+🎯 Write the following inline R sentence into your report to make a comment about the number of rows and columns in the `penguins` dataset.
+
+``` markdown
+🗣 The `penguins` dataset contains `{r} nrow(penguins)` rows and `{r} ncol(penguins)` columns: `{r} colnames(penguins)`.
+```
+
+Render to HTML to see the results. It should read:
+
+🗣 The `penguins` dataset contains `r nrow(penguins)` rows and `r ncol(penguins)` columns: `{r} colnames(penguins)`.
+
+## Task 5: State class and type
+
+List the columns, report their R classes, and explain whether they are categorical, discrete numeric, or continuous numeric. Note any columns that require careful interpretation.
+
+**Write inline R sentences**
+
+Use inline R code to dynamically report the data types for each variable. Identify:
+
+1.  the variable name (each column name)
+
+2.  the R class of the variable (e.g., factor (`<fct>`), numeric (`<dbl>`), integer (`<int>`))
+
+3.  whether it is categorical or numerical data
+
+4.  if numerical, whether it is discrete or continuous
+
+5.  whether the order matters or does not matter
+
+For example, if a column is of class "numeric", it likely contains numerical data that can be measured or counted. If a column is of class "factor", it likely contains categorical data that can be divided into groups or categories.
+
+🎯 Write inline R sentences for each variable (`r colnames(penguins)`) in the `penguins` dataset to describe the data types.
+
+```{r eval=FALSE, include=FALSE}
+template_A <- c("species", "island", "sex") 
+template_B <- c("bill_length_mm", "bill_depth_mm")    
+template_C <- c("flipper_length_mm", "body_mass_g" )
+template_D <- "year"      
+```
+
+``` markdown
+Template A: factor / categorical / unordered
+🗣 The `_____` column is stored as `{r} class(penguins$_____)}` in R. This is **categorical** data because it places penguins into groups or categories. The order of these categories does not matter, so this is best understood as an **unordered sample**.
+
+Template B: double / numerical / continuous / unordered
+🗣 The `_____` column is stored as `{r} class(penguins$_____)}` in R. This is **numerical** data because it records a measured quantity. It is continuous data because measurements can vary across a range of values. The order of the values does not matter unless we sort them for analysis.
+
+Template C: integer / numerical / continuous / unordered
+🗣 The `_____` column is stored as `{r} class(penguins$_____)}` in R. This is **numerical** data because it records a measured quantity. It is **continuous** data because measurements can vary across a range of values. The order of the values does not matter unless we sort them for analysis.
+
+Template D: integer year / numerical / discrete / ordered or careful interpretation
+🗣 The `_____` column is stored as `{r} class(penguins$_____)}` in R. This is **numerical** data in R because it is stored as numbers. However, this column should be interpreted carefully because it represents year rather than a body measurement. The values are **discrete**, and their **order matters** because years follow a time sequence.
+```
+
+Render to HTML to see the results.
+
+🪞 Was there anything surprising?
+
+Sometimes variables will have a class that is not correct to the data type. In our dataset, Template C integer columns could have been stored as double, and the year column could have been stored as a factor. This is a common issue in data science, and it is important to check the structure of your data before proceeding with analysis.
+
+These classes are not wrong, but they require careful interpretation. In the future, you may want to change the class of a variable to better reflect its data type and make it easier to analyze.
+
+# Part 2
+
+Use count-based summaries when your question is about how many observations you have or how often values appear. Length, sum, count are all ways to add up values in a dataset.
+
+For this assignment, I do not expect you to type up all of the reading notes into your report. The report should focus on your work with the penguins dataset. The intended workflow is to read, study, or skim a lesson section as needed, and then complete the task that follows in your notebook. In other words, the reading sections are there to support your learning, but the required submission is the notebook work produced from the tasks.
+
+You are welcome to keep any extra notes that help you learn. That is never a problem. But to earn Complete, you only need to use the task materials to build the notebook, fill in the needed blanks, run the code, and include the required inline R sentences and brief explanations.
+
+## Length
+
+**Length** counts the number of values in the set of numbers. In other words, it tells us how many observations we have. In a data table, it tells us how many rows are in a column.
+
+🎯 Count the number of values in the `mpg` column of the `mtcars` dataset.
+
+```{r}
+# ⚡ length (Step 1a)
+n <- length(mtcars$mpg)
+```
+
+------------------------------------------------------------------------
+
+🌳 Use this inline R code to dynamically report the number of values in the `mpg` column and include it in a sentence. Write the sentence in your notebook document outside of a code chunk and without `#`.
+
+``` markdown
+
+🗣 The `mpg` column in the `mtcars` dataset contains `{r} length(mtcars$mpg)` values.
+```
+
+When rendered to HTML, this will show as:
+
+🗣 The `mpg` column in the `mtcars` dataset contains `r length(mtcars$mpg)` values.
+
+Test rendering with the inline code to make sure it works. \_\_\_
+
+*You can also use `nrow(mtcars)` to get the number of rows in the dataset, which should give the same result as `length(mtcars$mpg)` since each row has one value for `mpg`.*
+
+In Chapter 13, you will work inside `summarize()`, you will often use `n()` to count rows within groups.
+
+## Count and Mode
+
+When you want to know how often each value appears in a column, use the **`dplyr`** function `count()`. This is especially useful for categorical variables and discrete variables. A frequency table shows how many times each unique value appears.
+
+The **mode** is the value that appears most often. In other words, once you create a frequency table, the mode is the value with the largest count.
+
+📜 The SYNTAX:
+
+`data %>%`\
+`count(variable)`
+
+*Use `?count` to learn more about the function.*
+
+🎯 Use `count()` to create a table of the **frequency** of each unique value in the `cyl` column of the `mtcars` dataset. Determine the mode.
+
+```{r}
+# ⚡ Count discrete values 
+cyl_counts <- mtcars %>%
+  count(cyl)
+# ✅ 
+cyl_counts
+```
+
+🗣 In this table, `n` is the number of times that each unique value appears in the `cyl` column. 8 cylinders occur most frequently (14 times) in the `cyl` column of the `mtcars` dataset.
+
+*Note: If no value occurs more than once, then all are the mode or no mode. You get to pick.*
+
+------------------------------------------------------------------------
+
+🪞 What is the difference between `length()` `sum()` and `count()`?
+
+-   `length()` counts the number of values in a column,
+
+-   `sum()` adds up the values in a column, and
+
+-   `count()` counts the frequency of each unique value in a categorical column.
+
+For `cyl`, we care about how many cars in the dataset have 4, 6, or 8 cylinders (`count()`) and not about the total of all cylinder values added together (`sum()`). A frequency table helps us describe categorical data, and the mode helps us identify which category appears most often.
+
+The mode is the only measure of central tendency that works with nominal (categorical) data. Extreme values don't affect the mode. It is easy to interpret because it's simply the most common value. This data is often depicted in histograms or frequency tables.
+
+## Task 1
+
+Under the heading **Count-Based Summaries**, decide which variables in the `penguins` dataset are appropriate for `length()`, `count()`, and mode reporting.
+
+🎯 Your goal is to identify which variables make sense for count-based summaries and begin writing the **Count-Based Summaries** section of your Data Understanding Notebook.
+
+### **Step 1**: Choose appropriate variables
+
+Review the columns in `penguins`. Then identify:
+
+1.  one column you could use with `length()` to report how many values are in the dataset
+
+2.  two columns that make sense to summarize with `count()`
+
+3.  one column where the **mode** would be meaningful
+
+💡 **Tip:** `count()` and mode are most useful for categorical, factor, and discrete variables.
+
+### **Step 2**: Create one length report
+
+🗣 Use `length()` in an an inline R sentence to report how many values are in one *appropriate* column (your pick) from the `penguins` dataset.
+
+🪞 Why did you pick that column? Explain your thinking.
+
+``` markdown
+🗣 The `______` column in the `penguins` dataset contains `{r} length(penguins$_____)` observations.
+
+🗣 I chose `_____` for `length()` because it is a ______ variable (e.g., numerical, continuous, unordered, ordered, integer, factor). It makes sense to use length because _______________ (e.g., it might be helpful to point out ...)
+```
+
+### **Step 3**: Create one frequency table
+
+🎯 Use `count()` to create a frequency table for one appropriate column (your choice) from the `penguins` dataset.
+
+```{r eval=FALSE}
+# ⚡
+penguin_counts <- penguins %>%
+  count(______)
+```
+
+```{r, eval=FALSE}
+# ✅
+penguin_counts
+```
+
+### **Step 4**: Identify the mode
+
+🗣 Comment on the frequency table you created. What does it tell you about the distribution of values in that column?
+
+1.  Look at your frequency table and determine which value appears most often. That value is the mode.
+
+2.  Write 2 to 3 sentences in your notebook
+
+-   which variable you chose for `count()`
+
+-   why that variable is appropriate for a frequency table
+
+-   what the mode tells you about the dataset
+
+-   You may also briefly state which variables would not make sense to describe with `count()` and mode, and why.
+
+3.  use an inline R sentence pattern. Examples:
+
+``` markdown
+🗣 The most common value in the `_______` column has `{r} length(penguins$______)` observations.
+
+🗣 I chose `_____` for `count()` because it is a ______ variable (e.g., numerical, continuous, unordered, ordered, integer, factor). It makes sense to use count because _______________.
+```
+
+### **Step 5** Render your notebook
+
+Render your Quarto document to HTML and make sure the Count-Based Summaries section includes:
+
+- one frequency table
+
+- at least two complete sentences
+
+- at least one inline R sentence
+
+------------------------------------------------------------------------
+
+The next sections introduce two other measures of center that are more appropriate for numerical data.
+
+Measures of **central tendency**, or measures of center, are used to describe the typical value in a dataset. They give us an idea of where the center of the data is located. Common measures of central tendency include the mean, median, and mode.
+
+## Median
+
+The **median** is the middle value of a set of numbers when they are arranged in order. The median is often useful when the data may contain unusually high or low values.
+
+**Step 1**: Sort the data in ascending order.
+
+**Step 2**: Check the size of the sample (n). If there is an even number of values, the median is the average of the two middle values.
+
+**Step 3**: Calculate the median using the appropriate formula based on whether n is odd or even.
+
+-   If n is odd, the median is the middle value: $$\text{median} = x_{(\frac{n+1}{2})}$$
+
+-   If n is even, the median is the average of the two middle values: $$\text{median} = \frac{x_{(\frac{n}{2})} + x_{(\frac{n}{2}+1)}}{2}$$
+
+Where $x_{(i)}$ represents the ith ordered value in the sample.
+
+------------------------------------------------------------------------
+
+🌳 Type this in your notebook document to see how to write the median calculation mathematically.
+
+``` math
+$$
+\text{median} = x_{(\frac{n+1}{2})}
+$$
+
+$$
+\text{median} = \frac{x_{(\frac{n}{2})} + x_{(\frac{n}{2}+1)}}{2}
+$$
+```
+
+------------------------------------------------------------------------
+
+🎯 Calculate the median of the `mpg` column in the `mtcars` dataset.
+
+### Step 1
+
+```{r}
+# ✅  Pre-check
+print(mtcars$mpg)
+```
+
+```{r}
+# ⚡ Median Step 1: Sort the data
+sorted_data <- sort(mtcars$mpg)  
+# ✅ 
+sorted_data
+```
+
+------------------------------------------------------------------------
+
+🌳 Use this inline code to dynamically report the size of the sample.
+
+``` markdown
+🗣 The `mpg` column in the `mtcars` dataset sorted in ascending order is: `{r} sorted_data`.
+```
+
+When rendered to HTML, this will read:
+
+🗣 The `mpg` column in the `mtcars` dataset sorted in ascending order is: `r sorted_data`.
+
+------------------------------------------------------------------------
+
+### Step 2
+
+🎯 Find the size of the sample to determine how to calculate the median.
+
+```{r}
+# ⚡ Median Step 2: Get the size of the sample
+length(sorted_data)
+```
+
+------------------------------------------------------------------------
+
+🌳 Use this inline code to dynamically report the size of the sample.
+
+``` markdown
+🗣 There are `{r} length(sorted_data)` values.
+```
+
+When rendered to HTML, this will read:
+
+🗣 There are `r length(sorted_data)` values.
+
+------------------------------------------------------------------------
+
+We need to calculate the median for a dataset with an even number of data points.
+
+### Step 3
+
+To do this manually, we find the two middle values and take their average. The two middle values are the 16th and 17th values in the sorted list.
+
+🎯 Find the median using the bracket operator `[]` to access the 16th and 17th values in the sorted list.
+
+```{r}
+# ⚡ Median Step 3: Calculate the median for an even number of values
+median_value <- (sorted_data[16] + sorted_data[17]) / 2
+# ✅
+median_value
+```
+
+R simply gives us the median value without needing to do the manual calculations.
+
+🎯 Use `median()` function to find the middle of the distribution of the `mpg` column in the `mtcars` dataset.
+
+```{r}
+# ⚡ Or use the median() function
+median(mtcars$mpg)
+```
+
+------------------------------------------------------------------------
+
+🌳 Use this inline code to dynamically report the median value.
+
+``` markdown
+🗣 The median of the `mpg` column in the `mtcars` dataset is `{r} median(mtcars$mpg)`.
+```
+
+When rendered to HTML, this will show as:
+
+🗣 The median of the `mpg` column in the `mtcars` dataset is `r median(mtcars$mpg)`.
+
+------------------------------------------------------------------------
+
+The median is a measure of center that is sometimes selected when the data contains outliers. The most common measure of center is the mean, which is the average of the values in a dataset. The next section introduces the mean and how to calculate it.
+
+## Task 2
+
+Place this task after the **Median** section.
+
+🎯 Your goal is to choose one numerical measurement from the `penguins` dataset and explain why median is an appropriate measure of center for that variable.
+
+### **Step 1**: Choose a variable
+
+Select one variable from `penguins` that you identified in Part 1 as numerical and suitable for a median.
+
+Good candidates are measurement variables such as bill length, bill depth, flipper length, or body mass.
+
+### **Step 2**: Calculate the median
+
+🎯 Use the `median()` function to calculate the middle of the distribution for your chosen variable.
+
+```{r, eval=FALSE}
+# ⚡
+median(penguins$______, na.rm = TRUE)
+```
+
+💡 **Tip**: If your variable contains missing values, include `na.rm = TRUE`.
+
+### **Step 3**: Write an inline R sentence
+
+Write a sentence in your notebook that reports the median value.
+
+``` markdown
+🗣 The median of the `_____` column in the `penguins` dataset is `{r} median(penguins$______, na.rm = TRUE)`.
+```
+
+Rendered to HTML to see the results.
+
+### **Step 4**: Write a reflection
+
+🪞 **Reflect**: Explain why median makes sense. You can use these prompts to help you write 2 to 3 reflection sentences.
+
+- why this variable is appropriate for a median?
+
+- what the median represents in plain language?
+
+- why the order of the values matters when finding the median?
+
+```markdown
+🪞 I chose the `______` variable from the `penguins` dataset to describe with the median because it is a ______ variable (e.g., numerical, continuous, unordered, ordered, integer, factor) that may contain outliers. The median is a better measure of center for this variable because it is not affected by extreme values, unlike the mean. Using the median allows us to get a more accurate representation of the typical value in the dataset for this variable.
+
+```
+
+___
+
+The next section introduces the mean, which is the most common measure of center and is often used for numerical data that does not contain outliers.
+
+## Mean
+
+The **mean** is the average of a set of numbers. It is calculated by summing all the values and dividing by the number of values.
+
+**Step 1a** is to count the number of values in the dataset.
+
+**Step 1b** is to sum the values in the dataset.
+
+**Step 2** is to divide the sum by the number of values in the dataset.
+
+### Step 1a
+
+We calculated the number of values in the `mpg` column of the `mtcars` dataset in the previous section
+
+```{r}
+# ⚡ length (Step 1a)
+n <- length(mtcars$mpg)
+```
+
+### Step 1b
+
+**Summation** is the process of adding a sequence of numbers together. Summation is represented by the Greek letter sigma (Σ). It indicates that we are summing a series of values.
+
+------------------------------------------------------------------------
+
+🌳 Type this in your notebook document to see how to write summation in Markdown with LaTeX syntax.
+
+``` math
+$$
+\sum_{i=1}^{n}
+$$
+```
+
+$$\sum_{i=1}^{n}$$
+
+When you see $\sum_{i=1}^{5} a$, this means:
+
+-   Start with $i=1$ (the second value in the set of numbers)
+
+-   Add the value $a$ to your sum
+
+-   Increase $i$ by 1
+
+-   Repeat until you reach $i=5$ (the fifth value in the set of numbers)
+
+-   Then stop
+
+This is adding $a$ four times (once each for $i-1$, $i=2$, $i=3$, $i=4$, and $i=5$).
+
+``` math
+$$
+\sum_{i=1}^{5} a => a_1 + a_2 + a_3 + a_4 + a_5 
+$$
+```
+
+$$
+\sum_{i=1}^{5} a => a_1 + a_2 + a_3 + a_4 + a_5 
+$$
+
+------------------------------------------------------------------------
+
+🎯 Sum the values in the `mpg` column of the `mtcars` dataset. Store the result as sum_sample.
+
+```{r}
+# ⚡ Sum (Step 1b)
+sum_x <- sum(mtcars$mpg)
+# ✅ 
+sum_x
+```
+
+`sum(mtcars$mpg)` is the total value from adding all the values in the `mpg` column of the `mtcars` dataset.
+
+------------------------------------------------------------------------
+
+🌳 Use this inline code to dynamically report `sum_sample`.
+
+``` markdown
+🗣 The sum of the values in the `mpg` column of the `mtcars` dataset is `{r} sum_x`.
+```
+
+When rendered to HTML, this will show as:
+
+🗣 The sum of the values in the `mpg` column of the `mtcars` dataset is `r sum_x`.
+
+You can also use `sum(mtcars$mpg)` directly in the inline code without storing it in a variable.
+
+``` markdown
+🗣 The sum of the values in the `mpg` column of the `mtcars` dataset is `{r} sum(mtcars$mpg)`
+```
+
+------------------------------------------------------------------------
+
+### Step 2
+
+Divide the sum of the values by the number of values to get the mean.
+
+------------------------------------------------------------------------
+
+🌳 Type this in your notebook document to see how to write mean calculation mathematically using LaTeX syntax.
+
+``` math
+$$
+\bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i
+$$
+```
+
+$$\bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i$$
+
+------------------------------------------------------------------------
+
+🎯 Calculate the mean of the `mpg` column in the `mtcars` dataset.
+
+```{r}
+# ⚡ Mean (Step 2) Divide Step 1 values
+x_bar <- sum_x / n 
+```
+
+🗣 We used `sum_x` and `n` objects created earlier.
+
+🎯 Calculate the mean of the `mpg` column in the `mtcars` dataset using the `mean()` function.
+
+```{r}
+# ⚡
+# OR use mean() function directly
+x_bar <- mean(mtcars$mpg) 
+# ✅ 
+x_bar
+```
+
+------------------------------------------------------------------------
+
+🌳 Use this inline code to dynamically report the mean value.
+
+``` markdown
+🗣 The mean of the values in the `mpg` column of the `mtcars` dataset is `{r} mean(mtcars$mpg)`.
+```
+
+When rendered to HTML, this will show as:
+
+🗣 The mean of the values in the `mpg` column of the `mtcars` dataset is `r x_bar`.
+
+------------------------------------------------------------------------
+
+The next section, which explores measures of variability describe how spread out the values in a dataset are.
+
+## Task 3
+
+Place this task after the **Mean** section.
+
+🎯 Your goal is to calculate and report the mean for one numerical measurement from the penguins dataset.
+
+### **Step 1**: Choose a variable
+
+Use the same variable or choose a new one
+
+You may use the same variable from Task 2 so that you can compare mean and median later, or choose a different numerical measurement.
+
+### **Step 2**: Calculate the mean
+
+🎯 Use the `mean()` function to calculate the average of your chosen variable.
+
+```{r, eval=FALSE}
+# ⚡
+mean(penguins$______, na.rm = TRUE)
+```
+
+### **Step 3**: Write an inline R sentence
+
+Write a sentence in your notebook that reports the mean value.
+
+``` markdown
+🗣 The mean of the `_____` column in the `penguins` dataset is
+`{r} mean(penguins$______, na.rm = TRUE)`.
+```
+Render to HTML to see the results.
+
+### **Step 4**: Write a reflection
+
+🪞 Reflect: Explain why mean makes sense. You can use these prompts to help you write 2 to 3 reflection sentences.
+
+-   Why this variable is appropriate for a mean?
+
+-   What the mean represents in plain language?
+
+-   How the mean compares to the median or simple counting methods?
+
+-   Connect back to data type
+
+```markdown
+🪞 I chose the `______` variable from the `penguins` dataset to describe with the mean because it is a ______ variable (e.g., numerical, continuous, unordered, ordered, integer, factor). The mean is a good measure of center for this variable because it takes into account all values in the dataset and provides an average that represents the typical value. 
+```
+
+Comparing the mean to the median can also give us insights into the distribution of the data; if they are close, the data may be symmetrically distributed, while a large difference may indicate skewness.
+
+## Task 4
+
+Place this task under **Measures of Center Compared**. 
+
+🎯 Your goal is to compare the mean and median for one variable and explain what that comparison suggests about the data.
+
+### **Step 1**: Choose a variable
+
+
+Use a variable for which you have already calculated both the mean and the median.
+
+### **Step 2**: Write a comparison sentence with inline R
+
+Add a sentence that reports both values together.
+
+``` markdown
+🗣 For the `_____` column, the median is `{r} median(penguins$______, na.rm = TRUE)` and the mean is `{r} mean(penguins$______, na.rm = TRUE)`.
+```
+
+### **Step 3**: Interpret the comparison
+
+🪞 Reflect: Write 3 to 4 sentences that answer questions like these:
+
+- Are the mean and median close together or noticeably different?
+
+- What might that suggest about the distribution of values?
+
+- If this variable had unusually high or low values, which measure would you trust more?
+
+- Which measure would you emphasize in your notebook, and why?
+
+```markdown
+🪞 The mean and median for the `_____` column are (close together/different). This suggests that the distribution of values is (symmetrical/skewed). If there are unusually high or low values, I would trust the (mean/median) more because it is (affected by outliers/not affected by outliers). The (mean/median) is the better measure to report for this variable.
+```
+
+## Task 5
+
+Place this task under **Measures of Center Compared**. 
+
+🎯 Your goal is to compare a measure of center for one numerical variable across at least two groups from one categorical variable.
+
+This task helps you move from describing a single variable to comparing center across groups.
+
+### **Step 1**: Choose a numerical variable and a grouping variable
+
+Choose:
+
+- one numerical measurement variable
+
+- one categorical grouping variable
+
+For example, you might compare body mass by sex, or bill length by species. The package documentation identifies `species`, `island`, and `sex` as factor variables and the body-size columns as measurements.
+
+### **Step 2**: Calculate the mean or median for each group
+
+Use logical subsetting to calculate the mean or median for two different categories from your grouping variable.
+
+```{r eval=FALSE}
+# ⚡ Example structure using median
+median(penguins$______[penguins$______ == "_____"], na.rm = TRUE)
+median(penguins$______[penguins$______ == "_____"], na.rm = TRUE)
+```
+
+```{r eval=FALSE}
+# ⚡ Example structure using mean
+mean(penguins$______[penguins$______ == "_____"], na.rm = TRUE)
+mean(penguins$______[penguins$______ == "_____"], na.rm = TRUE)
+```
+
+### **Step 3**: Write a comparison sentence with inline R
+
+Write one sentence that reports both group values.
+
+``` markdown
+🗣 The median `_____` for `_____` penguins is `{r} median(penguins$______[penguins$______ == "_____"], na.rm = TRUE)`, while the median for `_____` penguins is `{r} median(penguins$______[penguins$______ == "_____"], na.rm = TRUE)`.
+```
+
+### **Step 4**: Interpret the comparison
+
+🪞 Reflect: Write 3 to 4 sentences that answer questions like these:
+
+- which groups you compared
+
+- which group had the larger center
+
+- what that early difference might suggest about the dataset
+
+___
+
+This comparison helps you see an early pattern in the data and suggests a direction for later descriptive analysis. While measures of center tell us about a typical value, measures of spread tell us how tightly clustered or spread out the values are around that center.
+
+# Part 3
+
+Measures of **spread** describe how much the values in a dataset vary. In this part, you will continue learning how to describe variability with standard deviation, range, interquartile range, and the five-number summary. These measures help analysts understand whether data values are relatively consistent or whether they vary widely.
+
+In Part 3, you will also practice new **Quarto formatting** skills so your HTML report reads like an analyst’s notebook rather than a list of answers. In this part, you will practice how to:
+
+- add labels to section headings
+- refer to one section from another section
+- use a callout block to highlight an interpretation
+- format a short results list in Markdown
+
+## Task 0
+
+Add to your YAML:
+
+```markdown
+---
+title: "Your Title"
+format: html
+number-sections: true # This is needed for cross-references to work
+---
+```
+
+A section label is a short name attached to a heading. Quarto can use that label to create links to that section later in your report.
+
+Before you begin, update your remaining section headings so Quarto.
+
+```markdown
+## Standard Deviation {#sec-sd}
+## Range {#sec-range}
+## Interquartile Range {#sec-iqr}
+## Five-Number Summary {#sec-five}
+```
+
+Notice that each section heading has a label in curly braces. The label starts with a hashtag and is followed by a unique identifier (e.g., `sec-sd` for the standard deviation section).
+
+Update an earlier section on measures of center does not yet have a label, add one there too. For example:
+
+```markdown
+## Measures of Center {#sec-center}
+```
+
+These labels allow you to refer to these sections later in the report. For example, you can write:
+
+As you work through Part 3, render to HTML occasionally so you can check that your section links, callout boxes, and inline R code display correctly.
+
+## Standard Deviation
+
+The **standard deviation** is a measure of how spread out the values in a dataset are. It is calculated by taking the square root of the variance. To calculate the **variance**:
+
+**Step 1** Find the difference between each value and the mean. 
+
+**Step 2** Square those differences
+
+**Step 3** Add them together
+
+**Step 4** Divide that number by the number (`length()`) of values minus 1.
+
+This results in the sample variance, which is denoted as $s^2$. You'll take the square root of the variance to get the standard deviation.
+
+### Step 1: Calculate the variance
+
+The **variance** is a measure of how spread out the values in a dataset are. It is calculated as the average of the squared differences from the mean.
+
+To calculate the variance, first find the difference between each value and the mean. Then square those differences, add them together, and divide by the number of values minus 1.
+
+------------------------------------------------------------------------
+
+🌳 Type this in your notebook under **Measures of Spread** to see how to write the variance calculation mathematically.
+
+``` math
+$$
+s^2 = \frac{\sum_{i=1}^{n} (x_i - \bar{x})^2}{(n-1)}
+$$
+```
+
+$$s^2 = \frac{\sum_{i=1}^{n} (x_i - \bar{x})^2}{(n-1)}$$
+
+------------------------------------------------------------------------
+
+🎯 Calculate the variance of the `mpg` column in the `mtcars` dataset.
+
+```{r}
+# ⚡
+# Variance step 3: Calculate the variance
+variance <- sum((mtcars$mpg - x_bar)^2) / (n - 1)
+# ✅ 
+variance
+```
+
+🗣 We used `x_bar` (mean) and `n` (column length), objects created earlier. Let's break down this nested function to make sure we understand what is happening.
+
+First, the `mtcars$mpg - x_bar` calculates the difference between *each value* in the `mpg` column and the *mean* of the `mpg` column.
+
+Raising the differences to the power of 2, `(mtcars$mpg - x_bar)^2`, squares each difference.
+
+These squared differences are summed together.
+
+The sum of squared differences is divided by the length of the column minus 1, `(n - 1)`.
+
+This results in the sample variance ($s^2$).
+
+🎯 Calculate the variance of the `mpg` column in the `mtcars` dataset using the `var()` function.
+
+```{r}
+# ⚡
+# OR use var() function directly
+variance <- var(mtcars$mpg)
+# ✅ 
+variance
+```
+
+🌳 Use this inline code to dynamically report the variance value.
+
+``` markdown
+🗣 The variance of the values in the `mpg` column of the `mtcars` dataset is `{r} var(mtcars$mpg)`.
+```
+
+When rendered to HTML, this will show as:
+
+🗣 The variance of the values in the `mpg` column of the `mtcars` dataset is `r var(mtcars$mpg)`.
+
+You can round the variance to two decimal places for better readability.
+
+``` markdown
+🗣 The variance of the values in the `mpg` column of the `mtcars` dataset is `{r} round(var(mtcars$mpg), 2)`
+```
+
+### Step 2: Calculate the standard deviation
+
+Find the **standard deviation** by taking the square root of the variance.
+
+
+------------------------------------------------------------------------
+
+## Task 1
+
+🌳 Type this in your notebook document to see how to write the standard deviation calculation mathematically.
+
+``` math
+$$
+s = \sqrt{s^2} = \sqrt{\frac{\sum_{i=1}^{n}(x_i - \bar{x})^2}{n-1}}
+$$
+```
+
+$$s = \sqrt{s^2} = \sqrt{\frac{\sum_{i=1}^{n}(x_i - \bar{x})^2}{n-1}}$$
+
+------------------------------------------------------------------------
+
+🎯 Calculate the standard deviation of the `mpg` column in the `mtcars` dataset.
+
+```{r}
+# ⚡
+# Standard Deviation step 4: Calculate the standard deviation
+std_dev <- sqrt(sum((mtcars$mpg - x_bar)^2) / (n - 1))
+std_dev
+```
+
+🗣 This places the variance formula inside `sqrt()`, which calculates the square root of the variance.
+
+🎯 Calculate the standard deviation of the `mpg` column in the `mtcars` dataset using the `sd()` function.
+
+```{r}
+# ⚡
+# OR use sd() function directly 
+std_dev <- sd(mtcars$mpg)
+# ✅ 
+std_dev
+```
+
+------------------------------------------------------------------------
+
+🌳 Use this inline code to dynamically report the standard deviation value.
+
+``` markdown
+🗣 The standard deviation of the values in the `mpg` column of the `mtcars` dataset is `{r} sd(mtcars$mpg)`
+```
+
+When rendered to HTML, this will show as:
+
+🗣 The standard deviation of the values in the `mpg` column of the `mtcars` dataset is `r sd(mtcars$mpg)`
+
+You can round the standard deviation to two decimal places for better readability.
+
+``` markdown
+🗣 The standard deviation of the values in the `mpg` column of the `mtcars` dataset is `{r} round(sd(mtcars$mpg), 2)`
+```
+
+------------------------------------------------------------------------
+
+Standard deviation uses every value in the dataset, so it gives a fuller picture of variability than a measure based on only the smallest and largest values. However, standard deviation is affected by unusually high or low values. This means it can be less helpful when a distribution is strongly skewed or contains outliers.
+
+## Task 2
+
+Place this task after the **Standard Deviation** section.
+
+🎯 Your goal is to calculate and report the standard deviation for one numerical measurement from the penguins dataset.
+
+### **Step 1**: Choose a variable
+
+Under the heading `## Standard Deviation {#sec-sd}` in your Quarto document, choose one numerical measurement variable from the `penguins` dataset.
+
+Good candidates include:
+
+-  `bill_length_mm`
+  
+-  `bill_depth_mm`
+  
+-  `flipper_length_mm`
+  
+-  `body_mass_g`
+
+💡 **Tip**: Choose a body measurement variable, not a categorical variable like `species` or `sex`.
+
+### **Step 2**: Calculate the standard deviation
+
+🎯 Use the `sd()` function to calculate the standard deviation of your chosen variable.
+
+```{r, eval=FALSE}
+# ⚡
+sd(penguins$______, na.rm = TRUE)
+```
+
+### **Step 3**: Write an inline R sentence
+
+Write a sentence in your notebook that reports the standard deviation value.
+
+``` markdown
+🗣 The standard deviation of the `_____` column in the `penguins` dataset is `{r} round(sd(penguins$______, na.rm = TRUE), 2)`.
+```
+
+Render to HTML to see the result.
+
+### **Step 4**: Write a reflection
+
+A **callout block** creates a shaded note box in your HTML report so an important comment stands out.
+
+🪞 Reflect: Explain why standard deviation makes sense. You can use these prompts to help you write 2 to 3 reflection sentences. Write your interpretation in a callout block
+
+- Why this variable is appropriate for standard deviation?
+
+- What the standard deviation tells you about the spread of the values?
+
+- Why standard deviation uses more information than just the minimum and maximum?
+
+You can use this sentence pattern, if helpful, but place your reflection is place your reflection inside a Quarto callout block to make it visually stand out.
+
+```markdown
+::: {.callout-note}
+
+🪞 I chose the `______` variable because it is a numerical measurement. The standard deviation tells me how spread out the values are around the mean. A larger standard deviation means the values vary more, while a smaller standard deviation means the values are more tightly clustered.
+
+:::
+```
+
+### **Step 5**: Add one cross-reference sentence
+
+Write one sentence that connects spread to the earlier section on center. Use a Quarto section cross-reference.
+
+```markdown
+
+::: {.callout-note}
+
+🗣 Compared with the center measures discussed in @sec-center, the standard deviation helps describe how much the values vary around the mean.
+
+:::
+
+```
+___
+
+In the next section, we will explore measures of spread that are less sensitive to outliers and skewed data.
+
+## Range
+
+The simplest measure of spread to calculate and understand is the **range**, which is the difference between the largest and smallest values in a dataset. This value gives you a quick sense of how spread out the data is, but it can be heavily influenced by outliers.
+
+Determined entirely by just two values:
+
+$$\text{Range} = x_{(n)}- x_{(1)}$$
+
+Where $x_{(n)}$ is the largest value and $x_{(1)}$ is the smallest value in the dataset.
+
+------------------------------------------------------------------------
+
+🌳 Type this in your notebook document to see how to write the range calculation mathematically.
+
+``` math
+$$
+\text{Range} = x_{(n)} - x_{(1)}
+$$
+```
+
+------------------------------------------------------------------------
+
+In R, you can calculate the range using the `range()` function, which returns a vector containing the minimum and maximum values of the dataset. To get the range, you can subtract the minimum from the maximum.
+
+```{r}
+# ⚡
+mpg_range <- range(mtcars$mpg)
+mpg_range
+```
+
+🗣 mpg_range is a vector that contains the minimum and maximum values of the `mpg` column in the `mtcars` dataset. The first value is the minimum, and the second value is the maximum.
+
+We can use the bracket operator `[]` to access the minimum and maximum values from the `mpg_range` vector.
+
+```{r}
+# Calculate the range by subtracting the minimum from the maximum
+mpg_range_value <- mpg_range[2] - mpg_range[1]
+mpg_range_value
+```
+
+You can also calculate the range directly by using the `max()` and `min()` functions.
+
+```{r}
+# ⚡
+max(mtcars$mpg) - min(mtcars$mpg)
+```
+
+Because range depends only on the minimum and maximum values, one extreme value can make it misleading. It also does not show where most of the data fall. The next section introduces a measure of spread that is less affected by extreme values.
+
+## Task 3
+
+Place this task after the **Range** section.
+
+🎯 Your goal is to calculate and report the range for one numerical measurement from the `penguins` dataset.
+
+### **Step 1**: Choose a variable
+
+Under the heading **Range** in your notebook, use the same numerical variable from Task 2 or choose another numerical measurement variable from `penguins`.
+
+### **Step 2**: Calculate the range
+
+🎯 Calculate the range of your chosen variable. Use `range()` to find the minimum and maximum values. Then subtract the minimum from the maximum to calculate the range.
+
+```{r, eval=FALSE}
+# ⚡
+penguin_range <- range(penguins$______, na.rm = TRUE)
+# ✅
+penguin_range
+```
+
+```{r, eval=FALSE}
+# ⚡ Calculate the range value
+penguin_range_value <- penguin_range[2] - penguin_range[1]
+# ✅
+penguin_range_value
+```
+
+### **Step 3**: Report your results as a short Markdown list
+
+Instead of writing only a paragraph, format your results as a short list. 
+
+```markdown
+- **Minimum**: `{r} range(penguins$______, na.rm = TRUE)[1]`
+
+- **Maximum**: `{r} range(penguins$______, na.rm = TRUE)[2]`
+
+- **Range**: `{r} diff(range(penguins$______, na.rm = TRUE))`
+```
+
+Render to HTML to see the results.
+
+### **Step 4**: Add a comparison sentence with a section cross-reference
+
+
+Write one sentence that connects range to the earlier section on center. Use a Quarto section cross-reference.
+
+```markdown
+::: {.callout-note}
+🗣 Compared with the center measures discussed in @sec-center, the range gives a quick description of how far apart the smallest and largest values are.
+:::
+
+```
+
+🗣 When rendered, `@sec-center` should become a section link if your earlier heading is labeled correctly.
+
+💡 **Tip:** If the link does not work, check that your earlier heading includes `{#sec-center}`. Make sure the earlier heading actually looks like this: `## Measures of Center {#sec-center}`
+
+
+### **Step 5**: Write a reflection
+
+🪞 Reflect: Explain why range makes sense. You can use these prompts to help you write 2 to 3 reflection sentences.
+
+- What the range tells you about the spread of the data?
+
+- Why range is easy to calculate?
+
+- Why range can be misleading if there are unusually high or low values?
+
+You can use this sentence pattern if helpful:
+
+```markdown
+🪞 The range gives a quick description of how far apart the smallest and largest values are. It is easy to calculate and understand, but it only uses two values. Because of that, one extreme value can make the range seem larger than the spread of most of the data.
+```
+
+## Interquartile Range (IQR)
+
+The **interquartile range** (IQR) describes the spread of the middle 50% of the data. It is often useful because it is less affected by unusually high or low values than the full range.
+
+A **quartile** is the whole data range divided into four equal parts.
+
+It is calculated as:
+
+$$IQR = Q_3 - Q_1$$
+
+Where $Q_1$ is the **first quartile** (25th percentile) and $Q_3$ is the **third quartile** (75th percentile).
+
+By focusing on the middle 50% of the data, the IQR reduces the influence of extreme values.
+
+🎯 Use `IQR()` function to calculate the interquartile range of the `mpg` column in the `mtcars` dataset.
+
+```{r}
+# ⚡
+iqr_value <- IQR(mtcars$mpg)
+# ✅
+iqr_value
+```
+
+------------------------------------------------------------------------
+
+🌳 Use this inline code to dynamically report the interquartile range value.
+
+``` markdown
+🗣 The interquartile range of the values in the `mpg` column is `{r} IQR(mtcars$mpg)`
+```
+
+When rendered to HTML, this will show as:
+
+🗣 The interquartile range of the values in the `mpg` column of the `mtcars` dataset is `r IQR(mtcars$mpg)`
+
+------------------------------------------------------------------------
+
+## Task 4
+
+Place this task after the **Interquartile Range** section.
+
+🎯 Your goal is to calculate and report the interquartile range (IQR) for one numerical measurement from the `penguins` dataset.
+
+### **Step 1**: Choose a variable
+
+Under the heading `## Interquartile Range {#sec-iqr}` in your Quarto document, use the same numerical variable from Task 2 or Task 3, or choose another numerical measurement variable from `penguins`.
+
+### **Step 2**: Calculate the interquartile range
+
+🎯 Use the `IQR()` function to calculate the interquartile range of your chosen variable.
+
+```{r, eval=FALSE}
+# ⚡
+iqr_value <- IQR(penguins$______, na.rm = TRUE)
+# ✅
+iqr_value
+```
+
+### **Step 3**: Write an inline R sentence
+
+Write a sentence in your notebook that reports the interquartile range value.
+
+``` markdown
+🗣 The interquartile range of the `_____` column in the `penguins` dataset is `{r} IQR(penguins$______, na.rm = TRUE)`.
+```
+
+Render to HTML to see the result.
+
+### **Step 4**: Write a reflection
+
+🪞 Reflect: Explain why interquartile range makes sense. You can use these prompts to help you write 2 to 3 reflection sentences.
+
+- What does the IQR describe?
+
+- Why does the IQR focuses on the middle 50% of the data?
+
+- Why is the IQR is often more useful than the full range when there are extreme values?
+
+You can use this sentence pattern if helpful:
+
+```markdown
+🪞 The IQR describes the spread of the middle 50% of the data. It is useful because it is less affected by unusually high or low values than the full range. This makes it a strong choice when I want to describe the spread of the typical values in the dataset.
+```
+
+### **Step 5** Add one cross-reference sentence
+
+Write one comparison sentence that refers back to the Range section.
+
+```markdown
+🗣 Compared with the full spread described in @sec-range, the IQR focuses on the middle 50% of the data and is less affected by extreme values.
+```
+
+### Five Number Summary
+
+You can use the `summary()` function to get a quick overview of a numeric variable. In R, this includes the minimum, $Q_1$, median, mean, $Q_3$, and maximum. The five-number summary refers to the minimum, $Q_1$, median, $Q_3$, and maximum.
+
+🎯 Use `summary()` to get a quick overview of the distribution of the `mpg` column in the `mtcars` dataset.
+
+*Type `?summary` to learn about the `summary()` function.*
+
+```{r}
+# ⚡
+summary(mtcars)  # Summarizes all columns at once
+```
+
+🎯 Use `summary()` to get a quick overview of the distribution of the `mpg` column in the `mtcars` dataset.
+
+```{r}
+# ⚡
+summary(mtcars$mpg)  # Summarizes just the mpg column
+```
+
+## Task 5
+
+Place this task after the **Five Number Summary** section.
+
+🎯 Your goal is to use the `summary()` function to get a quick overview of one numerical measurement from the `penguins` dataset.
+
+### **Step 1**: Choose a variable
+
+Under the heading **Five Number Summary** in your notebook, use the same numerical variable from earlier tasks or choose another numerical measurement variable from penguins.
+
+### **Step 2**: Generate the summary
+
+🎯 Use `summary()` to get an overview.
+
+```{r, eval=FALSE}
+# ⚡
+summary(penguins$______)
+```
+
+### **Step 3**: Write an interpretation
+
+🪞 Explain what the summary tells you about the distribution of values. You can use these prompts to help you write 2 to 3 reflection sentences.
+
+- What does the summary tell you about the minimum, maximum, and quartiles?
+
+- How does the summary help you understand the distribution of values? Why `summary()` is a useful function?
+
+- How does the summary compare to the mean and standard deviation you calculated earlier?
+
+You can use this sentence pattern if helpful:
+
+```markdown
+🗣 In the `_____` column, the minimum value is ______, the median is ______, and the maximum is ______. The first and third quartiles show where the middle half of the data falls. This summary gives me a quick picture of both center and spread in this variable.
+```
+
+## Task 6
+
+**End Part 3 with a takeaway**
+
+Finish Part 3 with one short takeaway. State which measure of spread you think was most useful for your chosen variable and why.
+
+You can use this sentence pattern if helpful:
+
+```markdown
+🪞 For the `_____` variable, I think the most useful measure of spread is ______. I chose this measure because ______.
+```
+
+------------------------------------------------------------------------
+
+So far, you have learned how to calculate descriptive statistics manually and using built-in functions. You have also learned how to use inline R code to dynamically report these statistics in your Quarto document.
+
+In the next part of this assignment, you will use these ideas about center and spread to describe the penguins data more clearly. After completing Chapter 13, you will group data before summarizing it using `dplyr` functions.
+
+# Summary
+
+In this activity, you are not only learning how to calculate descriptive statistics. You are practicing how to learn from data in a more deliberate way. You begin by identifying variable types, then use that knowledge to choose appropriate count-based summaries, measures of center, and measures of spread. As you build the notebook, you rehearse earlier ideas in later sections, explain your code and results in plain language, and reflect on why a method does or does not fit a given variable. This supports self-regulated learning by asking you to plan, monitor, and revise your thinking as you work.
+
+You should have a reproducible **Data Understanding Notebook** that shows both your code and your reasoning. Just as importantly, you should have stronger habits for analytical work: slowing down to inspect data before summarizing it, persisting when a task is difficult, checking whether your interpretation matches the data type, and using writing as a strategy for understanding. These are not just course tasks. They are foundational habits for credible, careful data analysis.
+
+# Chapter Terms
+
+**Callout Block**: A formatted block in Quarto Markdown that sets off important content—such as a note, tip, warning, or reflection—so it stands out visually in the rendered document. Callout blocks are created with `:::` syntax and a callout class such as `.callout-note`, and in HTML output they appear as styled boxes with distinctive formatting.
+
+**Categorical Data**: Data whose values place observations into groups or categories. The categories may have no natural order (nominal) or may have an order with uneven gaps between categories (ordinal). In R, categorical data are often stored as factors.
+
+**Census**: A complete count or measurement of every member of a population, rather than just a subset.
+
+**Central Tendency**: A measure that represents the center or typical value of a dataset. Common measures of central tendency include the mean, median, and mode.
+
+**Continuous Data**: Numerical data that can take any value within a range, including values between other values. Measurements such as height, weight, and time are typical examples.
+
+**Descriptive statistics**: Numerical summaries that describe the main features of a dataset, such as measures of central tendency (mean, median, mode) and measures of variability (range, variance, standard deviation).
+
+**Discrete Data**: Numerical data that can take only specific, separate values, often counts such as 0, 1, 2, 3, and so on. In practice, discrete data are commonly integer-valued.
+
+**Frequency**: The number of times a value or category appears in a dataset.
+
+**Interquartile Range (IQR)**: The range of the middle 50% of the data, calculated as `Q3 - Q1`. Because it ignores the lowest 25% and highest 25%, it is less sensitive to extreme values than the full range.
+
+**Length**: The number of elements in an object. For a vector, `length(x)` is the count of elements in the vector; for a list, it’s the number of list components; for a data frame, it returns the number of columns.
+
+**Mean**: The arithmetic average of a set of numbers, found by adding all values and dividing by the number of values.
+
+**Median**: The middle value in an ordered dataset. If there is an even number of values, the median is the average of the two middle values.
+
+**Mode** (statistic): The value or category with the greatest frequency in a dataset. A dataset can have one mode, more than one mode, or no mode if no value occurs more often than the others.
+
+**Numerical Data**: Data recorded as numbers, where the values have meaningful magnitudes and consistent intervals. Numerical data are also called *quantitative* data.
+
+**Ordered Sample**: A sample in which the order of the selected elements does matter, so `(1, 2, 3)` is different from `(3, 2, 1)`. In counting language, this is the idea behind a *permutation*.
+
+**Ordinal Data**: Categorical data with a meaningful ranking or order, but where the differences between adjacent categories are not necessarily equal or measurable. Examples include Likert-scale responses such as “strongly disagree” to “strongly agree.”
+
+**Parameter**: A numerical summary of a population.
+
+**Percentile**: A value that marks the point at or below which a given percentage of observations fall. For example, the 50th percentile is the median.
+
+**Population**: The entire collection of individuals, cases, or objects you want to study.
+
+**Quartile**: One of the cut points that divides ordered data into four equal parts. The first quartile (`Q1`) is the 25th percentile, the second quartile (`Q2`) is the median, and the third quartile (`Q3`) is the 75th percentile.
+
+**Range**: A simple measure of spread found by subtracting the smallest value from the largest value in a dataset.
+
+**Sample**: A subset of the population that you actually observe or measure.
+
+**Spread**: How much the values in a dataset vary or scatter rather than cluster tightly together. Common measures of spread include range, interquartile range (IQR), variance, and standard deviation.
+
+**Standard Deviation**: A measure of spread equal to the square root of the variance. Because it takes the square root, standard deviation is expressed in the same units as the original data.
+
+**Statistic**: A numerical summary computed from a sample.
+
+**Summation**: The process of adding a sequence of values together. In formulas, summation is written with the capital Greek letter sigma, `Σ`, as a compact way to show a sum.
+
+**Unordered Sample**: A sample in which the order of the selected elements does not matter, so `{1, 2, 3}` represents the same selection as `{3, 2, 1}`. In counting language, this is the idea behind a *combination*.
+
+**Variance**: A measure of spread that describes how far values tend to vary from the mean, based on squared deviations. In introductory statistics, sample variance is commonly calculated using `n - 1` in the denominator.

@@ -1,0 +1,69 @@
+00:00:01
+welcome back we're going to be talking about functions and objects in r we're looking at r studio right here now think of your data as an object right and that data might have different attributes it might have different structures and we're going to talk about that and functions are the instructions that we're giving are to apply to those objects it's relatively straightforward and at the end of this lesson you're going to feel really comfortable with these ideas if you want to learn about our
+
+00:00:27
+programming then you have come to the right place on this youtube channel we're creating our programming videos on everything now to make life easy if we want to work with objects we want to assign them to something some sort of word that we can use so that we can apply functions to those objects it's pretty straightforward we can see we've already got an object here in our environment and it's called cars and if we were to click on that object we would see it would that in this case it's a data frame and
+
+00:00:56
+we can see that data frame pops up here on the left hand up upper left-hand quadrant but we can also create objects right so we can create an object for example we might want to call it my age and then if we use a little arrow symbol to indicate that we're assigning something to that that particular set of characters and we're going to pretend that my age is 12 and if we push command enter or control enter on a pc we can see that that's become a little object here in our global environment
+
+00:01:26
+now let's take a look at how it is that we apply up functions to our objects let's let's make a new little object called your age and we're going to say that your age is 14 uh and that pops into our environment over there now how do we apply a function to these objects the function sum which is to add up is the function right and then we put brackets and we put the arguments of the function inside the brackets and the first argument for any function is usually what objects that function should be
+
+00:01:55
+applied to and we're going to talk about other arguments in just a minute but let's have a look if we said we want the sum of my age and your age come on to enter and you can see down here in the console we can see it's added those up now the most common object that we work with is a data frame right so there are all sorts of types and structures but we're just going to deal with the common stuff now and we'll get more into sort of more detailed variations on that as these lessons unfold
+
+00:02:23
+but let's have a look at cars right here so if we click on cars it's an object in our environment that data frame pops up and we can see it here and a nice neat and tidy tidy data frame has got the variables as columns so we've got speed and distance and each observation is a new row right so this is a typical format for a data frame and we're going to look at how it is that we can apply functions to an object like this so we might want to apply the function plot okay and plot is a nice function because
+
+00:02:51
+it r chooses the best kind of diagram that it can for any particular kind of data with plot and we want to apply the function plot to the data frame cars okay push command enter and we can see down at the bottom on the right it's created a plot of speed versus distance right there we can zoom in and have a better look at that if we want to and of course if we wanted to we could export that as a pdf or an image now we might want to apply a function to a part of the data frames not the entire data
+
+00:03:23
+frame but we might want to take one of the variables there within for example speed and we might want to apply a function to that so if we've got a data frame we've got multiple variables we can let's say for example the function we want to use is histogram or hist for short open brackets the data frame we want to use is cars right and within that the variable we want to look at is speed and if we push command enter we get a histogram of just the speed on the bottom on the at the bottom on the right over there
+
+00:03:54
+here's a neat little trick if you use the function attach and you apply it to the object cars command enter cars becomes attached and so you don't need to use that little dollar sign to indicate which variable you want to use anymore you can just type in the variable so now if we did hist for example and distance just for distance it would create a histogram of the distance without us needing to put cars dollar sign dist now there are hundreds and hundreds of different functions and of course as you
+
+00:04:26
+install packages into r you get even more what i'm going to do quickly now is show you a couple of the functions that you can apply to objects that will help you understand those objects a little better what the parameters and attributes of those objects are so this is a great way to just sort of understand the nuts and bolts of the objects that you're working with and practice working with functions first of all you can do a summary of a particular data frame if you push command enter we get both
+
+00:04:55
+variable speed and distance and it gives us basically in this case they're both numeric variables and so we get the minimum the maximum the interquartile range the median and and and the mean for both of those variables and of course we can ask for a summary of just one of the variables right cars and i'm going to do the dollar sign and speed but of course because cars is attached you don't need to do that you could have just put in speed there command enter and here we get a summary of just that
+
+00:05:19
+particular variable other functions that are going to help you understand the attributes and the parameters of your data are class for example and we can put in class cards and that's going to tell us that cars is a data frame class cars dollar speed and that's going to tell us that speed is a numeric variable we can ask for the length of in the data frame cars the variable speed and it's going to tell us that that has got 50 rows or 50 observations we can also ask for how many unique vari values there are
+
+00:05:55
+right so things that like this is more useful if you're dealing with for example a categorical variable but let's do it anyway unique speed and it's going to say these are all the unique values that exist in that in that particular variable now you might want to get a sense of your data by looking at the first few rows or the last few rows of data so we can do head right that'll give us the first few it'll give us the first six in in actual fact cars and there we have the first six
+
+00:06:24
+six rows of data and if we do the same tail cars it'll give us the last six rows of data if you wanted are to extract out just a particular subset of your data you can type in your object cars and then use square brackets to tell it which subset you'd like now in the square bracket we're going to put a comma and i'm gonna i'm gonna just do this one step at a time before the comma you tell it what rows you wanna look at and after the comma you tell it what columns you wanna look at right
+
+00:06:56
+so if we wanted to look at row three two six and we wanted to look at both columns so in this case one to two it gives us that particular data frame that particular subset and of course we can actually assign that we can call it subset if we wanted to we could call it anything and voila we've created a new little data frame or new object called subset and we can look at that right over there now a little more about functions right functions have arguments the first argument in a function is usually what data you're
+
+00:07:34
+going to look at but there are other arguments and i'm going to show you how that works right now let's start off by saying let's say we don't know much about a particular function like let's say the median we can put a question mark and we type in the word median and in our help menu at the bottom on the right we're going to see all of what we call the r documentation around this and one of the things it tells us is what are the arguments what are the things that need to go inside the
+
+00:07:59
+brackets in order for this function to work some of those arguments you need to input right so for example you need to tell the function which data set or which object it needs to look at but a lot of the a lot of the arguments are actually just set as defaults and you don't need to do anything unless you want them to change right and i'm going to show you how that works with this particular example in the example of median the n a dot rm which is n a stands for not available or missing data and rm
+
+00:08:27
+stands for remove the na.rm argument is set by default to false and we can change that to true and i'm going to show you how that works okay let's do that so first i'm just going to show you how if we use the function median apply it to the object cause and the variable distance in this case it'll give us and we don't need to put in that second argument by the way remember i said n a dot rm n a remove argument is set by default to false you don't have to put it in r just
+
+00:08:58
+assumes that it's false and in this case this data has no missing values it doesn't really matter so if we push command enter it just produces the median in this case 36. let's quickly create an object that does have missing values in it and i'll show you how this particular argument works and how it is that we can change the value in an argument when we apply a function to an object right so let's create an object called new data it's just going to be a single it's just
+
+00:09:24
+going to be a single vector and if you want to put multiple values into a vector what we can do is use a little c which stands for concatenation and we can say 2 4 six three i'm going to put in n a for not available so there's a missing value there and we'll end off with nine right and you can have spaces between those it doesn't really matter right come on to enter now we've got a new object here called new data it's numeric and there are the values and we can see the missing value
+
+00:09:54
+is right there if we apply the function median to that object new data because there's a missing value r is giving us n a it cannot calculate the median because there's a missing value inside that object however if we add in information with respect to that second argument so comma n a remove is equal to true in other words remove missing values the n a remove remove feature of this function is set to true it'll remove missing values and then try and calculate the meaning now if we push command enter voila we
+
+00:10:37
+get the median value right i hope that was useful just to summarize we've got objects right and objects have got different structures we talked about the one structure which is a data frame that's the most common structure and within that there are variables variables have got different types right there's numeric there's categorical etcetera etcetera we're going to talk more about that in another video we apply functions to those objects those functions are instructions are
+
+00:11:01
+to do to those objects to that data but sometimes there are additional arguments that we need to put in to give more specific instructions as to how it is that that function should be applied to that object right i hope you found that useful take care
+

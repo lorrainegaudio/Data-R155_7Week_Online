@@ -1,0 +1,418 @@
+---
+title: "Signature Assignment"
+subtitle: "Descriptive Statistics Part 4"
+author: "Lorraine Gaudio"
+date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
+team: "Spring 2026"
+output: 
+  html_document: # To create an HTML document from R Markdown
+    toc: false # Table of contents (TOC)
+    toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactivne scrolling
+    includes:
+      in_header: ../assets/header.html
+      after_body: ../assets/footer.html
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r eval=FALSE, include=FALSE}
+title: "Signature Assignment"
+subtitle: "Descriptive Statistics"
+author: "Lorraine Gaudio"
+date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
+output: 
+  pdf_document:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+    citation_package: natbib
+    fig_caption: true
+    df_print: kable # Data frame printing
+    includes:
+      in_header: ../assets/header.tex
+    latex_engine: xelatex  # Use xelatex to support fontspec
+fontsize: 12pt
+geometry: margin=1in
+mainfont: "Garamond" # Sets the font of the entire document
+sansfont: "Gotham-Book.otf" # Set sans-serif font to Gotham Book
+monofont: "Courier New" # Set monospace font to Courier New
+documentclass: scrreprt
+linkcolor: boisestateblue # Customizes the color of hyperlinks
+urlcolor: magenta # Customizes the color of URLs
+citecolor: black # Customizes the color of citations
+bibliography: references.bib # Bibliography file
+biblio-style: apalike                 # ⟵ natbib needs a .bst style
+natbiboptions: "round,authoryear"     # round brackets, Author (Year)
+# ---
+title: "Signature Assignment"
+subtitle: "Descriptive Statistics"
+author: "Lorraine Gaudio"
+date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
+team: "Spring 2026"
+output: 
+  html_document: # To create an HTML document from R Markdown
+    toc: false # Table of contents (TOC)
+    toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactivne scrolling
+    includes:
+      in_header: ../assets/header.html
+      after_body: ../assets/footer.html
+```
+
+# Overview
+
+This Signature Assignment asks you to build a **Data Understanding Notebook** in Quarto using the `penguins` dataset. The notebook is a working analytical document where you load data, identify variable types, choose appropriate descriptive statistics, and explain what those statistics show. This activity asks you to 🎯 plan your approach, ✅ monitor whether your code and interpretations make sense, and 🗣 revise your thinking when something is unclear or incorrect. That process is part of self-regulated learning: using metacognitive strategies to guide your own understanding.
+
+This activity is also designed to help you practice writing words around code. In this course, explaining your code and output in plain English is a learning strategy that helps you rehearse key ideas, strengthen your memory, and check whether you truly understand what the code is doing. Each part builds on previous sections, so you return to earlier ideas and use them again in a new context. This repetition helps you develop fluency.
+
+Learning how to create a **Data Understanding Notebook** is something you can use in real analytical settings. Researchers do not begin with conclusions. They begin by getting to know the data: what each variable represents, what kind of values it contains, which summaries make sense, and what early patterns or problems deserve attention. This notebook reflects that real workflow. It helps you practice persistence on difficult tasks, document your thinking, and build habits that matter in real analytical settings where clear reasoning, reproducible work, and thoughtful interpretation are expected.
+
+This activity is designed to be open-ended. You have the freedom to choose which variables to describe and which descriptive statistics to use. The goal is not to get a "right answer" but to make informed choices and explain your reasoning. You will learn how to connect the reading to the data, make decisions about which summaries fit which kinds of variables, and explain why those summaries make sense.
+
+By the end of the Descriptive Statistics activity you will be able to:
+
+-   Define key data science terms related to data collection and data types.
+
+-   Calculate and interpret common descriptive statistics such as counts, mode, median, mean, variance, and standard deviation.
+
+-   Report descriptive statistics using inline R code in a Quarto document.
+
+-   Understand the importance of choosing appropriate descriptive statistics based on the type of data and research question.
+
+-   Produce a well-structured and formatted HTML document summarizing the descriptive statistics of a dataset.
+
+# Part 4
+
+## Task 1: Load 📦 Packages
+
+
+```{r eval=FALSE}
+# ⚡ Install once (if needed): 
+# install.packages("tidyverse")
+
+# install.packages("palmerpenguins")
+```
+
+🎯 Load the packages
+
+```{r message=FALSE, warning=FALSE}
+# ⚡ Load packages:
+library(tidyverse)
+library(palmerpenguins)
+data(penguins)
+```
+
+---
+
+## [Selecting columns and filtering rows](https://carpentry.library.ucsb.edu/CustomDC-R/04-dplyr/index.html#selecting-columns-and-filtering-rows)
+
+📖 **Review** Review the following documentation. Do not include in your notebook.
+
+🎯 To select columns of a data frame, use `select()`. The first argument to this function is the data frame (`penguins`), and the subsequent arguments are the columns to keep.
+
+```{r}
+# ⚡ EXAMPLE
+penguins_select <- penguins %>%
+  select(species, island, bill_length_mm, bill_depth_mm)
+```
+
+🎯 To select all columns except certain ones, put a “-” in front of the variable to exclude it.
+
+```{r}
+# ⚡ EXAMPLE
+head(select(penguins, -year, -species))
+```
+
+This will select all the variables in penguins except year and species.
+
+🎯 To choose rows based on a specific criterion, use `filter()`.
+
+```{r, eval=FALSE}
+# ✅  What are your options
+unique(penguins$island)
+unique(penguins$species)
+unique(penguins$sex)
+unique(penguins$year)
+range(penguins$bill_length_mm, na.rm = TRUE)
+range(penguins$bill_depth_mm, na.rm = TRUE)
+range(penguins$flipper_length_mm, na.rm = TRUE)
+range(penguins$body_mass_g, na.rm = TRUE)
+```
+
+```{r}
+# ✅  Pre-check
+nrow(penguins)
+```
+
+```{r} 
+# ⚡ EXAMPLE
+penguins_filter <- penguins %>%
+  filter(island == "Torgersen")
+# ⚡ EXAMPLE
+penguins_filter <- penguins %>%
+  filter(year == 2007)
+```
+
+
+```{r}
+# ✅  
+head(penguins_filter)
+nrow(penguins_filter)
+```
+
+🗣 What do you notice about the data frame after filtering? How does it differ from the original `penguins` data frame? 
+
+## [Mutate](https://carpentry.library.ucsb.edu/CustomDC-R/04-dplyr/index.html#mutate)
+
+Frequently you’ll want to create new columns based on the values in existing columns, for example to do unit conversions, or to find the ratio of values in two columns. For this we’ll use `mutate()`.
+
+🎯 To create a new column using `mutate()` and calculation:
+
+```{r}
+# ⚡ EXAMPLE
+penguins_mutate <- penguins %>%
+  mutate(body_mass_kg = body_mass_g / 1000)
+```
+```{r}
+# ✅  
+head(penguins_mutate)
+```
+
+🗣 What do you notice about the data frame after mutating? What new information does the column provide?
+
+---
+
+In the first few rows of the output we see some `NA`’s, so if we wanted to remove those we could insert a `filter()` in the chain.
+
+🎯 To remove rows with `NA` values in the new column, we can use `filter()` after `mutate()`.
+
+```{r}
+# ⚡ EXAMPLE
+penguins_mutate_filter <- penguins %>%
+  filter(!is.na(body_mass_g)) %>%
+  mutate(body_mass_kg = body_mass_g / 1000, 
+         body_mass_lb = body_mass_kg * 2.2) 
+```
+
+## Task 2 
+
+Select, filter, and mutate the `penguins` data frame to create a new data frame that contains only the variables and rows you want to analyze.
+
+🎯 Choose at least 3 variables to include in your new data frame. You can select specific columns, filter rows based on certain criteria, and create new columns using `mutate()` if needed.
+
+```{r, eval = FALSE}
+# ⚡ type code here
+`_________` <- penguins %>%
+    filter(!is.na(`_________`)) %>%
+    mutate(`_________` `_` `_________`) %>%
+    filter(`_________` `_` `_________`) %>%
+    select(`_________`, `_________`)
+```
+```{r eval=FALSE, include=FALSE}
+penguins_flipper_length_cm <- penguins %>%
+    filter(!is.na(flipper_length_mm)) %>%
+    mutate(flipper_length_cm = flipper_length_mm / 10) %>%
+    filter(flipper_length_cm < 20) %>%
+    select(species, flipper_length_cm)
+```
+
+
+```{r, eval=FALSE}
+# ✅ Check your new data frame
+head(`_________`)
+nrow(`_________`)
+```
+
+🗣 What variables did you choose to include in your new data frame? Why did you select those variables? What criteria did you use to filter the rows? Did you create any new columns using `mutate()`? If so, what was the purpose of those new columns?
+
+---
+
+## [`summarize()` function](https://carpentry.library.ucsb.edu/CustomDC-R/04-dplyr/index.html#split-apply-combine-data-analysis-and-the-summarize-function)
+
+
+Many data analysis tasks can be approached using the split-apply-combine paradigm: split the data into groups, apply some analysis to each group, and then combine the results. Key functions of dplyr for this workflow are `group_by()` and `summarize()`.
+
+The `group_by()` and `summarize()` functions `group_by()` is often used together with `summarize()`, which collapses each group into a single-row summary of that group. `group_by()` takes as arguments the column names that contain the categorical variables for which you want to calculate the summary statistics. So to compute the mean `body_mass_g` by `sex`.
+
+🎯 To calculate the mean of one column grouped by another.
+
+```{r}
+# ⚡ EXAMPLE
+penguins %>%
+  group_by(sex) %>%
+  summarize(mean_body_mass_g = mean(body_mass_g))
+```
+
+You can also group by multiple columns
+
+```{r message=FALSE, warning=FALSE}
+# ⚡ EXAMPLE
+penguins %>%
+  group_by(sex, species) %>%
+  summarize(mean_body_mass_g = mean(body_mass_g)) 
+```
+
+🗣  From both outputs, we see missing data. The value NA appears an additional, extraneous row.
+
+Investigate where the NA's are coming from.
+
+```{r}
+# ✅ where are the NA's coming from?
+penguins %>%
+  filter(is.na(sex)) 
+```
+
+🎯 To  remove the `NA` values, we can add `is.na()` to the `filter()` function before grouping and summarizing. 
+
+```{r, eval=FALSE}
+# ⚡ EXAMPLE
+penguins %>%
+  filter(!is.na(body_mass_g), !is.na(sex)) %>%
+  group_by(sex, species) %>%
+  summarize(mean_body_mass_g = mean(body_mass_g))
+
+penguins %>%
+  filter(!is.na(body_mass_g), !is.na(sex)) %>%
+  group_by(sex, species) %>%
+  summarize(mean_body_mass_g = mean(body_mass_g),
+            min_body_mass_g = min(body_mass_g))
+```
+
+🗣 The `!` symbol negates the result, so we’re asking for every row where sex is *not* an `NA`. We can pipe this filter so that we calculate the mean body mass after missing values have been removed.
+
+🎯 When calculating summary values, we can also look at the amount of cases that went into the calculation. The `n()` function returns the number of observations in each group.
+
+```{r}
+# ⚡ EXAMPLE
+penguins %>%
+  filter(!is.na(body_mass_g), !is.na(sex)) %>%
+  group_by(sex, species) %>%
+  summarize(mean_body_mass_g = mean(body_mass_g),
+            min_body_mass_g = min(body_mass_g),
+            num_cases = n(),
+            .group = "drop_last") 
+```
+
+### Reporting a summary table in Quarto
+
+📖 **Review** The example below shows how to display a grouped summary as a numbered table in Quarto and refer to it in a sentence. Do not copy this exact example into your notebook unless your instructor tells you to. Use it as a model for Task 3.
+
+
+```{r echo=FALSE, results='asis'}
+knitr::asis_output(
+  paste(
+    c(
+      "````",
+      "Table @tbl-demo-summary shows the mean and minimum body mass for each sex-species group.",
+      "",
+      "```{r}",
+      "#| label: tbl-demo-summary",
+      "#| tbl-cap: \"Mean and minimum penguin body mass by sex and species\"",
+      "",
+      "demo_summary <- penguins %>%",
+      "  filter(!is.na(body_mass_g), !is.na(sex)) %>%",
+      "  group_by(sex, species) %>%",
+      "  summarize(",
+      "    mean_body_mass_g = mean(body_mass_g),",
+      "    min_body_mass_g = min(body_mass_g),",
+      "    num_cases = n(),",
+      "    .groups = \"drop\"",
+      "  )",
+      "",
+      "knitr::kable(demo_summary, digits = 1)",
+      "```",
+      "````"
+    ),
+    collapse = "\n"
+  )
+)
+```
+
+## Task 3
+
+🎯 Use `group_by()` and `summarize()` to calculate descriptive statistics for the variables in your new data frame. Choose at least two different summary statistics (e.g., mean, median, standard deviation) for each variable.
+
+```{r echo=FALSE, results='asis'}
+knitr::asis_output(
+  paste(
+    c(
+      "````",
+      "```{r}",
+      "#| label: tbl-penguins-summary",
+      "#| tbl-cap: \"_____________\"",
+      "",
+      "# ⚡ Type code here",
+      "penguins_table <- `_________` %>%",
+      "  filter(!is.na(`_________`), !is.na(`_________`)) %>%",
+      "  group_by(`_________`) %>%",
+      "  summarize(",
+      "    mean_`_________`   = mean(`_________`),",
+      "    median_`_________` = median(`_________`),",
+      "    sd_`_________`     = sd(`_________`),",
+      "    num_cases          = n(),",
+      "    .groups = \"drop\"",
+      "  )",
+      "",
+      "knitr::kable(penguins_table, digits = 1)",
+      "```",
+      "````"
+    ),
+    collapse = "\n"
+  )
+)
+```
+
+
+🗣 Write 2–4 sentences below your table that refer to it in words. Start one sentence with: "Table @tbl-penguins-summary shows that ..."
+
+🗣 What summary statistics did you calculate for each variable? Why did you choose those particular statistics? How do the summary statistics differ across the groups defined by your categorical variable(s)? What insights can you draw from the summary statistics about the distribution and characteristics of your data?
+
+## Task 4
+
+What was the heaviest animal measured in each `year`? Return the columns `year`, `island`, `species`, and `body_mass_g`. 
+
+🎯 Write the goal in plain English, then write the code to achieve that goal.
+
+```{r eval=FALSE}
+# ⚡ Type code here
+`_____` <- `______` %>%
+    filter(!is.na(`_________`)) %>%
+    group_by(`_________`) %>%
+    filter(`_________` == max(`_________`)) %>%
+    select(`_________`, `_________`, `_________`, `_________`) %>%
+    arrange(`_________`)
+```
+
+```{r eval=FALSE, include=FALSE}
+# answer
+penguins %>%
+    filter(!is.na(body_mass_g)) %>%
+    group_by(year) %>%
+    filter(body_mass_g == max(body_mass_g)) %>%
+    select(year, island, species, body_mass_g) %>%
+    arrange(year)
+```
+
+```{r eval=FALSE, include=FALSE}
+# ✅ Check 
+
+```
+
+🗣 What does the output show? How does it answer the question about the heaviest animal measured in each year? Are there any patterns or trends in the data that you notice from this output? How might you further investigate or visualize this information to gain additional insights?
+
+🗣 What decision did you make when choosing your grouping variable and summary statistics? What did your grouped table help you notice that a single overall summary would have hidden? If you had to revise one part of your code or caption, what did you change and why?

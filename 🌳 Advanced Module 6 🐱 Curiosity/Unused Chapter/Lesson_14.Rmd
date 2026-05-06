@@ -1,0 +1,448 @@
+---
+title: "Lesson 14"
+author: "by Lorraine Gaudio"
+date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
+output: 
+  pdf_document:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+    citation_package: natbib
+    fig_caption: true
+    df_print: kable # Data frame printing
+    includes:
+      in_header: ../assets/header.tex
+    latex_engine: xelatex  # Use xelatex to support fontspec
+fontsize: 12pt
+geometry: margin=1in
+mainfont: "Garamond" # Sets the font of the entire document
+sansfont: "Gotham-Book.otf" # Set sans-serif font to Gotham Book
+monofont: "Courier New" # Set monospace font to Courier New
+documentclass: scrreprt
+linkcolor: boisestateblue # Customizes the color of hyperlinks
+urlcolor: magenta # Customizes the color of URLs
+citecolor: black # Customizes the color of citations
+bibliography: references.bib # Bibliography file
+biblio-style: apalike                 # ⟵ natbib needs a .bst style
+natbiboptions: "round,authoryear"     # round brackets, Author (Year)
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r eval=FALSE, include=FALSE}
+title: "Lesson 14"
+author: "by Lorraine Gaudio"
+date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
+output: 
+  pdf_document:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+    citation_package: natbib
+    fig_caption: true
+    df_print: kable # Data frame printing
+    includes:
+      in_header: ../assets/header.tex
+    latex_engine: xelatex  # Use xelatex to support fontspec
+fontsize: 12pt
+geometry: margin=1in
+mainfont: "Garamond" # Sets the font of the entire document
+sansfont: "Gotham-Book.otf" # Set sans-serif font to Gotham Book
+monofont: "Courier New" # Set monospace font to Courier New
+documentclass: scrreprt
+linkcolor: boisestateblue # Customizes the color of hyperlinks
+urlcolor: magenta # Customizes the color of URLs
+citecolor: black # Customizes the color of citations
+bibliography: references.bib # Bibliography file
+biblio-style: apalike                 # ⟵ natbib needs a .bst style
+natbiboptions: "round,authoryear"     # round brackets, Author (Year)
+ 
+Or
+title: "Lesson 14"
+author: "by Lorraine Gaudio"
+date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
+team: "Fall 2025"
+output: 
+  html_document: # To create an HTML document from R Markdown
+    toc: true # Table of contents (TOC)
+    toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactivne scrolling
+    code_folding: show # Enables you to include R code but have it hidden by default. (Show hide button)
+    includes:
+      in_header: ../assets/header.html
+      after_body: ../assets/footer.html
+```
+
+
+# ❄️ Almost done with Intro to R! 
+
+In lesson 14, We explore thematic coding and data filtering. Many datasets include text—movie genres, country names, survey answers. You often need to *find* rows that mention certain words  or exact terms. Today you’ll learn to combine `str_detect()` with `dplyr::filter()` on both **row names** and **character columns**, using word boundaries (`\\b`) and alternation (`|`) so your patterns are precise.
+
+
+To begin Lesson 14, follow these steps:
+
+1. Open your course project for RStudio 
+   
+2. Create a new file. From the file types we have used so far, pick which file type you want to use. (File > New File > ???).
+
+3. Type in the code provided in this document as you follow along with the video. Pause the video at anytime to answer assignment questions, dig deeper or add memo notes.
+
+**Lesson Overview**
+
+By the end of Lesson 14 you will be able to:
+
+1. ⚡ Remember – Recall `str_detect()`, word boundaries `\\b`, and `|`.
+
+2. 🔍 Understand – Explain `sapply()` and `lapply()` and how regex boundaries match *whole* words.
+
+3. 🛠 Apply –  Use `filter()` + `str_detect()` on data‑frame columns *and* on `row.names()`.
+
+4. 📊 Analyze –  Combine boundary tokens and alternation for precise filters.
+
+5. 🧠️ Evaluate – Judge which words give meaningful thematic signals.
+
+Keep these goals in mind as you move through each section.
+
+# 📦 Packages
+
+Install once (if needed): `install.packages("dplyr")`; `install.packages("dslabs")`; `install.packages("stringr")`
+
+```{r , eval=FALSE}
+install.packages("stringr")
+```
+
+Load the packages at the start of every session:
+
+```{r , eval=FALSE}
+library(dslabs)  # Data science labs package
+library(dplyr)   # Data manipulation package
+library(stringr) # For str_detect() function
+```
+
+# Warm‑Up
+
+What is str_detect?
+
+```{r , eval=FALSE}
+?str_detect    # Arguments and return value (logical)
+```
+
+👀 Check‑in: Why might `ignore_case = TRUE` be safer for text search?
+
+# Row‑name search
+
+Start every plot by piping a data frame into `ggplot()`.
+
+```{r , eval=FALSE}
+View(USArrests)  # View USArrests dataset in RStudio viewer
+row.names(USArrests)  # Check row names of USArrests dataset
+```
+
+```{r , eval=FALSE}
+USArrests %>%
+  filter(str_detect(row.names(USArrests), "^New")) -> New_states
+```
+
+👀 Check‑in: Which *New* states were found? Use row.names(New_states).
+
+# Column search
+
+```{r , eval=FALSE}
+View(movielens)
+nrow(movielens) 
+```
+
+```{r , eval=FALSE}
+movielens %>%
+  filter(str_detect(title, "\\bLove\\b")) -> Love_films
+```
+
+👀 Check‑in: Run nrow(Love_films). Surprised at the count?
+
+```{r eval=FALSE, include=FALSE}
+nrow(Love_films)
+View(Love_films) 
+```
+
+# Exact word match
+
+`\\b` boundary  & `regex`
+
+region column holds strings like "Northeast", "South".
+
+```{r , eval=FALSE}
+?stringr::regex
+```
+
+🧩 Explanation: Regular expressions (regex) allow you to search, extract, and manipulate text based on patterns rather than exact matches. 
+
+
+```{r , eval=FALSE}
+# Case Insensitive Matching
+str_detect("HELLO", regex("hello", ignore_case = TRUE))
+```
+
+
+```{r , eval=FALSE}
+# Word Boundary Matching
+murders %>%
+  filter(str_detect(region, regex("\\bSouth\\b"))) -> South_states
+```
+
+🧩 Explanation: `\\b` anchors to word boundaries → avoids matching inside longer words, ensuring "South" is matched not "Southampton".
+
+```{r , eval=FALSE}
+murders %>%
+  filter(str_detect(region, regex("\\b(North|South)\\b"))) -> NS_states
+```
+
+🧩 Explanation:  `(A|B)` acts like A **OR** B inside a single `regex` pattern, matches either "North" OR "South" in one operation.
+
+# Count Matches Quickly
+
+```{r , eval=FALSE}
+match_counts <- c(
+  nrow(New_states),
+  nrow(Love_films),
+  nrow(South_states),
+  nrow(NS_states)
+)
+```
+
+🎯 The GOAL: Build a small data frame of simulated heights.
+
+```{r , eval=FALSE}
+# Add names if needed
+names(match_counts) <- c("New_states", "Love_films", "South_states", "NS_states")
+
+# Display the results
+match_counts
+```
+
+Alternatively, use `sapply()` to count rows in each data frame
+
+```{r , eval=FALSE}
+?sapply # sapply() applies a function to each element of a list or vector
+match_counts <- sapply(list(New_states, Love_films, South_states, NS_states), nrow)
+match_counts
+```
+
+# Inspect the Corpus
+
+Load the lesson corpus (Resnik & Elliott passages):
+
+```{r , eval=FALSE}
+load("Lesson_14_Workspace.RData")  # creates Science_Values
+```
+
+```{r , eval=FALSE}
+length(Science_Values)   # lines/pages in the article
+head(Science_Values)
+```
+
+# Build a Keyword Index
+
+```{r , eval=FALSE}
+?lapply  # lapply() applies a function to each element of a list or vector
+```
+
+```{r , eval=FALSE}
+Index_Words <- c("values", "norms", "integrity", "ethics", "bias", "trust", 
+                 "transparency", "responsibility", "reproducibility", "evidence", 
+                 "policy", "funding", "conflict")
+```
+
+📝 We compose the `function(w)`. It takes each `Index_Words` as input.
+
+```{r , eval=FALSE}
+Index <- lapply(Index_Words, function(w) {
+  which(str_detect(Science_Values, regex(paste0("\\b", w, "\\b"),
+                                         ignore_case = TRUE)))
+})
+```
+
+```{r , eval=FALSE}
+names(Index) <- Index_Words
+```
+
+👀 Check‑in: What does `Index` contain? Use names(Index) to see the words.
+
+```{r , eval=FALSE}
+# Check the index for "trust"
+Index[["trust"]]  
+```
+
+👀 Check‑in: How many lines mention "trust"? Use length(Index[["trust"]])
+
+# Preview Context Lines
+
+```{r , eval=FALSE}
+Science_Values[Index[["transparency"]]][1:2]   # first two transparency hits
+```
+
+```{r , eval=FALSE}
+# One-liner to get all sentences containing "trust"
+trust_sentences <- Science_Values[Index[["trust"]]]
+```
+
+
+# 📝 Practice Space
+
+🧠 Challenge:
+
+1. Create **`United_Year2000`** with `gapminder` rows from `year == 2000` *and* `countries` containing `"United"`.
+
+2. Write one `regex` that captures both "bias" and "biased". Test on `Science_vec` and count lines.
+
+```{r , eval=FALSE}
+
+
+```
+
+✍️ Practice:
+
+a. Build a vector of three new ethics-related words. Or create objects that filter `gapminder` country names for each word.
+
+b. Write a loop (`lapply`) that saves a separate data frame per word.
+
+Add at least one 👀 check‑in predicting the total rows you expect.
+
+# ➤ Assignment
+
+Replace each ____ placeholder (and any TODO comments) with working code or a short written answer. Run each section; be sure the requested objects appear in the Environment. When finished, save **BOTH** this script and your .RData workspace and upload.
+
+When you’re done, your workspace should contain SIX new objects: `Merc_cars`, `United`, `Saint`, `Republics`, `Union_2000`, `Keyword_Counts`
+
+## Task 0
+
+📦 Packages
+
+Attach `stringr`, `dplyr`, and `dslabs` and load `Lesson_14_Workspace.RData`
+
+```{r, eval=FALSE}
+____(____) 
+____(____)
+____(____)
+load("Lesson_14_Workspace.RData")
+```
+
+## Task 1
+
+Row-name search
+
+Replace each _____ with functions to find all rows in `mtcars` with `"Mazda"`
+
+```{r, eval=FALSE}
+Mazda_cars <- mtcars %>% 
+  _____(_____(row.names(mtcars), "Mazda"))
+```
+
+## Task 2
+
+⚡ Explain what Task 1’s pipeline does.
+
+✍️ EXPLANATION: "___"
+
+## Task 3
+
+“United” countries
+
+Use `gapminder` ➜ rows whose `country` contains `"United"`. Store as **`United`**.
+
+```{r, eval=FALSE}
+____ <- _____
+```
+
+## Task 4
+
+Exact “St” countries
+
+`gapminder` ➜ rows whose `country` is exactly the word `"St"`. Hint: use `\\b` before and after. Store as **`Saint`**.
+
+
+```{r, eval=FALSE}
+_____ <- _____
+
+```
+
+## Task 5
+
+Republic OR Rep
+
+Use `gapminder` ➜ rows whose `country` contains `"Republic"` OR exactly `"Rep"`. Hint: combine `\\b` with alternation (`|`). Store as **`Republics`**.
+
+```{r, eval=FALSE}
+_____ <- _____
+```
+
+## Task 6
+
+Year-specific filter + ignore_case
+
+Use `gapminder` ➜ `year == 2000` AND `country` contains` "union"` (any case). Store as **`Union_2000`**.
+
+```{r, eval=FALSE}
+_____ <- _____
+```
+
+## Task 7
+
+Build a keyword hit count
+
+Using `Science_Values` (vector of text lines) and the vector `keys` of `"bias"`, `"ethics"`, `"trust"` produce **`Keyword_Counts`**: a named integer vector of line counts per word.
+
+```{r, eval=FALSE}
+keys <- _____
+
+
+_____ <- _____
+
+```
+
+```{r, eval=FALSE}
+# Quick check
+print(Keyword_Counts)
+```
+
+## Task 8
+
+🤔 Reflect: 
+
+📝 Write a short paragraph reflecting on when is adding `\\b` around a word **not** a good idea?
+
+✍️ EXPLANATION: "___"
+
+# Save and Upload
+
+1. You will be submitting **both** the Quarto Document and the workspace file. The workspace file saves all the objects in your environment that you created in this lesson. You can save the workspace by running the following command in a code chunk of the Quarto Document document:
+
+```{r , eval=FALSE}
+save.image("Assignment14_Workspace.RData")
+```
+
+Or you can click the "Save Workspace" button in the Environment pane. 
+
+💾 **Always save the R documents before closing.**
+
+2. Find the assignment in this week's module in Canvas and upload **both** the RMD and the workspace file.
+
+# Today you practiced:
+
+- Used word boundaries (`\\b`) and alternation (`|`) inside `regex` strings.
+
+- Combined `str_detect()` with `dplyr::filter()` for flexible row selection.
+
+- Searched both data-frame columns and row names.
+
+- Built a keyword index for qualitative reading.
+
+
+

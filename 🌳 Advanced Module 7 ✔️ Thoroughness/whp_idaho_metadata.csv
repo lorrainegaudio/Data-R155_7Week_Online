@@ -1,0 +1,2 @@
+name,n_layers,n_cells,is_factor,has_levels,crs_wkt,is_lonlat,res_x_m,res_y_m,xmin,xmax,ymin,ymax,value_units,description
+WHP_ID,1,7774185,FALSE,FALSE,+proj=aea +lat_0=23 +lon_0=-96 +lat_1=29.5 +lat_2=45.5 +x_0=0 +y_0=0 +datum=NAD83 +units=m +no_defs,FALSE,240,240,-1715625,-1189305,2208975,3059775,WHP index (unitless),Wildfire Hazard Potential (continuous index); Idaho subset

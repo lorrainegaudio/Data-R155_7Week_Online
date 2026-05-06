@@ -1,0 +1,67 @@
+---
+title: "Data Understanding Notebook"
+subtitle: "Descriptive Statistics"
+author: "Sanga Zamaraikamal Pori"
+date: today
+toc: true
+toc-depth: 2
+number-sections: true
+format: html
+---
+
+# Purpose of this notebook
+
+This document is an exploratory data analysis notebook used to understand the dataset `penguins` and prepare for later analysis. It is data for three penguin species observed in the Palmer Archipelago, Antarctica, collected by Dr. Kristen Gorman with Palmer Station LTER. How do penguin body measurements differ by species, sex, and island in the Palmer Archipelago?
+
+[Dataset References](https://allisonhorst.github.io/palmerpenguins/reference/penguins.html)
+
+# Load Packages and Data
+
+This section loads the packages and dataset needed for the analysis.
+
+```{r}
+library(dplyr)
+library(palmerpenguins)
+data(package = "palmerpenguins")
+```
+
+# Variables and Data Types
+
+```{r}
+glimpse(penguins)
+colnames(penguins)
+```
+
+The \`penguins\` dataset contains \`r nrow(penguins)\` rows and \`r ncol(penguins)\` columns: \`r paste(colnames(penguins), collapse = ", ")\`.
+
+The `species` column is stored as `r class(penguins$species)` in R. This is **categorical** data because it places penguins into groups or categories. The order of these categories does not matter, so this is best understood as an **unordered sample**.
+
+The `island` column is stored as `r class(penguins$island)` in R. This is **categorical** data because it places penguins into groups or categories. The order of these categories does not matter, so this is best understood as an **unordered sample**.
+
+The `bill_length_mm` column is stored as `r class(penguins$bill_length_mm)` in R. This is **numerical** data because it records a measured quantity. It is **continuous** data because measurements can vary across a range of values. The order of the values does not matter unless we sort them for analysis.
+
+The `bill_depth_mm` column is stored as `r class(penguins$bill_depth_mm)` in R. This is **numerical** data because it records a measured quantity. It is **continuous** data because measurements can vary across a range of values. The order of the values does not matter unless we sort them for analysis.
+
+The `flipper_length_mm` column is stored as `r class(penguins$flipper_length_mm)` in R. This is **numerical** data because it records a measured quantity. It is **continuous** data because measurements can vary across a range of values. The order of the values does not matter unless we sort them for analysis.
+
+The `body_mass_g` column is stored as `r class(penguins$body_mass_g)` in R. This is **numerical** data because it records a measured quantity. It is **continuous** data because measurements can vary across a range of values. The order of the values does not matter unless we sort them for analysis.
+
+The `sex` column is stored as `r class(penguins$sex)` in R. This is **categorical** data because it places penguins into groups or categories. The order of these categories does not matter, so this is best understood as an **unordered sample**.
+
+The `year` column is stored as `r class(penguins$year)` in R. This is **numerical** data in R because it is stored as numbers. However, this column should be interpreted carefully because it represents year rather than a body measurement. The values are **discrete**, and their **order matters** because years follow a time sequence.
+
+# Median
+
+# Mean
+
+# Measures of Spread
+
+## Standard Deviation
+
+## Range
+
+## Interquartile Range
+
+## Five Number Summary
+
+# Early Takeaways

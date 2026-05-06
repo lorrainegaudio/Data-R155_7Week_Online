@@ -1,0 +1,501 @@
+---
+title: "🤪 Vector MadLib"
+author: "by Lorraine Gaudio"
+date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
+team: "Summer 2026"
+output: 
+  html_document: # To create an HTML document from R Markdown
+    toc: false # Table of contents (TOC)
+    toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactive scrolling
+    code_folding: show # Enables you to include R code but have it hidden by default. (Show hide button)
+    includes:
+      in_header: ../assets/header.html
+      after_body: ../assets/footer.html
+encoding: UTF-8
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r eval=FALSE, include=FALSE}
+title: "Chapter 3 Activity"
+author: "by Lorraine Gaudio"
+date:   "`r paste('Lesson generated on', format(Sys.Date(), '%B %d, %Y'))`"
+output: 
+  pdf_document:
+    toc: true
+    toc_depth: 1
+    number_sections: true
+    citation_package: natbib
+    fig_caption: true
+    df_print: kable # Data frame printing
+    includes:
+      in_header: ../assets/header.tex
+    latex_engine: xelatex  # Use xelatex to support fontspec
+fontsize: 12pt
+geometry: margin=1in
+mainfont: "Garamond" # Sets the font of the entire document
+sansfont: "Gotham-Book.otf" # Set sans-serif font to Gotham Book
+monofont: "Courier New" # Set monospace font to Courier New
+documentclass: scrreprt
+linkcolor: boisestateblue # Customizes the color of hyperlinks
+urlcolor: magenta # Customizes the color of URLs
+citecolor: black # Customizes the color of citations
+bibliography: references.bib # Bibliography file
+biblio-style: apalike                 # ⟵ natbib needs a .bst style
+natbiboptions: "round,authoryear"     # round brackets, Author (Year)
+ 
+Or
+title: "Chapter 3 Activity"
+author: "by Lorraine Gaudio"
+date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
+team: "SPring 2026"
+output: 
+  html_document: # To create an HTML document from R Markdown
+    toc: true # Table of contents (TOC)
+    toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactive scrolling
+    code_folding: show # Enables you to include R code but have it hidden by default. (Show hide button)
+    includes:
+      in_header: ../assets/header.html
+      after_body: ../assets/footer.html
+```
+
+
+# Overview
+
+This coding challenge is designed to deepen your understanding of vectors in R. You will build vectors of different types, convert one existing character vector into a factor, and generate two MadLib stories from your objects.
+
+
+In this activity, you will practice how to:
+
+1. 🔨 Build and inspect vectors: numeric, integer, logical, and character
+
+2.  🔧 Use logical operators to create logical vectors
+
+3. 🪄 Convert a character vector into factor class
+
+4. 💪 Practice reproducible work by fixing errors and documenting what happened
+
+## How to complete this activity
+
+Open the provided R Notebook template for this activity. The template already contains the main sections, starter code chunks, and places for your comments/memos.
+
+Your job is to work through the template from top to bottom:
+
+1. Fill in the blanks in the code chunks.
+2. Run each chunk after you complete it.
+3. Check that the required objects appear in your Environment.
+4. Write short comments or memos when prompted.
+5. Run the story code after all required objects have been created.
+
+💡 **Tip:** The story code depends on the vectors you create earlier in the notebook. If an object is missing, misspelled, or created with the wrong name, the story code will break.
+
+# Vectors
+
+**Rules**: Name your vectors *exactly* as listed. Follow the rules for each type. Element duplication is allowed. 
+
+## Numeric vector
+
+🎯  Create a vector called `numeric` using your pick of six **real numbers** (length = 6)
+
+```{r eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
+numeric <- c( __ , __ , __ , __ , __ , __) # length = 6
+```
+
+```{r eval=FALSE}
+## ✅  print stored vector
+numeric
+```
+
+🎯  Use `length()` to verify that `numeric` contains six values.
+
+```{r eval=FALSE}
+## ✅ Check the length of your vector
+_____(numeric)
+```
+
+🗣 Comment: Describe what kind of values are stored in the **numeric vector**.
+
+## Integer vector
+
+🎯 Create a vector called `integer` using four **whole numbers**, your pick. (length = 4)
+
+```{r eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
+integer <- c(__L, __L, __L, __L) # length = 4
+```
+
+```{r eval=FALSE}
+## ✅  print stored vector
+integer
+```
+
+🎯  Use `length()` to verify that `integer` contains exactly four values.
+
+```{r eval=FALSE}
+## ✅ Check the length of your vector
+_____(integer)
+```
+
+🗣 Comment: Describe what makes this vector an **integer vector**.
+
+## Logical vector
+
+A logical vector can be created several ways. For this task, you will create the vector using **logical operators**.
+
+___
+
+📖 **Review** The logical operators are:
+
+- `>` greater than
+
+- `<` less than
+
+- `==` equal to
+
+- `>=` greater than or equal to
+
+- `<=` less than or equal to
+
+- `!=` not equal to
+
+
+___
+
+**EXAMPLE**
+
+```{r, eval=FALSE}
+logical_example <- c(1 > 2, (3 + 5) <= (10 - 2)) # length = 2
+```
+
+
+___
+
+🎯  Create a vector called `logical` using only **logical operators** (length = 4).
+
+```{r eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
+logical <- c( __ , __ , __ , __ ) # length = 4
+```
+
+```{r eval=FALSE}
+## ✅  print stored vector
+logical
+```
+
+🎯  Use `class()` to verify that the object `logical` has the class `logical`. Use `length()` to verify there are four elements in the `logical` object.
+
+```{r eval=FALSE}
+## ✅ Check the length and class of your vector
+_____(logical)
+_____(logical)
+```
+
+🗣 Comment: Explain one comparison you used and why it returns `TRUE` or `FALSE`.
+
+## Character vectors
+
+Make each character vector with words or phrases of your choice. 💡 **Tip:** character values need quotation marks.
+
+### Name Vector
+
+🎯  Create a vector called `name`. Use any people names, real or fictional (length = 6); Element duplication is recommended.
+
+```{r eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
+name <- c( __ , __ , __ , __ , __ , __ ) # length = 6
+```
+
+```{r eval=FALSE}
+## ✅  print stored vector
+name
+```
+
+### Team Name
+
+🎯  Create a vector called `group_name` → imaginary team/group names (length = 4)
+
+```{r eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
+group_name <- c( __ , __ , __ , __ ) # length = 4
+```
+
+```{r eval=FALSE}
+## ✅  print stored vector
+group_name
+```
+
+### Social Handle
+
+🎯  Create a vector called `at_handle` → any made-up social media handles (length = 4)
+
+_A social media handle is a unique identifier on a platform. Prefixed with “@”, it is used to find, tag, or mention someone, group, or organization online._
+
+```{r eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
+at_handle <- c( __ , __ , __ , __ ) # length = 4
+```
+
+```{r eval=FALSE}
+## ✅  print stored vector
+at_handle
+```
+
+### Item
+
+🎯  Create a vector called `item` → any kind of thing or object (length = 6). Element duplication is recommended.
+
+```{r eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
+item <- c( __ , __ , __ , __ , __ , __ ) # length = 6
+```
+
+```{r eval=FALSE}
+## ✅  print stored vector
+item
+```
+
+### Activity
+
+🎯  Create a vector called `activity` → something you do (length = 4).
+
+```{r eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
+activity <- c( __ , __ , __ , __ ) # length = 4
+```
+
+```{r eval=FALSE}
+## ✅  print stored vector
+activity
+```
+
+### Location
+
+🎯  Create a vector called `location` → any place, real or imagined (length = 4)
+
+```{r eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
+location <- c( __ , __ , __ , __ ) # length = 4
+```
+
+```{r eval=FALSE}
+## ✅  print stored vector
+location
+```
+
+### Rally Cry
+
+🎯  Create a vector called `call_to_action` → a catch phrase or statement (length = 4)
+
+_A rally cry is a phrase, or idea used to inspire, unite, or motivate a group toward a common goal or action._
+
+```{r eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
+call_to_action <- c(__, __, __, __) # length = 4
+```
+
+```{r eval=FALSE}
+## ✅  print stored vector
+call_to_action
+```
+
+### Emotion
+
+🎯  Create a vector called `emotion` → a mood or feeling (length = 6). Element duplication is recommended.
+
+```{r eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
+emotion <- c(__, __, __, __, __, __)
+```
+
+```{r eval=FALSE}
+## ✅  print stored vector
+emotion
+```
+
+### Retro Game
+
+🎯  Create a vector called `retro_game` → any game titles (length = 4)
+
+```{r eval = FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
+retro_game <- c(__, __, __, __)
+```
+
+```{r eval=FALSE}
+## ✅  print stored vector
+retro_game
+```
+
+### Social Media
+
+🎯  Create a vector called `social_media_platform` → any virtual community  (length = 3)
+
+_A social media platform is a website or application that allows users to create and share content or participate in social networking._
+
+```{r eval = FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
+social_media_platform <- c(__, __, __) # length 3
+```
+
+### Character Vector Check
+
+```{r eval=FALSE}
+# ✅ Check lengths
+length(name)
+length(group_name)
+length(at_handle)
+length(item)
+length(activity)
+length(location)
+length(call_to_action)
+length(emotion)
+length(retro_game)
+length(social_media_platform)
+```
+
+🗣 Comment: Describe one issue that can happen if character values are missing quotation marks.
+
+## Factor class
+
+**Convert one character vector to factor class**
+
+A factor is R’s way of storing categorical data. In this activity, you will choose one character vector you already created and convert it into a factor object called `story_factor`.
+
+➤  Step 1: Check the Class
+
+🎯 Select a character vector (e.g., `name`, `item`, `emotion`) and use a function `class()` to check the class of the vector.
+
+```{r eval=FALSE}
+# ✅ Check the class before conversion
+class( __ )
+```
+
+➤  Step 2: Change Class to Factor
+
+🎯 Use `as.factor()` to convert your chosen character vector into a new object called `story_factor`.
+
+```{r eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
+story_factor <- as.factor(x = __)
+```
+
+➤  Step 3: Check the Class
+
+🎯 Verify that `story_factor` has factor class, then inspect its levels.
+
+```{r eval=FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
+class(story_factor)
+levels(story_factor)
+```
+
+🗣 Comment: Explain which vector you converted, how the class changed, and what the levels show.
+
+
+# Story
+
+➤  Copy and paste the following code and read your Mad Lib Story!
+
+➤ Before running the story code, confirm these objects exist in your Environment:
+
+`numeric`, `integer`, `logical`, `name`, `group_name`, `at_handle`, `item`, `activity`, `location`, `call_to_action`, `emotion`, `retro_game`, `social_media_platform`, and `story_factor`
+
+```{r , eval=FALSE}
+# ⚡  Copy and paste this code into your R Notebook
+# Function to pick a random element from a vector
+pick <- function(x) sample(x, 1)
+
+# ---------- Story 1 ----------
+story1 <- paste(
+  "After a long week,", pick(name), "unplugged by trying", pick(activity),
+  "with", pick(group_name), "at their favorite spot,", paste0(pick(location), "."),
+  "Vibe rating:", paste0(pick(numeric), "."),
+  "The ", pick(activity), "was going so well, but then a crucial missing", paste0(pick(item), " was discovered."),
+  "Going with the flow was", ifelse(pick(logical), "reasonable.", "unreasonable."),
+  "Reminding each other", paste0(pick(call_to_action), "."),
+  "They made a plan for Episode", paste0(pick(integer), ","),
+  "closing with a", paste0(pick(emotion), " mood.")
+)
+
+print(story1)
+# ---------- Story 2 ----------
+# Using the factor object to pick one category
+selected_factor_value <- pick(story_factor)
+
+story2 <- paste(
+  "On a mission for a fashion comeback,", pick(name), "found", pick(item),
+  "at", pick(location), "that screamed Y2K.",
+  "They spent a total of", paste0(pick(numeric), " dollars"),
+  "but they", ifelse(pick(logical), "remembered", "forgot"), "to get a receipt!",
+  "After posting a 'before' shot on", paste0(pick(social_media_platform), ","),
+  "the post went viral", ifelse(pick(logical), "by midnight.", "by the next day."),
+  "The random category pulled from the factor vector was", paste0(selected_factor_value, "."),
+  "Their retro level was officially", paste0(pick(retro_game), " status,"),
+  "and they immediately upcycled the item online for", paste0(pick(numeric), " dollars"),  
+  "and sold in", pick(integer), "minutes.", 
+  "The community response was so strong, they had this final message for their followers:", 
+  paste0(pick(call_to_action), ".")
+)
+
+print(story2)
+```
+
+
+# Glossary
+
+**Arguments**: Inputs that you provide to functions to customize their behavior. Arguments are specified within the parentheses of a function call and can modify how the function operates or what data it processes.
+
+**Character Vector**: A vector that stores text strings, written in quotes, such as `"apple", "banana", "grapes"` or `"ID_001", "ID_002", "ID_003"`.
+
+**Class** `class()`: A function that reports the object’s class, which tells R how to interpret the object and which methods to use when functions are applied to it. For example, `class(3.14)` returns `"numeric"`, and `class(mtcars)` returns `"data.frame"`.
+
+**Code Chunks**: Fenced blocks in an R Markdown/Notebook document where R code is written and executed, usually starting with <code>&#96;&#96;&#96;{r}</code>. Only code inside a chunk runs, and its output (including plots and tables) appears directly below the chunk when executed.
+
+**Concatenate** `c()`: A function that combines (concatenates) values into a single vector. You use `c()` to create a vector, append items to an existing vector, or join multiple vectors together (for example, `c(1, 2, 3)` or `c(x, y)`.
+
+**Elements**: The individual data values stored inside a vector object. Each element has a position (its index) and can be accessed by indexing (for example, `x[1]` for the first element).
+
+**Environment Pane**: The pane that lists the objects currently stored in memory for your session (for example, data frames, vectors, and functions). It helps you check what exists, inspect object names/types, and remove or manage objects.
+
+**Factor Class**: An R object class for categorical data, where each value is stored as an integer code that points to a category label. Factors help R handle categories correctly in tables, plots, and statistical models, even though they may print like text.
+
+**Functions**: Reusable blocks of code that perform specific tasks. Functions can take inputs (arguments) and return outputs. R has many built-in functions, and you can also create your own.
+
+**Function Call**: The act of running a function by writing its name followed by parentheses, optionally supplying arguments inside (e.g., `mean(x)`). 
+
+**Integer Vector**: A vector that stores whole numbers. In R, integers are typically written with an `L` suffix, such as `1L` or `42L`.
+
+**Logical Operators**: Operators that create or combine logical elements. The most common are comparison operators—`==`, `!=`, `<`, `>`, `<=`, `>=`—which return `TRUE`/`FALSE`, and Boolean operators—`!` (NOT), `&` / `|` (AND/OR applied element-by-element), and `&&` / `||` (AND/OR that evaluate only the first element, mainly for if conditions).
+
+**Logical Vector**: A vector that stores Boolean elements: `TRUE` or `FALSE` (and sometimes `NA` for missing). Logical vectors are commonly produced by comparisons (for example, `x > 0`) and are heavily used for filtering and conditional code.
+
+**Objects**: The variables, data frames, functions, and other items that you create and store in your R environment during a session. These objects can be viewed and managed in the Environment pane.
+
+**Object Name**: The variable name you assign with `<-` that refers to the entire object in your environment. You use the object name to print, modify, or pass the whole object to functions.
+
+**Numeric Vector**: A vector that stores real (decimal) numbers, such as `3.14`, `-2.5`, or `0`.
+
+**Real Numbers**: Numbers that can be located on the number line, including whole numbers, integers, fractions, decimals, and irrational numbers such as `pi` and `sqrt(2)`. Real numbers do not include imaginary numbers, and in statistics they are commonly used to represent measured quantitative values such as height, weight, or time.
+
+**Vector**: A one-dimensional object that stores an ordered sequence of elements of the same basic type (for example, all numeric, all character, or all logical). Vectors are the core building block of many R objects, and you create them with functions like `c()`; you can subset them by position or by logical conditions.
+
+**Whole Numbers**: The counting numbers together with zero: `0, 1, 2, 3, ....` Whole numbers do not include negative numbers, fractions, or decimals.
+
+ 

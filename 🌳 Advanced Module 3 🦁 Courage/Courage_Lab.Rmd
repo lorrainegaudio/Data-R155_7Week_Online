@@ -1,0 +1,295 @@
+---
+title: "Courage Lab"
+author: "by Lorraine Gaudio"
+date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
+team: "Spring 2026"
+output: 
+  html_document: # To create an HTML document from R Markdown
+    toc: false # Table of contents (TOC)
+    toc_depth: 2 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactivne scrolling
+    includes:
+      in_header: ../assets/header.html
+      after_body: ../assets/footer.html
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r eval=FALSE, include=FALSE}
+title: "Courage Lab"
+author: "by Lorraine Gaudio"
+date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
+output: 
+  pdf_document:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+    citation_package: natbib
+    fig_caption: true
+    df_print: kable # Data frame printing
+    includes:
+      in_header: ../assets/header.tex
+    latex_engine: xelatex  # Use xelatex to support fontspec
+fontsize: 12pt
+geometry: margin=1in
+mainfont: "Garamond" # Sets the font of the entire document
+sansfont: "Gotham-Book.otf" # Set sans-serif font to Gotham Book
+monofont: "Courier New" # Set monospace font to Courier New
+documentclass: scrreprt
+linkcolor: boisestateblue # Customizes the color of hyperlinks
+urlcolor: magenta # Customizes the color of URLs
+citecolor: black # Customizes the color of citations
+bibliography: references.bib # Bibliography file
+biblio-style: apalike                 # ⟵ natbib needs a .bst style
+natbiboptions: "round,authoryear"     # round brackets, Author (Year)
+ 
+Or
+title: "Courage Lab"
+author: "by Lorraine Gaudio"
+date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
+team: "Spring 2026"
+output: 
+  html_document: # To create an HTML document from R Markdown
+    toc: true # Table of contents (TOC)
+    toc_depth: 2 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactivne scrolling
+    code_folding: show # Enables you to include R code but have it hidden by default. (Show hide button)
+    includes:
+      in_header: ../assets/header.html
+      after_body: ../assets/footer.html
+```
+
+# 👥 Human-Centered AI
+
+This course teaches AI competencies: Human-centered mindset, AI techniques and applications, and Ethics of AI. So far, we've focused on AI techniques and applications such as prompt engineering. Today, we take a step back and think about when and how to use AI in a way that centers human relationships and learning.
+
+Help-seeking is a social act. In learning, research, and work settings, asking for help typically does more than solve a problem: it signals vulnerability; it activates reciprocity. It transmits norms; and it builds trust and belonging. When you ask your peer, instructor, or others for help, you are participating in a relational infrastructure. Quick questions before class, brief check-ins during office hours, and small moments of confusion shared with classmates all build a sense of community and shared purpose. If an LLM becomes the easiest, fastest, lowest-friction option, you will experience fewer micro-interactions, have fewer peer modeling opportunities, and fewer moments where norms, strategies, or values are socially transmitted. Using LLM exclusively will reduce the density of casual, learning-oriented contact, which is often where community is actually built. Those “small” interactions are how learning communities form.
+
+An AI can give instrumental help (fast feedback, examples, explanations) without any social risk. That can be especially useful when you feel anxious, behind, or worried about looking foolish. LLMs don't judge, don't get tired, don't keep score, and don't *feel like* you are disclosing private information to others. But it also means AI can quietly replace the low-stakes human interactions that help you feel connected. In other words, LLMs provide private competence-building but may result in feelings of isolation. A shared learning ecology offers connection but requires vulnerability and time. 
+
+# 🦁 Courage
+
+Fear shows up in predictable ways: fear of struggling, fear of failure, fear of speaking up, fear of being “found out,” and fear of looking foolish in front of other people. The problem is not that fear exists. The problem is what fear does when it drives your behavior. It keeps you on the sidelines, makes you passive, and convinces you to protect your image instead of taking risks. Over time, that disengagement compounds. You miss opportunities to practice, you avoid asking questions, and you may fall behind. That is why fear is the enemy of deep learning.
+
+Courage is not the absence of fear. Courage is the ability to manage fear in service of truth and understanding. In practical terms, courage means you act even when you feel exposed or uncertain. You volunteer an answer attempt, you ask the “dumb” question, you share work-in-progress, you bring an error message to a peer or to office hours, and you let feedback guide your next attempt. Courage also means responding to obstacles with agency: you stay involved, you try new strategies, and you use available resources instead of ruminating on mistakes or interpreting errors as evidence that you “*aren’t good at this.*”
+
+Courage matters because it directly determines whether you will actually use the learning environment you’re in. A student can have access to strong teaching, helpful peers, office hours, and AI tools and still not benefit if fear prevents engagement. Courage is the bridge between resources and results. It is also a relationship skill. When you practice courage, you make help-seeking possible, and help-seeking builds community. That’s why courage sits next to “human-centered AI” in this course. AI can support learning, but courage is what keeps you connected to people and willing to learn in public, which is where much of the growth happens.
+
+# 🛠 Lab Activity
+
+## Purpose
+
+This lab is about practicing courage and human-centered AI use. You will (1) Identify one real point of confusion from recent course work, (2) Practice naming what makes help-seeking hard, and (3) Ask a real person for help using a clear, respectful message. AI tools may be used only to improve the clarity of your help request (or to suggest a few next steps you can ask a person about). They should not be used to solve the problem today.
+
+⏱️ At a Glance
+
+ - **Time estimate** 30 minutes
+
+ - **Due**: Monday
+
+ - **You will produce**: `HTML` file of your R Notebook with your question inventory, help request, and reflection.
+
+## 🖥 Courage Lab Notebook
+
+Please take 5 minutes to set up your notebook
+
+1. Open RStudio. 
+
+2. Start a new R Notebook named `courage_lab.Rmd`
+
+3. In the YAML header, title it **"Courage Lab"** and include your name + date.
+
+4. Please delete the Notebook template text.
+
+5. Create the section headers
+
+```markdown
+## Question Inventory
+## Help Request
+## Reflection
+## AI Transparency Memo (if used)
+```
+
+## 🔍 Question Inventory
+
+Please take 10 minutes to reflect on your recent work and identify a specific question you have right now.
+
+### Identify one recent “stuck moment”
+
+Under **## Question Inventory**, use the markdown sub-header 
+
+```markdown
+### Stuck moment from recent work
+```
+Answer:
+
+- What assignment/activity was it from?
+
+- What exactly happened when you got stuck?
+
+- What did you do next (keep trying, stop, search web, ask a peer, ask instructor, use ?help, use AI, etc.)?
+
+### Write ONE question you have right now
+
+Under **## Question Inventory**, make your second markdown sub-header 
+
+```markdown
+### My current question
+```
+
+Identify *at least* one question you have right now.
+    - Source: (Assignment __, feedback comment, class activity, etc.)
+    - My question:
+    - My code &/or error:
+
+If you have code or an error, include it in a code chunk:    
+```{r}
+# Include code example
+```
+
+### Name your main barrier to asking for help
+
+Under **## Question Inventory**, make your third markdown sub-header 
+
+```markdown
+### What makes asking hard for me
+```
+**What is your main barrier to asking for help?**
+
+Choose 1–2 barriers and **explain** briefly:
+
+- fear of looking dumb
+
+- not sure how to ask
+
+- procrastination
+
+- overwhelmed
+
+- time
+
+- “I should know this”
+
+- other (be specific)
+
+## 📝 Prepare Your Help Request
+
+In this lab, we assume you are stuck. Your job is not to keep troubleshooting. Your job is to document your thinking clearly and ask a real person for help in a way that makes it easy for them to respond. Please take a few minutes to draft a help request message.
+
+### Clarifying the issue
+
+Under **## Help Request**, use the markdown sub-header 
+
+```markdown
+### Clarifying
+```
+**What is your best guess about what’s going wrong?**
+
+Before you write your message, add a short memo in your notebook under ## Help Request with these three items:
+
+- **Goal** (what you were trying to do):
+
+- **Attempts** (what you tried): 
+
+- **Current understanding**
+
+- **What you’re confused about**:
+
+### Identify who to ask for help
+
+Under **## Help Request**, add a second the markdown sub-header 
+
+```markdown
+### Who to ask
+```
+
+Consider who you will ask for help. Pick one person to contact.
+
+- Message a classmate (Canvas Inbox)
+
+- Message the course instructor "Lorraine" (email: **lorrainegaudio@boisestate.edu**)
+
+- Message adviser, mentor, friend, family member, etc.
+
+### Draft your help request message
+
+Under **## Help Request**, add a third the markdown sub-header 
+
+```markdown
+### Message Draft
+```
+
+Draft your help request message. Here is a template you can use, but please feel free to adapt it to your style and the person you are asking. The most important thing is that it is clear, respectful, and makes it easy for the person to respond.
+
+    Hi [Name],
+    
+    I’m working on [course item + task].
+    I’m stuck on: [1 sentence describing the problem].
+    
+    What I’m trying to do:
+    - [goal]
+    
+    What I tried:
+    - [attempt 1]
+    - [attempt 2]
+    - [attempt 3]
+    
+    What I understand so far:
+    - [1 sentence]
+    
+    What I’m confused about:
+    - [1 question]
+    
+    Code/error (if relevant):
+    [Paste the exact error message OR a small code snippet]
+    
+    Could you recommend the next step I should try (or what to check first)?
+    
+    Thanks,
+    [Your name]
+    
+💡 **Tip:** Including a screenshot of your RStudio code/error can be helpful.
+
+⚠️ If you use AI to improve the message you will send to a person, please create a transparency memo regarding your AI use in your notebook.
+
+## 📬 Send your help request
+
+Send your message to your chosen person.
+
+## 🪞 Reflect on Your Courage
+
+Under **## Reflection**, write 4–6 reflective sentences. 
+
+** Reflection prompts** (Optional, but you can use these to guide your reflection):
+
+- What part of this felt uncomfortable or risky?
+
+- What did you do anyway (your “courage move”)?
+
+- What is your next step before the next class?
+
+- Who did you connect with, and what is one thing you learned about how they think?
+
+# 📤 Submission
+
+1. Save your R Notebook.
+
+2. Knit to HTML.
+
+3. **Upload the HTML file** to the Courage Lab assignment in Canvas.
+
+4. 🎉 Celebrate your courage. The outcome is not “having the right answer.” The outcome is staying engaged and practicing help-seeking.

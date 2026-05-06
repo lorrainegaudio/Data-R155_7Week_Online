@@ -1,0 +1,211 @@
+---
+title: "Signature Assignment"
+subtitle: "Descriptive Statistics"
+author: "YOUR NAME"
+date: today
+toc: true
+toc-depth: 2
+number-sections: true
+format:
+  html:
+    code-fold: true
+execute: 
+  warning: true
+  messsage: true
+---
+
+# Part 1
+
+## Load Packages and Data
+
+```{r}
+#| eval: false
+#| include: true
+
+#install.packages("dplyr")
+#install.packages("dslabs")
+```
+
+```{r}
+library(dslabs)
+library(dplyr)
+```
+
+The data has three penguin species observed in the Palmer Archipelago, Antarctica, collected by Dr. Kristen Gorman with Palmer Station LTER.
+
+```{r}
+#install.packages("palmerpenguins")
+```
+
+```{r}
+library(palmerpenguins)
+data(package = 'palmerpenguins')
+```
+
+```{r}
+data(penguins)
+```
+
+**How do penguin body measurements differ by species, sex, and island in the Palmer Archipelago?**
+
+## Data Types
+
+### Step 1
+
+What are the column names in this data?
+
+```{r}
+colnames(penguins)
+```
+
+The column names in the dataset `penguins` are `{r} colnames(penguins)`
+
+The `species` column is stored as `{r} class(penguins$species)` in R. It has the unique values: `{r} unique(penguins$species)`
+
+The island column is stored as `{r} class(penguins$island)` in R. It has the unique values: `{r} unique(penguins$island)`
+
+The bill_length_mm column is stored as `{r} class(penguins$bill_length_mm)` in R. The data are continuous.
+
+The bill_depth_mm column is stored as `{r} class(penguins$bill_depth_mm)` in R. The data are continuous.
+
+The flipper_length_mm column is stored as `{r} class(penguins$flipper_length_mm)` in R. The data are continuous.
+
+The body_mass_g column is stored as `{r} class(penguins$body_mass_g)` in R. The data are continuous.
+
+The `sex` column is stored as `{r} class(penguins$sex)` in R. Sex is stored as a factor.
+
+The year column is stored as `{r} class(penguins$year)` in R. It has the unique values: `{r} unique(penguins$year)`
+
+# Part 2
+
+## Count-Based Summaries
+
+The `species` column in the `penguins` dataset contains `{r} length (penguins$species)` observations.
+
+I chose `species` for `length()` because it is an unordered factor variable. It makes sense to use length because it might be helpful to know the total number of observations in the data frame.
+
+```{r}
+penguin_counts <- penguins %>%
+  count(sex)
+```
+
+```{r}
+penguin_counts
+```
+The mode (male) in the `sex` column has 168 observations.
+I chose `sex` for `count()` because it's a categorical variable, and categorical variables are more useful for making frequency tables when compared to numerical variables like `flipper length`. The mode being male tells us that the majority of the penguins in the data frame are male.
+
+## Median
+$$
+\text{median} = x_{(\frac{n+1}{2})}
+$$
+
+
+$$
+\text{median} = \frac{x_{(\frac{n}{2})} + x_{(\frac{n}{2}+1)}}{2}
+$$
+```{r}
+print(mtcars$mpg)
+```
+```{r}
+sorted_data <- sort(mtcars$mpg)
+sorted_data
+```
+The `mpg` column in the `mtcars` dataset sorted in ascending order is: `{r} sorted_data`.
+
+```{r}
+length(sorted_data)
+```
+There are `{r} length(sorted_data)` values.
+
+```{r}
+median_value <- (sorted_data[16] + sorted_data[17]) / 2
+median_value
+```
+```{r}
+median(mtcars$mpg)
+```
+The median of the `mpg` column in the `mtcars` dataset is `{r} median(mtcars$mpg)`.
+
+### Task 2
+
+```{r}
+median(penguins$body_mass_g, na.rm = TRUE)
+```
+The median of the `body_mass_g` column in the `penguins` dataset is `{r} median(penguins$body_mass_g, na.rm = TRUE)`.
+
+I chose the `body_mass_g` variable from the `penguins` data set to describe with the median because it is a numerical variable that may contain outliers. The median is a better measure of center for this variable because it is not affected by extreme values, unlike the mean. Using the median allows us to get a more accurate representation of the typical value in the data set for this variable because it specifically picks the middle-most value in the data set.
+
+## Mean
+
+```{r}
+n <- length(mtcars$mpg)
+```
+
+$$
+\sum_{i=1}^{n}
+$$
+$$
+\sum_{i=1}^{5} a => a_1 + a_2 + a_3 + a_4 + a_5 
+$$
+```{r}
+sum_x <- sum(mtcars$mpg)
+sum_x
+```
+The sum of the values in the `mpg` column of the `mtcars` dataset is `{r} sum_x`.
+
+$$
+\bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i
+$$
+```{r}
+x_bar <- sum_x / n
+```
+
+```{r}
+x_bar <- mean(mtcars$mpg)
+x_bar
+```
+The mean of the values in the `mpg` column of the `mtcars` dataset is `{r} mean(mtcars$mpg)`.
+
+### Task 3
+
+```{r}
+mean(penguins$body_mass_g, na.rm = TRUE)
+```
+The mean of the `body_mass_g` column in the `penguins` dataset is `{r} mean(penguins$body_mass_g, na.rm = TRUE)`.
+
+I chose the `body_mass_g` variable from the `penguins` dataset to describe with the mean because it is a numerical variable, and we could see if the mean was being pulled up or down compared to the median. It appears that it isn't heavily skewed by outliers. The mean is a good measure of center for this variable because it takes into account all values in the dataset and provides an average that represents the typical value.
+
+## Measures of Spread Compared
+
+For the `body_mass_g` column, the median is `{r} median(penguins$body_mass_g, na.rm = TRUE)` and the mean is `{r} mean(penguins$body_mass_g, na.rm = TRUE)`.
+
+The mean and median for the `body_mass_g` column are close together. This suggests that the distribution of values is symmetrical. If there are unusually high or low calues, I would trust the median more because it is not affected by outliers. Both the mean and the median are good measure to report, but I would report mean for this variable because we can confirm that it isn't being skewed by outliers and the mean uses every observation and represents the balance point of the data.
+
+```{r}
+median(penguins$bill_length_mm[penguins$sex == "male"], na.rm = TRUE)
+median(penguins$bill_length_mm[penguins$sex == "female"], na.rm = TRUE)
+```
+```{r}
+mean(penguins$bill_length_mm[penguins$sex == "male"], na.rm = TRUE)
+mean(penguins$bill_length_mm[penguins$sex == "female"], na.rm = TRUE)
+```
+The mean `bill_length_mm` for `male` penguins is `{r} mean(penguins$bill_length_mm[penguins$sex == "male"], na.rm = TRUE)`, while the mean for `female` penguins is `{r} mean(penguins$bill_length_mm[penguins$sex == "female"], na.rm = TRUE)`.
+
+I compared male and female penguins' bill length in mm. I found that the male penguins had larger bill lengths than the female penguins on average. This seems like it could likely mean that penguins are a sexually dimorphic species and that males at least tend to have a larger bill, if not be larger in general than their female counterparts.
+
+# Part 3
+
+## Standard Deviation
+
+## Range
+
+## Interquartile Range
+
+## Five Number Summary
+
+## Early Takeaways
+
+# Part 4
+
+## Describing Data with dplyr

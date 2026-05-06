@@ -1,0 +1,684 @@
+---
+title: "Wildfire Signature Assignment"
+subtitle: "Part B: Lognormal tail probabilities"
+author: "Lorraine Gaudio"
+date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
+team: "Spring 2026"
+output: 
+  bookdown::html_document2: # To create an HTML document from R Markdown
+    toc: true # Table of contents (TOC)
+    toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactivne scrolling
+    code_folding: show # Enables you to include R code but have it hidden by default. (Show hide button)
+    includes:
+      in_header: ../../assets/header.html
+      after_body: ../../assets/footer.html
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r eval=FALSE, include=FALSE}
+title: "Wildfire Signature Assignment"
+author: "Lorraine Gaudio"
+date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
+output: 
+   bookdown::pdf_document2:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+    citation_package: natbib
+    fig_caption: true
+    df_print: kable # Data frame printing
+    includes:
+      in_header: ../assets/header.tex
+    latex_engine: xelatex  # Use xelatex to support fontspec
+fontsize: 12pt
+geometry: margin=1in
+mainfont: "Garamond" # Sets the font of the entire document
+sansfont: "Gotham-Book.otf" # Set sans-serif font to Gotham Book
+monofont: "Courier New" # Set monospace font to Courier New
+documentclass: scrreprt
+linkcolor: boisestateblue # Customizes the color of hyperlinks
+urlcolor: magenta # Customizes the color of URLs
+citecolor: black # Customizes the color of citations
+bibliography: references.bib # Bibliography file
+biblio-style: apalike                 # ⟵ natbib needs a .bst style
+natbiboptions: "round,authoryear"     # round brackets, Author (Year)
+ 
+Or
+title: "Wildfire Signature Assignment"
+author: "Lorraine Gaudio"
+date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
+team: "Spring 2026"
+output: 
+  bookdown::html_document2: # To create an HTML document from R Markdown
+    toc: true # Table of contents (TOC)
+    toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactivne scrolling
+    code_folding: show # Enables you to include R code but have it hidden by default. (Show hide button)
+    includes:
+      in_header: ../assets/header.html
+      after_body: ../assets/footer.html
+```
+
+# Overview
+
+🔥 Idaho is well known for its wildfires. They play a ecological role, shaping our forests and grasslands while presenting significant hazards to communities and resources. In recent years, the Idaho landscape has experienced frequent and sometimes severe wildfire seasons due to both natural and human activity. While fires are part of the natural ecosystem, they have become more destructive as the climate warms. Wildfire preparedness and management is a continuing challenge for the state. For more information this [research at Boise State](https://www.boisestate.edu/coas/2024/12/04/boise-state-experts-provide-perspective-on-idaho-mountain-wildfires/).
+
+
+**How far could a new wildfire run in 8 hours? How many new wild fire ignitions will grow larger than 10 km (straight line) in 8 hours?**
+
+In this three-part Core Signature Assignment activity option, you can work in groups but each person submits their own work independently. 
+
+
+By the end of this Wildfire Signature Assignment you will be able to:
+
+1. 🧭 Organize – Set up a reproducible RStudio workflow (project, files, data, RData) that can be re-run on another machine.
+
+2. 🛠 Wrangle – Import the WHP sample data, create quantile-based hazard categories, and summarize areas and probabilities with tidy R code.
+
+3. 📈 Model – Specify and use lognormal models (p/q/d/r *lnorm* functions) to answer distance and tail-probability questions by hazard category.
+
+4. 🎲 Simulate – Build a multi-step Monte Carlo simulation (with `replicate()`) that mixes categories by area weights and estimates the chance of many fast-growing fires in a season.
+
+5. 🗣 Communicate – Knit a clear Rmd/Qmd notebook that explains assumptions, code choices, and results, with appropriate metadata and citations for data and help sources.
+
+6. 🪞 Reflect – Document troubleshooting, AI use, and learning-skill growth (curiosity, courage, tenacity, thoroughness, open-mindedness) through short memos embedded in the workflow.
+
+# Setting Up Your Notes
+
+To begin Part B of the Wildfire guided activity, follow these steps:
+
+1. Open your course project for RStudio 
+
+For those of you who **have GitHub** and a course project, navigate to your course folder and open your course project. This will open RStudio. Click "Pull" in the Git pane to get the latest version of the course materials. After completing work, save, stage, commit, and push.
+
+If you **don't have GitHub** or a course project, just open RStudio and set your working directory to your course folder.
+
+2. Download `Fire-Assignment-PartB-StudentCopy.qmd` and save it in your course folder.
+
+3. No additional dataset download is required for Part B. Use the table and parameter values provided in the activity.
+
+4. Edit the YAML to show your name.
+
+5. Follow along.
+
+Read the background material below, then complete the tasks that follow. Replace each ____ placeholder (and any TODO comments) with working code or a short written answer. Run each section; be sure the requested objects appear in the Environment. 
+
+Use the template 🎯 Goal → ⚡ Code → ✅ Checks → 🗣 Comment to met the Complete criteria
+
+1. 🎯 **Goal** – In your own words, one sentence about what you are trying to do.
+
+2. ⚡ **Code** – Code that completes the task (replace each `____` with your own code).
+
+3. ✅ **Checks** – Code that convinces you your solution works (structure, counts, summaries, etc.).
+
+4.  🗣 **Comment** – 1–2 sentences either:
+  - data-focused (what you learned about the wildfire data), **or**
+  - code-focused (what the code does / why it works).
+
+**Supporting**
+
+- 📝 Format your document with headings, code chunks, and narrative text. Use proper grammar, spelling, and punctuation. Include a document title, author name, and 🕰 date in the heading of your report.
+
+- 👀 Cite resources (including referencing lessons, peers, instructor guidance, internet websites, AI summaries, the help file in R) in memos. State specifically what or who helped and in what ways. Always compose your own code (no copy and paste). 
+
+- 🚀 Code trials show how you explored ideas, asked questions independently of the assignment. Include code comments to explain your thinking.
+
+- 🪞 Reflect on learning process, connects ideas, discusses challenges, and describes improvement strategies.
+
+- 🧠 Growth mindset means you demonstrate effort, persistence, and a positive attitude toward learning new skills. You show courage.  
+
+- 💬 Prediction means you make hypotheses about what the code will do or what the data will look like before running it, and then reflect on whether your predictions were correct.
+
+- ✍️ Record what you tried, even if it didn’t work. This is proof of thoroughness and trustworthiness, prevents future duplication of errors, contextualizing successes, and exposes hidden discoveries (unanticipated effect).
+
+# Part B
+
+The table below summarizes seven wildfire hazard categories, from **Very Low** to **Ultra (Top 1%)**, along with the probability and spread-distance values used in this assignment. The **Probability** column gives the statewide area share for each category and is interpreted here as the chance that a randomly located ignition falls in that category.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, tab.cap='Table 1. Quantile-based WHP categories for Idaho and 8-hour spread distance parameters. Probability = statewide area share (% of valid raster area); distances in kilometers; WHP is unitless.'}
+library(terra); library(dplyr); library(readr); library(knitr); library(kableExtra)
+
+# Alias for clarity
+whp <- whp_idaho
+
+# whp is your SpatRaster (continuous WHP for Idaho)
+probs <- c(0, .25, .50, .75, .90, .95, .99, 1.00)
+qv <- as.numeric(stats::quantile(values(whp, na.rm = TRUE), probs = probs, na.rm = TRUE))
+
+# Build a categorical raster from those thresholds
+whp_cat <- app(whp, fun = function(v) as.integer(cut(v, breaks = qv, include.lowest = TRUE, labels = FALSE)))
+names(whp_cat) <- "cat"
+
+# Compute area per category (km^2), excluding NA
+area_km2 <- cellSize(whp, unit = "km")
+area_by_cat <- zonal(area_km2, whp_cat, fun = "sum", na.rm = TRUE) |>
+   tibble::as_tibble(.name_repair = "minimal")
+names(area_by_cat)[1:2] <- c("cat", "area_km2")
+area_by_cat <- mutate(area_by_cat, area_pct = area_km2 / sum(area_km2))
+
+# Human labels + WHP bounds
+labels <- c("Very Low","Low","Moderate","High","Very High","Extreme","Ultra (Top 1%)")
+bounds <- tibble(
+  cat = 1:7,
+  whp_lo = qv[1:7],
+  whp_hi = qv[2:8]
+)
+
+# Your distance parameters (update as needed)
+param_tbl <- tibble::tibble(
+  cat = 1:7,
+  Category = labels,
+  normal_mean_km = c(2.0, 3.0, 4.5, 7.0, 12.0, 18.0, 28.0),
+  normal_sd_km   = c(1.0, 1.0, 1.5, 2.0, 3.0, 4.0, 6.0),
+  mu_log  = c(0.582, 1.046, 1.451, 1.907, 2.455, 2.866, 3.310),
+  sd_log  = c(0.472, 0.325, 0.325, 0.280, 0.246, 0.220, 0.212)
+) |>
+  left_join(bounds, by = "cat") |>
+  left_join(area_by_cat, by = "cat") |>
+  transmute(
+    Category,
+    Probability = round(100 * area_pct, 2),  # measured %
+    `Mean (km)` = normal_mean_km,
+    `SD (km)`   = normal_sd_km,
+    `Mean log` = mu_log,
+    `SD log`   = sd_log
+  )
+
+# Render as a real table so LaTeX/HTML uses the chunk caption
+kbl(param_tbl,
+    booktabs = TRUE,
+    align    = c("l","r","r","r","r","r","r","r")) |>
+  kable_styling(full_width = FALSE,
+                latex_options = c("hold_position","scale_down"))
+
+```
+
+_The distance values in this table are modeling assumptions used for the assignment. They are not measured fire runs from the raster itself. In this activity, we assume that ignitions are equally likely anywhere in the valid wildfire hazard raster, that higher hazard categories tend to produce longer 8-hour spread distances, and that spread distance within a category can be modeled with a lognormal distribution._
+
+💡 **Tip:** **The Mean log and SD log columns give the parameters used for the lognormal model.** In this activity, you will use these values with R functions such as `plnorm()`, `qlnorm()`, `dlnorm()`, and `rlnorm()` to answer probability questions and simulate wildfire spread distances.
+
+___
+
+_Note: You do not need to understand the text descriptions of the equations to complete the tasks. There are there for those who are studying statistics more deeply (me, your instructor). Focus on what each R function does, what quantity you are calculating, and how to explain the result in the wildfire setting._
+
+
+The Normal mean (km) and Normal SD (km) columns give the mean and standard deviation, in kilometers, for a zero-truncated normal distance model representing straight-line spread over 8 hours. The Mean log and SD log columns give the parameters \( \mu \) and \( \sigma \) of a lognormal distance model in which
+
+\[
+\log(\text{distance in km}) \sim \mathcal{N}(\mu,\sigma^2).
+\]
+
+Labels “Extreme” and “Ultra” denote upper-tail bins (approximately the 95–99% and 99–100% quantiles, respectively).
+
+___
+
+## Statistical Methods
+
+In this assignment, the variable of interest is 8-hour straight-line spread distance in kilometers. Because distance can take many possible positive values, we treat it as a continuous random variable.
+
+A **continuous random variable** is a variable that can take on an infinite number of values within a given range. Unlike discrete random variables, which can only take on specific, separate values (🎲 like the roll of a die), continuous random variables can take on any value within a certain interval. Examples of continuous random variables include ⚖️ weight or 🕓 time. In this assignment, we will use 📏 distance in km. 
+
+___
+
+_Note: You do not need to understand the text descriptions of the equations to complete the tasks. There are there for those who are studying statistics more deeply (me, your instructor). Focus on what each R function does, what quantity you are calculating, and how to explain the result in the wildfire setting._
+
+
+Let $X$ be the continuous random variable of straight-line kilometer distance in an 8-hour period. Then a probability distribution of $X$ is a function $f(x)$ such that for any two numbers $a$ and $b$ with $a \leq b,
+$$
+P(a \leq X \leq b) =  \int_{a}^{b} f(x) \, dx
+$$
+
+The probability that $X$ takes on a value in the interval $[a, b]$ is given by the area above this interval and under the graph of the density function. 
+
+___
+
+You will practice four R functions for the lognormal distribution:
+
+- a **probability** (`plnorm()`) tells you how likely an event is,
+- a **percentile** (`qlnorm()`) tells you a cutoff value in the distribution,
+- a **density** (`dlnorm()`) tells you how concentrated the distribution is near a particular value,
+- and **simulation** (`rlnorm()`) lets you generate many possible wildfire distances under the model.
+
+
+## Lognormal Distribution
+
+In this assignment, we will use **lognormal distribution** to model the 8-hour straight-line distance of new ignitions in High wildfire hazard categories. We will explore the list of R functions for the lognormal distribution. You can access the documentation for these functions by running the following command in R:
+
+```{r , eval=FALSE}
+?Lognormal
+```
+
+A **lognormal distribution** is used to model a variable that is always positive and becomes normal after taking the logarithm of the values. 
+
+```{r echo=FALSE}
+# Parameters
+meanlog <- 1.5
+sdlog   <- 0.6
+p_cut   <- 0.80   # chosen percentile
+
+# Simulate data
+x <- rlnorm(3000, meanlog = meanlog, sdlog = sdlog)
+log_x <- log(x)
+
+# Percentile on original scale
+x_p <- qlnorm(p_cut, meanlog = meanlog, sdlog = sdlog)
+
+# Grids for smooth curves
+x_max   <- qlnorm(0.995, meanlog, sdlog)
+x_grid  <- seq(0.001, x_max, length.out = 1000)
+y_grid  <- dlnorm(x_grid, meanlog, sdlog)
+
+x_shade <- seq(0.001, x_p, length.out = 500)
+y_shade <- dlnorm(x_shade, meanlog, sdlog)
+
+# Layout: two plots on top, one caption strip below
+layout(matrix(c(1, 2, 3, 3), nrow = 2, byrow = TRUE),
+       heights = c(4, 1.15))
+
+par(oma = c(0, 0, 2.2, 0),
+    mgp = c(2.4, 0.8, 0),
+    tcl = -0.3,
+    cex.main = 1.05)
+
+# -------------------------
+# Panel 1: Lognormal distribution
+# -------------------------
+par(mar = c(4.2, 4.2, 2.8, 1.2))
+
+hist(x,
+     breaks = 28,
+     probability = TRUE,
+     xlim = c(0, x_max),
+     col = "gray88",
+     border = "white",
+     main = "Lognormal distribution",
+     xlab = "Original scale (X > 0)",
+     ylab = "Density")
+
+# Shaded probability area
+polygon(c(0, x_shade, x_p),
+        c(0, y_shade, 0),
+        col = adjustcolor("goldenrod1", alpha.f = 0.45),
+        border = NA)
+
+# Re-draw histogram lightly so bars remain visible
+hist(x,
+     breaks = 28,
+     probability = TRUE,
+     xlim = c(0, x_max),
+     col = adjustcolor("lightblue3", alpha.f = 0.35),
+     border = "white",
+     add = TRUE)
+
+# Density curve and percentile line
+lines(x_grid, y_grid, col = "navy", lwd = 2)
+abline(v = x_p, col = "firebrick", lwd = 2, lty = 2)
+
+# Small percentile label only
+usr1 <- par("usr")
+text(x_p, usr1[4] * 0.93,
+     labels = paste0(round(100 * p_cut), "th percentile"),
+     pos = 4, cex = 0.82, col = "firebrick")
+
+# -------------------------
+# Panel 2: After taking logs
+# -------------------------
+par(mar = c(4.2, 4.2, 2.8, 1.2))
+
+hist(log_x,
+     breaks = 28,
+     probability = TRUE,
+     col = "gray82",
+     border = "white",
+     main = "After taking logs",
+     xlab = "log(X)",
+     ylab = "Density")
+
+curve(dnorm(x, mean = meanlog, sd = sdlog),
+      add = TRUE, col = "darkgreen", lwd = 2)
+
+# -------------------------
+# Panel 3: Caption / key strip
+# -------------------------
+par(mar = c(0.4, 1, 0.2, 1))
+plot.new()
+plot.window(xlim = c(0, 1), ylim = c(0, 1))
+box(col = "gray85")
+
+# Row 1
+rect(0.04, 0.63, 0.08, 0.78,
+     col = adjustcolor("lightblue3", alpha.f = 0.35), border = NA)
+text(0.10, 0.705, "Bars show the distribution of X",
+     adj = 0, cex = 0.9)
+
+segments(0.39, 0.705, 0.45, 0.705, col = "navy", lwd = 2)
+text(0.47, 0.705, "Height of the curve = concentration (density)",
+     adj = 0, cex = 0.9)
+
+# Row 2
+rect(0.04, 0.20, 0.08, 0.35,
+     col = adjustcolor("goldenrod1", alpha.f = 0.45), border = NA)
+text(0.10, 0.275,
+     labels = paste0("Shaded area = probability = P(X <= percentile) = ", p_cut),
+     adj = 0, cex = 0.9)
+
+segments(0.58, 0.275, 0.64, 0.275, col = "firebrick", lwd = 2, lty = 2)
+text(0.66, 0.275,
+     labels = paste0("Percentile = x-value where area reaches ", p_cut),
+     adj = 0, cex = 0.9)
+
+mtext("A lognormal variable is positive, and log(X) is approximately normal",
+      outer = TRUE, line = 0.5, cex = 1.05)
+```
+
+
+## Task 1
+
+**Tail probability with `plnorm()`**
+
+`plnorm()` computes the cumulative distribution function (CDF) for a lognormal distribution. It gives the probability that a lognormally distributed random variable is less than or equal to a certain value.
+
+❓ Question a: If a new ignition starts in a **High-hazard area**, what is the probability that its 8-hour straight-line spread will be **10 km or more in 8 hours** under the lognormal model?
+
+___
+
+Let $X$ be the continuous random variable giving the 8-hour straight-line spread distance (in km) of a new ignition in a High-hazard area. Suppose $X$ has the probability density function $\mathcal{f_{high}}(x)$. Then for any two distances $a$ and $b$ with $0 \leq a \leq b$,
+
+$$ P(a \leq X \leq b) = \int_{a}^{b} \mathcal{f_{high}}(x) dx. $$ 
+
+In particular, the probability that the 8-hour straight-line spread is at least 10 km is given by
+
+$$ P(X \geq 10) = \int_{10}^{\infty} \mathcal{f_{high}}(x) dx, $$ 
+
+and in this problem, $\mathcal{f_{high}}(x)$ is the density of a lognormal distribution. 
+
+___
+
+Task instructions
+
+1. Treat \(X\) as the 8-hour distance (km) for a new ignition in a High-hazard area.
+
+2. Model \(X\) with a lognormal distribution using the **High** row’s **Mean log** and **SD log** from **Table 1**.
+
+3. Use `plnorm()` with `lower.tail = FALSE` to compute  
+  \( P(X \geq 10) = P(X > 10) \).
+
+4.  Store the result as **`p_high_exact`**.
+
+5.  Check both the decimal probability and the corresponding percentage.
+
+🎯 **Goal.**  
+In your own words, state what you are finding the probability of, including time and distance and model type.
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+# ⚡ Test: lognormal tail probability for High category
+____  # store p_high_exact, use plnorm(), 10 km threshold, High Mean log, High SD log
+
+```
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+# ✅ Verify: examine probability and percentage
+____ # display p_high_exact
+____ # convert p_high_exact to a percentage
+```
+
+🗣 Comment (TODO).
+Interpret what your probability means for High-hazard ignitions.
+
+## Task 2
+
+`qlnorm()` computes the quantile function (inverse CDF) for a lognormal distribution. It gives the value below which a certain percentage of the distribution falls.
+
+❓ Question b: For ignitions in **High-hazard areas**, what 8-hour spread distance is exceeded only **5% of the time** under the lognormal model? In other words, what is the **95th percentile** run length?
+
+___
+  
+Let $X$ be the continuous random variable giving the 8-hour straight-line spread distance (in km) of a new ignition in a High-hazard area. Suppose $X$ has the probability density function $\mathcal{f_{high}}(x)$. The cumulative distribution function (CDF) of $X$ is given by
+
+$$ F(x) = P(X \leq x) = \int_{0}^{x} \mathcal{f_{high}}(t) dt. $$
+
+We define the 95th percentile of $X$, denoted by $q_{0.95}$ of this distribution to be the value satisfying
+
+$$ P(X \leq q_{0.95}) = F(q_{0.95}) = 0.95. $$
+
+equivalently, 
+
+$$
+\int_{0}^{q_{0.95}} \mathcal{f_{high}}(x) dx = 0.95
+$$
+
+In particular, the 95th percentile of the 8-hour straight-line spread distance for new ignitions in High-hazard areas is given by 
+
+$$ q_{0.95} = F^{-1}(0.95), $$ 
+
+and in this problem $\mathcal{f_{high}}(x)$ is the density of a lognormal distribution.
+
+___
+
+**Task instructions**
+
+1. Continue modeling the High-hazard 8-hour distance \(X\) with a lognormal distribution.
+
+2. Use `qlnorm()` to find the 95th percentile distance (km) for \(X\).
+
+3. Use the High row’s Mean log and SD log from Table 1.
+
+4. Store the result as `q95_high`.
+
+5. Check that this distance is plausible given the High category’s mean and SD.
+
+🎯 Goal.
+Write your own sentence(s) goal for finding a distance that 95% of High-hazard ignitions stay below.
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+# ⚡ Test: 95th percentile distance for High category
+____ # store q95_high, use qlnorm() with p = 0.95, High Mean log, High SD log
+```
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+# ✅  Verify: print and sanity-check the 95th percentile
+____ # display q95_high
+```
+
+🗣 Comment (TODO).
+Explain in words what this percentile distance means in the context of High-hazard ignitions.
+
+## Task 3
+
+`dlnorm()` computes the probability density function (PDF) for a lognormal distribution. It gives the relative likelihood of the random variable taking on a specific value.
+
+❓ Question c: Under the **High-hazard lognormal model**, which distance is more locally likely: **3 km** or **10 km** in 8 hours?
+_Note: A higher density means the distribution is more concentrated near that value, not that the exact value has a standalone probability._
+
+___
+
+Let $X$ be the continuous random variable giving the 8-hour straight-line spread distance (in km) of a new ignition in a High-hazard area. Suppose $X$ has the probability density function $\mathcal{f_{high}}(x)$. Then for any two distances $a$ and $b$ with $0 \leq a \leq b$,
+
+$$ P(a \leq X \leq b) = \int_{a}^{b} \mathcal{f_{high}}(x) dx. $$
+
+The values $\mathcal{f_{high}}(x)$ are densities, not probabilities. They represent the height of the distribution at the point x. In particular, the density at 3 km and 10 km are given by
+
+$$ \mathcal{f_{high}}(3) \text{ and } \mathcal{f_{high}}(10). $$
+
+___
+
+**Task instructions**
+
+1. Under the High-hazard lognormal model, use `dlnorm()` to compute the density at 3 km and 10 km.
+
+2. Use the High row’s Mean log and SD log from Table 1.
+
+3. Store the results as `d_3` and `d_10`.
+
+4. Compare `d_3` and `d_10` to decide which distance is more locally likely.
+
+🎯 Goal.
+Write your own sentence(s) goal for comparing how locally likely 3 km vs 10 km runs are under the High-hazard model.
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+# ⚡ Test: compare densities at 3 km and 10 km
+____ # compute d_3 using dlnorm() at 3 km with High Mean log, High SD log
+____ # compute d_10 using dlnorm() at 10 km with High Mean log, High SD log
+
+```
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+# ✅ Checks: print and compare heights
+
+____ # display d_3
+____ # display d_10
+```
+
+🗣 Comment (TODO).
+Use your two density values to describe which distance is more locally likely and what that implies.
+
+## Task 4
+
+`rlnorm()` generates random numbers from a lognormal distribution. **Note**: This task has three parts.
+
+❓ Question d: If we simulate **450 new ignitions** in **High-hazard areas** this season, about how many would be classified as **fast-growing**, meaning they spread **10 km or more in 8 hours**?
+
+___
+
+_Note: You do not need to understand the text descriptions of the equations to complete the tasks. There are there for those who are studying statistics more deeply (me, your instructor). Focus on what each R function does, what quantity you are calculating, and how to explain the result in the wildfire setting._
+
+Let $X$ be the continuous random variable giving the 8-hour straight-line spread distance (in km) of a new ignition in a High-hazard area. Assume
+
+$$ X \sim \text{Lognormal}(\mu = \text{meanlog High}, \sigma = \text{ sdlog  High}), $$
+
+with density function $\mathcal{f_{high}}(x)$ and CDF $F_{high}(x)$. 
+
+The probability that a single new ignition is 'fast-growing' (i.e., spreads 10 km or more in 8 hours) is given by
+
+$$ P(X \geq 10) = 1 - F_{high}(10)$$
+
+Now suppose we observe (or simulate) $n = 450$ new ignitions in High-hazard areas this season. Let $X_1, X_2, \ldots, X_{450}$ be random variables, each with the same lognormal distribution as $X$. 
+
+Define indicator variables for 'fast-growing' ignitions:
+
+$$ I_i = \begin{cases} 1 & \text{if } X_i \geq 10 \\ 0 & \text{if } X_i < 10 \end{cases} \quad i = 1,\dots,450.$$
+
+Then, the total number of 'fast-growing' ignitions, $S$, is given by
+
+$$ S = \sum_{i=1}^{450} I_i $$
+
+Each $I_i$ is a Bernoulli random variable with success probability $P(I_i = 1) = P(X_i \geq 10) = P(X \geq 10),$. Therefore, the **theoretical expected number** of 'fast-growing' ignitions is
+
+$$ \mathbb{E}[S] = \sum_{i=1}^{450} \mathbb{E}[I_i] = 450 \cdot P(X \geq 10). $$
+
+___
+
+In Tasks 4.1 through 4.3, you will simulate one season of 450 High-hazard ignitions, count how many are fast-growing, and visualize the simulated distances. Your simulated results may differ somewhat from the theoretical expected value because simulation includes random variation.
+
+### Task 4.1
+
+**Simulate High-hazard distances**
+
+Task instructions
+
+1. Use `rlnorm()` to simulate 450 independent 8-hour distances for ignitions in the High category.
+
+2. Use the High row’s Mean log and SD log from Table 1.
+
+3. Set a seed with `set.seed(2025)` for reproducibility.
+
+4. Store the simulated distances in a vector `High_Lognorm`.
+
+5. Summarize the simulated distances to understand the range, center, and skew of this simulated season’s distances.
+
+🎯 Goal.
+Write your own sentence(s) goal for Task 4.1.
+
+```{r eval=FALSE, message=FALSE, warning=FALSE}
+# ⚡ Test: simulate 8-hour distances for High category
+____ # set a seed for reproducibility
+____ # store High_Lognorm, use rlnorm() to generate 450 values with High Mean log, High SD log
+```
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+# ✅  Verify: look at basic summaries
+____ # summarize High_Lognorm (e.g., summary())
+____ # confirm the length of High_Lognorm is 450)
+```
+
+🗣 Comment (TODO).
+Describe briefly how the simulated distances behave (range, skew, center).
+
+### Task 4.2
+
+**Count fast-growing ignitions** (≥10 km)
+
+**Task instructions**
+
+1. Define a “fast-growing” ignition as one with an 8-hour distance ≥ 10 km.
+
+2. Use a logical condition on `High_Lognorm` to identify fast-growing runs.
+
+3. Use `sum()` on that logical vector to count how many simulated ignitions are fast-growing.
+
+4. Store the count as `fast_growing_count`.
+
+5. Optionally, compute the simulated proportion of fast-growing ignitions and compare it to `p_high_exact` from Task 1.
+
+🎯 Goal.
+Write your own sentence(s) goal for Task 4.2.
+
+```{r eval=FALSE, message=FALSE, warning=FALSE}
+# ⚡ Test: count fast-growing ignitions (≥ 10 km)
+____ # store as fast_growing_count,use sum() to count TRUEs of logical vector 
+```
+
+```{r eval=FALSE, message=FALSE, warning=FALSE}
+# ✅  Verify: inspect count (and optional proportion)
+
+____ # display fast_growing_count
+____ # optionally compute the proportion fast_growing_count / length(High_Lognorm)
+```
+
+🗣 Comment (TODO).
+Explain what your simulated count suggests about how many fast-growing events you might see in a season.
+
+### Task 4.3
+
+**Visualize simulated distances**
+
+**Task instructions**
+
+1. Use `hist()` to create a histogram of `High_Lognorm`.
+
+2. Choose a reasonable bin setting and axis labels.
+
+3. Use the plot to comment on the distribution shape (e.g., skew, tail length).
+
+4. Connect the shape of the histogram to your numeric summaries from Task 4.1.
+
+🎯 Goal.
+Write your own sentence(s) goal for visualizing the simulated High-hazard distances.
+
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+# ⚡/✅ Code histogram of simulated High_Lognorm distances
+____ # call hist() on High_Lognorm, choosing breaks/title/xlab as you see fit
+```
+
+🗣 Comment (TODO).
+In one sentence, relate the histogram’s shape to your earlier summaries and to what you expect from a lognormal model.
+
+
+# ---

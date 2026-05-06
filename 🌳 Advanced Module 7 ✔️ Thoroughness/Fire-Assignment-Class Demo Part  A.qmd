@@ -1,0 +1,244 @@
+---
+title: "Wildfire"
+subtitle: "Part A: Explore and Wrangle"
+author: "YOUR NAME"
+date: today
+format: html
+---
+
+# Introduction
+
+Idaho is well known for its wildfires. They play a ecological role, shaping our forests and grasslands while presenting significant hazards to communities and resources. In recent years, the Idaho landscape has experienced frequent and sometimes severe wildfire seasons due to both natural and human activity. While fires are part of the natural ecosystem, they have become more destructive as the climate warms. Wildfire preparedness and management is a continuing challenge for the state.
+
+Wildfire managers need tools that show where fires are more likely and how intense they could become. The U.S. Forest Service’s Wildfire Hazard Potential (WHP) is one such tool: a nationwide raster layer where each grid cell stores a unitless index of relative wildfire hazard (higher value = higher hazard).
+
+How far could a new wildfire run in 8 hours? How many new wild fire ignitions will grow larger than 10 km (straight line) in 8 hours?
+
+# Explore and Wrangle
+
+The data analyst's first step is to load the data and explore and modify it. 
+
+## Library and Load Data
+
+```{r}
+#| message: false
+#| warning: false
+library(readr)
+library(tidyverse)
+```
+
+
+🎯  We will be working with a sample of the WHP data for Idaho, which is stored in a CSV file. 
+
+```{r}
+#| message: false
+#| warning: false
+#⚡ Code
+county_raw <- readr::read_csv("whp_raw_sample.csv")
+```
+
+
+```{r, eval=FALSE}
+# ✅  Verify 
+dplyr::glimpse(county_raw)
+
+nrow(county_raw)
+```
+
+🗣 `county_raw` is a 150,000 row tibble of raw WHP cell values with county and per-cell area.
+
+`whp` – The Wildfire Hazard Potential value for a single sampled raster cell. This is a unitless, continuous index (higher = greater relative hazard). Values come directly from the WHP GeoTIFF.
+
+`county` – The county name (e.g., “Idaho”, “Twin Falls”) obtained by spatially joining each sampled cell to the TIGER/Line county boundary. Use for readable reports.
+
+`county_fips` – The county’s 3-digit FIPS code from TIGER/Line.
+
+`cell_area_km2` – The area (in square kilometers) represented by that raster cell, computed from the raster’s equal-area projection. With 240 m × 240 m cells this is ~0.0576 km²; small numeric differences reflect rounding. Summing this column by any grouping yields true area totals, and dividing by the statewide sum yields area shares.
+
+## Audit Check
+
+🎯  This basic audit to check how many rows they have, whether key variables are missing values, and whether numeric columns look reasonable.
+
+I calculate the number of rows, the number of missing values in the `whp` column, and the minimum and maximum cell area.
+
+```{r}
+# ⚡ Code: for dplyr::summarize
+county_summary <- county_raw %>%
+  summarize(
+    "n rows"   = n(),
+    "n na whp" = sum(is.na(whp)),
+    "min area" = min(cell_area_km2),
+    "max area" = max(cell_area_km2)
+  )
+
+# ✅ Verify
+
+knitr::kable(county_summary)
+```
+
+
+🗣 The data looks good. There are 150,000 rows, no missing values in the `whp` column, and the cell area values are consistent with the expected size of the raster cells (around 0.0576 km²). This suggests that the dataset is complete and properly structured for analysis.
+
+
+## Compute WHP quantile edges
+
+🎯  To categorize the WHP values into quantiles, we can use the `quantile()` function to compute the edges of the quantiles. This will allow us to classify each cell into a specific quantile based on its `WHP` value.
+
+Use `quantile()` function from base R’s `stats` package to compute the quantiles of the `whp` column in `county_raw`. Store the result as `e` for “edges”.
+
+Create the seven category edges using the quantiles (0, .25, .50, .75, .90, .95, .99, 1.00).
+
+
+```{r}
+# ⚡ Code: Base R stats::quantile 
+e <- stats::quantile(
+  county_raw$whp,
+  probs = c(0, .25, .50, .75, .90, .95, .99, 1),
+  na.rm = TRUE
+)
+
+```
+```{r}
+# ✅  Verify
+e
+```
+
+🗣 The `e` object contains the cut-points for categorizing WHP into quantile-based bins.
+
+`e[1]` = minimum WHP (0th percentile)
+
+`e[2]` = 25th percentile
+
+`e[3]` = 50th percentile (median)
+
+`e[4]` = 75th percentile
+
+`e[5]` = 90th percentile
+
+`e[6]` = 95th percentile
+
+`e[7]` = 99th percentile
+
+`e[8]` = maximum WHP (100th percentile)
+
+```{r}
+e[2]
+```
+
+
+## Category Label
+
+🎯  Use `dplyr::mutate()` and `dplyr::case_when()` to turn the numeric `whp` values in `county_raw` into an ordered categorical variable called `Category`, using the quantile edges `e`. Store the resultant data set as `county_cats`.
+
+Start from `county_raw`.
+
+Use `mutate()` to add a new variable `Category`.
+
+Use `case_when()` to assign a label based on which interval of e each `whp` value falls into.
+
+Convert `Category` to an ordered factor so the levels follow the intended risk order.
+
+Each row will be assigned exactly one of these labels based on its `whp` value:
+
+If a row’s `whp` value is at least the minimum `WHP` AND less than the 25th percentile, label it “Very Low”.
+
+If `whp` is at least the 25th percentile AND less than the 50th percentile (median), label it “Low”.
+
+If `whp` is at least the 50th percentile AND less than the 75th percentile, label it “Moderate”.
+
+If `whp` is at least the 75th percentile AND less than the 90th percentile, label it “High”.
+
+If `whp` is at least the 90th percentile AND less than the 95th percentile, label it “Very High”.
+
+If `whp` is at least the 95th percentile AND less than the 99th percentile, label it “Extreme”.
+
+If `whp` is at least the 99th percentile AND less than or equal to the maximum WHP, label it “Ultra (Top 1%)”.
+
+If a value of `whp` does not fall in any of these ranges (e.g., `NA`), `Category` should be `NA`.
+
+**Hint**: All intervals are closed on the left (`>=`) and open on the right (`<`), except the last one, which is closed on both sides (`>=` and `<=`).
+
+
+```{r}
+# ⚡ Code:  dplyr::mutate + dplyr::case_when
+county_cats <- county_raw %>%
+  mutate(
+    Category = case_when(
+      whp >= e[1] & whp <  e[2] ~ "Very Low",
+      whp >= e[2]  & whp <  e[3]  ~ "Low",
+      whp >= e[3]  & whp <  e[4]  ~ "Moderate",
+      whp >= e[4]  & whp <  e[5]  ~ "High",
+      whp >= e[5]  & whp <  e[6]  ~ "Very High",
+      whp >= e[6]  & whp <  e[7]  ~ "Extreme",
+      whp >= e[7] & whp <= e[8] ~ "Ultra (Top 1%)",
+      TRUE ~ NA_character_
+    ),
+    Category = factor(
+      Category,
+      levels = c(
+        "Very Low",
+        "Low",
+        "Moderate",
+        "High",
+        "Very High",
+        "Extreme",
+        "Ultra (Top 1%)"
+      ),
+      ordered = TRUE
+    )
+  )
+```
+
+```{r}
+# ✅  Verify
+county_cats %>% count(Category)
+```
+
+🗣 I used `case_when` to assign labels by WHP range. Because the CRS is equal-area and cell size is uniform, counts approximate area. The `cell_area_km2` column lets you compute true area easily.
+
+
+## Summary Table
+
+🎯 Use `dplyr::group_by()` and `dplyr::summarize()` to aggregate total area by `Category`, then compute `Probability` as each category’s share of the total statewide area. Store the result as `prob_tbl`.
+
+1.  Start from `county_cats` (the data set you created in Task 4, which already has `Category` and `cell_area_km2`).
+
+2.  Use `group_by()` so that all rows in the same `Category` are treated as a single group.
+
+3.  Use `summarize()` to compute, for each `Category`:
+
+-   `area_km2`: the total area in square kilometers, as the sum of `cell_area_km2` across all cells in that category.
+
+-   `n_cells`: the number of grid cells in that category using `n()`.
+
+-   Use `.groups = "drop"` so that the result is no longer grouped after summarizing.
+
+4.  Use mutate() to create a new variable called `Probability` that is the `area_km2` divided by `sum(area_km2)`.
+
+This makes `Probability` the fraction of statewide area that falls in each `Category`. The probabilities across all categories should sum to 1 (up to rounding error).
+
+5.  Use `select()` to keep only the columns, in this order: `Category`, `Probability`, `area_km2`, `n_cells`.
+
+
+```{r}
+# ⚡ Code: dplyr::group_by + dplyr::summarize + dplyr::mutate
+prob_tbl <- county_cats %>%
+  group_by(Category) %>%
+  summarize(
+    area_km2 = sum(cell_area_km2),
+    n_cells  = n(),
+    .groups  = "drop"
+  ) %>%
+  mutate(
+    Probability = area_km2 / sum(area_km2)
+  ) %>%
+  select(Category, Probability, area_km2, n_cells)
+```
+
+```{r}
+# ✅  Verify
+knitr::kable(prob_tbl)
+
+```
+
+🗣 The `prob_tbl` tibble now summarizes total area and cell counts by WHP category, along with the statewide area share (Probability) for each category.

@@ -1,0 +1,29 @@
+---
+title: "Hello Penguins"
+author: "Lorraine Gaudio"
+format: html
+---
+
+
+# Purpose
+
+I am creating this document to see how I can modify the old R Markdown template. I want make the document work better with Canvas and look more like a webpage. I also want to make it more visually appealing and easier to read. I will be using the `html_document` format and editing my customized CSS to achieve this.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
