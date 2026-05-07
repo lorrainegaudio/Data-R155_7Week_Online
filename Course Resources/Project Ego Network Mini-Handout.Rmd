@@ -1,0 +1,322 @@
+---
+title: "Project Ego Network Mini Handout"
+subtitle: "Beyond Boundaries: Map Interdisciplinary Networks"
+author: "Lorraine Gaudio"
+date: "`r paste('Workshop', format(as.Date('2026-05-07'), '%B %d, %Y'))`"
+
+output:
+  pdf_document:
+    latex_engine: xelatex
+    toc: false
+    number_sections: false
+    keep_tex: false
+
+documentclass: article
+fontsize: 12pt
+geometry: margin=0.75in
+
+mainfont: "Garamond"
+sansfont: "Gotham-Book.otf"
+monofont: "Courier New"
+
+header-includes:
+  - \usepackage{xcolor}
+  - \usepackage{array}
+  - \usepackage{tabularx}
+  - \usepackage{ragged2e}
+  - \usepackage{enumitem}
+  - \usepackage{needspace}
+  - \definecolor{boisestateblue}{HTML}{0033A0}
+  - \usepackage{titlesec}
+  - \titleformat{\section}{\large\sffamily\bfseries\color{boisestateblue}}{}{0pt}{}
+  - \titleformat{\subsection}{\normalsize\sffamily\bfseries\color{boisestateblue}}{}{0pt}{}
+  - \titlespacing*{\section}{0pt}{0.8em}{0.3em}
+  - \titlespacing*{\subsection}{0pt}{0.6em}{0.2em}
+  - |
+    \makeatletter
+    \renewcommand{\maketitle}{%
+      \begin{center}
+      {\Large\sffamily\bfseries\color{boisestateblue}\@title\par}
+      \vspace{0.25em}
+      {\small\sffamily \@author \quad \@date\par}
+      \end{center}
+      \vspace{0.6em}
+    }
+    \makeatother
+  - \setlength{\parindent}{0pt}
+  - \setlength{\parskip}{0.35em}
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE
+)
+```
+
+# Mapping the Network Around Your Research Project
+
+By the end of this activity, you will have a quick map of the people around **one** research project and **one concrete next step** to strengthen it.
+
+## Quick setup
+
+- Work with **one** project, proposal, or research direction.
+- Use **one sticky note per person**.
+- Identify around **6–8 people**.
+
+## Step 1: Choose your project  
+**Time: 1 minute**
+
+Write the name of one project, proposal, or research direction on a sticky note and place it in the center of your page.
+
+**Write:**  
+`Project / proposal / research direction: __________________________`
+
+
+
+## Step 2: Add your current contacts  
+**Time: 5 minutes**
+
+Write **one person per sticky note**.
+
+On each note, write:
+
+`Name or initials — role`
+
+```{r step-2-lists-table, results='asis'}
+role_examples <- c(
+  "collaborator",
+  "methods expert",
+  "student",
+  "community partner",
+  "industry partner",
+  "agency contact",
+  "funder contact",
+  "evaluator",
+  "project manager",
+  "research support",
+  "other"
+)
+
+include_people <- c(
+  "collaborators or co-investigators",
+  "students or trainees",
+  "research support staff",
+  "data or methods experts",
+  "community, government, clinical, or industry partners",
+  "funder-facing or proposal-facing contacts",
+  "project managers, evaluators, or implementation partners"
+)
+
+do_not_include <- c(
+  "roles with no person attached yet",
+  "offices with no active contact person",
+  "future people you hope to meet someday"
+)
+
+make_latex_list <- function(items) {
+  paste0(
+    "\\begin{minipage}[t]{\\linewidth}\n",
+    "\\RaggedRight\n",
+    "\\begin{itemize}[leftmargin=1.2em, itemsep=0pt, parsep=0pt, topsep=2pt, partopsep=0pt]\n",
+    paste0("\\item ", items, collapse = "\n"),
+    "\n\\end{itemize}\n",
+    "\\vspace*{0.45em}\n",
+    "\\end{minipage}"
+  )
+}
+
+cat("
+\\begingroup
+\\small
+\\renewcommand{\\arraystretch}{1.12}
+\\setlength{\\tabcolsep}{5pt}
+\\noindent
+\\begin{tabularx}{\\linewidth}{
+  |>{\\RaggedRight\\arraybackslash}X
+  |>{\\RaggedRight\\arraybackslash}X
+  |>{\\RaggedRight\\arraybackslash}X|
+}
+\\hline
+\\textbf{Examples of roles} &
+\\textbf{Include people such as} &
+\\textbf{Do not include} \\\\
+\\hline
+",
+make_latex_list(role_examples), " & ",
+make_latex_list(include_people), " & ",
+make_latex_list(do_not_include), " \\\\
+\\hline
+\\end{tabularx}
+\\endgroup
+")
+```
+
+Place the notes loosely around the center for now.
+
+**Try to identify at least 6–8 people.**
+
+
+
+\pagebreak
+
+## Step 3: Arrange your map  
+**Time: 3 minutes**
+
+Move the notes so the people who are more active, central, or important to moving the project forward sit **closer** to the middle.
+
+Move occasional, indirect, or less-developed relationships **farther out**.
+
+There is no perfect answer here. The goal is to make the shape of the project visible.
+
+
+
+## Step 4: Draw only meaningful ties  
+**Time: 6 minutes**
+
+All these individuals are connected to you. Now decide which of your contacts are connected to each other.
+
+### Quick tie test
+
+**Draw a line only if your best guess answer is yes to these questions:**
+
+1. **Do these two people know each other by name and by sight?**
+2. **Would they greet each other if they passed in the Quad?**
+3. **Could either one contact the other for support if needed?**
+
+If yes, draw the line.  
+If you have to guess hard, **leave it blank**.
+
+Do **not** draw a line because:
+
+- they are on the same project roster
+- they work in the same department
+- they attended the same meeting once
+- you hope they will connect later
+
+A missing line is useful information. It may show that **you** are the bridge between parts of the project.
+
+
+
+## Step 5: Reflect what you notice  
+**Time: 5 minutes**
+
+Pause and look at the shape of your map.
+
+Ask yourself:
+
+- Are most people connected to each other, or mostly connected through me?
+- Do I see clusters?
+- Is one person a bridge to a partner, method, facility, or funding pathway?
+- Where does the network feel thin?
+- Is there a needed role not filled by someone in your network?
+
+## Keep your map
+
+You will use this map in the next part of the session.
+
+\pagebreak
+
+## Additional Resources
+
+### Current contacts
+
+**Attributes List**
+
+Use this table to keep a simple record of the people included in your map.
+
+```{r current-contacts-table, results='asis'}
+rows <- paste(
+  rep("\\rule{0pt}{1.8em} & & \\\\ \\hline", 8),
+  collapse = "\n"
+)
+
+cat("
+\\Needspace{12\\baselineskip}
+\\noindent
+\\begingroup
+\\small
+\\renewcommand{\\arraystretch}{1.25}
+\\setlength{\\tabcolsep}{4pt}
+\\begin{tabularx}{\\linewidth}{
+  |>{\\RaggedRight\\arraybackslash}X
+  |>{\\RaggedRight\\arraybackslash}X
+  |>{\\RaggedRight\\arraybackslash}X|
+}
+\\hline
+\\textbf{Contact name} & \\textbf{Role} & \\textbf{Influence} \\\\ \\hline
+", rows, "
+\\end{tabularx}
+\\endgroup
+")
+```
+
+Write a short **Role** label, such as collaborator, methods expert, student, community partner, industry partner, agency contact, funder contact, evaluator, project manager, research support, or other.
+
+Under **Influence**, choose up to three attributes: expertise, access, credibility, implementation capacity, funding intelligence, community relevance, infrastructure, evaluation capacity, or decision authority.
+
+### Next Step
+
+```{r next-step-table, results='asis'}
+rows <- paste(
+  rep("\\rule{0pt}{2.4em} & & \\\\ \\hline", 4),
+  collapse = "\n"
+)
+
+cat("
+\\Needspace{9\\baselineskip}
+\\noindent
+\\begingroup
+\\small
+\\renewcommand{\\arraystretch}{1.25}
+\\setlength{\\tabcolsep}{4pt}
+\\begin{tabularx}{\\linewidth}{
+  |>{\\RaggedRight\\arraybackslash}X
+  |>{\\RaggedRight\\arraybackslash}X
+  |>{\\RaggedRight\\arraybackslash}X|
+}
+\\hline
+\\textbf{Missing role or capacity} & 
+\\textbf{Why it matters} & 
+\\textbf{Possible persons, if known} \\\\ \\hline
+", rows, "
+\\end{tabularx}
+\\endgroup
+")
+```
+
+\pagebreak
+
+## Additional Resources and References
+
+**Boise State University. (n.d.). _Boise State Experts_.**  
+<https://experts.boisestate.edu/>
+
+Used as the live demonstration tool for showing one example of a research network. Boise State Experts helps participants see how research profiles, projects, outputs, and visible collaboration patterns can be represented through institutional research data. In the activity, this resource supports the transition from a publication-based ego network to a project-based ego network.
+
+**Cornell University Faculty Advancement, Diversity, and Inclusion. (n.d.). _Strategically developing a network of mentors_. Practical Toolkit for Mentoring.**  
+<https://faculty-inclusive-mentoring.cornell.edu/practical-toolkit-for-mentoring/strategically-developing-a-network-of-mentors/>
+
+Used as a conceptual model for thinking about existing support, prospective support, and unmet needs across different domains. Although this activity is not focused on mentoring, this resource helped shape the idea that a structured mapping process can help identify network strengths and missing forms of support.
+
+**McCarty, C., Molina, J. L., Aguilar, C., & Rota, L. (2007). A comparison of social network mapping and personal network visualization. _Field Methods, 19_(2), 145--162.**  
+<https://doi.org/10.1177/1525822X06298592>
+
+Used to ground the activity in egocentric network methods, especially the use of a name generator to identify people in a focal network and name-interpreter prompts to describe each person’s role or relationship to the focal participant. This article also informed the activity’s tie definition, including the criterion that a contact is someone the participant knows, who knows them, and whom they could contact again if needed.
+
+**Partnering Resources. (n.d.). _Team network mapping tool_.**  
+<https://partneringresources.com/wp-content/uploads/Tool-Team-Network-Mapping.pdf>
+
+Used to help shape the sticky-note mapping format. This tool supports a practical, team-centered approach to identifying contacts, placing them visually, and reflecting on how relationships support team effectiveness. It is especially useful as a next-step resource for groups that want to continue developing their maps after the activity.
+
+**Vacca, R. (2024, June 20). _Egocentric network analysis with R_.**  
+<https://raffaelevacca.github.io/egocentric-r-book/>
+
+Included as an optional follow-up resource for participants who want to move beyond a hand-drawn ego network and learn how egocentric network data can be organized, analyzed, and visualized in R. This is most useful after the activity for participants interested in turning informal network maps into structured data.
+
+**Wijenberg, M. L. M., van de Goor, I. A. M., van Oers, H. A. M., & Koelen, M. A. (2017). The value of the participatory network mapping tool to facilitate and evaluate coordinated action in health promotion networks: Two Dutch case studies. _Global Health Promotion, 26_(2), 32--41.**  
+<https://journals.sagepub.com/doi/pdf/10.1177/1757975917716923>
+
+Used to support the broader logic of participatory network mapping: visualization plus discussion can help participants identify roles, relationships, gaps, successes, and opportunities for coordinated action. This resource helped frame the activity as more than a drawing exercise; the purpose is to make relationships visible enough to support reflection and next steps.
