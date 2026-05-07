@@ -1,9 +1,9 @@
 ---
-title: "Signature Assignment"
+title: "Data Understanding Notebook"
 subtitle: "Descriptive Statistics"
-author: "Lorraine Gaudio"
+author: "by Lorraine Gaudio"
 date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
-team: "Spring 2026"
+team: "Summer 2026"
 output: 
   html_document: # To create an HTML document from R Markdown
     toc: false # Table of contents (TOC)
@@ -25,10 +25,11 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r eval=FALSE, include=FALSE}
-title: "Signature Assignment"
+title: "Data Understanding Notebook"
 subtitle: "Descriptive Statistics"
-author: "Lorraine Gaudio"
+author: "by Lorraine Gaudio"
 date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
+team: "Summer 2026"
 output: 
   pdf_document:
     toc: true
@@ -53,11 +54,11 @@ bibliography: references.bib # Bibliography file
 biblio-style: apalike                 # ⟵ natbib needs a .bst style
 natbiboptions: "round,authoryear"     # round brackets, Author (Year)
 # ---
-title: "Signature Assignment"
+title: "Data Understanding Notebook"
 subtitle: "Descriptive Statistics"
-author: "Lorraine Gaudio"
+author: "by Lorraine Gaudio"
 date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
-team: "Spring 2026"
+team: "Summer 2026"
 output: 
   html_document: # To create an HTML document from R Markdown
     toc: false # Table of contents (TOC)
@@ -74,7 +75,7 @@ output:
       after_body: ../assets/footer.html
 ```
 
-Overview
+# Overview
 
 This Signature Assignment asks you to build a **Data Understanding Notebook** in Quarto using the `penguins` dataset. The notebook is a working analytical document where you load data, identify variable types, choose appropriate descriptive statistics, and explain what those statistics show. This activity asks you to 🎯 plan your approach, ✅ monitor whether your code and interpretations make sense, and 🗣 revise your thinking when something is unclear or incorrect. That process is part of self-regulated learning: using metacognitive strategies to guide your own understanding.
 
@@ -86,43 +87,62 @@ This activity is designed to be open-ended. You have the freedom to choose which
 
 By the end of the Descriptive Statistics activity you will be able to:
 
--   Define key data science terms related to data collection and data types.
+-   📖 Define key data science terms related to data collection and data types.
 
--   Calculate and interpret common descriptive statistics such as counts, mode, median, mean, variance, and standard deviation.
+-   🧮 Calculate and interpret common descriptive statistics such as counts, mode, median, mean, variance, and standard deviation.
 
--   Report descriptive statistics using inline R code in a Quarto document.
+-   🧵 Report descriptive statistics using inline R code in a Quarto document.
 
--   Understand the importance of choosing appropriate descriptive statistics based on the type of data and research question.
+-   🧩 Understand the importance of choosing appropriate descriptive statistics based on the type of data and research question.
 
--   Produce a well-structured and formatted HTML document summarizing the descriptive statistics of a dataset.
+-   🏺 Produce a well-structured and formatted HTML document summarizing the descriptive statistics of a dataset.
 
-# Part 1
+# Start Your Data Understanding Notebook
 
-Part 1 builds the foundation for the full report. In this section, you will set up your Quarto file, inspect the `penguins` dataset, and begin deciding which descriptive statistics fit which kinds of variables. Your goal is to connect the reading to the penguins dataset. You will build on this in Part 2 where you explain why a summary method makes sense for that kind of data.
+This section builds the foundation for your **Data Understanding Notebook**. You will create a Quarto file, work in the **Source** editor, set up the document header, and add the first sections of your report.
 
-## Task 1: Set up notebook
+You are still new to Quarto, so move slowly. The goal is not just to make a file. The goal is to understand how Quarto formatting becomes a clean HTML report.
+
+## Task 1
+
+**Set up notebook**
 
 ### **Step 1**
 
-The first step to creating a **Data Understanding Notebook** is to set up your Quarto document. This will be the working document where you will write your notes, run code, and create a reproducible report.
+1. Open RStudio.
 
--   For those of you who **have GitHub** and a course **project**, (1) navigate to your course folder and (2) open your course project. This will open RStudio. (3) Click "Pull" in the Git pane to get the latest version of the course materials. *After completing work: save, stage, commit, and push.*
-
--   If you **don't have GitHub** or a course project, just open RStudio and set your working directory to your course folder.
-
-### **Step 2** Open a new Quarto document
+2. Create a new Quarto document:
 
 `File` > `New File` > `Quarto Document`
 
-Enter the document title and your name.
+3. Enter the document title and your name.
 
--   Data Understanding Notebook
+- Title: `Data Understanding Notebook`
+- Author: `YOUR NAME`
 
--   YOUR NAME
+4. Choose the output format as `HTML`.
 
-### ** Step 3** YAML Header
+5. Uncheck the option to use visual markdown editor.
 
-Modify your YAML header to custom design your new Quarto document. Update the title, author, date, and table of contents in the YAML header.
+The **Visual** editor can be useful later, but it may hide some of the formatting marks you need to practice in this activity. Make sure you are working in the **Source** editor.
+
+In the **Source** editor, you can see the Quarto formatting symbols you are learning, including:
+
+- hashtags for headings, such as `# Purpose of this notebook`
+- backticks for code, such as `penguins`
+- code chunk fences, such as ```` ```{r} ````
+
+6. Select **Create Empty Document** to start with a blank slate.
+
+![New Quarto Document Form](source_empty_file.png)
+
+### **Step 2**
+
+Modify your YAML header to customize your Quarto document. The YAML header is the section at the very top of the file between the two lines of three dashes: `---`.
+
+The YAML header controls information about the document and how the HTML report will be created.
+
+Replace the YAML header at the top of your Quarto file with this:
 
 ```{r echo=FALSE, results='asis'}
 cat("```yaml
@@ -139,42 +159,34 @@ format: html
 ```")
 ```
 
-Save it as `descriptive_statistics.qmd`.
+Here is what these YAML settings do:
 
-### Headings
+- `title` gives the report its main title.
+- `subtitle` adds a smaller title underneath the main title.
+- `author` identifies who created the notebook.
+- `date: today` tells Quarto to use the current date when the document renders.
+- `toc: true` creates a table of contents.
+- `toc-depth: 2` includes level 1 and level 2 headings in the table of contents.
+- `number-sections: true` numbers the report sections.
+- `format: html` tells Quarto to create an HTML report.
 
-Use the section headings, like those shown below, to create the structure of your notebook. You can copy and paste the section headings into your new Quarto document.
+Save the file as `descriptive_statistics.qmd` in your course folder.
 
-``` markdown
+### **Step 3**
 
+Add only the headings you need for this first section.
+
+Copy and paste these headings into your Quarto file below the YAML header:
+
+```markdown
 # Purpose of this notebook
 
 # Load Packages and Data
-
-# Variables and Data Types
-
-# Count-Based Summaries
-
-# Median
-
-# Mean
-
-# Measures of Spread
-
-## Standard Deviation
-
-## Range
-
-## Interquartile Range
-
-## Five Number Summary
-
-# Early Takeaways
 ```
 
-Work through the sections under each heading.
+You will add more sections later as the notebook grows.
 
-💡 **Tip:** Render to HTML often to see the results.
+💡 **Tip:** Render to HTML often. Rendering helps you check whether your Quarto formatting is working the way you expect.
 
 ## Task 2: Notebook Purpose Statement
 
@@ -227,9 +239,9 @@ data(package = 'palmerpenguins')
 
 ## Foundations
 
-Before we continue through more tasks, you will benefit from learning about what data represents, what kind of variable you are working with, and what a summary value actually means. These foundation sections introduce key terms.
+Before we continue through more tasks, you will benefit from learning about what data represents, what kind of variable you are working with, and what a summary value actually means. These foundation sections introduce key terms. 
 
-As you work through the next section, **Variables and Data Types**, you will think about the kinds of data in `penguins`. This understanding will help you make informed choices on how to best describe your data.
+As you work through the next section, **Variables and Data Types**, you will think about the kinds of data in `penguins`. This understanding will help you make informed choices on how to best describe your data. In the practice space, you will inspect the `penguins` dataset, and begin deciding which descriptive statistics fit which kinds of variables. Your goal is to connect the descriptive statistics reading to the penguins dataset while practicing Quarto formatting skills. 
 
 ### Data Collection
 
@@ -301,6 +313,8 @@ When describing data, you will need to choose the appropriate statistical method
 In your Data Understanding Notebook, you will inspect the `penguins` dataset and identify the types of variables in each column. This will help you decide which descriptive statistics to use for summarizing the data later in the report.
 
 **Inspect the penguins data**, identify what kind of variable each column contains, and explain why that matters for descriptive statistics later in the report.
+
+# Practice Space
 
 ## Task 4: Dataset overview
 
@@ -1618,6 +1632,8 @@ You should have a reproducible **Data Understanding Notebook** that shows both y
 
 **Sample**: A subset of the population that you actually observe or measure.
 
+**Source**: The plain-text editing view for an `.Rmd` or `.qmd` file, where you can see and edit the actual document syntax, including the YAML header, Markdown formatting, code chunk fences, and inline R. Use Source when instructions ask you to type exact code or formatting. In RStudio, you can switch to this view with the Source button at the top-left of the document toolbar.
+
 **Spread**: How much the values in a dataset vary or scatter rather than cluster tightly together. Common measures of spread include range, interquartile range (IQR), variance, and standard deviation.
 
 **Standard Deviation**: A measure of spread equal to the square root of the variance. Because it takes the square root, standard deviation is expressed in the same units as the original data.
@@ -1629,3 +1645,5 @@ You should have a reproducible **Data Understanding Notebook** that shows both y
 **Unordered Sample**: A sample in which the order of the selected elements does not matter, so `{1, 2, 3}` represents the same selection as `{3, 2, 1}`. In counting language, this is the idea behind a *combination*.
 
 **Variance**: A measure of spread that describes how far values tend to vary from the mean, based on squared deviations. In introductory statistics, sample variance is commonly calculated using `n - 1` in the denominator.
+
+**Visual**: The formatted editing view for an `.Rmd` or `.qmd` file, where the document appears more like a word processor while still saving as Markdown underneath. Visual is useful for writing narrative text, tables, citations, and formatted content, but it can hide some of the syntax students need to learn. In RStudio, you can toggle between Source and Visual using the buttons at the top-left of the document toolbar.

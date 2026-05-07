@@ -1,0 +1,428 @@
+---
+title: "Glossary"
+author: "Lorraine Gaudio"
+date:   "`r paste(format(Sys.Date(), '%B %d, %Y'))`"
+team: "Spring 2026"
+output: 
+  html_document: # To create an HTML document from R Markdown
+    toc: false # Table of contents (TOC)
+    toc_depth: 2 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactivne scrolling
+    includes:
+      in_header: ../assets/header.html
+      after_body: ../assets/footer.html
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# A
+
+**Accountability**: Taking responsibility for the results you report by verifying them, responding to questions or critiques, and correcting errors when found. In practice, this means you keep a clear record (e.g., in an R Markdown/Notebook or script) that shows how you checked your work and why you made your choices.
+
+**Aesthetic mapping**: A connection between a variable in the data and a visual property in the plot, such as position, color, or fill. In `ggplot2`, mappings are usually set inside `aes()`.
+
+**And** (`&`): An element-by-element logical operator that returns `TRUE` only where both conditions are `TRUE`; otherwise it returns `FALSE` (or `NA` when the result can’t be determined because of missing values).
+
+**Arguments**: Inputs that you provide to functions to customize their behavior. Arguments are specified within the parentheses of a function call and can modify how the function operates or what data it processes.
+
+**Assignment Operator**: The symbol `<-` is used to assign values to variables in R. It indicates that the value on the right should be stored in the variable on the left. The less common `->` assigns the value on the left into the name on the right.
+
+**Atomic Vector**: A one-dimensional R vector where all elements must be the same basic type (logical, integer, double/numeric, character, complex, or raw). If you combine different types, R will coerce them to a single type so the vector stays atomic.
+
+# B
+
+**Backtick**: The &#96; character (above the Tab key) used for code-related formatting and quoting. In **Markdown**, single backticks mark *inline code* and triple backticks create *fenced code blocks*; in **R Markdown**, backticks also mark *inline R code* (<code>&#96;r ...&#96;</code>), including inside YAML fields like <code>date: "&#96;r Sys.Date()&#96;"</code>, which gets evaluated when you render the document. In R, backticks can also quote non-syntactic names (e.g., names with spaces) so they can be used safely in code.
+
+**Biased Outcome**: An outcome in a random process where some results are more likely than others, so the outcomes are not equally likely.
+
+**Boxplot**: A graph that summarizes a distribution using the median, quartiles, spread, and possible outliers.
+
+# C
+
+**Callout Block**: A formatted block in Quarto Markdown that sets off important content—such as a note, tip, warning, or reflection—so it stands out visually in the rendered document. Callout blocks are created with `:::` syntax and a callout class such as `.callout-note`, and in HTML output they appear as styled boxes with distinctive formatting.
+
+**Categorical Data**: Data whose values place observations into groups or categories. The categories may have no natural order (nominal) or may have an order with uneven gaps between categories (ordinal). In R, categorical data are often stored as factors.
+
+**Census**: A complete count or measurement of every member of a population, rather than just a subset.
+
+**Center**: The middle or typical location of a dataset. Measures of center, such as the mean and median, summarize where values tend to cluster.
+
+**Central Tendency**: A measure that represents the center or typical value of a dataset. Common measures of central tendency include the mean, median, and mode.
+
+**Character String**: A single piece of text in R, stored as a character value and written in quotes (for example, "My favorite color is yellow!" or "Who stole the cookie from the cookie jar?"). 
+
+**Character Indexing**: Indexing a named vector using character strings that match element names (for example, `x[c("Octarine", "TARDIS Blue")]`). With `[`, names are matched exactly; any name that doesn’t exist returns `NA` for that position.
+
+**Character Vector**: A vector that stores text strings, written in quotes, such as `"apple", "banana", "grapes"` or `"ID_001", "ID_002", "ID_003"`.
+
+**Class** `class()`: A function that reports the object’s class, which tells R how to interpret the object and which methods to use when functions are applied to it. For example, `class(3.14)` returns `"numeric"`, and `class(mtcars)` returns `"data.frame"`.
+
+**Code Chunks**: Fenced blocks in an R Markdown/Notebook document where R code is written and executed, usually starting with <code>&#96;&#96;&#96;{r}</code>. Only code inside a chunk runs, and its output (including plots and tables) appears directly below the chunk when executed.
+
+**Column index**: The index used to select columns in a data frame or matrix (the second slot inside brackets: `x[, j]`).
+
+**Concatenate** `c()`: A function that combines (concatenates) values into a single vector. You use `c()` to create a vector, append items to an existing vector, or join multiple vectors together (for example, `c(1, 2, 3)` or `c(x, y)`.
+
+**Conditional Subsetting** (Logical Subsetting): Filtering an object by using a logical condition inside [ (e.g., `df[df$cyl != 4, ]`), where `TRUE` keeps an element/row and `FALSE` drops it. This contrasts with negative indexing, which excludes by position rather than by a condition.
+
+**Console Pane**: The pane where R executes commands and prints output. Anything you type and run here is evaluated immediately, and messages, warnings, errors, and results appear here.
+
+**Continuous Data**: Numerical data that can take any value within a range, including values between other values. Measurements such as height, weight, and time are typical examples.
+
+**Count**: The number of observations or values in a dataset, group, or category. In introductory statistics, count tells you how many cases are present.
+
+**CSV** (Comma-Separated Values): A plain-text file (`.csv`) for rectangular (row-and-column) data where each row is a line and values are separated by commas. Because it’s plain text, CSV is widely compatible across software, but it does not reliably preserve spreadsheet features like formulas, cell formatting, or multiple sheets.
+
+# D
+
+**Data Dictionary**: A companion document (often a table) that defines each variable in a dataset—its name, meaning/description, data type, allowable values or coding scheme, missing-value codes, and any notes needed to interpret the data correctly and reuse it later.
+
+**Data Frame**: A two-dimensional R object for tabular data, organized as rows and columns. Each column is a vector (or factor) with the same number of rows, columns can have different data types, and the object has class "`data.frame`".
+
+**Default Arguments**: Inputs that already have a preset value in the function definition and are used automatically when you don’t provide your own (e.g., `mean(..., na.rm = FALSE)` by default).
+
+**Density Plot**: A graph for continuous numerical data that shows a smoothed estimate of the distribution of values. In `ggplot2`, a density plot is typically created with `geom_density()` and can be understood as a smooth alternative to a histogram.
+
+**Descriptive statistics**: Numerical summaries that describe the main features of a dataset, such as measures of central tendency (mean, median, mode) and measures of variability (range, variance, standard deviation).
+
+**Discrete Data**: Numerical data that can take only specific, separate values, often counts such as 0, 1, 2, 3, and so on. In practice, discrete data are commonly integer-valued.
+
+**Distribution**: The pattern of possible values of a variable, together with how likely those values are or how often they occur.
+
+**Dollar Sign Operator** (`$`): An extraction (and replacement) operator used to access a single named component of a recursive object. Most commonly a data frame column (`df$col`) or a list element (`lst$name`). `$` requires a literal name (not a name stored in a variable), returns NULL if the name doesn’t exist, and by default may do partial matching (which can surprise you).
+
+**Double Square Bracket Operator** (`[[`): An extraction operator used to pull out one single element from a list (or one column from a data frame) and return the element itself, not a same-type subset. Unlike `[`, which can return multiple elements and preserves the container type, `[[` is for “give me the one thing inside” (e.g., a vector inside a dataframe).
+
+# E
+
+**Elements**: The individual data values stored inside a vector object. Each element has a position (its index) and can be accessed by indexing (for example, `x[1]` for the first element).
+
+**Element Names**: The individual labels assigned to elements inside a named vector. Element names let you index by label (e.g., `color["blue"]`) to retrieve specific values.
+
+**Environment Pane**: The pane that lists the objects currently stored in memory for your session (for example, data frames, vectors, and functions). It helps you check what exists, inspect object names/types, and remove or manage objects.
+
+**Equal To** (`==`): A relational operator that tests equality and returns `TRUE` where values are equal and `FALSE` where they are not (element-by-element for vectors).
+
+**Error**: A console message indicating that R could not complete a command. Execution stops at that point, no result is produced for that step, and you must fix the problem (for example, a misspelled object name, invalid argument, or syntax issue) before the code can run.
+
+**Excel** (.xlsx): A Microsoft Excel workbook file (`.xlsx`) that can store one or more worksheets, along with spreadsheet features like formulas and formatting. `.xlsx` uses the Office Open XML format (the “x” indicates an XML-based file without macros).
+
+**Extraction**: Retrieving a single component from an object—such as one list element or one data-frame column—so you get the “thing itself” (often a simplified result like a vector). Extraction is commonly done with `[[ ]]` (extract one element by position or name) or `$` (extract one column by name).
+
+# F
+
+**Factor Class**: An R object class for categorical data, where each value is stored as an integer code that points to a category label. Factors help R handle categories correctly in tables, plots, and statistical models, even though they may print like text.
+
+**Factor Levels**: The distinct category labels a factor can take (for example, `"freshman"`, `"sophomore"`, `"junior"`, `"senior"`). Levels define the set and order of categories, and each factor value is internally stored as the index of its level.
+
+**Fair Outcome**: An outcome in a random process where all possible results are equally likely. For example, in a fair six-sided die, each face has probability 1/6.
+
+**File Menu**: The top-left menu in RStudio that provides commands for creating, opening, saving, exporting, and printing files and projects. It’s where you start new items (for example, a new R Script), open existing files, manage recent files/projects, and access project-level actions. 
+
+**Files Pane** and Help – Tabs/panes used to navigate your project folders and view supporting information. Files lets you browse, open, rename, and manage files; Help shows documentation for functions and packages (including searchable help pages).
+
+**File Path**: A text “address” that tells the computer (and R) where a file or folder is located. Paths can be absolute (the full location from the start of the file system) or relative (interpreted relative to your current working directory). In R, `getwd()` shows the current working directory that relative paths are based on, and `file.path()` helps build paths in an operating-system-safe way.
+
+**Frequency**: The number of times a value or category appears in a dataset.
+
+**Functions**: Reusable blocks of code that perform specific tasks. Functions can take inputs (arguments) and return outputs. R has many built-in functions, and you can also create your own.
+
+**Function Call**: The act of running a function by writing its name followed by parentheses, optionally supplying arguments inside (e.g., `mean(x)`). 
+
+**Function Object**: A function stored as an R object (functions are “first-class” in R, meaning you can assign them to names, pass them to other functions, and inspect them). 
+
+# G
+
+**geom**: A geometric layer that controls how data are drawn on the plot. Examples include `geom_point()`, `geom_histogram()`, and `geom_boxplot()`.
+
+**ggplot2**: An R package for data visualization based on the grammar of graphics. It builds plots by combining data, mappings, and geometric layers.
+
+**Global Options**: A settings window that controls how RStudio behaves across projects and sessions. This is where you can set defaults like appearance, saving behavior, code formatting, and how RStudio runs R.
+
+**Graphical User Interface** (GUI): A point-and-click interface that lets you interact with software using menus, buttons, and file browsers instead of typing commands. In RStudio, the Import Dataset wizard is a GUI tool that helps you select a file and then outputs the R code (including the file path) needed to reproduce the import, so you can copy that code into your R script.
+
+**Greater Than** (`>`): A relational operator that compares two values (or vectors) and returns a logical vector that is `TRUE` where the left side is greater than the right side, and `FALSE` otherwise (with `NA` if the comparison is unknown).
+
+**Greater Than or Equal To** (`>=`): A relational operator that returns `TRUE` where the left side is greater than or equal to the right side, and `FALSE` otherwise.
+
+**Grouping Parentheses**: Parentheses `(` `)` used to explicitly group parts of an expression so R evaluates them together, in the order you intend, rather than relying on operator precedence and associativity rules. This is especially important when mixing logical operators like `&` and `|`, where missing parentheses can change the meaning of your filter.
+
+# H
+
+**Help Page**: Documentation for R functions and packages that provides information on usage, arguments, and examples. Accessed using `?function_name` or `help(function_name)`.
+
+**Help Tab**: Located in the Files/Plots/Packages/Help pane, this tab provides access to R documentation, package vignettes, and search functionality to find help topics related to R functions and packages.
+
+**Hexadecimal Color Codes**: A way to specify colors using a `#` followed by hexadecimal digits. In R (and most software), `#RRGGBB` defines the red, green, and blue intensities using two hex digits each (00–FF), for example `#FF0000` (red) or `#1E90FF` (blue). Some codes include transparency as a fourth pair, `#RRGGBBAA`, where `AA` controls alpha (00 = fully transparent, FF = fully opaque).
+
+**Histogram**: A graph for numerical data that groups values into intervals (bins) and shows how many observations fall in each bin.
+
+**Honesty**: Accurately reporting what you did in R—your actual steps, mistakes, revisions, and uncertainty—without presenting outside work as your own. This includes clearly attributing code, ideas, and any AI assistance, and being able to explain the code you submit.
+
+**HTML**: A web page file type (`.html`) written in **HyperText Markup Language** that a web browser can open and display as a formatted document. In this course, Preview/Knit/Render can create an HTML file (often `.html` or `.nb.html`) that shows your notebook’s text, code, and output in the browser; because it opens from your computer (a local `file://` path), you can’t submit it by copying the browser address. Upload the HTML file itself.
+
+# I
+
+**Impute**: To replace missing or unusable values (e.g., `NA`) with substituted values—often a plausible estimate based on the observed data (such as mean/median imputation or model-based predictions)—so the dataset can be analyzed without dropping incomplete cases. Because imputed values are estimates, you should document what method you used and why.
+
+**In Set** (`%in%`): A membership operator that returns a logical vector indicating whether each element on the left appears anywhere in the vector on the right (e.g., `region %in% c("West","South")`)
+
+**Independent Events**: Events where the occurrence of one does not change the probability of the other. In probability notation, events A and B are independent when $P(A \cap B) = P(A)P(B)$; equivalently, knowing that one happened does not change the probability of the other.
+
+**Indexing Operator**: The square-bracket indexing operator `[` or `[[` are used to extract or replace parts of an object in R (for example, `x[i]`). For vectors, it selects one or more elements and returns the same kind of object as `x` (a vector).
+
+**Inline R**: A short R expression written inside backticks with the prefix `r` (for example, <code>&#96;r Sys.Date()&#96;</code>) that is evaluated when you knit/render the document and replaced with its result in the output. Inline R is used to insert dynamic values (dates, computed statistics, labels) directly into your narrative text, and it can also be used in YAML fields like <code>date: "&#96;r Sys.Date()&#96;"</code> when supported.
+
+**Insertion**: A common type of subassignment where you add something new to an object—most often a new column in a data frame. Example: `df[["Tag_Flag"]] <- "No"` (creates the column if it doesn’t exist yet).
+
+**Integrated Development Environment** (IDE): A software application that combines the core tools you need to write and run code in one place. RStudio is an IDE because it brings script editing, the R console, environment/object viewing, help/documentation, and file navigation into a single interface.
+
+**Integer Vector**: A vector that stores whole numbers. In R, integers are typically written with an `L` suffix, such as `1L` or `42L`.
+
+**Interquartile Range (IQR)**: The range of the middle 50% of the data, calculated as `Q3 - Q1`. Because it ignores the lowest 25% and highest 25%, it is less sensitive to extreme values than the full range.
+
+# J
+
+# K
+
+**Knit**: In RStudio, the action that renders an `.Rmd` (including an R Notebook) into a finished output file (such as HTML, PDF, or Word) by running the document’s code chunks, inserting their results, and converting the document to the chosen format. Clicking the Knit button typically calls `rmarkdown::render()` in a new, clean R session, so everything needed to reproduce the result must be created or loaded in the document itself, and the output file is saved alongside the `.Rmd`.
+
+**Knit Button**: The toolbar button in RStudio that renders an R Markdown file (`.Rmd`) into a finished output (e.g., HTML, PDF, Word) by calling `rmarkdown::render()` and running the document’s code to generate results. The output file is saved next to the `.Rmd` (same base name), and the button’s drop-down lets you choose among available output formats (shortcut: Ctrl/Cmd + Shift + K).
+
+# L
+
+**Labels**: Text added to a `ggplot2` graphic to identify and explain what the plot shows, such as axis labels, legend titles, plot titles, subtitles, captions, and tags. In `ggplot2`, labels are commonly set with `labs()`, `xlab()`, `ylab()`, and `ggtitle()`
+
+**Large Language Models (LLMs)**: AI systems trained on massive collections of text and code to predict and generate language, including R code and explanations. In an R-learning context, LLMs can help you brainstorm, interpret error messages, and draft code—but they can also produce plausible-sounding mistakes, so you must verify outputs, understand each line you run, and document when and how you used the tool.
+
+**Length**: The number of elements in an object. For a vector, `length(x)` is the count of elements in the vector; for a list, it’s the number of list components; for a data frame, it returns the number of columns.
+
+**Less Than** (`<`): A relational operator that returns `TRUE` where the left side is less than the right side, and `FALSE` otherwise (vectorized across elements).
+
+**Less Than or Equal To** (`<=`): A relational operator that returns `TRUE` where the left side is less than or equal to the right side, and `FALSE` otherwise.
+
+**Logical Indexing**: Indexing a vector using a logical vector of `TRUE`/`FALSE` values (for example, `x[x > 0]`) so R keeps the elements where the index is `TRUE` and drops those where it is `FALSE`. If the logical index is a different length, R may recycle it, which can lead to surprising results.
+
+**Logical Operators**: Operators that create or combine logical elements. The most common are comparison operators—`==`, `!=`, `<`, `>`, `<=`, `>=`—which return `TRUE`/`FALSE`, and Boolean operators—`!` (NOT), `&` / `|` (AND/OR applied element-by-element), and `&&` / `||` (AND/OR that evaluate only the first element, mainly for if conditions).
+
+**Logical Vector**: A vector that stores Boolean elements: `TRUE` or `FALSE` (and sometimes `NA` for missing). Logical vectors are commonly produced by comparisons (for example, `x > 0`) and are heavily used for filtering and conditional code.
+
+# M
+
+**Markdown**: A lightweight plain-text formatting syntax used to write structured documents (headings, lists, links, emphasis, code) in a way that stays readable as plain text and can be rendered into formats like HTML on many platforms and tools.
+
+**Mean**: The arithmetic average of a set of numbers, found by adding all values and dividing by the number of values.
+
+**Median**: The middle value in an ordered dataset. If there is an even number of values, the median is the average of the two middle values.
+
+**Missing Values**: Data values that are unknown or not recorded; in R they are represented by `NA` (“Not Available”). `NA` is a special missing-value indicator (with typed versions like `NA_integer_`, `NA_real_`, and `NA_character_`), and many calculations will return `NA` if any missing values are present unless you explicitly remove them (often via `na.rm = TRUE`, which defaults to `FALSE` in functions like `mean()`)
+
+**Missing Value Propagation**: R’s behavior where an `NA` (unknown value) “carries through” computations and comparisons. If an operation can’t be determined because of missing data, the result is often `NA` (unknown) instead of `TRUE` or `FALSE`. For example, `NA == "Tagged"` returns `NA`. If you use a logical mask that contains `NA` values for subsetting (e.g., `x[mask]` or `df[mask, ]`), R does not treat `NA` as `FALSE`, so the subset may include `NA` values (or `NA` rows), which can change counts and results.
+
+**Mode** (R object): The underlying storage type of an R object—the low-level kind of data it is fundamentally stored as. `mode(x)` reports this storage mode (often aligning with atomic types like `"numeric"`, `"integer"`, `"logical"`, or `"character"`), which is useful for understanding coercion and how R will treat the object in computations.
+
+**Mode** (statistic): The value or category with the greatest frequency in a dataset. A dataset can have one mode, more than one mode, or no mode if no value occurs more often than the others.
+
+**Monte Carlo Simulation**: A simulation method that uses repeated random sampling to approximate probabilities, study uncertainty, or estimate numerical results.
+
+# N
+
+**NA**: A special constant that marks a missing value (“Not Available”)—meaning the data point is unknown or not recorded. R also provides typed missing values like `NA_integer_`, `NA_real_`, `NA_character_`, and `NA_complex_` to match the underlying data type.
+
+**Named Vectors**: Vectors that have labels attached to their elements via the `names()` attribute, so you can refer to values by name instead of only by position. Named vectors are useful as simple lookup tables (for example, retrieving a hex code by a color name).
+
+**Names Indexing**: Indexing a named vector using character strings that match element names (for example, `x[c("Octarine", "TARDIS Blue")]`). With `[`, names are matched exactly; any name that doesn’t exist returns `NA` for that position. Also see character indexing.
+
+**NaN**: A special numeric constant (“Not a Number”) that represents an undefined arithmetic result in floating-point math (for example, `0/0` or other invalid operations). `NaN` is non-finite (not a regular number).
+
+**Negative Indexing**: Using negative integers inside the single bracket operator `[` to exclude elements (or rows/columns) by position (e.g., `x[-2]` drops the 2nd element; `df[ , -c(8, 9)]` drops columns 8 and 9). In base R, negative and positive indices can’t be mixed in the same subset (except `0`)
+
+**Nesting Function Calls**: Writing one function call inside another so the inner function runs first and its returned value becomes an argument to the outer function (for example, `mean(sample(x, 5))`). This works because a function call can appear anywhere an expression is allowed, and functions return a value that can be passed directly into the next call.
+
+**Normal Distribution**: A continuous, bell-shaped distribution that is symmetric around its center, with most values near the mean and fewer values farther away.
+
+**Not** (`!`): A logical operator that negates a logical value: `!TRUE` becomes `FALSE`, and `!FALSE` becomes `TRUE` (and `!NA` remains `NA`).
+
+**Not Equal To** (`!=`): A relational operator that returns `TRUE` where values differ and `FALSE` where they match (vectorized across elements).
+
+**Numeric Vector**: A vector that stores real (decimal) numbers, such as `3.14`, `-2.5`, or `0`.
+
+**Numerical Data**: Data recorded as numbers, where the values have meaningful magnitudes and consistent intervals. Numerical data are also called *quantitative* data.
+
+# O
+
+**Objects**: The variables, data frames, functions, and other items that you create and store in your R environment during a session. These objects can be viewed and managed in the Environment pane.
+
+**Object Name**: The variable name you assign with `<-` that refers to the entire object in your environment. You use the object name to print, modify, or pass the whole object to functions.
+
+**Openness**: Making your analysis inspectable and reproducible by sharing the inputs and decisions that produced your results (data source, packages, code, and key assumptions). In this course, openness means you provide others with enough details so thay are able to rerun your work and get the same outputs.
+
+**Or** (`|`): An element-by-element logical operator that returns `TRUE` where either condition is `TRUE`; otherwise it returns `FALSE` (or `NA` when the result is ambiguous due to missing values).
+
+**Ordered Sample**: A sample in which the order of the selected elements does matter, so `(1, 2, 3)` is different from `(3, 2, 1)`. In counting language, this is the idea behind a *permutation*.
+
+**Ordinal Data**: Categorical data with a meaningful ranking or order, but where the differences between adjacent categories are not necessarily equal or measurable. Examples include Likert-scale responses such as “strongly disagree” to “strongly agree.”
+
+**Overwrite**: A common type of subassignment where you change existing values (you replace what is already there). Example:` df[rows, "Status"] <- "Wild_Hatch"`.
+
+# P
+
+**Package**: An installable collection of R code—functions, documentation, and sometimes datasets—that adds new features beyond base R. Packages are commonly installed from CRAN and then loaded with `library()` so you can use their tools in your session.
+
+**Panes**: The four main sections of the RStudio interface: Source, Console, Environment/History, and Files/Plots/Packages/Help. Each pane serves a specific purpose for coding, executing commands, managing objects, and accessing resources.
+
+**Pane Layout**: The section in Global Options where you choose which tabs appear in each pane and where panes sit on the screen. These settings that let you reposition items like Console, Source, Environment, Files, Plots, and Help to match your workflow.
+
+**Parameter**: A numerical summary of a population.
+
+**Percentile**: A value that marks the point at or below which a given percentage of observations fall. For example, the 50th percentile is the median.
+
+**Pipe**: An operator that passes the result of one step directly into the next step, letting you write code as a readable sequence of actions instead of nesting functions inside each other. In tidyverse code, the pipe is usually `%>%`, so `x %>% f()` means “take `x`, then apply `f()`”; in newer base R, a similar built-in pipe is `|>`.
+
+**Population**: The entire collection of individuals, cases, or objects you want to study. 
+
+**Positional Indexing**: Indexing a vector using numeric positions (for example, `x[1]` for the first element or `x[c(1, 3)]` for the first and third). Positions are based on the current order of the vector.
+
+**Precedence Bug**: An error where a mixed-operator expression is grouped and evaluated differently than intended because R applies operator precedence rules when parentheses are missing. In R, & binds more tightly than |, so `a & b | c` is interpreted as `(a & b) | c` unless you add parentheses to force `a & (b | c)`.
+
+**Preview Menu**: The drop-down attached to the Preview button in an R Notebook (`output: html_notebook`) that lets you generate a quick notebook preview and choose other render (“knit”) actions (e.g., HTML/PDF/Word). Preview renders an HTML view using outputs from chunks you’ve already run (it does not re-execute code), while knit options render the full document to the selected output format.
+
+**Probability**: A number from 0 to 1 that describes how likely an event is to occur, where 0 means impossible and 1 means certain.
+
+**Probability Weights**: Numbers that control how likely each value is to be selected in a random sample. In R, the prob argument in `sample()` supplies these weights; they must be nonnegative and do not have to add up to 1.
+
+**Propagation**: R’s default behavior where an unknown value “spreads” through a computation. If an expression includes `NA`, the result will usually be `NA` (e.g., `5 + NA` returns `NA`) because the outcome can’t be determined without the missing information. This is often called **NA propagation**, and it’s why many summary functions return `NA` unless you explicitly remove missing values (e.g., `na.rm = TRUE`)
+
+# Q
+
+**Quartile**: One of the cut points that divides ordered data into four equal parts. The first quartile (`Q1`) is the 25th percentile, the second quartile (`Q2`) is the median, and the third quartile (`Q3`) is the 75th percentile.
+
+**Quarto**: An open-source scientific and technical publishing system that uses Quarto Markdown files (`.qmd`) to combine Markdown text with executable code (including R) and render reproducible outputs like HTML, PDF, Word, slides, and websites. It’s the language-agnostic successor to R Markdown, designed for reports where code, results, and writing stay tied together.
+
+# R
+
+**R** is a programming language and engine that runs your R code.
+
+**R Markdown**: A document format (`.Rmd`) that mixes plain-text writing (Markdown) with embedded R code chunks, so you can generate reports that combine narrative, code, and computed output. You can render an R Markdown file into finished formats like HTML, PDF, or Word.
+
+**R Notebook**: An `.Rmd` (R Markdown) document that lets you run code in chunks and see the results (output, tables, plots) immediately below each chunk. It’s designed for reproducible work because it keeps your code, results, and explanatory notes together in the same file.
+
+**R Script**: A plain-text file (typically saved with a `.R` extension) that contains a sequence of R commands you write and save for later use. An R script lets you run code in a repeatable, organized way—so you can recreate analyses, clean data, define functions, and document your workflow without relying on one-off console commands.
+
+**Range**: A simple measure of spread found by subtracting the smallest value from the largest value in a dataset.
+
+**Real Numbers**: Numbers that can be located on the number line, including whole numbers, integers, fractions, decimals, and irrational numbers such as `pi` and `sqrt(2)`. Real numbers do not include imaginary numbers, and in statistics they are commonly used to represent measured quantitative values such as height, weight, or time.
+
+**Recycling**: R’s rule for handling vector operations when the vectors have different lengths. The shorter vector is repeated (recycled) to match the length of the longer vector, then the operation is performed element-by-element. Recycling is safe only when the longer length is an exact multiple of the shorter; otherwise R issues a warning and the result may be unreliable.
+
+**Render Tab**: A temporary tab that appears in RStudio’s Console pane when you Knit/Render an R Markdown (`.Rmd`) or Quarto (`.qmd`) document. It shows the rendering log—progress messages, warnings, and errors—separately from your interactive Console, and typically includes a Stop control so you can interrupt a failed or long render.
+
+**Replacement**: A sampling method where a selected value is put back before the next draw, so it can be chosen again. In R, this is controlled by replace = TRUE in functions like `sample()`.
+
+**Required Arguments**: Inputs a function needs because they have no default value in the function definition; you must supply them in the call (or the function can’t do its job). 
+
+**Reproducibility**: The ability to get the same computational results again by using the same data, code, steps, and analysis conditions.
+
+**Research Journal**: A running record of your R analysis process. This inlcudes what question you asked, what code you tried (including failed attempts), what outputs you got, and what decisions you made along the way. In practice, it’s maintained in an R script or R Markdown/Notebook with dated notes, comments, and citations so you (or someone else) can retrace, verify, and reproduce the work.
+
+**Row index**: The index used to select rows in a data frame or matrix (the first slot inside brackets: `x[i, ]`)
+
+**RStudio Desktop** is an **integrated development environment** (IDE) that makes writing, running and organizing R code easier.
+
+# S
+
+**Sample**: A subset of the population that you actually observe or measure. 
+
+**Sample Space**: The set of all possible outcomes of a random experiment.
+
+**Sampling Variability**: The natural sample-to-sample differences that occur because different random samples from the same population usually produce different statistics.
+
+**Scalars**: Single-value objects (length 1). In R, scalars are not a separate data type—what people call a “scalar” is typically an atomic vector with exactly one element (numeric, character, logical, etc.).
+
+**Scatterplot**: A graph that shows the relationship between two numeric variables by placing one point for each observation.
+
+**Script Editor Pane**: Source; The pane where you write, edit, and save code in script files (typically .R) and author documents like R Markdown/Quarto notebooks. Code written here can be run line-by-line or in chunks without retyping it in the Console.
+
+**Session Menu**: The top-menu item in RStudio that controls actions related to your current R session (the live, running workspace). You use it to restart or terminate R, manage what is loaded in memory, and set session-specific settings like the working directory. It sits alongside menus like File, Edit, Code, View, Plots, Tools, and Help at the top of the RStudio window.
+
+**`set.seed()`**: An R function that sets the starting state of the random number generator so random operations can be repeated and produce the same results again.
+
+**Simulation**: A model of a random process that generates artificial outcomes so you can study what might happen and estimate probabilities or patterns.
+
+**Source**: The plain-text editing view for an `.Rmd` or `.qmd` file, where you can see and edit the actual document syntax, including the YAML header, Markdown formatting, code chunk fences, and inline R. Use Source when instructions ask you to type exact code or formatting. In RStudio, you can switch to this view with the Source button at the top-left of the document toolbar.
+
+**Special Values** (NA, NaN, Inf, -Inf, NULL): Reserved constants in R that represent non-standard values: `NA` for missing data, `NaN` for undefined numeric results, `Inf`/`-Inf` for positive/negative infinity, and `NULL` for “no value” (an empty/null object). In practice, use `is.na()` to detect `NA` and `NaN`, `is.nan()` to detect `NaN` specifically (not `NA`), `is.infinite()`/`is.finite()` to handle infinities and other non-finite values, and `is.null()` to test for `NULL`.
+
+**Spread**: How much the values in a dataset vary or scatter rather than cluster tightly together. Common measures of spread include range, interquartile range (IQR), variance, and standard deviation.
+
+**Standard Deviation**: A measure of spread that describes how far values typically vary from the mean. A small standard deviation means values are clustered close to the mean, while a large standard deviation means they are more spread out.
+
+**Statistic**: A numerical summary computed from a sample.
+
+**Subassignment**: Replacing part of an object by putting an index on the left side of `<-`. R changes only the indexed part of the object. Examples: `x[i] <- value`, `df[rows, "col"] <- value`, `df[[col]] <- value`, `df$col <- value`.
+
+**Subsetting**: Selecting a smaller piece of an R object using indices (positions, names, or a logical mask). With data frames, subsetting most commonly uses `[` in the form `df[rows, cols]` and typically preserves the object’s structure (e.g., you still get a data frame when you subset rows and columns).
+
+**Summation**: The process of adding a sequence of values together. In formulas, summation is written with the capital Greek letter sigma, `Σ`, as a compact way to show a sum.
+
+# T
+
+**Tabular Data**: Data arranged in a table (a rectangular structure) where rows represent records/observations and columns represent variables/attributes. This row–column layout is the standard format used by spreadsheets, databases, and data frames.
+
+**Theme**: A set of display settings that controls the non-data parts of a `ggplot2` graphic, such as fonts, background, gridlines, axis text, legend appearance, and title styling. Complete themes like `theme_bw()` or `theme_light()` change the overall look of a plot, while `theme()` lets you customize individual parts.
+
+**Tidyverse**: An opinionated collection of R packages designed to work together for data science. The packages share a common design philosophy, data structures, and coding style, which makes it easier to import, clean, reshape, visualize, and analyze data within a consistent workflow.
+
+**Tokens**: The smallest meaningful pieces of code that R reads and interprets when it parses a line. Tokens include things like names (mean), numbers (`3.14`), strings (`"text"`), operators (`<-`, `+`), parentheses (`(`,`)`), commas (`,`), and brackets (`[`, `[[`, `{`). Whitespace usually just separates tokens for readability and is otherwise ignored.
+
+**Tools**: The top-menu item that provides access to settings and helper features in RStudio. It is the place you go to change preferences, install tools, and access developer utilities. This menu that groups commands for customizing the IDE and running support tasks (for example, options, addins, and project tools).
+
+**Transparency**: The practice of clearly disclosing your methods, materials, assumptions, tools, values, and sources so another person can follow your workflow, reproduce your results, and evaluate your claims. In this course, transparency supports explanatory power (you can explain what your code does and why) and originality/accountability (you produce and attribute work honestly, including documenting if and how you used AI).
+
+# U
+
+**Uniform Distribution**: A distribution in which all possible outcomes in the range are equally likely.
+
+**Unordered Sample**: A sample in which the order of the selected elements does not matter, so `{1, 2, 3}` represents the same selection as `{3, 2, 1}`. In counting language, this is the idea behind a combination.
+
+# V
+
+**Variables**: See Objects; data values in R. Variables can hold different types of data, such as numbers, text, or more complex structures like data frames and lists. 
+
+**Variance**: A measure of spread that describes how far values tend to vary from the mean, based on squared deviations. In introductory statistics, sample variance is commonly calculated using `n - 1` in the denominator.
+
+**Vector**: A one-dimensional object that stores an ordered sequence of elements of the same basic type (for example, all numeric, all character, or all logical). Vectors are the core building block of many R objects, and you create them with functions like `c()`; you can subset them by position or by logical conditions.
+
+**Vectorization**: R’s behavior of applying a function to an entire vector at once, producing results element-by-element without writing an explicit loop. For example, `paste(first, last)` combines the first elements together, then the second, then the third, returning a vector of full names.
+
+**Vector Arithmetic**: Performing mathematical operations directly on vectors. In R, operations like` +`, `-`, `*`, `/`, and `^` are applied element-by-element, so `c(1, 2, 3) + c(10, 20, 30)` returns `c(11, 22, 33)`.
+
+**Visual**: The formatted editing view for an `.Rmd` or `.qmd` file, where the document appears more like a word processor while still saving as Markdown underneath. Visual is useful for writing narrative text, tables, citations, and formatted content, but it can hide some of the syntax students need to learn. In RStudio, you can toggle between Source and Visual using the buttons at the top-left of the document toolbar.
+
+# W
+
+**Warning**: A console message indicating that R did run the command but detected a potential problem. Execution continues and a result is produced, but the output may be incomplete, unexpected, or based on an assumption (for example, coercing types, removing missing elements, or using a function in a way that may not behave as intended).
+
+**Whole Numbers**: The counting numbers together with zero: `0, 1, 2, 3, ....` Whole numbers do not include negative numbers, fractions, or decimals.
+
+**Working Directory**: The folder on your computer that R treats as the default “home base” for the current session. When you read files (e.g., `read.csv("data.csv")`) or save outputs (e.g., `write.csv(df, "results.csv")`) using relative paths, R looks in (and writes to) the working directory unless you specify a full path. You can view or change it using Session → Set Working Directory, and you can check it with `getwd()` or change it with `setwd("path/to/folder")`.
+
+# X
+
+# Y
+
+**YAML Header**: The metadata section at the top of an R Markdown or Quarto document, written between `---` lines, that controls document settings like the title, author, date, output format (HTML/PDF/Word), and options for rendering.
+
+# Z
+
+
+

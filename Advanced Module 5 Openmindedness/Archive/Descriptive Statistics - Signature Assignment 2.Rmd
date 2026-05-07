@@ -74,7 +74,7 @@ output:
       after_body: ../assets/footer.html
 ```
 
-Overview
+# Overview
 
 This Signature Assignment asks you to build a **Data Understanding Notebook** in Quarto using the `penguins` dataset. The notebook is a working analytical document where you load data, identify variable types, choose appropriate descriptive statistics, and explain what those statistics show. This activity asks you to 🎯 plan your approach, ✅ monitor whether your code and interpretations make sense, and 🗣 revise your thinking when something is unclear or incorrect. That process is part of self-regulated learning: using metacognitive strategies to guide your own understanding.
 
