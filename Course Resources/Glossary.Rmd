@@ -180,6 +180,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Indexing Operator**: The square-bracket indexing operator `[` or `[[` are used to extract or replace parts of an object in R (for example, `x[i]`). For vectors, it selects one or more elements and returns the same kind of object as `x` (a vector).
 
+**Inline Code**: Code-style text placed within a sentence by surrounding the text with single backticks, such as `penguins`. In Quarto and Markdown, inline code is used to mark object names, function names, file names, or short code expressions so they appear in a monospace code font in the rendered report. This formatting signals to the reader, “treat this as code or a code-related name,” not as ordinary prose. 
+
 **Inline R**: A short R expression written inside backticks with the prefix `r` (for example, <code>&#96;r Sys.Date()&#96;</code>) that is evaluated when you knit/render the document and replaced with its result in the output. Inline R is used to insert dynamic values (dates, computed statistics, labels) directly into your narrative text, and it can also be used in YAML fields like <code>date: "&#96;r Sys.Date()&#96;"</code> when supported.
 
 **Insertion**: A common type of subassignment where you add something new to an object—most often a new column in a data frame. Example: `df[["Tag_Flag"]] <- "No"` (creates the column if it doesn’t exist yet).
