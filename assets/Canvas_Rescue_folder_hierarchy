@@ -1,0 +1,403 @@
+
+Canvas_Rescue/ 
+  ├── RAW_EXPORTS/ 
+    ├── course_files_export (1).zip 
+    └── POLISHED-SANDBOX---INMaster---DATA-R-155-2026-May-08_21-41-37-791.zip 
+  ├── OFFLINE_HTML/ 
+    ├── POLISHED-SANDBOX---DATA-R-155/ 
+      ├── viewer/ 
+      ├── files/ 
+        ├── icons/ 
+        ├── Instructor Images/ 
+        ├── Module 0/ 
+        ├── Module 1/ 
+        ├── bundle.js 
+        ├── course-data.js 
+        └── index.html 
+  ├── IMSCC/ 
+    └── polished-sandbox-inmaster-data-r-155-export.imscc 
+  ├── FILES/ 
+    ├── site_assets/ 
+      ├── Advanced/ # Remove. I don't think I am using this.
+      ├── Banner & Course Card/
+          ├── Data R 155 Banner.png
+          ├── Data R 155 Course Card.png
+      ├── icons/ 
+      ├── Instructor Images/ 
+          ├── 20250405_205325.jpg
+          ├── DSC_0624.jpg
+      ├── Module 0/
+          ├── 👋Preface.html
+      ├── Module 1/
+          ├── Chapter_1_📍Navigation.html
+          ├── Chapter_2_📑Scripts.html
+          ├── R_for_Ecologists_TRANSCRIPT_R for Ecologists (Lesson 2) Start using R and RStudio!.txt
+          ├── R_Programming101_TRANSCRIPT_R programming for beginners using functions and objects in R.txt
+          ├── IBM_Technology_TRANSCRIPT_R vs Python (1).txt
+          ├── R_Programming101_TRANSCRIPT_R programming for beginners - Why you should use R.txt
+          ├── Quiz_Question.png
+      ├── Module 2/ 
+          ├── 🤪-Vector-MadLib.html
+          ├── Vector MadLib - Student Copy.Rmd
+          ├── Chapter_3_📏Vector.html
+          ├── Chapter_4_🏗️Structures.html
+          ├── Is-AI-Appropriate-Group-Discussion.html
+          ├── R_for_Ecologists_TRANSCRIPT_The Basics of R for Ecologists Lesson 4 Part 2 (Creating and indexing vectors).txt
+          ├── R_for_Ecologists_TRANSCRIPT_The Basics of R for Ecologists Lesson 4 Part 3 (Naming and modifying Vectors + more indexing).txt
+          ├── R_Programming101_TRANSCRIPT_Data types in R programming.txt
+          ├── R_Programming101_TRANSCRIPT_R programming for beginners using functions and objects in R (1).txt
+      ├── Module 3/
+          ├── Chapter_5_🛟Help!.html
+          ├── Chapter_6_❌MissingValues.html
+          ├── Equitable_Equations_TRANSCRIPT_What is R Markdown.txt
+          ├── John_Spencer_TRANSCRIPT_Growth Mindset vs. Fixed Mindset.txt
+          ├── R_for_Ecology_TRANSCRIPT_R Markdown TUTORIAL  A powerful tool for LEARNING R (IN 45 MINUTES).txt
+          ├── R_for_Ecology_TRANSCRIPT_The Basics of R for Ecologists Lesson 5 Part 1 (Other user functions for working with vectors).txt
+          ├── R_for_Ecology_TRANSCRIPT_The Basics of R for Ecologists Lesson 5 Part 2 (Custom functions and getting help).txt
+          ├── Roger_Peng_TRANSCRIPT_R Markdown with RStudio.txt
+          ├── Tingenuity_AI_TRANSCRIPT_How to Use Markdown Format in ChatGPT for Better Output.txt
+      ├── Module 4/
+          ├── car_prices.xlsx
+          ├── Chapter_7_📤ImportingData.html
+          ├── Chapter_8_👈Indexing.html
+          ├── field_sightings.csv
+          ├── R_for_Ecology_TRANSCRIPT_The Basics of R for Ecologists Lesson 6 Part 1 (indexing and filtering dataframes).txt
+          ├── R_Programming101_TRANSCRIPT_Importing Data from Microsoft Excel.txt
+          ├── Values_Transport_dplace.csv
+      ├── Module 5/
+          ├── Chapter_10_🔀AndOrIn.html
+          ├── Chapter_11_💈dplyrSubsetting.html
+          ├── DataTastic_TRANSCRIPT_Introduction to LOGICAL OPERATORS in R.txt
+          ├── R_Programming101_TRANSCRIPT_Quarto  -  replacing R Markdown in R Studio.txt
+          ├── R_Programming101_TRANSCRIPT_Quarto - How to use YAML in R Studio to configure your quarto document.txt
+          ├── R_Programming101_TRANSCRIPT_Quarto - inserting executable code as code chunks into your document.txt
+      ├── Module 6/ 
+          ├── Chapter-12_🏷️Recoding.html
+          ├── Chapter-13_🧺GroupedSummaries.html
+          ├── R_Programming101_TRANSCRIPT_R programming for beginners. Manipulate data using the tidyverse select, filter and mutate.txt
+      ├── Module 7/ 
+          ├── Chapter-15_🎲Probabilityfunctions.html
+          ├── Chapter-16_📈-ggplot2.html
+          ├── Equitable_Equations_TRANSCRIPT_The normal distribution in R.txt
+          ├── Fire-Assignment-Part-A.html
+          ├── Fire-Assignment-Part-B.html
+          ├── Fire-Assignment-Part-C.html
+          ├── Fire-Assignment-PartA-StudentTemplate.qmd
+          ├── Fire-Assignment-PartB-StudentTemplate.qmd
+          ├── Fire-Assignment-PartC-StudentTemplate.qmd
+          ├── Ian_Dworkin_TRANSCRIPT_Introduction to monte carlo simulations using R - The absolute basics.srt.txt
+          ├── R_Programming101_TRANSCRIPT_Data visualization with ggplot.txt
+          ├── R_Programming101_TRANSCRIPT_ggplot for plots and graphs. An introduction to data visualization using R programming.txt
+          ├── R_Programminmg101_TRANSCRIPT_Using ggplot to create bar charts for 2 categorical variables.         R programming for beginners.txt
+          ├── whp_raw_sample.csv
+      └── Uploaded Media/ # folder is empty
+  ├── WORKING_SITE/
+    ├── index.html
+    ├── syllabus.html
+    ├── css/
+    │   └── site.css
+    ├── js/
+    │   └── site.js
+    ├── assets/
+    │   ├── icons/ # there are 43 icon svg files in this folder
+    │   ├── Instructor-Images/ 
+    │       ├── 20250405_205325.jpg
+    │       └── DSC_0624.jpg
+    │   ├── Module 0/
+            └── 👋Preface.html
+    │   ├── Module 1/
+          ├── Chapter_1_📍Navigation.html
+          ├── Chapter_2_📑Scripts.html
+          ├── R_for_Ecologists_TRANSCRIPT_R for Ecologists (Lesson 2) Start using R and RStudio!.txt
+          ├── R_Programming101_TRANSCRIPT_R programming for beginners using functions and objects in R.txt
+          ├── IBM_Technology_TRANSCRIPT_R vs Python (1).txt
+          ├── R_Programming101_TRANSCRIPT_R programming for beginners - Why you should use R.txt
+          └── Quiz_Question.png
+    │   ├── Module 2/ 
+          ├── 🤪-Vector-MadLib.html
+          ├── Vector MadLib - Student Copy.Rmd
+          ├── Chapter_3_📏Vector.html
+          ├── Chapter_4_🏗️Structures.html
+          ├── Is-AI-Appropriate-Group-Discussion.html
+          ├── R_for_Ecologists_TRANSCRIPT_The Basics of R for Ecologists Lesson 4 Part 2 (Creating and indexing vectors).txt
+          ├── R_for_Ecologists_TRANSCRIPT_The Basics of R for Ecologists Lesson 4 Part 3 (Naming and modifying Vectors + more indexing).txt
+          ├── R_Programming101_TRANSCRIPT_Data types in R programming.txt
+          └── R_Programming101_TRANSCRIPT_R programming for beginners using functions and objects in R (1).txt
+    │   ├── Module 3/
+          ├── Chapter_5_🛟Help!.html
+          ├── Chapter_6_❌MissingValues.html
+          ├── Equitable_Equations_TRANSCRIPT_What is R Markdown.txt
+          ├── John_Spencer_TRANSCRIPT_Growth Mindset vs. Fixed Mindset.txt
+          ├── R_for_Ecology_TRANSCRIPT_R Markdown TUTORIAL  A powerful tool for LEARNING R (IN 45 MINUTES).txt
+          ├── R_for_Ecology_TRANSCRIPT_The Basics of R for Ecologists Lesson 5 Part 1 (Other user functions for working with vectors).txt
+          ├── R_for_Ecology_TRANSCRIPT_The Basics of R for Ecologists Lesson 5 Part 2 (Custom functions and getting help).txt
+          ├── Roger_Peng_TRANSCRIPT_R Markdown with RStudio.txt
+          └── Tingenuity_AI_TRANSCRIPT_How to Use Markdown Format in ChatGPT for Better Output.txt
+    │   ├── Module 4/
+          ├── car_prices.xlsx
+          ├── Chapter_7_📤ImportingData.html
+          ├── Chapter_8_👈Indexing.html
+          ├── field_sightings.csv
+          ├── R_for_Ecology_TRANSCRIPT_The Basics of R for Ecologists Lesson 6 Part 1 (indexing and filtering dataframes).txt
+          ├── R_Programming101_TRANSCRIPT_Importing Data from Microsoft Excel.txt
+          └── Values_Transport_dplace.csv
+    │   ├── Module 5/
+          ├── Chapter_10_🔀AndOrIn.html
+          ├── Chapter_11_💈dplyrSubsetting.html
+          ├── DataTastic_TRANSCRIPT_Introduction to LOGICAL OPERATORS in R.txt
+          ├── R_Programming101_TRANSCRIPT_Quarto  -  replacing R Markdown in R Studio.txt
+          ├── R_Programming101_TRANSCRIPT_Quarto - How to use YAML in R Studio to configure your quarto document.txt
+          └── R_Programming101_TRANSCRIPT_Quarto - inserting executable code as code chunks into your document.txt
+    │   ├── Module 6/ 
+          ├── Chapter-12_🏷️Recoding.html
+          ├── Chapter-13_🧺GroupedSummaries.html
+          └── R_Programming101_TRANSCRIPT_R programming for beginners. Manipulate data using the tidyverse select, filter and mutate.txt
+    │   ├── Module 7/ 
+          ├── Chapter-15_🎲Probabilityfunctions.html
+          ├── Chapter-16_📈-ggplot2.html
+          ├── Equitable_Equations_TRANSCRIPT_The normal distribution in R.txt
+          ├── Fire-Assignment-Part-A.html
+          ├── Fire-Assignment-Part-B.html
+          ├── Fire-Assignment-Part-C.html
+          ├── Fire-Assignment-PartA-StudentTemplate.qmd
+          ├── Fire-Assignment-PartB-StudentTemplate.qmd
+          ├── Fire-Assignment-PartC-StudentTemplate.qmd
+          ├── Ian_Dworkin_TRANSCRIPT_Introduction to monte carlo simulations using R - The absolute basics.srt.txt
+          ├── R_Programming101_TRANSCRIPT_Data visualization with ggplot.txt
+          ├── R_Programming101_TRANSCRIPT_ggplot for plots and graphs. An introduction to data visualization using R programming.txt
+          ├── R_Programminmg101_TRANSCRIPT_Using ggplot to create bar charts for 2 categorical variables.         R programming for beginners.txt
+          └── whp_raw_sample.csv
+    ├── modules/
+    │   ├── Course Resources
+           ├── How this Course Works
+           ├── How to Earn Your Grade:🌱 vs🌳 and ✅ vs 🟡
+           ├── 🗺️ Course Roadmap
+           ├── 🌱 Core # subheader
+           ├── How to Complete 🌱 Core Guided Activities
+           ├── How to Complete 🌱 Core Practice Space
+           ├── 🌱 Core Practice Space 🎟️ Token Bank (Tracking Only)
+           ├── Advanced # subheader
+           ├── 🌳 Advanced Activities Tour
+           ├── How to Complete 🌳 Advanced Guided Activities
+           ├── How to Participate in 🌳Discussion Groups
+           └── 👋 Instructor Information
+                └── How to 📅 Book a Meeting with the Instructor
+    │   ├── 🌱 Core: Module 1: 💪 Tenacity
+           ├── 01.1.00 Module 1 Overview
+           ├── 🌱 Core Tracker: Earn "Complete" for ALL items in 🌱 Core Modules to earn a C grade or better. # subheader
+           ├── Do Monday  # subheader
+           ├── 00.1.01 👋 Preface Guided Activity (🌱Core; 30 min)
+           ├── 00.1.02 👋 Preface File Submission JPEG/PNG (🌱Core; 15 min)
+           ├── 01.1.01 📍 Navigation Guided Activity (🌱Core; 1 hr)
+           ├── 01.1.02 📍 Navigation Supplemental Materials (Optional; time varies)
+           ├── Due by Tuesday at 11:59 p.m. Mountain Time (revisions due Thursday) # subheader
+           ├── 01.1.03 📍 Navigation Practice Space (🌱Core; 30 min)
+           ├── 01.1.04 📍 Navigation Practice Space File Submission RData (🌱Core; 30 min)
+           ├── Do Wednesday # subheader
+           ├── 01.1.05 📑 Scripts Guided Activity (🌱Core; 1 hr)
+           ├── 01.1.06 📑 Scripts Supplemental Materials (Optional; time varies)
+           ├── Due by Thursday at 11:59 p.m. Mountain Time (revisions due Saturday) # subheader
+           ├── 01.1.07 📑 Scripts Practice Space (🌱Core; 30 min)
+           └── 01.1.08 📑 Scripts Practice Space File Submission R and RData (🌱Core; 30 min)
+    │   ├── 🌳 Advanced: Module 1: 💪 Tenacity
+           ├── 01.2.00 🐣 Resilient Beginnings Overview
+           ├── Do Wednesday  # subheader
+           ├── 01.2.01 🐣 Resilient Beginnings Guided Activity: Why I'm Learning R (🌳Advanced; 45 min)
+           ├── 01.2.02 🐣 Resilient Beginnings: Getting To Know You (🌳 Advanced; 30 min)
+           ├── Due by Thursday at 11:59 p.m. Mountain Time # subheader
+           ├── 01.2.03 🐣 Resilient Beginnings Reflective Discussion (🌳 Advanced; 30 min; initial post)
+           ├── Due by Friday at 11:59 p.m. Mountain Time # subheader
+           ├── 01.2.04 🐣 Resilient Beginnings Reflective Discussion (🌳 Advanced; 30 min; reply post)
+           ├── Due by Saturday at 11:59 p.m. Mountain Time # subheader
+           └── 01.2.05 📖 Review: Module 1.1 Quiz (🌳 Advanced; 30 min)
+    │   ├── 🌱 Core: Module 2: ✍️ Transparency
+           ├── 02.1.00 Module 2 Overview
+           ├── 🌱 Core Tracker: Earn "Complete" for ALL items in 🌱 Core Modules to earn a C grade or better. # subheader
+           ├── Do Monday  # subheader
+           ├── 02.1.01 📏 Vector Basics Guided Activity (🌱Core; 1 hr 30 min)
+           ├── 02.1.02 📏 Vector Basics Supplemental Materials (Optional; time varies)
+           ├── Due by Tuesday at 11:59 p.m. Mountain Time (revisions due Thursday) # subheader
+           ├── 02.1.03 📏 Vector Basics Practice Space (🌱Core; 30 min)
+           ├── 02.1.04 📏 Vector Basics Practice Space File Submission RMD & RData (🌱Core; 30 min)
+           ├── Do Wednesday # subheader
+           ├── 02.1.05 🏗️ Structures Guided Activity (🌱Core; 1 hr 30 min)
+           ├── 02.1.06 🏗️ Structures Supplemental Materials (Optional; time varies)
+           ├── Due by Thursday at 11:59 p.m. Mountain Time (revisions due Saturday) # subheader
+           ├── 02.1.07 🏗️ Structures Practice Space (🌱Core; 30 min)
+           └── 02.1.08 🏗️ Structures Practice Space File Submission RMD (🌱Core; 30 min)
+    │   ├── 🌳 Advanced Module 2: ✍️ Transparency
+           ├── 02.2.00 🪴 Innovation Nursery Overview
+           ├── Do Wednesday  # subheader
+           ├── 02.2.01 🧘 Human-Centered AI Guided Activity: Appropriate AI Vignette (🌳Advanced; 30 min)
+           ├── Due by Thursday at 11:59 p.m. Mountain Time # subheader
+           ├── 02.2.02 🧘 Human-Centered AI Reflective Discussion (🌳 Advanced; 30 min; initial post)
+           ├── Due by Friday at 11:59 p.m. Mountain Time # subheader
+           ├── 02.2.03 🧘 Human-Centered AI Reflective Discussion (🌳 Advanced; 30 min; reply posts)
+           ├── 02.2.04 🤪 Vector MadLib Guided Activity (🌳Advanced; 1 hr)
+           ├── Due by Saturday at 11:59 p.m. Mountain Time # subheader
+           └── 02.2.05 🤪 Vector MadLib: Textbox Submission (🌳 Advanced; 30 min)
+    │   ├── 🌱 Core: Module 3 🦁 Courage   
+           ├── 03.1.00 Module 3 Overview
+           ├── 03.00 Learning Skill Highlight: 🦁 Courage  # has content but not to be included for studnet view
+           ├── 🌱 Core Tracker: Earn "Complete" for ALL items in 🌱 Core Modules to earn a C grade or better. # subheader
+           ├── Do Monday  # subheader
+           ├── 03.1.01 🛟 Help! Guided Activity (🌱Core; 1 hr 30 min)
+           ├── 03.1.02 🛟 Help! Supplemental Materials (Optional; time varies)
+           ├── Due by Tuesday at 11:59 p.m. Mountain Time (revisions due Thursday) # subheader
+           ├── 03.1.03 🛟 Help! Practice Space (🌱Core; 30 min)
+           ├── 03.1.04 🛟 Help! Practice Space File Submission [FILE TYPE] (🌱Core; 30 min)
+           ├── Do Wednesday # subheader
+           ├── 03.1.05 ❌ Missing Values Guided Activity (🌱Core; 1 hr 30 min))
+           ├── 03.1.06 ❌ Missing Values Supplemental Materials (Optional; time varies))
+           ├── Due by Thursday at 11:59 p.m. Mountain Time (revisions due Saturday) # subheader
+           ├── 03.1.07 ❌ Missing Values Practice Space (🌱Core; 30 min)
+           └── 03.1.08 ❌ Missing Values Practice Space File Submission HTML (🌱Core; 30 min)
+    │   ├── 🌳 Advanced Module 3: 🦁 Courage
+           ├── 03.2.00 👾 Hack-A-Prompt (Round 1) Overview
+           ├── Do Wednesday  # subheader
+           ├── 03.2.01 👾 Hack-A-Prompt Guided Activity (🌳Advanced; 1 hr)
+           ├── Due by Thursday at 11:59 p.m. Mountain Time # subheader
+           ├── 🤖/👥 Choose Your Path: AI-use or Peer Trade # subheader
+           ├── 03.2.02a 👾 Hack-A-Prompt: 🤖 AI-use Reflective Discussion (🌳 Advanced; 30 min; initial post)
+           ├── 03.2.02b 👾 Hack-A-Prompt: 👥 Peer Trade Discussion (🌳 Advanced; 30 min; initial post)
+           ├── Due by Friday at 11:59 p.m. Mountain Time # subheader
+           ├── 03.2.03a 👾 Hack-A-Prompt: 🤖 AI-use Reflection (🌳 Advanced; 30 min; reply post)
+           ├── 03.2.03b 👾 Hack-A-Prompt: 👥 Peer Trade (🌳 Advanced; 30 min; reply post)
+           ├── Due by Saturday at 11:59 p.m. Mountain Time # subheader
+           └── 03.2.04 👾 Hack-A-Prompt: Both 🤖/👥 (🌳 Advanced; 30 min; final revision)
+    │   ├── 🌱 Core: Module 4: 🧭 Autonomy
+           ├── 04.1.00 Module 4 Overview
+           ├── 🌱 Core Tracker: Earn "Complete" for ALL items in 🌱 Core Modules to earn a C grade or better. # subheader
+           ├── Do Monday  # subheader
+           ├── 04.1.01 📤Importing Data Guided Activity (🌱Core; 1 hr 30 min)
+           ├── 04.1.02 📤 Importing Data Supplemental Materials (Optional; time varies)
+           ├── Due by Tuesday at 11:59 p.m. Mountain Time (revisions due Thursday) # subheader
+           ├── 04.1.03 📤 Importing Data Practice Space (🌱Core; 30 min)
+           ├── 04.1.04 📤 Importing Data Practice Space File Submission RMD & RData (🌱Core; 30 min)
+           ├── Do Wednesday # subheader
+           ├── 04.1.05 👈 Indexing Guided Activity (🌱Core; 1 hr 30 min)
+           ├── 04.1.06 👈 Indexing Supplemental Materials (Optional; time varies)
+           ├── Due by Thursday at 11:59 p.m. Mountain Time (revisions due Saturday) # subheader
+           ├── 04.1.07 👈 Indexing Practice Space (🌱Core; 30 min)
+           └── 04.1.08 👈 Indexing Practice Space File Submission HTML & RData (🌱Core; 30 min)
+    │   ├── 🌳 Advanced Module 4: 🧭 Autonomy
+           ├── 04.2.00 📝 Notebook Overview
+           ├── Do Wednesday  # subheader
+           ├── 04.2.01 📝 Data Understanding Notebook Guided Activity (🌳Advanced; 1 hr)
+           ├── Due by Thursday at 11:59 p.m. Mountain Time # subheader
+           ├── 04.2.02 📝 Data Understanding Notebook Discussion: Peer Review (🌳 Advanced; 30 min; initial post)
+           ├── 04.2.03 📖 Review Guided Activity (🌳Advanced; 1 hr)
+           ├── Due by Friday at 11:59 p.m. Mountain Time # subheader
+           ├── 04.2.04 📝 Data Understanding Notebook Peer Review (🌳 Advanced; 30 min; reply posts)
+           ├── 04.2.05 📖 Review: Quiz (🌳Advanced; 30 min)
+           ├── Due by Saturday at 11:59 p.m. Mountain Time # subheader
+           └── 04.2.06 📝 Data Understanding Notebook Peer Review (🌳 Advanced; 30 min; final revision)
+    │   ├── 🌱 Core: Module 5: 🤔 Openmindedness
+           ├── 05.1.00 Module 5 Overview
+           ├── 🌱 Core Tracker: Earn "Complete" for ALL items in 🌱 Core Modules to earn a C grade or better. # subheader
+           ├── Do Monday  # subheader
+           ├── 05.1.01 🔀 &, |, and %in% Guided Activity (🌱Core; 1 hr 30 min)
+           ├── 05.1.02 🔀 &, |, and %in% Supplemental Materials (Optional; time varies)
+           ├── Due by Tuesday at 11:59 p.m. Mountain Time (revisions due Thursday) # subheader
+           ├── 05.1.03 🔀 &, |, and %in% Practice Space (🌱Core; 30 min)
+           ├── 05.1.04 🔀 &. |, %in% Practice Space File Submission HTML (🌱Core; 30 min)
+           ├── Do Wednesday # subheader
+           ├── 05.1.05 💈 dplyr Subsetting Guided Activity (🌱Core; 1 hr 30 min)
+           ├── 05.1.06 💈 dplyr Subsetting Supplemental Materials (Optional; time varies)
+           ├── Due by Thursday at 11:59 p.m. Mountain Time (revisions due Saturday) # subheader
+           ├── 05.1.07 💈 dplyr Subsetting Practice Space (🌱Core; 30 min)
+           └── 05.1.08 💈 dplyr Subsetting Practice Space File Submission QMD (🌱Core; 30 min)
+    │   ├── 🌳 Advanced Module 5: 🤔 Openmindedness
+           ├── 05.2.00 👾 Hack-A-Prompt (Round 2) Overview
+           ├── Do Wednesday  # subheader
+           ├── 05.2.01 👾 Hack-A-Prompt Guided Activity (🌳Advanced; 1 hr)
+           ├── Due by Thursday at 11:59 p.m. Mountain Time # subheader
+           ├── 🤖/👥 Choose Your Path: AI-use or Peer Trade # subheader
+           ├── 05.2.02a 👾Hack-A-Prompt: 🤖 AI-use Reflective Discussion (🌳 Advanced; 30 min; initial post)
+           ├── 05.2.02b 👾 Hack-A-Prompt: 👥 Peer Trade Discussion (🌳 Advanced; 30 min; initial post)
+           ├── Due by Friday at 11:59 p.m. Mountain Time # subheader
+           ├── 05.2.03a 👾 Hack-A-Prompt: 🤖 AI-use Reflection (🌳 Advanced; 30 min; reply post)
+           ├── 05.2.03b 👾 Hack-A-Prompt: 👥 Peer Trade (🌳 Advanced; 30 min; reply post)
+           ├── Due by Saturday at 11:59 p.m. Mountain Time # subheader
+           └── 05.2.04 👾 Hack-A-Prompt: Both 🤖/👥 (🌳 Advanced; 30 min; final revision)
+    │   ├── 🌱 Core: Module 6: 🐱 Curiosity
+           ├── 06.1.00 Module 6 Overview
+           ├── 🌱 Core Tracker: Earn "Complete" for ALL items in 🌱 Core Modules to earn a C grade or better. # subheader
+           ├── Do Monday  # subheader
+           ├── 06.1.01 🏷️ Recoding Guided Activity (🌱Core; 1 hr 30 min)
+           ├── 06.1.02 🏷️ Recoding Supplemental Materials (Optional; time varies)
+           ├── Due by Tuesday at 11:59 p.m. Mountain Time (revisions due Thursday) # subheader
+           ├── 06.1.03 🏷️ Recoding Practice Space (🌱Core; 30 min)
+           ├── 06.1.04 🏷️ Recording Practice Space File Submission HTML (🌱Core; 30 min)
+           ├── Do Wednesday # subheader
+           ├── 06.1.05 🧺 Grouped Summaries Guided Activity (🌱Core; 1 hr 30 min)
+           ├── 06.1.06 🧺 Grouped Summaries Supplemental Materials (Optional; time varies)
+           ├── Due by Thursday at 11:59 p.m. Mountain Time (revisions due Saturday) # subheader
+           ├── 06.1.07 🧺 Grouped Summaries Practice Space (🌱Core; 30 min)
+           └── 06.1.08 🧺 Grouped Summaries Practice Space File Submission HTML (🌱Core; 30 min)
+    │   ├── 🌳 Advanced Module 6: 🐱 Curiosity
+           ├── 06.2.00 🐙 GitHub Overview
+           ├── Do Wednesday # subheader
+           ├── 06.2.01 🐙 GitHub Guided Activity (🌳Advanced; 1 hr 30 min)
+           ├── 💻/👥 Choose Your Path: RC Office Hours or Peer Help  # subheader
+           ├── 06.2.02a 🐙 GitHub: 💻 Attend Research Computing Office Hours (🌳 Advanced; 30 min)
+           ├── 06.2.02b 🐙 GitHub Discussion: 👥 Peer Help Support (🌳 Advanced; 30 min; alternate asynchronous option)
+           ├── Due by Friday at 11:59 p.m. Mountain Time # subheader
+           ├── 06.2.04 🐙 GitHub File Submission JPEG/PNG (🌳 Advanced; 30 min)
+           ├── Due by Saturday at 11:59 p.m. Mountain Time # subheader
+           ├── See 🌳 Advanced Module 7 for activities to do today. # subheader
+    │   ├── 🌱 Core: Module 7: ✔️ Thoroughness
+           ├── 07.1.00 Module 7 Overview
+           ├── 🌱 Core Tracker: Earn "Complete" for ALL items in 🌱 Core Modules to earn a C grade or better. # subheader
+           ├── Do Monday  # subheader
+           ├── 07.1.01 🎲 Probability functions Guided Activity (🌱Core; 1 hr 30 min)
+           ├── 07.1.02 🎲 Probability functions Supplemental Materials (Optional; time varies))
+           ├── Due by Tuesday at 11:59 p.m. Mountain Time (revisions due Thursday) # subheader
+           ├── 07.1.03 🎲 Probability functions Practice Space (🌱Core; 30 min))
+           ├── 07.1.04 🎲 Probability functions Practice Space File Submission QMD and RData (🌱Core; 30 min)
+           ├── Do Wednesday # subheader
+           ├── 07.1.05 📈 ggplot2 Guided Activity (🌱Core; 1 hr 30 min)
+           ├── 07.1.06 📈 ggplot2 Supplemental Materials (Optional; time varies)
+           ├── Due by Thursday at 11:59 p.m. Mountain Time (revisions due Saturday) # subheader
+           ├── 07.1.07 📈 ggplot2 Practice Space (🌱Core; 30 min)
+           └── 07.1.08 📈 ggplot2 Practice Space File Submission QMD & RDATA (🌱Core; 30 min)   
+    │   └── 🌳 Advanced Module 7: ✔️ Thoroughness
+           ├── 07.2.00 🔥 Wildfire Overview
+           ├── Do Saturday (Week 6) # subheader
+           ├── 07.2.01 🔥 Wildfire Guided Activity: Part A 🤠 Data Wrangling (🌳Advanced; 1 hr)
+           ├── 07.2.02 🔥 Wildfire Practice Space: Part A 🤠 Data Wrangling (🌳Advanced; 30 min)
+           ├── Do Wednesday  # subheader
+           ├── 07.2.03 🔥 Wildfire Guided Activity: Part B 🎲 Probability (🌳Advanced; 1 hr)
+           ├── 07.2.04 🔥 Wildfire Practice Space: Part B 🎲 Probability (🌳Advanced; 30 min)
+           ├── Due by Thursday at 11:59 p.m. Mountain Time # subheader
+           ├── 07.2.05 🔥 Wildfire Discussion: Peer Review (🌳 Advanced; 30 min; initial post)
+           ├── Due by Friday at 11:59 p.m. Mountain Time # subheader
+           ├── 07.2.06 🔥 WildFire Peer Review (🌳 Advanced; 30 min; reply posts)
+           ├── 07.2.07 🔥 Wildfire Guided Activity: Part C 🎰 Monte Carlo (🌳Advanced; 1 hr 30 min)
+           ├── Due by Saturday at 11:59 p.m. Mountain Time # subheader
+           ├── 07.2.08 🔥 Wildfire Practice Space: Part C 🎰 Monte Carlo (🌳Advanced; 30 min)
+           └── 07.2.09 🔥 Wildfire Peer Review (🌳 Advanced; 30 min; final revision)   
+    └── canvas-viewer/
+        ├── index.html
+        └── viewer/
+---
+      WORKING_SITE/modules/
+    ├── course-resources/
+    ├── advanced-tracker/
+    ├── core-module-01-tenacity/
+    ├── advanced-module-01-tenacity/
+    ├── core-module-02-transparency/
+    ├── advanced-module-02-transparency/
+    ├── core-module-03-courage/
+    ├── advanced-module-03-courage/
+    ├── core-module-04-autonomy/
+    ├── advanced-module-04-autonomy/
+    ├── core-module-05-openmindedness/
+    ├── advanced-module-05-openmindedness/
+    ├── core-module-06-curiosity/
+    ├── advanced-module-06-curiosity/
+    ├── core-module-07-thoroughness/
+    └── advanced-module-07-thoroughness/
+      
+  
+  

@@ -1222,578 +1222,997 @@ This comparison helps you see an early pattern in the data and suggests a direct
 
 Measures of center tell us about a typical value. Measures of spread tell us how tightly clustered or spread out the values are around that center.
 
-The next section introduces measures of spread, including standard deviation, range, interquartile range, and the five-number summary.
+# Measures of Spread
 
-This section also adds two new Quarto formatting skills: callout notes and section links.
+Measures of **spread** describe how much the values in a dataset vary. In this section, you will review standard deviation, range, interquartile range, and the five-number summary. These measures help analysts understand whether data values are relatively consistent or whether they vary widely.
+
+This section also introduces two new **Quarto formatting** skills that help an HTML report read like an analyst’s notebook rather than a list of answers:
+
+- callout notes
+- section links
 
 Pause report-building while you review the Measures of Spread reading section.
 
-# Measures of Spread
+## Standard Deviation
 
-Measures of **spread** describe how much the values in a dataset vary. In this part, you will continue learning how to describe variability with standard deviation, range, interquartile range, and the five-number summary. These measures help analysts understand whether data values are relatively consistent or whether they vary widely.
+The **standard deviation** is a measure of how spread out the values in a dataset are. It is calculated by taking the square root of the variance.
 
-In Part 3, you will also practice new **Quarto formatting** skills so your HTML report reads like an analyst’s notebook rather than a list of answers. In this part, you will practice how to:
+The **variance** is based on how far each value is from the mean. To calculate the sample variance:
 
-- add labels to section headings
-- refer to one section from another section
-- use a callout block to highlight an interpretation
-- format a short results list in Markdown
+1. Find the difference between each value and the mean.
+2. Square those differences.
+3. Add the squared differences together.
+4. Divide by the number of values minus 1.
 
-## Task 0
+This results in the sample variance, which is written as $s^2$. Then we take the square root of the variance to get the standard deviation.
 
-Add to your YAML:
+### Variance Formula
+
+The variance is based on how far each value is from the mean. We can build the formula one piece at a time.
+
+1. 🎯 First, each value is compared to the mean.
+
+```markdown
+<!-- Example in Quarto -->
+$$
+x_i - \bar{x}
+$$
+```
+
+_This is what it looks like after rendering:_
+
+$$
+x_i - \bar{x}
+$$
+
+🗣 This expression means: one data value minus the mean.
+
+> 🧐 **Notice:** In `x_i`, the `_i` creates a subscript. In `\bar{x}`, the `\bar{}` adds a bar over `x`. _$\bar{x}$ is the mean value._
+
+2. 🎯 Next, each difference is squared.
+
+```markdown
+<!-- Example in Quarto -->
+$$
+(x_i - \bar{x})^2
+$$
+```
+
+_This is what it looks like after rendering:_
+
+$$
+(x_i - \bar{x})^2
+$$
+
+🗣 This expression means: square the distance between one data value and the mean.
+
+> 🧐 **Notice:** The parentheses in `(x_i - \bar{x})^2` show that the whole difference is squared. The `^2` creates the superscript 2.
+
+3. 🎯 Next, all of the squared differences are added together.
+
+```markdown
+<!-- Example in Quarto -->
+$$
+\sum_{i=1}^{n} (x_i - \bar{x})^2
+$$
+```
+
+_This is what it looks like after rendering:_
+
+$$
+\sum_{i=1}^{n} (x_i - \bar{x})^2
+$$
+
+🗣 This expression means: add the squared differences for all values in the dataset.
+
+> 🧐 **Notice:** In `\sum_{i=1}^{n}`, the `\sum` creates the summation symbol. The `_{i=1}` places `i=1` below the symbol, and the `^{n}` places `n` above the symbol.
+
+4. 🎯 Finally, divide the sum of squared differences by the number of values minus 1.
+
+```markdown
+<!-- Example in Quarto -->
+$$
+s^2 = \frac{\sum_{i=1}^{n} (x_i - \bar{x})^2}{n - 1}
+$$
+```
+
+_This is what it looks like after rendering:_
+
+$$
+s^2 = \frac{\sum_{i=1}^{n} (x_i - \bar{x})^2}{n - 1}
+$$
+
+🗣 This full formula represents the sample variance. The $s^2$ represents the sample variance, and $n - 1$ is the denominator used for a sample variance calculation.
+
+> 🧐 **Notice:** In `s^2`, the `^2` creates a superscript. In `\frac{\sum_{i=1}^{n} (x_i - \bar{x})^2}{n - 1}`, the first set of braces becomes the numerator, or top of the fraction. The second set of braces becomes the denominator, or bottom of the fraction.
+
+The R code below follows the same structure as the formula. It subtracts the mean from each value, squares those differences, adds them together, and divides by `n - 1`.
+
+🎯 **Goal:** Calculate the variance of the `mpg` column in the `mtcars` dataset.
+
+```{r}
+# ⚡
+x_bar <- mean(mtcars$mpg)
+n <- length(mtcars$mpg)
+
+variance <- sum((mtcars$mpg - x_bar)^2) / (n - 1)
+
+# ✅
+variance
+```
+
+This calculation uses objects in steps:
+
+- `x_bar` stores the mean of the `mpg` column.
+- `n` stores the number of values in the `mpg` column.
+- `mtcars$mpg - x_bar` calculates the difference between each value and the mean.
+- `(mtcars$mpg - x_bar)^2` squares each difference.
+- `sum((mtcars$mpg - x_bar)^2)` adds the squared differences together.
+- `/ (n - 1)` divides by the number of values minus 1.
+
+This results in the sample variance, or $s^2$.
+
+**R also has a built-in function for variance.**
+
+🎯 **Goal:** Calculate the variance of the `mpg` column using `var()`.
+
+```{r}
+# ⚡
+variance <- var(mtcars$mpg)
+
+# ✅
+variance
+```
+
+A Quarto report can use inline R code to place the variance inside a sentence.
+
+```markdown
+<!-- Example in Quarto -->
+🗣 **Comment:** The variance of the values in the `mpg` column of the `mtcars` dataset is `{r} round(var(mtcars$mpg), 2)`.
+```
+
+_This is what it looks like after rendering:_
+
+🗣 **Comment:** The variance of the values in the `mpg` column of the `mtcars` dataset is 36.32.
+
+### Standard Deviation Formula
+
+The standard deviation is found by taking the square root of the variance.
+
+The formula can be written in a Quarto report using block math.
+
+```markdown
+<!-- Example in Quarto -->
+$$
+s = \sqrt{s^2} = \sqrt{\frac{\sum_{i=1}^{n}(x_i - \bar{x})^2}{n - 1}}
+$$
+```
+
+_This is what it looks like after rendering:_
+
+$$
+s = \sqrt{s^2} = \sqrt{\frac{\sum_{i=1}^{n}(x_i - \bar{x})^2}{n - 1}}
+$$
+
+🗣 The $s$ represents the sample standard deviation. The $s^2$ represents the sample variance. Taking the square root changes the variance back into the original unit of measurement.
+
+> 🧐 **Notice:** In `\sqrt{s^2}`, the `\sqrt{}` creates a square root symbol around the content inside the braces.
+
+> 🧐 **Notice:** In this example, the fraction is placed inside `\sqrt{}`. That means the entire fraction appears under the square root symbol after rendering.
+
+🎯 **Goal:** Calculate the standard deviation of the `mpg` column in the `mtcars` dataset.
+
+```{r}
+# ⚡
+std_dev <- sqrt(sum((mtcars$mpg - x_bar)^2) / (n - 1))
+
+# ✅
+std_dev
+```
+
+🗣 This places the variance calculation inside `sqrt()`, which calculates the square root of the variance.
+
+R also has a built-in function for standard deviation.
+
+🎯 **Goal:** Calculate the standard deviation of the `mpg` column using `sd()`.
+
+```{r}
+# ⚡
+std_dev <- sd(mtcars$mpg)
+
+# ✅
+std_dev
+```
+
+A Quarto report can also use inline R code to place the standard deviation inside a sentence.
+
+```markdown
+<!-- Example in Quarto -->
+🗣 **Comment:** The standard deviation of the values in the `mpg` column of the `mtcars` dataset is `{r} round(sd(mtcars$mpg), 2)`.
+```
+
+_This is what it looks like after rendering:_
+
+🗣 **Comment:** The standard deviation of the values in the `mpg` column of the `mtcars` dataset is 6.03.
+
+
+# Practice Space 5
+
+Now return to your Quarto file.
+
+In this Practice Space, you will continue building the report section called `# Measures of Spread`.
+
+You will add a standard deviation subsection, label sections so Quarto can link to them, calculate a standard deviation from the `penguins` dataset, and use a callout note to make an interpretation stand out.
+
+💡 **Tip:** Render to HTML after major edits. Since this activity teaches report formatting, you need to check both your R output and how the report looks after rendering. Correct any errors in R code or formatting before moving on to the next task.
+
+## Task 10
+
+**Update YAML and add section labels**
+
+🎯 **Goal:** Turn on numbered sections and add section labels so Quarto can create section links later in your report.
+
+### **Step 1**
+
+🎯 Update the YAML at the top of your Quarto file.
+
+Your YAML should look like this:
 
 ```markdown
 ---
 title: "Your Title"
 format: html
-number-sections: true # This is needed for cross-references to work
+number-sections: true
 ---
 ```
 
-A section label is a short name attached to a heading. Quarto can use that label to create links to that section later in your report.
+The line `number-sections: true` tells Quarto to number the headings in your HTML report. This makes section links easier for readers to follow.
 
-Before you begin, update your remaining section headings so Quarto.
+### **Step 2**
+
+🎯 Add labels to the section headings in your Measures of Spread section.
+
+A **section label** is a short name attached to a heading. Quarto can use that label to create a link to that section later in your report.
+
+Copy and paste these headings into your report as you build each subsection:
 
 ```markdown
 ## Standard Deviation {#sec-sd}
+
 ## Range {#sec-range}
+
 ## Interquartile Range {#sec-iqr}
+
 ## Five-Number Summary {#sec-five}
 ```
 
-Notice that each section heading has a label in curly braces. The label starts with a hashtag and is followed by a unique identifier (e.g., `sec-sd` for the standard deviation section).
+Each label goes inside curly braces after the heading text. The label starts with `#` and uses a short unique name.
 
-Update an earlier section on measures of center does not yet have a label, add one there too. For example:
+For example:
+
+- `{#sec-sd}` labels the Standard Deviation section.
+- `{#sec-range}` labels the Range section.
+- `{#sec-iqr}` labels the Interquartile Range section.
+- `{#sec-five}` labels the Five-Number Summary section.
+
+### **Step 3**
+
+🎯 Add a label to your earlier Measures of Center section.
+
+Find this heading in your report:
 
 ```markdown
-## Measures of Center {#sec-center}
+# Measures of Center for Numerical Data
 ```
 
-These labels allow you to refer to these sections later in the report. For example, you can write:
+Change it to:
 
-As you work through Part 3, render to HTML occasionally so you can check that your section links, callout boxes, and inline R code display correctly.
+```markdown
+# Measures of Center for Numerical Data {#sec-center}
+```
 
-## Standard Deviation
+You will use `@sec-center` later to create a link back to that section.
 
-The **standard deviation** is a measure of how spread out the values in a dataset are. It is calculated by taking the square root of the variance. To calculate the **variance**:
+### **Step 4**
 
-**Step 1** Find the difference between each value and the mean. 
+✅ **Checks:** Render to HTML.
 
-**Step 2** Square those differences
+After rendering, check that:
 
-**Step 3** Add them together
+- your section headings are numbered
+- your Measures of Spread headings still appear correctly
+- the labels such as `{#sec-sd}` and `{#sec-center}` do **not** show as regular text in the final HTML report
 
-**Step 4** Divide that number by the number (`length()`) of values minus 1.
+If the labels show as regular text, check that you typed them at the end of the heading line with curly braces.
 
-This results in the sample variance, which is denoted as $s^2$. You'll take the square root of the variance to get the standard deviation.
+## Task 11
 
-### Step 1: Calculate the variance
+**Add the standard deviation formula**
 
-The **variance** is a measure of how spread out the values in a dataset are. It is calculated as the average of the squared differences from the mean.
+🎯 **Goal:** Add a short math-text statement to the Standard Deviation section of your report.
 
-To calculate the variance, first find the difference between each value and the mean. Then square those differences, add them together, and divide by the number of values minus 1.
+### **Step 1**
 
-------------------------------------------------------------------------
+🎯 Go to this heading in your Quarto file:
 
-🌳 Type this in your notebook under **Measures of Spread** to see how to write the variance calculation mathematically.
+```markdown
+## Standard Deviation {#sec-sd}
+```
 
-``` math
+### **Step 2**
+
+🎯 Copy and paste this into your report:
+
+```markdown
+The standard deviation is the square root of the variance.
+
 $$
-s^2 = \frac{\sum_{i=1}^{n} (x_i - \bar{x})^2}{(n-1)}
-$$
-```
-
-$$s^2 = \frac{\sum_{i=1}^{n} (x_i - \bar{x})^2}{(n-1)}$$
-
-------------------------------------------------------------------------
-
-🎯 Calculate the variance of the `mpg` column in the `mtcars` dataset.
-
-```{r}
-# ⚡
-# Variance step 3: Calculate the variance
-variance <- sum((mtcars$mpg - x_bar)^2) / (n - 1)
-# ✅ 
-variance
-```
-
-🗣 We used `x_bar` (mean) and `n` (column length), objects created earlier. Let's break down this nested function to make sure we understand what is happening.
-
-First, the `mtcars$mpg - x_bar` calculates the difference between *each value* in the `mpg` column and the *mean* of the `mpg` column.
-
-Raising the differences to the power of 2, `(mtcars$mpg - x_bar)^2`, squares each difference.
-
-These squared differences are summed together.
-
-The sum of squared differences is divided by the length of the column minus 1, `(n - 1)`.
-
-This results in the sample variance ($s^2$).
-
-🎯 Calculate the variance of the `mpg` column in the `mtcars` dataset using the `var()` function.
-
-```{r}
-# ⚡
-# OR use var() function directly
-variance <- var(mtcars$mpg)
-# ✅ 
-variance
-```
-
-🌳 Use this inline code to dynamically report the variance value.
-
-``` markdown
-🗣 The variance of the values in the `mpg` column of the `mtcars` dataset is `{r} var(mtcars$mpg)`.
-```
-
-When rendered to HTML, this will show as:
-
-🗣 The variance of the values in the `mpg` column of the `mtcars` dataset is `r var(mtcars$mpg)`.
-
-You can round the variance to two decimal places for better readability.
-
-``` markdown
-🗣 The variance of the values in the `mpg` column of the `mtcars` dataset is `{r} round(var(mtcars$mpg), 2)`
-```
-
-### Step 2: Calculate the standard deviation
-
-Find the **standard deviation** by taking the square root of the variance.
-
-
-------------------------------------------------------------------------
-
-## Task 1
-
-🌳 Type this in your notebook document to see how to write the standard deviation calculation mathematically.
-
-``` math
-$$
-s = \sqrt{s^2} = \sqrt{\frac{\sum_{i=1}^{n}(x_i - \bar{x})^2}{n-1}}
+s = \sqrt{s^2} = \sqrt{\frac{\sum_{i=1}^{n}(x_i - \bar{x})^2}{n - 1}}
 $$
 ```
 
-$$s = \sqrt{s^2} = \sqrt{\frac{\sum_{i=1}^{n}(x_i - \bar{x})^2}{n-1}}$$
+### **Step 3**
 
-------------------------------------------------------------------------
+✅ **Checks:** Render to HTML.
 
-🎯 Calculate the standard deviation of the `mpg` column in the `mtcars` dataset.
+After rendering, check that:
 
-```{r}
+- the formula appears centered on its own line
+- the square root symbol appears correctly
+- the fraction appears inside the square root
+- the raw `$$` symbols do **not** show in the rendered report
+
+## Task 12
+
+**Report the standard deviation**
+
+🎯 **Goal:** Calculate and report the standard deviation for one numerical measurement from the `penguins` dataset.
+
+### **Step 1**
+
+🎯 Choose one numerical measurement variable from the `penguins` dataset.
+
+Good candidates are:
+
+- `bill_length_mm`
+- `bill_depth_mm`
+- `flipper_length_mm`
+- `body_mass_g`
+
+Choose a measurement variable, not a categorical variable like `species`, `island`, or `sex`.
+
+### **Step 2**
+
+🎯 Calculate the standard deviation for your chosen variable.
+
+Replace `_____` with the column name you chose.
+
+```{r eval=FALSE}
 # ⚡
-# Standard Deviation step 4: Calculate the standard deviation
-std_dev <- sqrt(sum((mtcars$mpg - x_bar)^2) / (n - 1))
-std_dev
+sd(penguins$_____, na.rm = TRUE)
 ```
 
-🗣 This places the variance formula inside `sqrt()`, which calculates the square root of the variance.
+### **Step 3**
 
-🎯 Calculate the standard deviation of the `mpg` column in the `mtcars` dataset using the `sd()` function.
+🎯 Add a sentence that reports the standard deviation using inline R code.
 
-```{r}
-# ⚡
-# OR use sd() function directly 
-std_dev <- sd(mtcars$mpg)
-# ✅ 
-std_dev
+Replace each `_____` with the column name you chose.
+
+```markdown
+🗣 **Comment:** The standard deviation of the `_____` column in the `penguins` dataset is `{r} round(sd(penguins$_____, na.rm = TRUE), 2)`.
 ```
 
-------------------------------------------------------------------------
+✅ **Checks:** Render to HTML.
 
-🌳 Use this inline code to dynamically report the standard deviation value.
+After rendering, check that:
 
-``` markdown
-🗣 The standard deviation of the values in the `mpg` column of the `mtcars` dataset is `{r} sd(mtcars$mpg)`
+- your sentence shows a number, not raw inline R code
+- the number is rounded to two decimal places
+- the variable name matches the column you chose
+
+### **Step 4**
+
+🎯 Add a callout note with your interpretation.
+
+A **callout note** creates a shaded box in your HTML report. It is useful when you want an important interpretation, warning, reminder, or takeaway to stand out from the rest of the text.
+
+In Quarto, a callout note starts with this line:
+
+```markdown
+::: {.callout-note}
 ```
 
-When rendered to HTML, this will show as:
+The callout note ends with this line:
 
-🗣 The standard deviation of the values in the `mpg` column of the `mtcars` dataset is `r sd(mtcars$mpg)`
-
-You can round the standard deviation to two decimal places for better readability.
-
-``` markdown
-🗣 The standard deviation of the values in the `mpg` column of the `mtcars` dataset is `{r} round(sd(mtcars$mpg), 2)`
+```markdown
+:::
 ```
+
+Everything between those two lines appears inside the shaded note box after rendering.
+
+Copy and paste this into your report. Replace `_____` with the column name you chose.
+
+```markdown
+::: {.callout-note}
+
+🪞 **Reflection:** I chose the `_____` variable because it is a numerical measurement. The standard deviation tells me how spread out the values are around the mean. A larger standard deviation means the values vary more, while a smaller standard deviation means the values are more tightly clustered.
+
+:::
+```
+
+✅ **Checks:** Render to HTML.
+
+After rendering, check that:
+
+- the reflection appears inside a shaded callout box
+- the callout markers `::: {.callout-note}` and `:::` do **not** show as regular text
+- your chosen variable name appears in the reflection
+
+### **Step 5**
+
+🎯 Add one sentence that links back to your Measures of Center section.
+
+A **section link** points the reader to another section of your report. Since you labeled the Measures of Center section as `{#sec-center}`, you can link to it by writing `@sec-center`.
+
+Copy and paste this sentence below your standard deviation callout note:
+
+```markdown
+🗣 **Comment:** Compared with the center measures discussed in @sec-center, the standard deviation helps describe how much the values vary around the mean.
+```
+
+✅ **Checks:** Render to HTML.
+
+After rendering, check that:
+
+- `@sec-center` turns into a clickable section link
+- the link points back to the Measures of Center section
+- the raw text `@sec-center` does **not** remain unchanged in the final HTML report
 
 ------------------------------------------------------------------------
 
 Standard deviation uses every value in the dataset, so it gives a fuller picture of variability than a measure based on only the smallest and largest values. However, standard deviation is affected by unusually high or low values. This means it can be less helpful when a distribution is strongly skewed or contains outliers.
 
-## Task 2
-
-Place this task after the **Standard Deviation** section.
-
-🎯 Your goal is to calculate and report the standard deviation for one numerical measurement from the penguins dataset.
-
-### **Step 1**: Choose a variable
-
-Under the heading `## Standard Deviation {#sec-sd}` in your Quarto document, choose one numerical measurement variable from the `penguins` dataset.
-
-Good candidates include:
-
--  `bill_length_mm`
-  
--  `bill_depth_mm`
-  
--  `flipper_length_mm`
-  
--  `body_mass_g`
-
-💡 **Tip**: Choose a body measurement variable, not a categorical variable like `species` or `sex`.
-
-### **Step 2**: Calculate the standard deviation
-
-🎯 Use the `sd()` function to calculate the standard deviation of your chosen variable.
-
-```{r, eval=FALSE}
-# ⚡
-sd(penguins$______, na.rm = TRUE)
-```
-
-### **Step 3**: Write an inline R sentence
-
-Write a sentence in your notebook that reports the standard deviation value.
-
-``` markdown
-🗣 The standard deviation of the `_____` column in the `penguins` dataset is `{r} round(sd(penguins$______, na.rm = TRUE), 2)`.
-```
-
-Render to HTML to see the result.
-
-### **Step 4**: Write a reflection
-
-A **callout block** creates a shaded note box in your HTML report so an important comment stands out.
-
-🪞 Reflect: Explain why standard deviation makes sense. You can use these prompts to help you write 2 to 3 reflection sentences. Write your interpretation in a callout block
-
-- Why this variable is appropriate for standard deviation?
-
-- What the standard deviation tells you about the spread of the values?
-
-- Why standard deviation uses more information than just the minimum and maximum?
-
-You can use this sentence pattern, if helpful, but place your reflection is place your reflection inside a Quarto callout block to make it visually stand out.
-
-```markdown
-::: {.callout-note}
-
-🪞 I chose the `______` variable because it is a numerical measurement. The standard deviation tells me how spread out the values are around the mean. A larger standard deviation means the values vary more, while a smaller standard deviation means the values are more tightly clustered.
-
-:::
-```
-
-### **Step 5**: Add one cross-reference sentence
-
-Write one sentence that connects spread to the earlier section on center. Use a Quarto section cross-reference.
-
-```markdown
-
-::: {.callout-note}
-
-🗣 Compared with the center measures discussed in @sec-center, the standard deviation helps describe how much the values vary around the mean.
-
-:::
-
-```
-___
-
 In the next section, we will explore measures of spread that are less sensitive to outliers and skewed data.
+
+Pause report-building while you review the Range reading section.
 
 ## Range
 
-The simplest measure of spread to calculate and understand is the **range**, which is the difference between the largest and smallest values in a dataset. This value gives you a quick sense of how spread out the data is, but it can be heavily influenced by outliers.
+The simplest measure of spread to calculate and understand is the **range**. The range is the difference between the largest and smallest values in a dataset.
 
-Determined entirely by just two values:
+The range gives you a quick sense of how spread out the data is, but it can be heavily influenced by outliers because it depends only on two values.
 
-$$\text{Range} = x_{(n)}- x_{(1)}$$
+The range formula can be written in a Quarto report using block math.
 
-Where $x_{(n)}$ is the largest value and $x_{(1)}$ is the smallest value in the dataset.
-
-------------------------------------------------------------------------
-
-🌳 Type this in your notebook document to see how to write the range calculation mathematically.
-
-``` math
+```markdown
+<!-- Example in Quarto -->
 $$
 \text{Range} = x_{(n)} - x_{(1)}
 $$
 ```
 
-------------------------------------------------------------------------
+_This is what it looks like after rendering:_
 
-In R, you can calculate the range using the `range()` function, which returns a vector containing the minimum and maximum values of the dataset. To get the range, you can subtract the minimum from the maximum.
+$$
+\text{Range} = x_{(n)} - x_{(1)}
+$$
+
+🗣 In this formula, $x_{(n)}$ represents the largest value and $x_{(1)}$ represents the smallest value.
+
+> 🧐 **Notice:** In `x_{(n)}` and `x_{(1)}`, the `_{} ` creates a subscript. The parentheses are included inside the subscript to show that the values are ordered from smallest to largest.
+
+In R, you can use the `range()` function to return both the minimum and maximum values.
+
+🎯 **Goal:** Find the minimum and maximum values of the `mpg` column in the `mtcars` dataset.
 
 ```{r}
 # ⚡
 mpg_range <- range(mtcars$mpg)
+
+# ✅
 mpg_range
 ```
 
-🗣 mpg_range is a vector that contains the minimum and maximum values of the `mpg` column in the `mtcars` dataset. The first value is the minimum, and the second value is the maximum.
+The object `mpg_range` is a vector that contains two values from the `mpg` column:
 
-We can use the bracket operator `[]` to access the minimum and maximum values from the `mpg_range` vector.
+- the first value is the minimum
+- the second value is the maximum
+
+We can use the bracket operator `[]` to access each value from the `mpg_range` vector.
+
+🎯 **Goal:** Calculate the range by subtracting the minimum from the maximum.
 
 ```{r}
-# Calculate the range by subtracting the minimum from the maximum
+# ⚡
 mpg_range_value <- mpg_range[2] - mpg_range[1]
+
+# ✅
 mpg_range_value
 ```
 
 You can also calculate the range directly by using the `max()` and `min()` functions.
+
+🎯 **Goal:** Calculate the range directly.
 
 ```{r}
 # ⚡
 max(mtcars$mpg) - min(mtcars$mpg)
 ```
 
-Because range depends only on the minimum and maximum values, one extreme value can make it misleading. It also does not show where most of the data fall. The next section introduces a measure of spread that is less affected by extreme values.
+🗣 Because range depends only on the minimum and maximum values, one extreme value can make it misleading. It also does not show where most of the data fall. The next section introduces a measure of spread that is less affected by extreme values.
 
-## Task 3
+# Practice Space 6
 
-Place this task after the **Range** section.
+Now return to your Quarto file.
 
-🎯 Your goal is to calculate and report the range for one numerical measurement from the `penguins` dataset.
+In this Practice Space, you will continue building the report section called `# Measures of Spread`.
 
-### **Step 1**: Choose a variable
+You will add to the subsection called `## Range {#sec-range}`. You will calculate the range for one numerical measurement from the `penguins` dataset, report the minimum, maximum, and range in a Markdown list, and write a short interpretation.
 
-Under the heading **Range** in your notebook, use the same numerical variable from Task 2 or choose another numerical measurement variable from `penguins`.
+Render to HTML after major edits so you can check that your list, inline R code, callout note, and section link display correctly.
 
-### **Step 2**: Calculate the range
+## Task 13
 
-🎯 Calculate the range of your chosen variable. Use `range()` to find the minimum and maximum values. Then subtract the minimum from the maximum to calculate the range.
+**Report the range**
 
-```{r, eval=FALSE}
+🎯 **Goal:** Calculate and report the range for one numerical measurement from the `penguins` dataset.
+
+### **Step 1**
+
+🎯 Choose one numerical measurement variable from the `penguins` dataset.
+
+You may use the same numerical variable you used for standard deviation, or you may choose another numerical measurement variable.
+
+Good candidates are:
+
+- `bill_length_mm`
+- `bill_depth_mm`
+- `flipper_length_mm`
+- `body_mass_g`
+
+Choose a measurement variable, not a categorical variable like `species`, `island`, or `sex`.
+
+### **Step 2**
+
+🎯 Calculate the minimum and maximum values for your chosen variable.
+
+Replace `_____` with the column name you chose.
+
+```{r eval=FALSE}
 # ⚡
-penguin_range <- range(penguins$______, na.rm = TRUE)
+penguin_range <- range(penguins$_____, na.rm = TRUE)
+
 # ✅
 penguin_range
 ```
 
-```{r, eval=FALSE}
-# ⚡ Calculate the range value
+### **Step 3**
+
+🎯 Calculate the range value.
+
+The `range()` function gives you two values. The first value is the minimum, and the second value is the maximum.
+
+To calculate the range, subtract the first value from the second value.
+
+```{r eval=FALSE}
+# ⚡
 penguin_range_value <- penguin_range[2] - penguin_range[1]
+
 # ✅
 penguin_range_value
 ```
 
-### **Step 3**: Report your results as a short Markdown list
+### **Step 4**
 
-Instead of writing only a paragraph, format your results as a short list. 
+🎯 Report your results as a short Markdown list.
+
+A Markdown list helps readers scan related results quickly. In this list, you will report the minimum, maximum, and range.
+
+Replace each `_____` with the column name you chose.
 
 ```markdown
-- **Minimum**: `{r} range(penguins$______, na.rm = TRUE)[1]`
-
-- **Maximum**: `{r} range(penguins$______, na.rm = TRUE)[2]`
-
-- **Range**: `{r} diff(range(penguins$______, na.rm = TRUE))`
+- **Minimum**: `{r} range(penguins$_____, na.rm = TRUE)[1]`
+- **Maximum**: `{r} range(penguins$_____, na.rm = TRUE)[2]`
+- **Range**: `{r} diff(range(penguins$_____, na.rm = TRUE))`
 ```
 
-Render to HTML to see the results.
+✅ **Checks:** Render to HTML.
 
-### **Step 4**: Add a comparison sentence with a section cross-reference
+After rendering, check that:
 
+- the results appear as a bulleted list
+- each list item shows a number, not raw inline R code
+- the minimum, maximum, and range values make sense for the variable you chose
 
-Write one sentence that connects range to the earlier section on center. Use a Quarto section cross-reference.
+### **Step 5**
+
+🎯 Add a callout note that compares range to measures of center.
+
+A section link helps readers move between related parts of your report. Since you labeled the Measures of Center section as `{#sec-center}`, you can link to it by writing `@sec-center`.
+
+Copy and paste this into your report:
 
 ```markdown
 ::: {.callout-note}
-🗣 Compared with the center measures discussed in @sec-center, the range gives a quick description of how far apart the smallest and largest values are.
-:::
 
+🗣 **Comment:** Compared with the center measures discussed in @sec-center, the range gives a quick description of how far apart the smallest and largest values are.
+
+:::
 ```
 
-🗣 When rendered, `@sec-center` should become a section link if your earlier heading is labeled correctly.
+✅ **Checks:** Render to HTML.
 
-💡 **Tip:** If the link does not work, check that your earlier heading includes `{#sec-center}`. Make sure the earlier heading actually looks like this: `## Measures of Center {#sec-center}`
+After rendering, check that:
 
+- the sentence appears inside a shaded callout box
+- `@sec-center` turns into a clickable section link
+- the link points back to the Measures of Center section
+- the raw text `@sec-center` does **not** remain unchanged in the final HTML report
 
-### **Step 5**: Write a reflection
-
-🪞 Reflect: Explain why range makes sense. You can use these prompts to help you write 2 to 3 reflection sentences.
-
-- What the range tells you about the spread of the data?
-
-- Why range is easy to calculate?
-
-- Why range can be misleading if there are unusually high or low values?
-
-You can use this sentence pattern if helpful:
+If the link does not work, check that your earlier heading looks like this:
 
 ```markdown
-🪞 The range gives a quick description of how far apart the smallest and largest values are. It is easy to calculate and understand, but it only uses two values. Because of that, one extreme value can make the range seem larger than the spread of most of the data.
+# Measures of Center for Numerical Data {#sec-center}
 ```
+
+### **Step 6**
+
+🎯 Add a short reflection about the range.
+
+The range is easy to calculate, but it only uses two values: the minimum and maximum. Your reflection should explain both why the range is useful and why it can be limited.
+
+Copy and paste this sentence pattern into your report. You may edit it to better match your variable.
+
+```markdown
+🪞 **Reflection:** The range gives a quick description of how far apart the smallest and largest values are. It is easy to calculate and understand, but it only uses two values. Because of that, one extreme value can make the range seem larger than the spread of most of the data.
+```
+
+------------------------------------------------------------------------
+
+Range gives a quick description of spread because it compares the largest and smallest values. This makes it easy to understand, but it also means the range can be strongly affected by one unusually high or low value.
+
+The interquartile range, or IQR, gives a different view of spread. Instead of using the full distance from the smallest value to the largest value, IQR focuses on the middle 50% of the data.
+
+Pause report-building while you review the Interquartile Range reading section.
+
 
 ## Interquartile Range (IQR)
 
 The **interquartile range** (IQR) describes the spread of the middle 50% of the data. It is often useful because it is less affected by unusually high or low values than the full range.
 
-A **quartile** is the whole data range divided into four equal parts.
+A **quartile** divides ordered data into four parts.
 
-It is calculated as:
+- $Q_1$ is the first quartile, or 25th percentile.
+- $Q_2$ is the second quartile, or median.
+- $Q_3$ is the third quartile, or 75th percentile.
 
-$$IQR = Q_3 - Q_1$$
+The IQR is calculated by subtracting the first quartile from the third quartile.
 
-Where $Q_1$ is the **first quartile** (25th percentile) and $Q_3$ is the **third quartile** (75th percentile).
+The formula can be written in a Quarto report using block math.
+
+```markdown
+<!-- Example in Quarto -->
+$$
+IQR = Q_3 - Q_1
+$$
+```
+
+_This is what it looks like after rendering:_
+
+$$
+IQR = Q_3 - Q_1
+$$
+
+In this formula, $Q_1$ represents the first quartile and $Q_3$ represents the third quartile.
+
+> 🧐 **Notice:** In `Q_1` and `Q_3`, the `_1` and `_3` create subscripts.
 
 By focusing on the middle 50% of the data, the IQR reduces the influence of extreme values.
 
-🎯 Use `IQR()` function to calculate the interquartile range of the `mpg` column in the `mtcars` dataset.
+🎯 **Goal:** Calculate the interquartile range of the `mpg` column in the `mtcars` dataset.
 
 ```{r}
 # ⚡
 iqr_value <- IQR(mtcars$mpg)
+
 # ✅
 iqr_value
 ```
 
-------------------------------------------------------------------------
+A Quarto report can use inline R code to place the IQR inside a sentence.
 
-🌳 Use this inline code to dynamically report the interquartile range value.
-
-``` markdown
-🗣 The interquartile range of the values in the `mpg` column is `{r} IQR(mtcars$mpg)`
+```markdown
+<!-- Example in Quarto -->
+🗣 **Comment:** The interquartile range of the values in the `mpg` column of the `mtcars` dataset is `{r} IQR(mtcars$mpg)`.
 ```
 
-When rendered to HTML, this will show as:
+_This is what it looks like after rendering:_
 
-🗣 The interquartile range of the values in the `mpg` column of the `mtcars` dataset is `r IQR(mtcars$mpg)`
+🗣 **Comment:** The interquartile range of the values in the `mpg` column of the `mtcars` dataset is 7.38.
 
-------------------------------------------------------------------------
+The IQR gives a narrower view of spread than the full range because it ignores the lowest 25% and highest 25% of values. This makes it useful when a dataset has skew or possible outliers.
 
-## Task 4
+# Practice Space
 
-Place this task after the **Interquartile Range** section.
+Now return to your Quarto file.
 
-🎯 Your goal is to calculate and report the interquartile range (IQR) for one numerical measurement from the `penguins` dataset.
+In this Practice Space, you will continue building the report section called `# Measures of Spread`.
 
-### **Step 1**: Choose a variable
+You will add to the subsection called `## Interquartile Range {#sec-iqr}`. You will calculate the IQR for one numerical measurement from the `penguins` dataset, report the result with inline R code, write a short reflection, and add a section link back to your Range section.
 
-Under the heading `## Interquartile Range {#sec-iqr}` in your Quarto document, use the same numerical variable from Task 2 or Task 3, or choose another numerical measurement variable from `penguins`.
+Render to HTML after major edits so you can check that your inline R code and section link display correctly.
 
-### **Step 2**: Calculate the interquartile range
+## Task 14
 
-🎯 Use the `IQR()` function to calculate the interquartile range of your chosen variable.
+**Report the interquartile range**
 
-```{r, eval=FALSE}
+🎯 **Goal:** Calculate and report the interquartile range (IQR) for one numerical measurement from the `penguins` dataset.
+
+### **Step 1**
+
+🎯 Choose one numerical measurement variable from the `penguins` dataset.
+
+You may use the same numerical variable you used for standard deviation or range, or you may choose another numerical measurement variable.
+
+Good candidates are:
+
+- `bill_length_mm`
+- `bill_depth_mm`
+- `flipper_length_mm`
+- `body_mass_g`
+
+Choose a measurement variable, not a categorical variable like `species`, `island`, or `sex`.
+
+### **Step 2**
+
+🎯 Calculate the interquartile range for your chosen variable.
+
+Replace `_____` with the column name you chose.
+
+```{r eval=FALSE}
 # ⚡
-iqr_value <- IQR(penguins$______, na.rm = TRUE)
+iqr_value <- IQR(penguins$_____, na.rm = TRUE)
+
 # ✅
 iqr_value
 ```
 
-### **Step 3**: Write an inline R sentence
+### **Step 3**
 
-Write a sentence in your notebook that reports the interquartile range value.
+🎯 Add a sentence that reports the interquartile range using inline R code.
 
-``` markdown
-🗣 The interquartile range of the `_____` column in the `penguins` dataset is `{r} IQR(penguins$______, na.rm = TRUE)`.
-```
-
-Render to HTML to see the result.
-
-### **Step 4**: Write a reflection
-
-🪞 Reflect: Explain why interquartile range makes sense. You can use these prompts to help you write 2 to 3 reflection sentences.
-
-- What does the IQR describe?
-
-- Why does the IQR focuses on the middle 50% of the data?
-
-- Why is the IQR is often more useful than the full range when there are extreme values?
-
-You can use this sentence pattern if helpful:
+Replace each `_____` with the column name you chose.
 
 ```markdown
-🪞 The IQR describes the spread of the middle 50% of the data. It is useful because it is less affected by unusually high or low values than the full range. This makes it a strong choice when I want to describe the spread of the typical values in the dataset.
+🗣 **Comment:** The interquartile range of the `_____` column in the `penguins` dataset is `{r} round(IQR(penguins$_____, na.rm = TRUE), 2)`.
 ```
 
-### **Step 5** Add one cross-reference sentence
+✅ **Checks:** Render to HTML.
 
-Write one comparison sentence that refers back to the Range section.
+After rendering, check that:
+
+- your sentence shows a number, not raw inline R code
+- the number is rounded to two decimal places
+- the variable name matches the column you chose
+
+### **Step 4**
+
+🎯 Write a short reflection about the IQR.
+
+The IQR describes the spread of the middle 50% of the data. Your reflection should explain why that is useful when a dataset may have unusually high or low values.
+
+Copy and paste this sentence pattern into your report. You may edit it to better match your variable.
 
 ```markdown
-🗣 Compared with the full spread described in @sec-range, the IQR focuses on the middle 50% of the data and is less affected by extreme values.
+🪞 **Reflection:** The IQR describes the spread of the middle 50% of the data. It is useful because it is less affected by unusually high or low values than the full range. This makes it a strong choice when I want to describe the spread of the typical values in the dataset.
 ```
 
-### Five Number Summary
+### **Step 5**
 
-You can use the `summary()` function to get a quick overview of a numeric variable. In R, this includes the minimum, $Q_1$, median, mean, $Q_3$, and maximum. The five-number summary refers to the minimum, $Q_1$, median, $Q_3$, and maximum.
+🎯 Add one comparison sentence that links back to the Range section.
 
-🎯 Use `summary()` to get a quick overview of the distribution of the `mpg` column in the `mtcars` dataset.
+A section link helps readers connect related ideas in your report. Since you labeled the Range section as `{#sec-range}`, you can link to it by writing `@sec-range`.
 
-*Type `?summary` to learn about the `summary()` function.*
-
-```{r}
-# ⚡
-summary(mtcars)  # Summarizes all columns at once
-```
-
-🎯 Use `summary()` to get a quick overview of the distribution of the `mpg` column in the `mtcars` dataset.
-
-```{r}
-# ⚡
-summary(mtcars$mpg)  # Summarizes just the mpg column
-```
-
-## Task 5
-
-Place this task after the **Five Number Summary** section.
-
-🎯 Your goal is to use the `summary()` function to get a quick overview of one numerical measurement from the `penguins` dataset.
-
-### **Step 1**: Choose a variable
-
-Under the heading **Five Number Summary** in your notebook, use the same numerical variable from earlier tasks or choose another numerical measurement variable from penguins.
-
-### **Step 2**: Generate the summary
-
-🎯 Use `summary()` to get an overview.
-
-```{r, eval=FALSE}
-# ⚡
-summary(penguins$______)
-```
-
-### **Step 3**: Write an interpretation
-
-🪞 Explain what the summary tells you about the distribution of values. You can use these prompts to help you write 2 to 3 reflection sentences.
-
-- What does the summary tell you about the minimum, maximum, and quartiles?
-
-- How does the summary help you understand the distribution of values? Why `summary()` is a useful function?
-
-- How does the summary compare to the mean and standard deviation you calculated earlier?
-
-You can use this sentence pattern if helpful:
+Copy and paste this sentence below your IQR reflection:
 
 ```markdown
-🗣 In the `_____` column, the minimum value is ______, the median is ______, and the maximum is ______. The first and third quartiles show where the middle half of the data falls. This summary gives me a quick picture of both center and spread in this variable.
+🗣 **Comment:** Compared with the full spread described in @sec-range, the IQR focuses on the middle 50% of the data and is less affected by extreme values.
 ```
 
-## Task 6
+✅ **Checks:** Render to HTML.
 
-**End Part 3 with a takeaway**
+After rendering, check that:
 
-Finish Part 3 with one short takeaway. State which measure of spread you think was most useful for your chosen variable and why.
+- `@sec-range` turns into a clickable section link
+- the link points back to the Range section
+- the raw text `@sec-range` does **not** remain unchanged in the final HTML report
 
-You can use this sentence pattern if helpful:
+If the link does not work, check that your Range heading looks like this:
 
 ```markdown
-🪞 For the `_____` variable, I think the most useful measure of spread is ______. I chose this measure because ______.
+## Range {#sec-range}
 ```
 
 ------------------------------------------------------------------------
 
-So far, you have learned how to calculate descriptive statistics manually and using built-in functions. You have also learned how to use inline R code to dynamically report these statistics in your Quarto document.
+The IQR focuses on the middle 50% of the data by comparing $Q_3$ and $Q_1$. The five-number summary expands that idea by showing the low end, the quartiles, the middle, and the high end of a numeric variable.
 
-In the next part of this assignment, you will use these ideas about center and spread to describe the penguins data more clearly. After completing Chapter 13, you will group data before summarizing it using `dplyr` functions.
+Pause report-building while you review the Five-Number Summary reading section.
+
+
+## Five-Number Summary
+
+A **five-number summary** gives a quick overview of the spread and center of a numeric variable.
+
+The five values are:
+
+- minimum
+- $Q_1$, or first quartile
+- median
+- $Q_3$, or third quartile
+- maximum
+
+These values help you see the low end, the middle 50%, the median, and the high end of the data.
+
+The five-number summary can be written in a Quarto report using a short Markdown list.
+
+```markdown
+<!-- Example in Quarto -->
+- **Minimum**
+- **Q1**
+- **Median**
+- **Q3**
+- **Maximum**
+```
+
+_This is what it looks like after rendering:_
+
+- **Minimum**
+- **Q1**
+- **Median**
+- **Q3**
+- **Maximum**
+
+> 🧐 **Notice:** The `-` creates a bullet point in Markdown. The double asterisks in `**Minimum**` make the word bold after rendering.
+
+In R, the `summary()` function gives a quick overview of a numeric variable. For a numeric variable, `summary()` returns the minimum, $Q_1$, median, mean, $Q_3$, and maximum.
+
+That means `summary()` shows the five-number summary **plus** the mean.
+
+🎯 **Goal:** Use `summary()` to get a quick overview of all columns in the `mtcars` dataset.
+
+```{r}
+# ⚡
+summary(mtcars)
+```
+
+This summarizes all columns at once. That can be useful for a quick scan, but it may include more output than you need.
+
+🎯 **Goal:** Use `summary()` to get a quick overview of only the `mpg` column.
+
+```{r}
+# ⚡
+summary(mtcars$mpg)
+```
+
+This output is easier to read because it focuses on one numeric variable.
+
+The five-number summary is useful because it connects several measures of spread. The minimum and maximum show the full range, while $Q_1$ and $Q_3$ help describe the middle 50% of the data. The median shows the center of the ordered values.
+
+# Practice Space
+
+Now return to your Quarto file.
+
+In this Practice Space, you will finish building the report section called `# Measures of Spread`.
+
+You will add to the subsection called `## Five-Number Summary {#sec-five}`. You will use `summary()` to describe one numerical measurement from the `penguins` dataset, write a short interpretation, and end the Measures of Spread section with a takeaway.
+
+Render to HTML after major edits so you can check that your code output, report text, and final takeaway display correctly.
+
+## Task 15
+
+**Report the five-number summary**
+
+🎯 **Goal:** Use the `summary()` function to get a quick overview of one numerical measurement from the `penguins` dataset.
+
+### **Step 1**
+
+🎯 Choose one numerical measurement variable from the `penguins` dataset.
+
+You may use the same numerical variable you used in earlier Measures of Spread tasks, or you may choose another numerical measurement variable.
+
+Good candidates are:
+
+- `bill_length_mm`
+- `bill_depth_mm`
+- `flipper_length_mm`
+- `body_mass_g`
+
+Choose a measurement variable, not a categorical variable like `species`, `island`, or `sex`.
+
+### **Step 2**
+
+🎯 Use `summary()` to get an overview of your chosen variable.
+
+Replace `_____` with the column name you chose.
+
+```{r eval=FALSE}
+# ⚡
+summary(penguins$_____)
+```
+
+### **Step 3**
+
+🎯 Write a short interpretation of the summary output.
+
+The `summary()` output helps you see the minimum, first quartile, median, mean, third quartile, and maximum. This gives you a quick picture of both center and spread.
+
+Copy and paste this sentence pattern into your report. Replace each `_____` with the correct value or variable name.
+
+```markdown
+🗣 **Comment:** In the `_____` column, the minimum value is _____, the median is _____, and the maximum value is _____. The first and third quartiles show where the middle half of the data falls. This summary gives me a quick picture of both center and spread in this variable.
+```
+
+✅ **Checks:** Render to HTML.
+
+After rendering, check that:
+
+- the `summary()` output appears below your code chunk
+- your interpretation uses values that match the `summary()` output
+- your sentence is written as report text, not as a code comment
+
+## Task 16
+
+**End the Measures of Spread section with a takeaway**
+
+🎯 **Goal:** Finish the Measures of Spread section with one short takeaway about which measure of spread was most useful for your chosen variable.
+
+### **Step 1**
+
+🎯 Choose the measure of spread that seemed most useful for your variable.
+
+You may choose:
+
+- standard deviation
+- range
+- interquartile range
+- five-number summary
+
+### **Step 2**
+
+🎯 Write one short takeaway.
+
+Copy and paste this sentence pattern into your report. Replace each `_____` with your own words.
+
+```markdown
+🪞 **Reflection:** For the `_____` variable, I think the most useful measure of spread is _____. I chose this measure because _____.
+```
+
+### **Step 3**
+
+✅ **Checks:** Render to HTML.
+
+After rendering, check that:
+
+- your Measures of Spread section has all four subsections
+- your final takeaway appears after the Five-Number Summary subsection
+- your report text is readable and not only a list of code outputs
+
+------------------------------------------------------------------------
+
+You have finished all sections of the Data Understanding Notebook! Congratulations on building a report that shows your code, your reasoning, and your interpretations.
 
 # Summary
 
-In this activity, you are not only learning how to calculate descriptive statistics. You are practicing how to learn from data in a more deliberate way. You begin by identifying variable types, then use that knowledge to choose appropriate count-based summaries, measures of center, and measures of spread. As you build the notebook, you rehearse earlier ideas in later sections, explain your code and results in plain language, and reflect on why a method does or does not fit a given variable. This supports self-regulated learning by asking you to plan, monitor, and revise your thinking as you work.
+# Summary
 
-You should have a reproducible **Data Understanding Notebook** that shows both your code and your reasoning. Just as importantly, you should have stronger habits for analytical work: slowing down to inspect data before summarizing it, persisting when a task is difficult, checking whether your interpretation matches the data type, and using writing as a strategy for understanding. These are not just course tasks. They are foundational habits for credible, careful data analysis.
+In this activity, you were not only learning how to calculate descriptive statistics. You were practicing formatting Quarto reports.
+
+You began by identifying variable types. Then you used that information to choose appropriate count-based summaries, measures of center, and measures of spread. As you built the notebook, you practiced explaining your code, reporting results in plain language, and reflecting on why a method does or does not fit a given variable.
+
+You should now have a reproducible **Data Understanding Notebook** that shows both your code and your reasoning. You also practiced several Quarto report-building skills, including headings, YAML settings, inline R code, math text, callout notes, section labels, section links, and Markdown lists.
+
+The bigger habit is this: slow down before summarizing data. Inspect the data first, check the variable type, choose a method that fits, and make sure your interpretation matches the evidence. These habits support credible, careful data analysis.
 
 # Chapter Terms
 
