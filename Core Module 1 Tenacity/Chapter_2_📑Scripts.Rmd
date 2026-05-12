@@ -776,6 +776,7 @@ nerdy_palette <- c(____, ____)
 
 # ✅ Check the number of elements in the nerdy_palette vector
 length(____)
+print(____)
 
 
 # 🗣 Comment: The output shows the updated `nerdy_palette` vector with __ elements added to the ___(beginning, middle, or end).
