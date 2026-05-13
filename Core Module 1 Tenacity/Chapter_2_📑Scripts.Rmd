@@ -186,14 +186,14 @@ Method B. **File Menu**
 
 ```{r, eval=FALSE}
 # Save your script in your course folder (e.g., Intro_to_R)
-# File name: chapter2_practice
+# File name: chapter2_notes
 # Save a type: R
 ```
 
 🧐 **Notice:** that the file extension `.R` is automatically added.
 
 ```{r eval=FALSE}
-# ✅ Verify that `chapter2_practice.R` is in the right folder.
+# ✅ Verify that `chapter2_notes.R` is in the right folder.
 ```
 
 💡 **Tip:** “Working directory” controls where R looks for files when you use relative paths, but you can still accidentally save a script somewhere else if you choose the wrong folder in the Save dialog. For this course, always save scripts into your course folder so your files stay together and you can find them when it’s time to upload.
@@ -419,7 +419,7 @@ An **atomic vector** one-dimensional object that stores an ordered collection of
 
 Let's use `c()`, `:`, and `seq()` to create vectors of different storage types: numeric, integer, and character. 
 
-## Numeric Vectors
+## Numeric Vectors with `c()`
 
 **Numeric vectors** are a list of numbers. So far, we have only stored single numbers in objects. 
 
@@ -440,7 +440,7 @@ print(numbers3)
 
 🧐 **Notice:** You can see object details by looking at the Environment pane. The `numbers3` object shows as "num [1:3]" indicating it is a numeric vector with three elements. These numbers are "numeric" because they include decimal points. The placement of the numbers in the list is ordered exactly as you entered them. 
 
-## Integer Vectors
+## Integer Vectors with `c()`
 
 **Integer vectors** are a list of whole numbers. In R, integers are typically written with an `L` suffix.
 
@@ -458,7 +458,9 @@ print(cursed_seq)
 
 🗣 The output shows the integer values stored in the `cursed_seq` vector. 🎬 Optional aside: Don't get *Lost* with these numbers that aren't a perfect mathematical progression.
 
-Vector Method B. Use "`:`" to create a simple sequence
+## Sequences with `:`
+
+"`:`" creates a simple sequence.
 
 🎯 Create a numeric vector named `combination` that contains the integer values from 1 to 5 using the `:` operator.
 
@@ -494,7 +496,7 @@ print(travel_jumps)
 🗣 The output shows the sequence of numbers stored in the `travel_jumps` vector. 🎬 Optional aside: Everything is connected. Everything is built on the number 33. It's Dark.
 
 
-## Character Vectors
+## Character Vectors with `c()`
 
 **Character vectors** store text strings, which are sequences of characters enclosed in quotes. Character vectors can include letters, numbers, symbols, and spaces. They are often used to represent names, labels, or any other textual data.
 
@@ -537,31 +539,31 @@ You can add to the end of a vector using the `c()` function.
 
 ```{r , eval=FALSE}
 # ⚡ Type this in your R Script
-rainbow <- c(rainbow, "indigo")
+rainbow_plus <- c(rainbow, "indigo")
 ```
 ```{r , eval=FALSE}
-# ✅ Check the rainbow vector
-print(rainbow)
+# ✅ Check the rainbow_plus vector
+print(rainbow_plus)
 ```
 
-🗣 The output shows the updated `rainbow` vector with "indigo" added to the end.
+🗣 The output shows the new object `rainbow_plus` vector with "indigo" added to the end.
 
 ## Logical Vectors
 
 **Logical vectors** are used for conditions and comparisons. They contain TRUE or FALSE values.
 
-🎯 Create a logical vector named `real` that contains the values TRUE, FALSE, and NA using the `c()` function.
+🎯 Create a logical vector named `logicals` that contains the values TRUE, FALSE, and NA using the `c()` function.
 
 ```{r , eval=FALSE}
 # ⚡ Type this in your R Notebook
-real <- c(FALSE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE, NA)
+logicals <- c(FALSE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE, NA)
 ```
 ```{r , eval=FALSE}
-# ✅ Check the real vector
-print(real)
+# ✅ Check the logicals vector
+print(logicals)
 ```
 
-🗣 The output shows the logical values stored in the `real` vector.
+🗣 The output shows the logical values stored in the `logicals` vector.
 
 # Inspecting Vectors
 
@@ -621,9 +623,9 @@ We can create a data frame by combining multiple vectors of the *same length* us
 
 ```{r , eval=FALSE}
 # ✅  Review Vectors 
-print(cursed_seq)
 print(rainbow)
 print(travel_jumps)
+print(cursed_seq)
 ```
 
 ```{r , eval=FALSE}
@@ -641,7 +643,7 @@ spectrum_shift <- data.frame(
 print(spectrum_shift)
 ```
 
-🗣 The output shows the `spectrum_shift` data frame with four columns: Vibe, Shift, Year, and Code. Each column corresponds to one of the vectors we combined.
+🗣 The output shows the `spectrum_shift` data frame with three columns: `Vibe`, `Year`, and `Code`. Each column corresponds to one of the vectors we combined.
 
 # Summary
 
@@ -707,7 +709,7 @@ Type this in your R Script, Fill in the blanks
 
 ```{r , eval=FALSE}
 
-# 🎯 Build a numeric vector named `exponents` that contains the integers from 0.5 to 10 using the `seq()` function.
+# 🎯 Build a numeric vector named `exponents` that contains the numbers between 0.5 and 10 using the `seq()` function.
 
 
 # ⚡ 
@@ -820,7 +822,7 @@ length(_______)
 Type this in your R Script, Fill in the blanks
 
 ```{r eval=FALSE}
-# 🎯 Create a data frame using `data.frame()` named `nerdy_df` that contains three columns: "Origin" (`origin`), "Color" (`color_names`), and "Hex" (`nerdy_palette`). 
+# 🎯 Create a data frame using `data.frame()` named `nerdy_df` that contains three columns: "Color" (`color_names`), "Hex" (`nerdy_palette`), and "Origin" (`origin`). 
 
 # ⚡ Type this in your R Script, Fill in the blanks
 nerdy_df <- ______(

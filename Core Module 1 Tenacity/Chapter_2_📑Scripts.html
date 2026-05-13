@@ -11,7 +11,7 @@
 
 <meta name="author" content="Lorraine Gaudio" />
 
-<meta name="date" content="2026-05-05" />
+<meta name="date" content="2026-05-12" />
 
 <title>Chapter 2</title>
 
@@ -1633,7 +1633,7 @@ display: none;
 <h1 class="title toc-ignore">Chapter 2</h1>
 <h3 class="subtitle">Scripts</h3>
 <h4 class="author">Lorraine Gaudio</h4>
-<h4 class="date">May 05, 2026</h4>
+<h4 class="date">May 12, 2026</h4>
 
 </div>
 
@@ -1781,11 +1781,11 @@ script open.</div>
 <li><p>Select Save As….</p></li>
 </ol>
 <pre class="r"><code># Save your script in your course folder (e.g., Intro_to_R)
-# File name: chapter2_practice
+# File name: chapter2_notes
 # Save a type: R</code></pre>
 <p>🧐 <strong>Notice:</strong> that the file extension <code>.R</code>
 is automatically added.</p>
-<pre class="r"><code># ✅ Verify that `chapter2_practice.R` is in the right folder.</code></pre>
+<pre class="r"><code># ✅ Verify that `chapter2_notes.R` is in the right folder.</code></pre>
 <p>💡 <strong>Tip:</strong> “Working directory” controls where R looks
 for files when you use relative paths, but you can still accidentally
 save a script somewhere else if you choose the wrong folder in the Save
@@ -2053,8 +2053,9 @@ single dimension of related values.</p>
 <p>Let’s use <code>c()</code>, <code>:</code>, and <code>seq()</code> to
 create vectors of different storage types: numeric, integer, and
 character.</p>
-<div id="numeric-vectors" class="section level2" number="5.1">
-<h2><span class="header-section-number">5.1</span> Numeric Vectors</h2>
+<div id="numeric-vectors-with-c" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> Numeric Vectors with
+<code>c()</code></h2>
 <p><strong>Numeric vectors</strong> are a list of numbers. So far, we
 have only stored single numbers in objects.</p>
 <p>Vector Method A. Use the <code>c()</code> function to combine (or
@@ -2074,8 +2075,9 @@ the Environment pane. The <code>numbers3</code> object shows as “num
 numbers are “numeric” because they include decimal points. The placement
 of the numbers in the list is ordered exactly as you entered them.</p>
 </div>
-<div id="integer-vectors" class="section level2" number="5.2">
-<h2><span class="header-section-number">5.2</span> Integer Vectors</h2>
+<div id="integer-vectors-with-c" class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> Integer Vectors with
+<code>c()</code></h2>
 <p><strong>Integer vectors</strong> are a list of whole numbers. In R,
 integers are typically written with an <code>L</code> suffix.</p>
 <p>🎯 Create a vector named <code>cursed_seq</code> that contains the
@@ -2089,7 +2091,11 @@ print(cursed_seq)</code></pre>
 <code>cursed_seq</code> vector. 🎬 Optional aside: Don’t get
 <em>Lost</em> with these numbers that aren’t a perfect mathematical
 progression.</p>
-<p>Vector Method B. Use “<code>:</code>” to create a simple sequence</p>
+</div>
+<div id="sequences-with" class="section level2" number="5.3">
+<h2><span class="header-section-number">5.3</span> Sequences with
+<code>:</code></h2>
+<p>“<code>:</code>” creates a simple sequence.</p>
 <p>🎯 Create a numeric vector named <code>combination</code> that
 contains the integer values from 1 to 5 using the <code>:</code>
 operator.</p>
@@ -2116,9 +2122,9 @@ print(travel_jumps)</code></pre>
 <code>travel_jumps</code> vector. 🎬 Optional aside: Everything is
 connected. Everything is built on the number 33. It’s Dark.</p>
 </div>
-<div id="character-vectors" class="section level2" number="5.3">
-<h2><span class="header-section-number">5.3</span> Character
-Vectors</h2>
+<div id="character-vectors-with-c" class="section level2" number="5.4">
+<h2><span class="header-section-number">5.4</span> Character Vectors
+with <code>c()</code></h2>
 <p><strong>Character vectors</strong> store text strings, which are
 sequences of characters enclosed in quotes. Character vectors can
 include letters, numbers, symbols, and spaces. They are often used to
@@ -2148,32 +2154,32 @@ print(rainbow)</code></pre>
 <p>🗣 The output shows the color names stored in the <code>rainbow</code>
 character vector.</p>
 </div>
-<div id="adding-elements-to-vectors" class="section level2" number="5.4">
-<h2><span class="header-section-number">5.4</span> Adding Elements to
+<div id="adding-elements-to-vectors" class="section level2" number="5.5">
+<h2><span class="header-section-number">5.5</span> Adding Elements to
 Vectors</h2>
 <p>You can add to the end of a vector using the <code>c()</code>
 function.</p>
 <p>🎯 Add the color “indigo” to the end of the existing
 <code>rainbow</code> vector.</p>
 <pre class="r"><code># ⚡ Type this in your R Script
-rainbow &lt;- c(rainbow, &quot;indigo&quot;)</code></pre>
-<pre class="r"><code># ✅ Check the rainbow vector
-print(rainbow)</code></pre>
-<p>🗣 The output shows the updated <code>rainbow</code> vector with
-“indigo” added to the end.</p>
+rainbow_plus &lt;- c(rainbow, &quot;indigo&quot;)</code></pre>
+<pre class="r"><code># ✅ Check the rainbow_plus vector
+print(rainbow_plus)</code></pre>
+<p>🗣 The output shows the new object <code>rainbow_plus</code> vector
+with “indigo” added to the end.</p>
 </div>
-<div id="logical-vectors" class="section level2" number="5.5">
-<h2><span class="header-section-number">5.5</span> Logical Vectors</h2>
+<div id="logical-vectors" class="section level2" number="5.6">
+<h2><span class="header-section-number">5.6</span> Logical Vectors</h2>
 <p><strong>Logical vectors</strong> are used for conditions and
 comparisons. They contain TRUE or FALSE values.</p>
-<p>🎯 Create a logical vector named <code>real</code> that contains the
-values TRUE, FALSE, and NA using the <code>c()</code> function.</p>
+<p>🎯 Create a logical vector named <code>logicals</code> that contains
+the values TRUE, FALSE, and NA using the <code>c()</code> function.</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook
-real &lt;- c(FALSE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE, NA)</code></pre>
-<pre class="r"><code># ✅ Check the real vector
-print(real)</code></pre>
-<p>🗣 The output shows the logical values stored in the <code>real</code>
-vector.</p>
+logicals &lt;- c(FALSE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE, NA)</code></pre>
+<pre class="r"><code># ✅ Check the logicals vector
+print(logicals)</code></pre>
+<p>🗣 The output shows the logical values stored in the
+<code>logicals</code> vector.</p>
 </div>
 </div>
 <div id="inspecting-vectors" class="section level1" number="6">
@@ -2232,9 +2238,9 @@ R.</p>
 vectors in the global environment that have the length of 6
 elements.</p>
 <pre class="r"><code># ✅  Review Vectors 
-print(cursed_seq)
 print(rainbow)
-print(travel_jumps)</code></pre>
+print(travel_jumps)
+print(cursed_seq)</code></pre>
 <pre class="r"><code># ⚡ Type this in your R Script
 # Create the Data Frame
 spectrum_shift &lt;- data.frame(
@@ -2245,8 +2251,9 @@ spectrum_shift &lt;- data.frame(
 <pre class="r"><code># ✅ Check the spectrum_shift Data Frame
 print(spectrum_shift)</code></pre>
 <p>🗣 The output shows the <code>spectrum_shift</code> data frame with
-four columns: Vibe, Shift, Year, and Code. Each column corresponds to
-one of the vectors we combined.</p>
+three columns: <code>Vibe</code>, <code>Year</code>, and
+<code>Code</code>. Each column corresponds to one of the vectors we
+combined.</p>
 </div>
 <div id="summary" class="section level1" number="8">
 <h1><span class="header-section-number">8</span> Summary</h1>
@@ -2378,7 +2385,7 @@ directed.</p>
 <div id="task-1" class="section level2" number="10.2">
 <h2><span class="header-section-number">10.2</span> Task 1</h2>
 <p>Type this in your R Script, Fill in the blanks</p>
-<pre class="r"><code># 🎯 Build a numeric vector named `exponents` that contains the integers from 0.5 to 10 using the `seq()` function.
+<pre class="r"><code># 🎯 Build a numeric vector named `exponents` that contains the numbers between 0.5 and 10 using the `seq()` function.
 
 
 # ⚡ 
@@ -2438,6 +2445,7 @@ nerdy_palette &lt;- c(____, ____)
 
 # ✅ Check the number of elements in the nerdy_palette vector
 length(____)
+print(____)
 
 
 # 🗣 Comment: The output shows the updated `nerdy_palette` vector with __ elements added to the ___(beginning, middle, or end).</code></pre>
@@ -2472,7 +2480,7 @@ length(_______)
 <div id="task-7" class="section level2" number="10.8">
 <h2><span class="header-section-number">10.8</span> Task 7</h2>
 <p>Type this in your R Script, Fill in the blanks</p>
-<pre class="r"><code># 🎯 Create a data frame using `data.frame()` named `nerdy_df` that contains three columns: &quot;Origin&quot; (`origin`), &quot;Color&quot; (`color_names`), and &quot;Hex&quot; (`nerdy_palette`). 
+<pre class="r"><code># 🎯 Create a data frame using `data.frame()` named `nerdy_df` that contains three columns: &quot;Color&quot; (`color_names`), &quot;Hex&quot; (`nerdy_palette`), and &quot;Origin&quot; (`origin`). 
 
 # ⚡ Type this in your R Script, Fill in the blanks
 nerdy_df &lt;- ______(
