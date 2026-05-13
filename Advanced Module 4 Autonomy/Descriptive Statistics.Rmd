@@ -170,7 +170,7 @@ Here is what these YAML settings do:
 - `number-sections: true` numbers the report sections.
 - `format: html` tells Quarto to create an HTML report.
 
-Save the file as `descriptive_statistics.qmd` in your course folder.
+Save the file as `data_understanding_notebook.qmd` in your course folder.
 
 ### **Step 3**
 
