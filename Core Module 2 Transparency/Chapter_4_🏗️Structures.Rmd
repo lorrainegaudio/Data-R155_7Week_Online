@@ -76,33 +76,41 @@ output:
 
 # Overview
 
-Now that you can work in an R Notebook and write usable memos, Chapter 4 focuses on a higher standard: transparency. In research, “correct code” is not enough. You need to document where help came from (peers, the internet, AI, your instructor), what you learned from it, and how you verified the result. Done well, transparency protects you: it shows academic integrity, makes your work reproducible, and prevents you from accidentally claiming understanding you don’t yet have.
+Now that you can work in an R Notebook and write usable memos, Chapter 4 raises the standard for documentation: transparency.
 
-This chapter also finishes the “vector metadata” toolkit you’ll need before we move into datasets. You will learn factor vectors (categorical data) and why levels matter—because many research variables are categories (condition, group, gender identity options, treatment type, survey responses). If your categories are mishandled, summaries and models can be misleading even when the code runs.
+In research, correct code is not enough. You also need to document where help came from, what you learned from it, and how you checked your result. This helps you show your learning honestly, return to your work later, and make your analysis understandable to someone else.
 
-Then you’ll learn named vectors and indexing, which are the mechanics behind selecting specific values. This is not “extra.” Indexing is how you pull out what you need, and it becomes the backbone of filtering, recoding, and subsetting once we start working with data frames. The point of this chapter is control: you can label data intentionally, select what you mean to select, and document your process so another person can reproduce it.
+This chapter also finishes the vector-selection skills you need before working with larger datasets. You will learn how vector elements can be labeled with names, how indexing lets you select specific values, and how logical values can be used to filter a vector.
 
-By the end of Chapter 4, you should be able to use transparency practices responsibly and confidently work with categorical data and indexing.
+The point of this chapter is control: selecting the values you mean to select, checking whether your selection worked, and documenting your process clearly enough that someone else could follow it.
 
-In Chapter Four you will learn how to:
+By the end of Chapter 4, you should be able to practice transparency in your notebook memos, select vector elements by position and name, build logical vectors using comparison operators, and use logical indexing to filter values from a vector.
 
-- 📝 Practice writing and saving an R Notebook.
+In Chapter Four, you will practice how to:
 
-- 📍 Run code from a code chunk.
+- ✍️ Practice transparency in code memos by documenting goals, checks, explanations, and outside resources.
 
-- 🧮 Perform arithmetic operations on numeric vectors.
+- 🧾 Create named vectors using element names.
 
-- ✍️ Practice transparency in memos
+- 📍 Use indexing to select vector elements by position.
 
-- 🏷️ Identify what kind of data an object is using `class()`
+- 🏷️ Use indexing to select vector elements by name.
 
-- ⚡ Explain how R coerces mixed‑type vectors.
+- ⚠️ Recognize that character indexing requires exact matching and returns NA when a name is not found.
 
-- 🛠 Build logical vectors.
+- 🛠 Build logical vectors using TRUE, FALSE, and NA.
+
+- 🔎 Use comparison operators such as >, <, ==, >=, <=, and != to create logical results.
+
+- 🧮 Use logical indexing to filter values from a vector.
+
+- ✅ Verify that your selected or filtered vector contains the expected values.
+
+----
 
 # R Notebooks—Part 2
 
-In chapter 3, you learned how to use an R Notebook (`.Rmd`) as a “reproducible thinking” document: code + output + memo-style writing in one place, in order. 
+In Chapter 3, you learned how to use an R Notebook (`.Rmd`) as a “reproducible thinking” document: code + output + memo-style writing in one place, in order. This section is a quick setup review before you begin the Chapter 4 work.
 
 Here’s what you can do now:
 
@@ -116,13 +124,13 @@ Here’s what you can do now:
 
 5. **Memo correctly**:
 
-- Inside a code chunk: text must start with # (otherwise R tries to run it).
+   - Inside a code chunk: text must start with `#` otherwise R tries to run it.
 
-- Outside a code chunk: you write normal paragraphs (no # needed).
+   - Outside a code chunk: write normal paragraphs with no `#` needed.
 
-- Use the notebook to document your learning process (goal, verify, memo, explain), including keeping errors visible (commented out) and explaining your fixes.
+   - Use the notebook to document your learning process, including your goal, checks, explanations, and resources used.
 
-An R Notebook is only useful if a human can read it. In this chapter, you’ll learn the minimum Markdown skills needed to produce a clean, graded-ready notebook: a date in the **YAML Header**, a clear outline using headings, and a successful knit to HTML.
+An R Notebook is only useful if a human can read it. In this chapter, you will keep building clean notebook habits: preserving the **YAML header**, organizing your work clearly, writing readable memos, and preparing a notebook that can knit successfully to HTML.
 
 ## Default Text
 
@@ -130,248 +138,183 @@ An R Notebook is only useful if a human can read it. In this chapter, you’ll l
 
 When you create a new R Notebook or R Markdown file, RStudio provides a template. It is designed to demonstrate the three core components of a notebook:
 
-- The YAML Header: The block of text at the very top, enclosed by three dashes (---). This tells R how to "knit" (render) your document.
+- The YAML header: The block of text at the very top, enclosed between two lines of three dashes (`---`). This tells RStudio how to knit, or render, your document.
 
 - Markdown Text: The white background text (like "This is an R Markdown Notebook"). This shows you how to write regular prose.
 
 - Code Chunks: The gray boxes containing code (like plot(cars)). This shows you how to embed executable R code.
 
-### Clear the Canvas
+### Clear the Default Notebook Body
 
 To start fresh, delete all the default text in the R Notebook so you have a blank canvas to work with. 
 
-**Keep the Header** Do not delete the text at the very top between the --- lines. This is your metadata (Title, Author, Output format). If you delete this, your file might not run correctly.
+#### **Keep the Header** 
 
-**Delete the Body** You can safely delete everything below that second set of three dashes (---).
+Do not delete the text at the very top between the --- lines. This is your metadata (Title, Author, Output format). If you delete this, your file might not run correctly.
 
-1. Place your cursor on the line immediately following the second ---.
+Your header should look something like this:
+
+```yaml
+---
+title: "Chapter 4"
+output: html_notebook
+---
+```
+
+Keep this top section. Delete the example text and code below it.
+
+#### **Delete the Body** 
+
+You can safely delete everything below the second `---` line. Keep the YAML header at the top.
+
+1. Place your cursor on the line immediately following the second `---`.
 
 2. Highlight everything all the way to the bottom of the document.
 
 3. Press Delete or Backspace.
 
+---
+
 # Transparency
 
-Science isn’t just about numbers; it’s about values that guide how and why we do our work. Researchers , policy makers and the general public must to trust scientific expertise for this work to have meaning (Resnik & Elliott, 2023). Transparency in academic work promotes trust. **Transparency** is disclosing methods, materials, assumptions, values, and interests (Resnik & Elliott, 2023) so another person can understand what you did and reproduce it. 
+Science is not just about numbers; it is also about the values that guide how and why we do our work. Researchers, policymakers, and the general public must be able to trust scientific expertise for this work to have meaning (Resnik & Elliott, 2023). Transparency in academic work promotes that trust. **Transparency** means disclosing methods, materials, assumptions, values, and interests so another person can understand what you did and reproduce it (Resnik & Elliott, 2023).
 
-Three values inside of transparency. 
+Transparency is associated with these three related values:
 
-1. **Honesty** is reporting what actually happened, including shortcuts, mistakes, and unexpected results. You record what you tried even when it failed to produce the results you anticipated. You state what you don't know yet. You do not present outside work as your own. For example, you do not present AI outputs as your own. LLMs produce text; they are not conscious “reasoners” that understand your goal the way you do. Being honest includes respecting others' intellectual property by giving credit where credit is due and acknowledging prior work. Researchers must ensure that they properly attribute any contributions made by LLMs to avoid issues of plagiarism and intellectual property infringement (e.g, Thomas, 2023).
+1. **Honesty** means reporting what actually happened, including shortcuts, mistakes, unexpected results, and outside help. You record what you tried even when it did not produce the result you expected. You state what you do not know yet. You do not present outside work as your own. If you use a peer, website, AI tool, instructor, or other resource, document what you used and what you learned.
 
-2. **Openness** is making your work inspectable so someone else can see what you used and how you got your result. Reproducibility is a key aspect of openness. Creating reproducible work is a core learning outcome for this course. Share the data source, code, and steps taken so someone else can follow your workflow and reproduce your results.
+2. **Openness** means making your work inspectable so someone else can see what you used and how you got your result. Reproducibility is a key part of openness. In this course, that means sharing the data source, code, steps, and explanations needed for someone else to follow your workflow.
 
-3. **Accountability** means taking responsibility for one's research; responding to criticisms of one's research, including allegations of misconduct; self-correction (carefully scrutinizing research during peer review and after publication; retracting or correcting flawed research); and attempting to reproduce results (Resnik & Elliott, 2023). Transparency practices provide the documentation that makes your assumptions, methods, and tools visible. Memoing around your code is not “extra writing.” It is part of doing credible work.
+3. **Accountability** means taking responsibility for your work. In this course, accountability means checking your results, correcting mistakes, responding to feedback, and documenting your process clearly enough that someone else can understand your choices.
 
-**Research journals** are running records of your R analysis process. They are an internal document that are invaluable when preparing publications or other reports. Add comments before or near your code explaining:
+In this course, **research journals** are running records of your R analysis process. They are internal documents that help you prepare reports, return to old work, and explain your decisions later.
 
-- 🎯 Goal: The intent of the code and method used (functions, steps, key decisions).
+In this course, your R Notebook works like a research journal. Add comments before or near your code explaining:
 
-- ⚡ Materials: Compose the code to achieve the goal, answer the question or test your prediction. Keep a record of the algorithms used in documents such as an R Script or R Markdown files.
+- 🎯 Goal: What are you trying to do?
 
-- ✍️ Assumptions: Document your research question or make a prediction about what the results will be. Keep a record of what you tried, even if it didn't achieve the results you wanted. 
+- 💬 Prediction: What do you expect the code to produce?
 
-- ✅ Verify: Show or explain how you checked that your results were correct. 
+- ⚡ Code/Test: What code did you use to test your idea?
 
-- 🗣 Comment: Explain the results and what the output means.
+- ✍️ Record what you tried: What did you try, including code that did not work?
 
-- 🪞 Metacognition: Reflect on the knowledge gained and how it might apply to other work. Record challenges you faced and how you overcame them. State the implications of the analysis or the values that motivate your analysis. Identify anything that could be bias choices. 
+- ✅ Verify: How did you check whether the result was correct?
 
-- 👀 Resource Cited: Document what resource you used and what you learned from that resource. 
+- 🗣 Comment: What does the output mean?
 
-___
+- 🪞 Reflect: What did you learn, and how could this help you later?
 
-Next, you will learn about data types and how to create different kinds of vectors in R. Write memos as you practice R programming. 
+- 👀 Resource Cited: What resource did you use, and what did you learn from it?
 
-# Vector Metadata
+You do not need every memo label for every small line of code. Use memo labels when your own code does something surprising, confusing, or important to check.
 
-In this section you will learn advanced skills that make vectors easier to work with:
+---
 
-1. **Factor Class**: how R stores categorical data using integer codes and labels.
+Next, you will practice these transparency habits while learning how R labels vector elements and selects specific values.
 
-2. **Names**: how to attach labels to vector elements so the vector can act like a simple lookup table.
+## Indexing Vectors
 
-3. **Indexing**: how to retrieve specific elements using either positions (1st, 2nd, 3rd) or names ("Octarine", "Matrix Green").
+The **indexing operator** `[` is the standard way to extract parts of a vector. The basic pattern is `x[i]`, where `x` is the vector and `i` is the index, or indices, of the elements you want to extract. For the atomic vectors in this chapter, `[ ]` can select one element or many, and it returns an object of the same type as `x`. 
 
-## Factor Vectors (Categorical Data)
+An **index** is a value used to identify elements in an object. In R, indices are often integers for positions, character values for names, or logical values such as `TRUE` and `FALSE`.
 
-A **factor** is R’s way of storing categorical data. These values that come from a fixed set of categories (for example: "freshman", "sophomore", "junior", "senior"). Factors are common in data analysis because they help R treat categories correctly in tables, summaries, and models.
+### Positional Indexing
 
-A factor often looks like a character vector, but it is not the same thing. In fact, object *type* will sometimes surprise you!
+🎯 **Goal** Use `[ ]` with index positions to extract values from a vector.
 
-### Creating Factors
-
-The function `factor()` is used to create factor vectors from character vectors.
-
-📜 The SYNTAX (basic): 
-
-`factor(x = character())`
-
-🎯 Create a factor vector named `grades` that contains the following letter grades: "A", "B", "C", "A", "B", "A" using the `factor()` function.
-
-```{r , eval=FALSE}
+```{r}
 # ⚡ Type this in your R Notebook
-grades <- c("A", "B", "C", "A", "B", "A")
-grades <- factor(grades)
+z <- c(10, 20, 30, 40, 50) # create a vector
 ```
 
-🗣 The object `grades` is overwritten as a factor using the `factor()` function because the same name is used in the assignment process `grades <-`.
 
-```{r , eval=FALSE}
-# ✅ Check the grades factor
-mode(grades)
-class(grades)
-print(grades)
-```
-
-🗣 The output shows that the `grades` object is of type "numeric" and class "factor." The printed output displays the levels of the factor, which are the unique categories present in the vector.
-
-### Levels and Ordering
-
-Even though the elements are text strings, the underlying type is stored as integer. Specifically, `mode()` often reports numeric while `typeof()` reports the precise storage type as integer. **Levels** are the distinct categories a factor can take, ordered in a specific way. By default, R usually orders factor levels alphabetically. You can override this default ordering by specifying the levels when creating the factor.
-
-🎯 Create a factor vector named `sizes` with levels ordered as "Small," "Medium," and "Large" using the `factor()` function.
-
-```{r , eval=FALSE}
+```{r}
 # ⚡ Type this in your R Notebook
-sizes <- c("Medium", "Large", "Small", "Medium", "Large")
-sizes <- factor(sizes, levels = c("Small", "Medium", "Large"))
+z[1]       
 ```
 
-```{r , eval=FALSE}
-# ✅ Check the sizes factor
-print(sizes)
-```
+🗣 This returns the first element by position.
 
-🗣 The output shows the `sizes` factor with levels ordered as "Small," "Medium," and "Large," as specified in the `factor()` function.
-
-___
-
-**🧩 Memo Example**
-
-![R Notebook creating a character vector of class standings, converting it to a factor, and showing levels() plus mode()/typeof() outputs; memo questions why the factor prints words but stores integer codes, with a follow-up memo summarizing the explanation (integer codes + levels labels).](Memo_Example4.png)
-
-🧐 **Notice:** The student (1) ✅ confirmed the original object’s class (character) and then created a factor version, (2) 🔎 checked multiple diagnostics (mode(), typeof(), and levels()) to investigate what changed, (3) ✍️ wrote a memo that pinpointed the exact contradiction (“stored as numbers but prints words”) instead of hand-waving, and (4) 🤖 used an AI tool to research the mechanism and then summarized the explanation accurately in their own words (integer codes + levels labels).
-
-This is a high-quality memo because it captures confusion, gathers diagnostic evidence, and then resolves the confusion with a correct explanation. 
-
-___
-
-
-Another type of attribute that vectors can have is names. Let's look at named vectors more closely.
-
-### Data Coercion
-
-A atomic vector means that all elements must be of the same type. If you try to mix types, R will coerce (convert) them to a common type based on a hierarchy of flexibility.
-
-🎯  What happens if you mix numbers and characters?
-
-```{r , eval=FALSE}
+```{r}
 # ⚡ Type this in your R Notebook
-mixed <- c("candy", 4, "book", 92)
-# ✅ Check the mixed vector
-class(mixed)            # character: all elements coerced to character
+z[3]      
 ```
 
-🗣 A vector can only hold *one* type. Mixing types triggers *coercion* to the most flexible type (logical → numeric → character).
+🗣 This returns the third element by position.
 
-
-#### Converting Between Types
-
-You can explicitly convert between types using functions like `as.numeric()`, `as.character()`, and `as.logical()`. 
-
-The `as.numeric()` function tries to convert characters to numbers. If it can't, it returns `NA` (not available).
-
-📜 The SYNTAX (basic): 
-
-`as.numeric(x)`
-
-
-🎯 Try converting a character vector of numbers to numeric using the `as.numeric()` function.
-
-```{r , eval=FALSE}
-as.numeric(c("1", "2", "3")) # character → numeric: text converts to numbers
-```
-
-🗣 The output shows the numeric values 1, 2, and 3 successfully converted from character strings.
-
-
-🎯 Try converting the `mixed` vector to numeric using the `as.numeric()` function.
-
-```{r , eval=FALSE}
+```{r}
 # ⚡ Type this in your R Notebook
-as.numeric(mixed)            # character → numeric: text converts to NA
+z[2:4]     
 ```
 
-🗣 The output shows `NA` for the character elements "candy" and "book" because they cannot be converted to numeric values. The numeric elements 4 and 92 are successfully converted.
+🗣 This returns the second, third, and fourth elements by position.
 
+> 🧐 **Notice:** `z[2:4]` selects positions 2 through 4. It does not search for the _values_ 2, 3, and 4.
 
-## Named Vectors
-
-Vectors that carry a names attribute so each element can be referred to by a label (a string), not just by position. R implements this via the `names()` accessor/replacement, which sets the "names" attribute on vectors. 
-
-🎯 Create a character vector named `nerdy_palette` that contains the following color names and their corresponding hexadecimal color codes using the `c()` function.
-
-```{r , eval=FALSE}
-# ⚡ Type this in your R Notebook, Fill in the blanks
-nerdy_palette <- c("Octarine" = "#7F00FF", "TARDIS Blue" = "#003B6F", "Rebeccapurple" = "#663399", "Hooloovoo" = "#4F97A3")
+```{r}
+# ⚡ Type this in your R Notebook
+z[-c(1, 5)] 
 ```
 
+🗣 Negative indexing removes elements. This returns all elements except the first and last.
+
+> 🧐 **Notice:** R counts positions starting at 1, not 0. Also notice that negative positions remove values instead of selecting them.
 
 
-```{r , eval=FALSE}
-# ✅ Check the nerdy_palette vector
-print(nerdy_palette)
-names(nerdy_palette)
-```
+### Character Indexing
 
-🗣 The nerdy_palette vector acts as a look-up table, allowing you to retrieve color hex codes by their assigned color names.
-
-
-### Object names vs Element names
+When a vector has names, you can use those names to index into the vector. **Character indexing** uses the names of the elements to retrieve specific values.
 
 There are two different naming ideas here. 
 
 1. **Object name** is the variable name `nerdy_palette` that you use to refer to the entire vector.
 
-2. **Element names** are the labels assigned to each element within the vector (e.g., "Octarine", "TARDIS Blue").
+2. **Element names** are the labels assigned to each element within the vector (e.g., `"Octarine"`, `"TARDIS Blue"`).
 
-Element names can be used in indexing to access specific elements of the vector.
+Element names can be used in indexing to access specific elements of the vector. A named vector works like a small lookup table: each value has a label, and you can use the label to retrieve the matching value.
 
-## Indexing Vectors
+🎯 **Goal:** Create a named vector of color codes, then use character indexing to return the hexadecimal color code for `"Octarine"`.
 
-The **indexing operator** `[` is the standard way to extract (or replace) parts of a vector. The basic pattern is `x[i]`, where `x` is the vector and `i` is the index (or indices) of the elements you want to extract. The `[` operator can select one element or many and it returns an object of the same type as `x`.
+```{r}
+# Create nerdy_palette
+nerdy_palette <- c(
+  "Octarine" = "#7F00FF",
+  "TARDIS Blue" = "#003B6F",
+  "Rebeccapurple" = "#663399",
+  "Hooloovoo" = "#4F97A3",
+  "Cosmic Latte" = "#FFF8E7",
+  "Vantablack" = "#000000",
+  "Matrix Green" = "#03A062",
+  "Source Engine Magenta" = "#FF00FF",
+  "Command Red" = "#CC0000",
+  "Impossible Green" = "#4D9E68"
+)
 
-### Indexing by Name
-
-When a vector has names, you can use those names to index into the vector. **Character indexing** uses the names of the elements to retrieve specific values.
-
-🎯 Use character indexing to return the hexadecimal color code for "Octarine."
-
-```{r , eval=FALSE}
-# ⚡ Type this in your R Notebook
+# Use character indexing to return the hex code for Octarine
 nerdy_palette["Octarine"]
 ```
 
-🗣 The output shows the hexadecimal color code for "Octarine" retrieved from the `nerdy_palette` vector using its name.
+🗣 When you run this chunk, it should return the hexadecimal color code for `"Octarine"` from the `nerdy_palette` vector.
 
-Character indexing required exact matching on names. If you ask for a name that doesn’t exist, you get NA for that element.
+Character indexing requires exact matching on names. If you ask for a name that doesn’t exist, you get NA for that element.
 
 🎯 Use character indexing to retrieve the color codes for "Octarine," "TARDIS Blue," and "NotAColor" from the `nerdy_palette` vector.
 
-```{r , eval=FALSE}
+```{r}
 # ⚡ Type this in your R Notebook
 nerdy_palette[c("Octarine", "TARDIS Blue", "NotAColor")]
 ```
 
-🗣 The output shows the hexadecimal color codes for "Octarine" and "TARDIS Blue," and `NA` for "NotAColor," which does not exist in the `nerdy_palette` vector.
+🗣 The output should return the color codes for `"Octarine"` and `"TARDIS Blue"`, plus `NA` for `"NotAColor"` because that name does not exist in the vector.
 
-### Indexing by Position
+### More Indexing by Position
 
 **Positional indexing** uses the numeric positions of elements in the vector to retrieve specific values. 
 
 🎯 Use positional indexing to return the first and third color codes from the `nerdy_palette` vector.
 
-```{r , eval=FALSE}
+```{r}
 # ⚡ Type this in your R Notebook
 nerdy_palette[c(1, 3)]
 ``` 
@@ -382,11 +325,30 @@ We will return to indexing in later chapters when we learn about data frames.
 
 # Logical Vectors
 
-___
+📖 **Review** from Chapter 2. 
 
-📖 **Review**
+**Logical vectors** are used for conditions and comparisons. They contain `TRUE` or `FALSE` values.
 
-**Logical operators** include:
+🎯 Create a logical vector named `real` that contains the values `TRUE`, `FALSE`, and `NA` using the `c()` function.
+
+```{r}
+# ⚡ Type this in your R Notebook
+real <- c(FALSE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE, NA)
+```
+```{r}
+# ✅ Check the real vector
+print(real)
+```
+
+🗣 The output prints the logical values stored in the `real` vector.
+
+----
+
+## Comparison Operators
+
+Logical vectors can also be created using comparison operators. These operators compare values and return TRUE or FALSE based on the comparison.
+
+**Comparison  operators** include:
 
 - `>` greater than
 
@@ -400,9 +362,26 @@ ___
 
 - `!=` not equal to
 
-___
+🎯 Create a logical vector named `logicals` that contains the results of the following comparisons: `1 > 2`, `3 < 5`, and `4 == 4` using the `c()` function.
 
-🎯 Create a new vector called `smaller`that contains only values in `number_list` that are less than or equal to 20.
+```{r}
+# ⚡ Type this in your R Notebook
+logicals <- c(1 > 2, 3 < 5, 4 == 4) 
+```
+
+```{r}
+# ✅ Check the logicals vector
+print(logicals)
+```
+
+🗣 The output shows the results of the comparisons stored in the `logicals` vector. There is one `FALSE` value and two `TRUE` values. The first value is `FALSE` because 1 is not greater than 2. The second value is `TRUE` because 3 is less than 5. The final value is `TRUE` because 4 is equal to 4.
+
+
+## Logical Indexing
+
+Logical values can be used to select elements from a vector. **Logical indexing** uses a logical vector inside `[ ]`. Values paired with `TRUE` are kept. Values paired with `FALSE` are left out.
+
+🎯 Create a new vector called `smaller` that contains only the values in `number_list` that are less than or equal to 20.
 
 ```{r}
 # ⚡ Type this in your R Notebook
@@ -412,33 +391,38 @@ number_list <- c(10, 25, 5, 30, 15, 40)
 🗣 The `number_list` vector contains the values 10, 25, 5, 30, 15, and 40.
 
 ```{r}
-# Step 1: create the logical "mask"
+# ⚡ Step 1: create the logical "mask"
 mask <- number_list <= 20
+
+# ✅ Check the mask
+print(mask)
 ```
 
-🗣 This prints a logical vector (`TRUE`/`FALSE`) the same length as `number_list`.
+🗣 This prints a logical vector (`TRUE`/`FALSE`) the same length as `number_list`. Each `TRUE` marks a value that is less than or equal to 20.
+
+⚠️ For logical indexing to behave as expected, the logical vector should line up with the vector you are filtering. Here, `mask` has one `TRUE` or `FALSE` value for each value in `number_list`.
 
 ```{r}
-# ⚡ Type this in your R Notebook
-# Step 2: use the logical vector inside [ ]
+# ⚡ Step 2: use the logical vector inside [ ]
 smaller <- number_list[mask]
-```
-
-🗣 This keeps only the values where the condition is `TRUE` (10, 5, 15).
-
-```{r}
-# ✅ Compare the vectors
-print(number_list)
 print(smaller)
 ```
 
-🗣 The output shows the values in the `number_list` vector that are less than or equal to 20, which are 10, 5, and 15. 
+🗣 This keeps only the values where mask is `TRUE`, so `smaller` contains 10, 5, and 15.
 
-Key idea here is that the condition (`number_list <= 20`) produces a logical vector; `[ ]` uses it as a filter.
+The key idea is that the condition `number_list <= 20` creates a logical vector, and `[ ]` uses that logical vector as a filter.
+
+---
 
 # Summary
 
-In this chapter, you learned to create an R Notebook, rename and save it correctly, and use code chunks to run R code with output shown directly beneath your work. You also practiced essential vector skills: doing arithmetic on numeric vectors (including recycling), checking an object’s class, combining text with `paste()`, creating factors, understanding how mixed-type vectors trigger coercion, creating named vectors, and indexing by position or name. Finally, you connected these technical skills to transparency by writing memos that clearly state your goal, show verification, explain results, and document any outside resources you used.
+In this chapter, you strengthened your R Notebook habits by practicing transparency in your code memos. You learned to document your goals, explain what your code produced, verify your results, and record outside resources when you used help. These habits make your work easier to understand, check, revise, and share.
+
+You also learned how to select values from vectors. You practiced positional indexing to select elements by number, negative indexing to remove elements, and character indexing to select elements from named vectors. You saw that character indexing requires exact matching and returns NA when a requested name does not exist.
+
+Finally, you learned how logical vectors support filtering. You created logical values with comparison operators, stored those results in a logical vector, and used logical indexing to keep only the values that met a condition.
+
+Your main takeaway is that transparent notebooks make your coding choices inspectable, and indexing gives you control over which vector values you select or filter.
 
 
 # Chapter Terms
@@ -491,99 +475,162 @@ In this chapter, you learned to create an R Notebook, rename and save it correct
 
 **Vectorization**: R’s behavior of applying a function to an entire vector at once, producing results element-by-element without writing an explicit loop. For example, `paste(first, last)` combines the first elements together, then the second, then the third, returning a vector of full names.
 
-**YAML Header**: The metadata section at the top of an R Markdown or Quarto document, written between `---` lines, that controls document settings like the title, author, date, output format (HTML/PDF/Word), and options for rendering.
+**YAML header**: The metadata section at the top of an R Markdown or Quarto document, written between `---` lines, that controls document settings like the title, author, date, output format (HTML/PDF/Word), and options for rendering.
 
 # 📝 Practice Space
 
-Fill in the blanks to complete the code. 
+Fill in the blanks to complete the code in your R Notebook.
 
-Before you begin, make sure you have created a new R Notebook in the Source pane and saved it as `chapter4_practice.Rmd` in your course folder. 
+Before you begin:
 
-Remember to document your **tenacity** on a memo if you encounter any errors while completing the tasks. Document how you troubleshot the error and what resource(s) you used to help you resolve the issue (**transparency**).
+1. Create a new R Notebook in RStudio.
+2. Save it in your course folder as `chapter4_practice.Rmd`.
+3. Complete all Practice Space tasks in that notebook.
+4. Save your workspace as `chapter4_practice.RData`.
 
-R Notebooks can look “fine” even when they are not reproducible because your Environment may still contain objects from earlier work. Start with a clean environment and run everything in order.
+Required files to submit:
 
+- `chapter4_practice.Rmd`
+- `chapter4_practice.RData`
+
+As you work, add short comments or memo notes explaining what your code is doing and what the output shows.
+
+If you encounter an error, document your **tenacity** by briefly noting what happened, what you tried, and how you fixed it or what still confuses you. Document how you troubleshot the error and what resource(s) you used to help you resolve the issue (**transparency**).
+
+Before submitting, clear your Environment and run the notebook from top to bottom. Objects need to be created in sequential order.
+
+You may quote AI output only when you clearly mark it as quoted text, either with quotation marks or a block quote using `>`. Then hand-type your own explanation of why you are including that quote.
 
 ## Task 1
 
-🎨 **Indexing named vectors**
+🧑‍🎓 **Create a named vector**
 
-🎯 Use character indexing to retrieve the hexadecimal color codes for "Matrix Green" and "Command Red" from the `nerdy_palette` vector.
+Practice creating a named vector by pairing values with element names. Some labels and some values are missing. The blanks test both parts of the name-value pair. 💡 **Tip:** Include quotes around the element names.
 
-```{r , eval=FALSE}
-# ⚡ Type this in your R Notebook
-nerdy_palette <- c(
-  "Octarine" = "#7F00FF",
-  "TARDIS Blue" = "#003B6F",
-  "Rebeccapurple" = "#663399",
-  "Hooloovoo" = "#4F97A3",
-  "Cosmic Latte" = "#FFF8E7",
-  "Vantablack" = "#000000",
-  "Matrix Green" = "#03A062",
-  "Source Engine Magenta" = "#FF00FF",
-  "Command Red" = "#CC0000",
-  "Impossible Green" = "#4D9E68"
+🎯 Create a named vector called student_counts that stores the number of students in four campus groups. Use the exact group names and counts: `"First Year"` count is 18, `"Sophomore"` count is 22, `"Junior"`count is 16, and `"Senior"` count is 14.
+
+```{r eval = FALSE}
+# ⚡ Type this in your R Notebook. Fill in the blanks.
+student_counts <- c(
+  ______ = 18,
+  "Sophomore" = ___,
+  ______ = 16,
+  "Senior" = ___
 )
-```
-```{r , eval=FALSE}
-# ⚡ Type this in your R Notebook, Fill in the blanks
-nerdy_palette[c(_______, _______)]
+
+# ✅ Check the vector
+print(student_counts)
 ```
 
-🗣 The output shows the hexadecimal color codes for "Matrix Green" and "Command Red" retrieved from the `nerdy_palette` vector using their names.
+🗣 Memo (outside of the code chunk): Explain how named vectors help make values easier to understand.
 
-🗣 ___Memo: articulate your learning process, connect ideas, or discuss challenges.___
+```{r eval=FALSE}
+missing element names: "First Year", "Junior"
+missing values: 22, 14
+```
+
 
 ## Task 2
 
-📌 **Indexing by position**
+➖ **Use negative indexing**
 
-🎯 Use positional indexing to retrieve the 2nd, 4th, and 6th color codes from the `nerdy_palette`.
+Practice using negative positions inside `[ ]` to remove elements from a vector.
 
-```{r , eval=FALSE}
-# ⚡ Type this in your R Notebook, Fill in the blanks
-________[c(_, _, _)]
+🎯 Use negative indexing to remove the 1st and 5th values from the `quiz_scores` vector.
+
+```{r eval=FALSE}
+# ⚡ Type this in your R Notebook.
+quiz_scores <- c(85, 92, 78, 88, 61, 95)
+
+# ⚡ Fill in the blank to remove positions 1 and 5.
+quiz_scores[____(1, 5)]
 ```
 
-🗣 The output shows the hexadecimal color codes for the 2nd, 4th, and 6th colors in the `nerdy_palette` vector.
+🗣 Explain what negative indexing does in R. 
 
-🗣 ___Memo: articulate your learning process, connect ideas, or discuss challenges.___
+"Negative indexing removed __________."
+
+```{r eval=FALSE, include=FALSE}
+quiz_scores[-c(1, 5)]
+```
 
 ## Task 3
 
-⚠️ **Logical filtering + indexing practice**
+🏷️ **Use character indexing**
 
-🎯 Use the `change` vector to complete the following:
+Practice selecting a named vector element using an exact character name.
 
-1. Create a new vector `positive_change` that contains only values in `change` that are greater than zero. 
+🎯 Use character indexing to retrieve the number of `"Junior"` students from the `student_counts` vector you created in Task 1.
 
-2. Create a new vector `last_two` that contains the last TWO elements of `change` (use numeric positions, not names).
-
-```{r , eval=FALSE}
-# ⚡ Type this in your R Notebook, Fill in the blanks
-change <- c(-2, 0, 5, 8, -1, 3)
-positive_change <- change[change _ 0]
-last_two <- change[c(___, ___)]
-```
-```{r , eval=FALSE}
-# ✅ Check the outputs
-print(positive_change)
-print(last_two)
+```{r eval=FALSE}
+# ⚡ Fill in the blank with the exact element name.
+____["____"]
 ```
 
-🗣 The output shows ___________________________.
+```{r eval=FALSE, include=FALSE}
+student_counts["Junior"]
+```
 
-🗣 ___Memo: articulate your learning process, connect ideas, or discuss challenges.___
+## Task 4
 
-## Task 4 
+⚖️ **Create a logical vector**
 
-Reflection
+Practice using a comparison operator to create a logical vector.
 
-🗣 In one sentence, explain why numeric values may be coerced to character if you mix them inside a single vector.
+🎯 Create a logical vector called `meets_goal` that checks whether each value in `quiz_scores` vector from Task 2 is greater than or equal to 80.
 
-🗣 Your explanation here ________
+```{r eval=FALSE}
+# ⚡ Use the quiz_scores vector from Task 2.
+
+# ⚡ Fill in the blank with the correct comparison operator.
+meets_goal <- quiz_scores ____ 80
+
+# ✅ Check the logical vector
+print(meets_goal)
+```
+
+🗣 Explain what `TRUE` and `FALSE` mean in the `meets_goal` vector.
+
+"TRUE means __________. FALSE means __________."
+
+```{r eval=FALSE, include=FALSE}
+meets_goal <- quiz_scores >= 80
+```
+
 
 ## Task 5
+
+🔎 **Use logical indexing**
+
+Practice using a logical vector as a mask to filter another vector.
+
+🎯 Use `meets_goal` from Task 4 to keep only the values in `quiz_scores` that are greater than or equal to 80.
+
+```{r eval=FALSE}
+# ⚡ Use the logical vector from Task 4 to filter quiz_scores.
+passing_scores <- ____[____]
+
+# ✅ Check the new vector
+print(passing_scores)
+```
+
+🗣 Memo: Explain which values were kept and why.
+
+passing_scores kept __________ because __________.
+
+
+```{r eval=FALSE, include=FALSE}
+passing_scores <- quiz_scores[meets_goal]
+```
+
+## Task 6
+ 
+ **Reflect on logical masks**
+ 
+🎯 In one to two sentences, explain how the logical mask controls which values are kept.
+
+
+## Task 7
 
 🎯 **Step 1: Sweep your Environment (start clean).**  
 Click the 🧹 **broom icon** in the Environment pane to clear objects.

@@ -157,11 +157,11 @@ _____(integer)
 
 ## Logical vector
 
-A logical vector can be created several ways. For this task, you will create the vector using **logical operators**.
+A logical vector can be created several ways. For this task, you will create the vector using **comparison operators**.
 
 ___
 
-📖 **Review** The logical operators are:
+📖 **Review** The comparison operators are:
 
 - `>` greater than
 
@@ -468,6 +468,8 @@ print(story2)
 
 **Code Chunks**: Fenced blocks in an R Markdown/Notebook document where R code is written and executed, usually starting with <code>&#96;&#96;&#96;{r}</code>. Only code inside a chunk runs, and its output (including plots and tables) appears directly below the chunk when executed.
 
+**Comparison Operators**: Operators that create or combine logical elements. The most common are comparison operators—`==`, `!=`, `<`, `>`, `<=`, `>=`—which return `TRUE`/`FALSE`.
+
 **Concatenate** `c()`: A function that combines (concatenates) values into a single vector. You use `c()` to create a vector, append items to an existing vector, or join multiple vectors together (for example, `c(1, 2, 3)` or `c(x, y)`.
 
 **Elements**: The individual data values stored inside a vector object. Each element has a position (its index) and can be accessed by indexing (for example, `x[1]` for the first element).
@@ -481,8 +483,6 @@ print(story2)
 **Function Call**: The act of running a function by writing its name followed by parentheses, optionally supplying arguments inside (e.g., `mean(x)`). 
 
 **Integer Vector**: A vector that stores whole numbers. In R, integers are typically written with an `L` suffix, such as `1L` or `42L`.
-
-**Logical Operators**: Operators that create or combine logical elements. The most common are comparison operators—`==`, `!=`, `<`, `>`, `<=`, `>=`—which return `TRUE`/`FALSE`, and Boolean operators—`!` (NOT), `&` / `|` (AND/OR applied element-by-element), and `&&` / `||` (AND/OR that evaluate only the first element, mainly for if conditions).
 
 **Logical Vector**: A vector that stores Boolean elements: `TRUE` or `FALSE` (and sometimes `NA` for missing). Logical vectors are commonly produced by comparisons (for example, `x > 0`) and are heavily used for filtering and conditional code.
 

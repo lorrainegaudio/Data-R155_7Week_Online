@@ -11,7 +11,7 @@
 
 <meta name="author" content="Lorraine Gaudio" />
 
-<meta name="date" content="2026-05-12" />
+<meta name="date" content="2026-05-14" />
 
 <title>Chapter 2</title>
 
@@ -1633,7 +1633,7 @@ display: none;
 <h1 class="title toc-ignore">Chapter 2</h1>
 <h3 class="subtitle">Scripts</h3>
 <h4 class="author">Lorraine Gaudio</h4>
-<h4 class="date">May 12, 2026</h4>
+<h4 class="date">May 14, 2026</h4>
 
 </div>
 
@@ -1660,6 +1660,7 @@ memos.</p></li>
 <li><p>🔍 Check the mode and length of any vector object.</p></li>
 <li><p>📊 Create a data frame from vectors.</p></li>
 </ul>
+<hr />
 </div>
 <div id="script-editor-source" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> Script Editor
@@ -1783,8 +1784,10 @@ script open.</div>
 <pre class="r"><code># Save your script in your course folder (e.g., Intro_to_R)
 # File name: chapter2_notes
 # Save a type: R</code></pre>
+<blockquote>
 <p>🧐 <strong>Notice:</strong> that the file extension <code>.R</code>
 is automatically added.</p>
+</blockquote>
 <pre class="r"><code># ✅ Verify that `chapter2_notes.R` is in the right folder.</code></pre>
 <p>💡 <strong>Tip:</strong> “Working directory” controls where R looks
 for files when you use relative paths, but you can still accidentally
@@ -1834,12 +1837,13 @@ Sweep your environment and run code out of order.</p>
 <p>💡 <strong>Tip:</strong> All scripts submissions must be able to run
 from top to bottom without errors. Regularly test your script by
 clicking Source to ensure that all lines run without errors.</p>
+<p>In R, an error message is not a judgment. It is the computer telling
+you exactly what it cannot do <em>yet</em>. Learning to read errors
+calmly and then adjusting your next step is a core part of learning to
+code.</p>
 <hr />
-<p>Throughout this course, you will see 🛠 <strong>Break
-Things!</strong>. This means I will create an error on purpose. In R, an
-error message is not a judgment. It is the computer telling you exactly
-what it cannot do <em>yet</em>. Learning to read errors calmly and then
-adjusting your next step is a core part of learning to code.</p>
+<p>Next, you will learn how to use comments as memos to document when
+you encounter errors.</p>
 </div>
 </div>
 <div id="memo-in-r-scripts" class="section level1" number="3">
@@ -1883,6 +1887,10 @@ do next time.</p></li>
 model the process. Mirror this process in all work you submit for the
 course. Each chapter will highlight specific memoing practices to focus
 on. This chapter focuses on documenting your tenacity.</p>
+<hr />
+<p>Now that you know how to write and run code in a script, you will
+likely encounter errors. Tenacity is the learning skill that helps you
+persist through those errors and learn from them.</p>
 </div>
 </div>
 <div id="tenacity" class="section level1" number="4">
@@ -1973,11 +1981,13 @@ tenacity process.</p>
 # Error: unexpected &#39;)&#39; in &quot;3.008+7*24)&quot;
 # memo: This error is because the ) is a typo. 
 3.008+7*24</code></pre>
+<blockquote>
 <p>🧐 <strong>Notice:</strong> The student (1) ✍️ kept but commented out
 (<code>#</code>) the code with the error, (2) ✍️ copied and pasted the
 error from the console, (3) 🗣 composed a memo that recognized the
 unexpected parenthesis as a typo and (4) ⚡ composed new code that
 removed it to fix the error.</p>
+</blockquote>
 <p><em>Memo examples like this one are provided throughout the each
 chapter.</em></p>
 <hr />
@@ -2026,15 +2036,18 @@ logicals2 &lt;- c( 1&gt;2, 3&lt;5, 4==4 )
 logicals2
 # memo: Here&#39;s what came back in the console! [1] FALSE  TRUE  TRUE
 # memo: That means 1&gt;2 is false, 3&lt;5 is true, and 4=4 is true</code></pre>
+<blockquote>
 <p>🧐 <strong>Notice:</strong> The student (1) ✍️ kept but commented out
 (<code>#</code>) the code with the errors, (2) ✍️ copied and pasted the
 error shown in the console, (3) 👀 cites a course video and the intent
 to 🛠 <strong>Break Things!</strong> to understand errors, (4) ⚡ revised
 the code to fix the errors, and 🗣 explained the final results.</p>
+</blockquote>
 <hr />
 <p>We turn to building basic objects next. As you work through the
 exercises, practice documenting your tenacity on a memo whenever you
 encounter an error or do not fully understand.</p>
+<hr />
 </div>
 </div>
 <div id="vectors" class="section level1" number="5">
@@ -2069,11 +2082,13 @@ numbers3  &lt;- c(1.5, 2.5, -3.5)                # Numeric with decimals and neg
 print(numbers3)</code></pre>
 <p>🗣 The output shows the three numbers stored in the
 <code>numbers3</code> vector.</p>
+<blockquote>
 <p>🧐 <strong>Notice:</strong> You can see object details by looking at
 the Environment pane. The <code>numbers3</code> object shows as “num
 [1:3]” indicating it is a numeric vector with three elements. These
 numbers are “numeric” because they include decimal points. The placement
 of the numbers in the list is ordered exactly as you entered them.</p>
+</blockquote>
 </div>
 <div id="integer-vectors-with-c" class="section level2" number="5.2">
 <h2><span class="header-section-number">5.2</span> Integer Vectors with
@@ -2180,6 +2195,9 @@ logicals &lt;- c(FALSE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE, NA)</co
 print(logicals)</code></pre>
 <p>🗣 The output shows the logical values stored in the
 <code>logicals</code> vector.</p>
+<hr />
+<p>In the next section, you will learn how to inspect vectors to confirm
+what they are before using them in your analysis.</p>
 </div>
 </div>
 <div id="inspecting-vectors" class="section level1" number="6">
@@ -2254,6 +2272,7 @@ print(spectrum_shift)</code></pre>
 three columns: <code>Vibe</code>, <code>Year</code>, and
 <code>Code</code>. Each column corresponds to one of the vectors we
 combined.</p>
+<hr />
 </div>
 <div id="summary" class="section level1" number="8">
 <h1><span class="header-section-number">8</span> Summary</h1>
@@ -2365,10 +2384,31 @@ intended).</p>
 </div>
 <div id="practice-space" class="section level1" number="10">
 <h1><span class="header-section-number">10</span> 📝 Practice Space</h1>
-<p><strong>Fill in the blanks to complete the code.</strong></p>
-<p>In the code blocks below, underscores (_) represent blanks. Do not
-type underscores. Replace them with the correct code (object names,
-function names, numbers, commas/quotes, or parentheses).</p>
+<p>Fill in the blanks to complete the code in your R Script.</p>
+<p>Before you begin:</p>
+<ol style="list-style-type: decimal">
+<li>Create a new R Script in RStudio.</li>
+<li>Save it in your course folder as
+<code>chapter2_practice.R</code>.</li>
+<li>Complete all Practice Space tasks in that notebook.</li>
+<li>Save your workspace as <code>chapter2_practice.RData</code>.</li>
+</ol>
+<p>Required files to submit:</p>
+<ul>
+<li><code>chapter2_practice.R</code></li>
+<li><code>chapter2_practice.RData</code></li>
+</ul>
+<p>As you work, add short comments or memo notes explaining what your
+code is doing and what the output shows.</p>
+<p>If you encounter an error, document your <strong>tenacity</strong> by
+briefly noting what happened, what you tried, and how you fixed it or
+what still confuses you.</p>
+<p>Before submitting, clear your Environment and run the notebook from
+top to bottom. Objects need to be created in sequential order.</p>
+<p>All work must be hand-typed by you in your own voice. Do not copy and
+paste from AI. You make quote AI output anywhere (clear quotation marks
+or quote (<code>&gt;</code>) before the paragraph). Hand-type a
+explanation of why you’re including that quote.</p>
 <div id="task-0" class="section level2" number="10.1">
 <h2><span class="header-section-number">10.1</span> Task 0</h2>
 <p>Before you begin, make sure you have created a new R script in the

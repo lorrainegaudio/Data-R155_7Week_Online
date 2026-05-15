@@ -92,6 +92,7 @@ In Chapter Two you will learn how to:
 
 - 📊 Create a data frame from vectors.
 
+---
 
 # Script Editor (Source)
 
@@ -190,7 +191,7 @@ Method B. **File Menu**
 # Save a type: R
 ```
 
-🧐 **Notice:** that the file extension `.R` is automatically added.
+> 🧐 **Notice:** that the file extension `.R` is automatically added.
 
 ```{r eval=FALSE}
 # ✅ Verify that `chapter2_notes.R` is in the right folder.
@@ -255,9 +256,11 @@ the_aftermath <- seven.eight - nine
 
 💡 **Tip:** All scripts submissions must be able to run from top to bottom without errors. Regularly test your script by clicking Source to ensure that all lines run without errors.
 
-___
+In R, an error message is not a judgment. It is the computer telling you exactly what it cannot do *yet*. Learning to read errors calmly and then adjusting your next step is a core part of learning to code. 
 
-Throughout this course, you will see 🛠 **Break Things!**. This means I will create an error on purpose. In R, an error message is not a judgment. It is the computer telling you exactly what it cannot do *yet*. Learning to read errors calmly and then adjusting your next step is a core part of learning to code. 
+---
+
+Next, you will learn how to use comments as memos to document when you encounter errors. 
 
 # Memo in R Scripts
 
@@ -286,6 +289,10 @@ Researchers have found that typing self-explanations of code improves retention 
 3. **Self-reflection** after action. After getting the code to work, 🗣 Comment about what you learned, what surprised you, or what questions remain. 🪞 Reflect on learning process and what you will do next time. 
 
 Icons for these strategies are provided in throughout each chapter to model the process. Mirror this process in all work you submit for the course. Each chapter will highlight specific memoing practices to focus on. This chapter focuses on documenting your tenacity.
+
+---
+
+Now that you know how to write and run code in a script, you will likely encounter errors. Tenacity is the learning skill that helps you persist through those errors and learn from them.
 
 # Tenacity
 
@@ -353,7 +360,7 @@ Below is a common beginner error along with memos documenting the tenacity proce
 3.008+7*24
 ```
 
-🧐 **Notice:** The student (1) ✍️ kept but commented out (`#`) the code with the error, (2) ✍️ copied and pasted the error from the console, (3) 🗣 composed a memo that recognized the unexpected parenthesis as a typo and (4) ⚡ composed new code that removed it to fix the error.
+> 🧐 **Notice:** The student (1) ✍️ kept but commented out (`#`) the code with the error, (2) ✍️ copied and pasted the error from the console, (3) 🗣 composed a memo that recognized the unexpected parenthesis as a typo and (4) ⚡ composed new code that removed it to fix the error.
 
 *Memo examples like this one are provided throughout the each chapter.* 
 
@@ -399,12 +406,14 @@ logicals2
 # memo: That means 1>2 is false, 3<5 is true, and 4=4 is true
 ```
 
-🧐 **Notice:** The student (1) ✍️ kept but commented out (`#`) the code with the errors, (2) ✍️ copied and pasted the error shown in the console, (3) 👀 cites a course video and the intent to 🛠 **Break Things!** to understand errors, (4) ⚡ revised the code to fix the errors, and 🗣 explained the final results.
+> 🧐 **Notice:** The student (1) ✍️ kept but commented out (`#`) the code with the errors, (2) ✍️ copied and pasted the error shown in the console, (3) 👀 cites a course video and the intent to 🛠 **Break Things!** to understand errors, (4) ⚡ revised the code to fix the errors, and 🗣 explained the final results.
 
 ___
 
 
 We turn to building basic objects next. As you work through the exercises, practice documenting your tenacity on a memo whenever you encounter an error or do not fully understand.
+
+---
 
 # Vectors
 
@@ -438,7 +447,7 @@ print(numbers3)
 
 🗣 The output shows the three numbers stored in the `numbers3` vector.
 
-🧐 **Notice:** You can see object details by looking at the Environment pane. The `numbers3` object shows as "num [1:3]" indicating it is a numeric vector with three elements. These numbers are "numeric" because they include decimal points. The placement of the numbers in the list is ordered exactly as you entered them. 
+> 🧐 **Notice:** You can see object details by looking at the Environment pane. The `numbers3` object shows as "num [1:3]" indicating it is a numeric vector with three elements. These numbers are "numeric" because they include decimal points. The placement of the numbers in the list is ordered exactly as you entered them. 
 
 ## Integer Vectors with `c()`
 
@@ -565,6 +574,10 @@ print(logicals)
 
 🗣 The output shows the logical values stored in the `logicals` vector.
 
+---
+
+In the next section, you will learn how to inspect vectors to confirm what they are before using them in your analysis.
+
 # Inspecting Vectors
 
 Before using data, we need to confirm *what* it is. 
@@ -645,6 +658,8 @@ print(spectrum_shift)
 
 🗣 The output shows the `spectrum_shift` data frame with three columns: `Vibe`, `Year`, and `Code`. Each column corresponds to one of the vectors we combined.
 
+---
+
 # Summary
 
 This chapter taught you how to work in an R script: create a new `.R` file in the Source pane, run code into the Console with RStudio’s Run commands/shortcuts, and use comments to document what you tried when something failed. You built vectors with `c()`, `:` and `seq()`, practiced element-wise vector arithmetic (including R’s recycling behavior and the warnings it can trigger), created character and logical vectors, and then checked objects with `mode()` and `length()` to confirm what they are before using them. Finally, you combined same-length vectors into a data frame using `data.frame()`, which is the standard “table” structure you will use constantly in later chapters.
@@ -689,9 +704,27 @@ This chapter taught you how to work in an R script: create a new `.R` file in th
 
 # 📝 Practice Space
 
-**Fill in the blanks to complete the code.** 
+Fill in the blanks to complete the code in your R Script.
 
-In the code blocks below, underscores (_) represent blanks. Do not type underscores. Replace them with the correct code (object names, function names, numbers, commas/quotes, or parentheses).
+Before you begin:
+
+1. Create a new R Script in RStudio.
+2. Save it in your course folder as `chapter2_practice.R`.
+3. Complete all Practice Space tasks in that notebook.
+4. Save your workspace as `chapter2_practice.RData`.
+
+Required files to submit:
+
+- `chapter2_practice.R`
+- `chapter2_practice.RData`
+
+As you work, add short comments or memo notes explaining what your code is doing and what the output shows.
+
+If you encounter an error, document your **tenacity** by briefly noting what happened, what you tried, and how you fixed it or what still confuses you.
+
+Before submitting, clear your Environment and run the notebook from top to bottom. Objects need to be created in sequential order.
+
+All work must be hand-typed by you in your own voice. Do not copy and paste from AI. You make quote AI output anywhere (clear quotation marks or quote (`>`) before the paragraph). Hand-type a explanation of why you're including that quote.
 
 ## Task 0
 

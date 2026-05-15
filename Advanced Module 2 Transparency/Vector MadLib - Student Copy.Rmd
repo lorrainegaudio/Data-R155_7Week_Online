@@ -80,10 +80,10 @@ _____(integer)
 
 ## Logical vector
 
-A logical vector can be created several ways. For this task, you will create the vector using **logical operators**.
+A logical vector can be created several ways. For this task, you will create the vector using **comparison operators**.
 
 
-🎯  Create a vector called `logical` using only **logical operators** (length = 4).
+🎯  Create a vector called `logical` using only **comparison operators** (length = 4).
 
 ```{r}
 # ⚡
