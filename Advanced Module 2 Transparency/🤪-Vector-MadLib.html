@@ -1719,7 +1719,7 @@ display: none;
 
 <h1 class="title toc-ignore">🤪 Vector MadLib</h1>
 <h4 class="author">by Lorraine Gaudio</h4>
-<h4 class="date">Version May 14, 2026</h4>
+<h4 class="date">Version May 17, 2026</h4>
 
 </div>
 
@@ -1796,7 +1796,7 @@ vector</strong>.</p>
 <div id="logical-vector" class="section level2" number="2.3">
 <h2><span class="header-section-number">2.3</span> Logical vector</h2>
 <p>A logical vector can be created several ways. For this task, you will
-create the vector using <strong>logical operators</strong>.</p>
+create the vector using <strong>comparison operators</strong>.</p>
 <hr />
 <p>📖 <strong>Review</strong> The comparison operators are:</p>
 <ul>
@@ -1949,28 +1949,35 @@ missing quotation marks.</p>
 <div id="factor-class" class="section level2" number="2.5">
 <h2><span class="header-section-number">2.5</span> Factor class</h2>
 <p><strong>Convert one character vector to factor class</strong></p>
-<p>A factor is R’s way of storing categorical data. In this activity,
-you will choose one character vector you already created and convert it
-into a factor object called <code>story_factor</code>.</p>
+<p>A factor is R’s way of storing categorical data. Factors often
+<em>print like words</em>, but R stores them internally using integer
+codes with category labels called <strong>levels</strong>.</p>
+<p>In this activity, you will choose one character vector you already
+created and use it to create a <strong>new factor object</strong> called
+<code>story_factor</code>.</p>
 <p>➤ Step 1: Check the Class</p>
 <p>🎯 Select a character vector (e.g., <code>name</code>,
 <code>item</code>, <code>emotion</code>) and use a function
 <code>class()</code> to check the class of the vector.</p>
 <pre class="r"><code># ✅ Check the class before conversion
 class( __ )</code></pre>
+<p>🗣 Comment: What class is the original vector</p>
 <p>➤ Step 2: Change Class to Factor</p>
 <p>🎯 Use <code>as.factor()</code> to convert your chosen character
 vector into a new object called <code>story_factor</code>.</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
 story_factor &lt;- as.factor(x = __)</code></pre>
+<p>🗣 The original vector does not change class.
+<code>story_factor</code> is a new factor object made from the selected
+character vector.</p>
 <p>➤ Step 3: Check the Class</p>
 <p>🎯 Verify that <code>story_factor</code> has factor class, then
 inspect its levels.</p>
-<pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
+<pre class="r"><code># ⚡ Type this in your R Notebook
 class(story_factor)
 levels(story_factor)</code></pre>
-<p>🗣 Comment: Explain which vector you converted, how the class changed,
-and what the levels show.</p>
+<p>🗣 Comment: Explain which vector you converted, how the new object’s
+class differs from the original vector’s class.</p>
 </div>
 </div>
 <div id="story" class="section level1" number="3">

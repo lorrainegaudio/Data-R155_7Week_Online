@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Appropriateness Quest</title>
+  <style>
+    :root {
+      --bsu-blue: #0033a0;
+      --bsu-orange: #d64309;
+      --light-blue: #eef3ff;
+      --light-orange: #fff3ec;
+      --pale-blue: #dce7ff;
+      --pale-orange: #ffe1d3;
+      --dark: #1f2937;
+      --mid: #535455;
+      --border: #d5d8df;
+      --bg: #f7f8fb;
+      --white: #ffffff;
+      --good: #17633a;
+      --warn: #8a4b00;
+      --bad: #8f1d1d;
+      --focus: #111827;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(135deg, var(--light-blue), var(--light-orange));
+      color: var(--dark);
+      min-height: 100vh;
+      padding: 18px;
+    }
+    .app {
+      max-width: 1080px;
+      margin: 0 auto;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 18px 44px rgba(0,0,0,.16);
+    }
+    header {
+      background: var(--bsu-blue);
+      color: white;
+      padding: 20px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    header h1 { margin: 0; font-size: 1.55rem; line-height: 1.2; }
+    .badge {
+      display: inline-block;
+      border: 1px solid rgba(255,255,255,.5);
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-weight: 700;
+      background: rgba(255,255,255,.14);
+      font-size: .92rem;
+      color: white;
+      text-decoration: none;
+    }
+    .home-link {
+      cursor: pointer;
+      min-height: 44px;
+    }
+    .home-link:hover,
+    .home-link:focus-visible {
+      background: rgba(255,255,255,.24);
+    }
+    main { padding: 24px; }
+    h2 { color: var(--bsu-blue); margin-top: 0; }
+    h3 { margin: 0 0 8px; }
+    p, li { line-height: 1.5; }
+    button, textarea { font: inherit; }
+    button:focus-visible, textarea:focus-visible, summary:focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 3px;
+    }
+    .screen { display: none; }
+    .screen.active { display: block; }
+    .grid { display: grid; gap: 16px; }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid-5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+    .card {
+      border: 1px solid var(--border);
+      border-left: 6px solid var(--bsu-blue);
+      background: var(--bg);
+      border-radius: 14px;
+      padding: 16px;
+    }
+    .card.blue { background: var(--light-blue); border-left-color: var(--bsu-blue); }
+    .card.orange { background: var(--light-orange); border-left-color: var(--bsu-orange); }
+    .card.good { border-left-color: var(--good); background: #f0fff6; }
+    .card.warn { border-left-color: var(--warn); background: #fff8ed; }
+    .card.bad { border-left-color: var(--bad); background: #fff1f1; }
+    .small { color: var(--mid); font-size: .93rem; }
+    .note {
+      border: 1px solid var(--pale-blue);
+      background: var(--light-blue);
+      border-radius: 12px;
+      padding: 14px;
+      margin: 16px 0;
+    }
+    .btn {
+      border: 0;
+      border-radius: 10px;
+      padding: 12px 16px;
+      background: var(--bsu-blue);
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+      min-height: 44px;
+    }
+    .btn:hover { filter: brightness(1.06); }
+    .btn.secondary { background: var(--mid); }
+    .btn.orange { background: var(--bsu-orange); }
+    .btn.light {
+      background: white;
+      color: var(--bsu-blue);
+      border: 1px solid var(--bsu-blue);
+    }
+    .btn.full { width: 100%; text-align: left; }
+    .btn.choice {
+      color: var(--dark);
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-left: 6px solid var(--bsu-blue);
+      box-shadow: 0 4px 12px rgba(0,0,0,.06);
+      text-align: left;
+      font-weight: 500;
+    }
+    .btn.choice:hover { border-color: var(--bsu-blue); transform: translateY(-1px); }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 18px; }
+    .profile-btn {
+      display: block;
+      width: 100%;
+      text-align: left;
+      background: var(--white);
+      color: var(--dark);
+      border: 1px solid var(--border);
+      border-left: 6px solid var(--bsu-orange);
+      border-radius: 14px;
+      padding: 16px;
+      cursor: pointer;
+      min-height: 150px;
+    }
+    .profile-btn:hover { box-shadow: 0 9px 22px rgba(0,0,0,.12); }
+    .profile-btn strong { display: block; font-size: 1.05rem; margin-bottom: 6px; color: var(--bsu-blue); }
+    .profile-btn span { display: block; line-height: 1.45; }
+    .meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      color: var(--mid);
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+    .progress-wrap { margin: 12px 0 18px; }
+    .progress-label { display: flex; justify-content: space-between; gap: 12px; font-weight: 700; color: var(--mid); }
+    .progress-outer {
+      height: 14px;
+      border-radius: 999px;
+      background: #e7e9ef;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+    .progress-inner { height: 100%; width: 0%; background: var(--bsu-orange); transition: width .25s ease; }
+    .stat-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      min-height: 118px;
+    }
+    .stat-card strong { display: block; color: var(--mid); font-size: .86rem; }
+    .stat-card .hint { color: var(--mid); font-size: .78rem; line-height: 1.25; min-height: 34px; margin-top: 4px; }
+    .value { font-size: 1.35rem; font-weight: 800; margin-top: 6px; }
+    .meter { height: 10px; border-radius: 999px; background: #e5e7eb; overflow: hidden; margin-top: 8px; }
+    .meter span { display: block; height: 100%; width: 0; background: var(--bsu-blue); transition: width .25s ease; }
+    .meter.risk span { background: var(--bsu-orange); }
+    .scenario {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: white;
+      padding: 18px;
+      margin-top: 16px;
+    }
+    .label {
+      color: var(--bsu-orange);
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+    .tag {
+      display: inline-block;
+      border-radius: 999px;
+      padding: 5px 9px;
+      background: var(--light-blue);
+      color: var(--bsu-blue);
+      font-size: .83rem;
+      font-weight: 700;
+    }
+    .tag.orange { background: var(--light-orange); color: var(--bsu-orange); }
+    code { background: #edf2f7; padding: 2px 5px; border-radius: 5px; font-family: Consolas, Monaco, monospace; }
+    pre {
+      background: #111827;
+      color: #f9fafb;
+      padding: 14px;
+      border-radius: 12px;
+      overflow-x: auto;
+      white-space: pre-wrap;
+    }
+    pre code {
+      background: transparent;
+      color: inherit;
+      padding: 0;
+      border-radius: 0;
+      display: block;
+      font-family: Consolas, Monaco, monospace;
+      line-height: 1.45;
+    }
+    .feedback { display: none; margin-top: 18px; }
+    .feedback.show { display: block; }
+    .feedback h3 { color: var(--dark); }
+    .verification {
+      border: 1px dashed var(--bsu-blue);
+      background: var(--light-blue);
+      border-radius: 12px;
+      padding: 12px;
+      margin-top: 12px;
+    }
+    table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+    th, td { text-align: left; vertical-align: top; border: 1px solid var(--border); padding: 10px; line-height: 1.4; }
+    th { background: var(--bsu-blue); color: white; }
+    tr:nth-child(even) td { background: #fbfcff; }
+    textarea {
+      width: 100%;
+      min-height: 220px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      resize: vertical;
+      line-height: 1.45;
+    }
+    .divider { border-top: 2px solid var(--bsu-blue); margin: 26px 0; }
+    details {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      background: var(--light-orange);
+      margin-top: 16px;
+    }
+    summary { cursor: pointer; font-weight: 800; color: var(--bsu-orange); }
+    .copy-note { min-height: 1.2rem; color: var(--mid); }
+
+    .decision-rhythm {
+      border: 1px solid var(--pale-blue);
+      background: #fbfcff;
+      border-radius: 12px;
+      padding: 14px 18px;
+      margin: 16px 0 24px;
+    }
+    .decision-rhythm h3 { color: var(--bsu-blue); margin-bottom: 8px; }
+    .decision-rhythm ol { margin: 0; padding-left: 1.35rem; }
+    .decision-rhythm li { margin: 6px 0; }
+    .profile-tendencies {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+      color: var(--mid);
+      font-size: .9rem;
+      line-height: 1.45;
+    }
+    .profile-tendencies strong { color: var(--dark); font-size: .9rem; }
+    @media (max-width: 900px) {
+      body { padding: 10px; }
+      main { padding: 18px; }
+      .grid-2, .grid-3, .grid-5 { grid-template-columns: 1fr; }
+      header h1 { font-size: 1.3rem; }
+      table, thead, tbody, th, td, tr { display: block; }
+      th { display: none; }
+      td { border-top: 0; }
+      td:first-child { border-top: 1px solid var(--border); font-weight: 800; color: var(--bsu-blue); background: var(--light-blue); }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <h1>AI Appropriateness Quest</h1>
+      <button id="home-link" class="badge home-link" type="button" aria-label="Return to the start screen">Home: Intro to R Programming</button>
+    </header>
+
+    <main>
+      <section id="start-screen" class="screen active" aria-labelledby="start-title">
+        <h2 id="start-title">Human-Centered, AI-Guided R Learning</h2>
+        <p>This short decision game asks you to practice an intellectual value: keeping your own judgment at the center when AI is available. You will read realistic Intro to R situations and decide whether AI would support learning, weaken learning, or depend on how it is used.</p>
+
+        <div class="note">
+          <strong>About the feedback meters:</strong> after you choose a learner profile, five numbers will appear: Understanding, Tenacity, AI Judgment, Reproducibility, and Delegation Risk. They are not grades. They are feedback signals that show how different choices affect learning, verification, and outsourcing.
+        </div>
+
+        <div class="decision-rhythm" aria-label="Decision rhythm">
+          <h3>Decision rhythm for each scenario</h3>
+          <ol>
+            <li><strong>Attempt:</strong> try the task first, run code, read errors, and notice what happened.</li>
+            <li><strong>Document:</strong> keep evidence of the code, error, what you tried, and what changed.</li>
+            <li><strong>Ask:</strong> use AI for help that preserves your accountability, such as hints, diagnostic questions, or explanations.</li>
+            <li><strong>Verify:</strong> rerun, compare, and explain the result in your own words.</li>
+          </ol>
+        </div>
+
+        <h2>Choose your learner profile</h2>
+        <p class="small">Each profile has strengths and risks. Pick the one that feels closest today.</p>
+        <div id="profile-grid" class="grid grid-2"></div>
+      </section>
+
+      <section id="game-screen" class="screen" aria-labelledby="scenario-title">
+        <div class="meta">
+          <span id="round-label">Round 1 of 6</span>
+          <span id="profile-label"></span>
+        </div>
+
+        <div class="progress-wrap" aria-label="Activity progress">
+          <div class="progress-label"><span id="progress-text">Required path</span><span id="progress-number">1 / 6</span></div>
+          <div class="progress-outer"><div id="progress-inner" class="progress-inner"></div></div>
+        </div>
+
+        <div class="grid grid-5" aria-label="Learning feedback signals">
+          <div class="stat-card"><strong>Understanding</strong><div class="hint">Can you explain the code or feedback?</div><div id="understanding-value" class="value"></div><div class="meter"><span id="understanding-meter"></span></div></div>
+          <div class="stat-card"><strong>Tenacity</strong><div class="hint">Did you attempt, document, and recalibrate?</div><div id="tenacity-value" class="value"></div><div class="meter"><span id="tenacity-meter"></span></div></div>
+          <div class="stat-card"><strong>AI Judgment</strong><div class="hint">Can you tell help from replacement?</div><div id="judgment-value" class="value"></div><div class="meter"><span id="judgment-meter"></span></div></div>
+          <div class="stat-card"><strong>Reproducibility</strong><div class="hint">Can the work be rerun and checked?</div><div id="repro-value" class="value"></div><div class="meter"><span id="repro-meter"></span></div></div>
+          <div class="stat-card"><strong>Delegation Risk</strong><div class="hint">How much thinking is being outsourced?</div><div id="risk-value" class="value"></div><div class="meter risk"><span id="risk-meter"></span></div></div>
+        </div>
+
+        <article class="scenario">
+          <div id="scenario-type" class="label"></div>
+          <h2 id="scenario-title"></h2>
+          <p id="scenario-text"></p>
+          <div id="code-area"></div>
+          <p><strong>Proposed AI move:</strong> <span id="ai-prompt"></span></p>
+        </article>
+
+        <div id="choice-grid" class="grid grid-2" aria-label="Choices"></div>
+
+        <section id="feedback" class="feedback" aria-live="polite">
+          <div id="feedback-card" class="card">
+            <h3 id="feedback-title"></h3>
+            <p id="feedback-text"></p>
+            <div class="verification"><strong>Verification plan:</strong> <span id="verification-text"></span></div>
+          </div>
+          <div class="actions" id="feedback-actions"></div>
+        </section>
+      </section>
+
+      <section id="core-complete-screen" class="screen" aria-labelledby="core-complete-title">
+        <h2 id="core-complete-title">Core rounds complete</h2>
+        <p>You completed the six required scenarios. You can go to the discussion reflection now, or keep practicing with optional bonus scenarios.</p>
+        <div class="grid grid-2">
+          <div class="card blue"><h3>Go to discussion reflection</h3><p>Use the final template to create your own AI appropriateness vignette for discussion.</p><button class="btn" onclick="showFinalScreen()">Go to discussion reflection</button></div>
+          <div class="card orange"><h3>Keep practicing</h3><p>Try optional bonus rounds on privacy, missing values, confidence, practice generation, and peer discussion.</p><button class="btn orange" onclick="startBonus()">Keep practicing with bonus scenarios</button></div>
+        </div>
+      </section>
+
+      <section id="final-screen" class="screen" aria-labelledby="final-title">
+        <h2 id="final-title">Discussion reflection</h2>
+        <p id="final-message">Use your game decisions to prepare a short scenario for discussion.</p>
+
+        <div class="grid grid-2">
+          <div class="card blue"><h3>Your AI decision profile</h3><p id="profile-summary"></p></div>
+          <div class="card orange"><h3>Course takeaway</h3><p>Ask, "Will this AI use help me learn, verify, and explain my own work?" not just, "Can AI do this?"</p></div>
+        </div>
+
+        <div class="divider"></div>
+
+        <h2>AI Help or AI Harm?</h2>
+        <p>This summary is the main takeaway from the game.</p>
+        <table aria-label="AI help or AI harm summary">
+          <thead><tr><th>AI role</th><th>Helps learning when...</th><th>Harms learning when...</th></tr></thead>
+          <tbody>
+            <tr><td>Error translator</td><td>You ask what an error means and inspect your own code.</td><td>You ask AI to rewrite the whole assignment.</td></tr>
+            <tr><td>Debugging coach</td><td>You ask for diagnostic steps after showing what you tried.</td><td>You paste replacement code without understanding it.</td></tr>
+            <tr><td>Concept tutor</td><td>You ask for examples and quiz yourself.</td><td>You copy explanations into your memo.</td></tr>
+            <tr><td>Practice generator</td><td>You solve first, then check or compare.</td><td>You read answers passively.</td></tr>
+            <tr><td>Verification support</td><td>You compare outputs and explain consequences.</td><td>You assume running code means correct code.</td></tr>
+            <tr><td>Reflection helper</td><td>You ask for reflection questions.</td><td>You ask AI to write the reflection for you.</td></tr>
+          </tbody>
+        </table>
+
+        <div class="divider"></div>
+
+        <h2>Create your own vignette</h2>
+        <p><strong>Create a realistic situation where a student must decide whether AI would support learning or replace the learning work.</strong></p>
+        <textarea id="reflection-box" aria-label="Create your own vignette template">Name:
+Context:
+R task:
+What the student has already tried:
+Problem or confusion:
+Proposed AI prompt:
+Evaluation: Appropriate, inappropriate, or conditional?
+Reason:
+Boundary or condition:
+Verification plan:</textarea>
+        <div class="actions"><button class="btn orange" onclick="copyText('reflection-box', 'copy-note')">Copy Vignette Template</button><button class="btn secondary" onclick="restartGame()">Play Again</button></div>
+        <p id="copy-note" class="copy-note"></p>
+
+        <details>
+          <summary>Advanced Challenge: Improve a Risky Prompt</summary>
+          <p><strong>Risky prompt:</strong> Fix my R assignment and write the memo for me.</p>
+          <p>Rewrite it so it supports learning instead of replacing learning.</p>
+          <textarea id="advanced-box" aria-label="Advanced prompt rewrite">I tried this code and got this error. Ask me diagnostic questions first, then give me a checklist. Do not rewrite the full assignment or memo.</textarea>
+          <div class="actions"><button class="btn orange" onclick="copyText('advanced-box', 'advanced-note')">Copy Advanced Prompt</button></div>
+          <p id="advanced-note" class="copy-note"></p>
+        </details>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const profiles = [
+      { id: 'careful', name: 'Careful Debugger', description: 'You read errors slowly, keep notes, and prefer a checklist before asking for help.', stats: { understanding: 50, tenacity: 68, judgment: 52, reproducibility: 64, risk: 22 } },
+      { id: 'sprinter', name: 'Deadline Sprinter', description: 'You move fast and get work submitted, but shortcuts can hide weak understanding.', stats: { understanding: 42, tenacity: 42, judgment: 38, reproducibility: 36, risk: 58 } },
+      { id: 'curious', name: 'Curious Experimenter', description: 'You like trying things and asking why, but you sometimes forget to document what worked.', stats: { understanding: 58, tenacity: 52, judgment: 48, reproducibility: 40, risk: 35 } },
+      { id: 'enthusiast', name: 'AI Enthusiast', description: 'You are comfortable asking AI for help, but you need to keep control of the learning.', stats: { understanding: 46, tenacity: 42, judgment: 48, reproducibility: 38, risk: 52 } }
+    ];
+
+    const coreScenarios = [
+      { type: 'Error translator', title: 'The object is missing', text: 'Maya runs her script and sees an error. She is not sure whether the problem is the object name, the order of the code, or something else.', code: "mean(seven_eight)\n# Error: object 'seven_eight' not found", prompt: 'Explain what this error means. Ask me what I already checked before giving suggestions.', tags: ['object not found', 'debugging', 'translator'], verification: 'Check the Environment, confirm the object name is spelled consistently, rerun the script from the top, and explain what line created the object.', choices: [
+        choice('Ask what the error means, then check the object name.', 'good', { understanding: 9, tenacity: 7, judgment: 8, reproducibility: 7, risk: -7 }, 'Strong choice. AI is being used as an error translator, while the student still inspects the code and controls the fix.'),
+        choice('Paste the broken section into AI and ask it to fix the code, without explaining what I tried.', 'warn', { understanding: 1, tenacity: -2, judgment: -4, reproducibility: -2, risk: 7 }, 'This is risky, not hopeless. The problem is the missing context. A better prompt would include what was tried and ask for diagnostic steps first.'),
+        choice('Ask AI for a corrected version, then submit after it runs once.', 'bad', { understanding: -7, tenacity: -7, judgment: -8, reproducibility: -5, risk: 16 }, 'Running once is not the same as understanding or verifying. This choice turns AI into a replacement coder.'),
+        choice('Use the Help tab first and ask AI only if the error still does not make sense.', 'good', { understanding: 8, tenacity: 9, judgment: 7, reproducibility: 7, risk: -6 }, 'Good. This protects the attempt-first habit and still leaves room for AI as a translator.')
+      ]},
+      { type: 'Deadline shortcut', title: 'The tempting shortcut', text: 'Jordan has not started the R script assignment. The deadline is tonight. The assignment asks students to create objects, run basic commands, and write memo comments.', code: '# Task: create objects, run commands, and write memos explaining what happened.', prompt: 'Fix my R assignment and write the memo for me.', tags: ['deadline', 'outsourcing', 'assignment'], verification: 'The student should be able to run every line, explain every object, and describe the memo evidence in their own words.', choices: [
+        choice('Write a rough attempt, then ask for a checklist before submitting.', 'good', { understanding: 8, tenacity: 10, judgment: 9, reproducibility: 8, risk: -8 }, 'Strong choice. The student owns the work and uses AI for review support.'),
+        choice('Ask AI for the answer and promise myself I will study it afterward.', 'bad', { understanding: -8, tenacity: -8, judgment: -9, reproducibility: -6, risk: 17 }, 'This sounds reasonable under pressure, but it usually skips the practice that builds coding skill.'),
+        choice('Ask AI to explain the directions in simpler language.', 'good', { understanding: 7, tenacity: 4, judgment: 7, reproducibility: 3, risk: -4 }, 'Appropriate. Clarifying directions supports learning when the student still writes and runs the code.'),
+        choice('Ask AI for a corrected script after writing only two lines.', 'warn', { understanding: 1, tenacity: -2, judgment: -4, reproducibility: -1, risk: 8 }, 'This is premature. A better move is to ask for one next step or one hint, not a replacement script.')
+      ]},
+      { type: 'Concept tutor', title: 'Understanding seq()', text: 'A student runs code that works but does not understand why the output looks the way it does.', code: "seq(from = 0, to = 10, by = 2)\n# 0 2 4 6 8 10", prompt: 'Explain from, to, and by in seq(). Give one tiny example and then quiz me.', tags: ['functions', 'arguments', 'concept tutor'], verification: 'Create a new seq() example, predict the output, run it, and explain any mismatch.', choices: [
+        choice('Ask for one example, then predict a second example myself.', 'good', { understanding: 11, tenacity: 6, judgment: 8, reproducibility: 5, risk: -7 }, 'Excellent. AI supports understanding, but the student still has to predict and test.'),
+        choice('Copy the AI explanation into the memo because it is accurate.', 'bad', { understanding: -5, tenacity: -5, judgment: -8, reproducibility: -2, risk: 13 }, 'The memo is evidence of student thinking. Copying AI wording weakens that evidence.'),
+        choice('Ask for five similar examples, but only read the answers.', 'warn', { understanding: 2, tenacity: 0, judgment: 1, reproducibility: 0, risk: 5 }, 'Examples help only if the student actively predicts, runs, and checks.'),
+        choice('Do not ask AI because the code already ran.', 'warn', { understanding: -3, tenacity: -1, judgment: -1, reproducibility: 1, risk: 3 }, 'Working code is not the same as understanding. A concept tutor would be appropriate here.')
+      ]},
+      { type: 'Debugging coach', title: 'Character versus numeric', text: 'Sam creates a vector of scores, but R treats the values as text instead of numbers.', code: "scores <- c('10', '12', '14')\nmean(scores)\n# argument is not numeric or logical", prompt: 'I think my vector may be the wrong type. Give me a debugging plan, not the final answer.', tags: ['vectors', 'class()', 'data type'], verification: 'Run class(scores), rerun mean(scores), and explain why quotation marks changed the data type.', choices: [
+        choice('Use class() before changing the vector.', 'good', { understanding: 12, tenacity: 9, judgment: 8, reproducibility: 8, risk: -8 }, 'Excellent. The student uses R tools to diagnose the problem before changing code.'),
+        choice('Ask AI to rewrite the vector, then paste the replacement.', 'bad', { understanding: -7, tenacity: -6, judgment: -8, reproducibility: -4, risk: 15 }, 'This may fix the line, but it skips the core lesson: character and numeric vectors behave differently.'),
+        choice('Delete the quotation marks but do not write down why.', 'warn', { understanding: 4, tenacity: 2, judgment: 1, reproducibility: -5, risk: 3 }, 'The fix may be right, but undocumented fixes are hard to learn from or reproduce.'),
+        choice('Ask for one hint, not the full solution.', 'good', { understanding: 8, tenacity: 7, judgment: 9, reproducibility: 5, risk: -7 }, 'Good. A bounded hint keeps the student active.')
+      ]},
+      { type: 'Reflection boundary', title: 'The tenacity memo', text: 'A student solved several errors and now needs to write a memo about what they tried, what failed, and what they learned.', code: '# Memo: Describe your problem-solving steps and what you learned.', prompt: 'Rewrite my memo so it sounds polished, while keeping my rough ideas.', tags: ['memo', 'reflection', 'learning evidence'], verification: 'Check whether every sentence still describes what the student actually did, tried, noticed, or learned.', choices: [
+        choice('Write bullets first, then ask what is unclear.', 'good', { understanding: 8, tenacity: 9, judgment: 9, reproducibility: 5, risk: -8 }, 'Strong choice. AI gives feedback on clarity, but the student supplies the thinking.'),
+        choice('Ask AI to write the memo from scratch.', 'bad', { understanding: -9, tenacity: -10, judgment: -10, reproducibility: -4, risk: 18 }, 'Not appropriate. The memo is the learning evidence. AI cannot replace the student reflection.'),
+        choice('Ask AI for reflection questions only.', 'good', { understanding: 7, tenacity: 8, judgment: 9, reproducibility: 4, risk: -7 }, 'Good. Reflection questions can help the student think without writing the reflection for them.'),
+        choice('Let AI polish the memo after writing two vague sentences.', 'warn', { understanding: 0, tenacity: -2, judgment: -4, reproducibility: -1, risk: 8 }, 'This is risky because polishing can hide weak reflection. The student needs real details first.')
+      ]},
+      { type: 'Good help-seeking prompt', title: 'The file path problem', text: 'Nia cannot import a CSV file. She has a screenshot of the Files pane and this error message.', code: "read.csv('penguins.csv')\n# Error: cannot open file 'penguins.csv': No such file or directory", prompt: 'I tried read.csv("penguins.csv") and got this error. I checked getwd() and list.files(). Ask me diagnostic questions first.', tags: ['file path', 'import data', 'help-seeking'], verification: 'Run getwd(), run list.files(), confirm the file location, and rerun the import from a clean session.', choices: [
+        choice('Share the error, what I tried, and ask for diagnostic questions.', 'good', { understanding: 10, tenacity: 10, judgment: 10, reproducibility: 10, risk: -9 }, 'Excellent. This is a strong help-seeking prompt because it includes evidence and requests diagnosis, not replacement.'),
+        choice('Ask AI to guess the correct file path.', 'bad', { understanding: -3, tenacity: -4, judgment: -7, reproducibility: -6, risk: 10 }, 'AI cannot see the actual folder unless the student provides accurate context. Guessing file paths is unreliable.'),
+        choice('Move the file around until the code works once.', 'warn', { understanding: 0, tenacity: 1, judgment: -3, reproducibility: -8, risk: 5 }, 'This may work once, but it does not build a reproducible workflow.'),
+        choice('Check getwd() and list.files() before asking AI.', 'good', { understanding: 9, tenacity: 11, judgment: 8, reproducibility: 10, risk: -8 }, 'Great. This uses RStudio and R tools before outside help.')
+      ]}
+    ];
+
+    const bonusScenarios = [
+      { type: 'Privacy boundary', title: 'The private data problem', text: 'A student wants to paste a classmate survey file into a public AI tool to ask for analysis help.', code: 'survey <- read.csv("class_survey.csv")', prompt: 'Analyze this whole file and tell me what variables matter.', tags: ['privacy', 'data', 'limits'], verification: 'Remove private data, use approved tools, or ask the instructor before sharing any data.', choices: [
+        choice('Do not paste the data. Ask what information is safe to share first.', 'good', { understanding: 8, tenacity: 5, judgment: 10, reproducibility: 5, risk: -10 }, 'Strong choice. Privacy limits matter even when the coding question is reasonable.'),
+        choice('Paste only the error message and column names after checking for private information.', 'good', { understanding: 7, tenacity: 5, judgment: 9, reproducibility: 6, risk: -8 }, 'Good. The student reduces risk and still gets useful help.'),
+        choice('Paste the full file because it is only for class.', 'bad', { understanding: -4, tenacity: -2, judgment: -10, reproducibility: -1, risk: 17 }, 'Class data can still be private. Convenience does not remove responsibility.'),
+        choice('Ask AI for general read.csv troubleshooting without sharing the file.', 'good', { understanding: 6, tenacity: 4, judgment: 8, reproducibility: 4, risk: -7 }, 'Appropriate. General troubleshooting can be useful without exposing data.')
+      ]},
+      { type: 'Verification support', title: 'The na.omit() shortcut', text: 'AI suggests using na.omit() to remove missing rows. The code runs, but the student has not checked what was removed.', code: 'clean_data <- na.omit(raw_data)', prompt: 'This code runs. Is that enough?', tags: ['missing values', 'verification', 'data consequence'], verification: 'Count missing values before and after, check how many rows were removed, and explain the consequence.', choices: [
+        choice('Compare rows before and after using na.omit().', 'good', { understanding: 10, tenacity: 8, judgment: 9, reproducibility: 9, risk: -8 }, 'Excellent. Verification support means checking consequences, not trusting running code.'),
+        choice('Use it because AI suggested it and the code runs.', 'bad', { understanding: -6, tenacity: -5, judgment: -8, reproducibility: -7, risk: 14 }, 'Running code can still be wrong for the question. The student must check what changed.'),
+        choice('Ask AI what na.omit() removes, then check the row count.', 'good', { understanding: 9, tenacity: 7, judgment: 8, reproducibility: 8, risk: -7 }, 'Good. Explanation plus verification is responsible use.'),
+        choice('Avoid missing values entirely by choosing a different dataset.', 'warn', { understanding: -2, tenacity: -4, judgment: -1, reproducibility: 0, risk: 2 }, 'Avoidance does not build skill. Missing values are part of real data work.')
+      ]},
+      { type: 'Confidence support', title: 'I am bad at coding', text: 'Casey says, "I am just not a coding person. I will let AI do this one and study it later."', code: '# Task: create a vector, check its class, and write what happened.', prompt: 'Do this beginner R task for me. I will read it afterward.', tags: ['confidence', 'agency', 'productive struggle'], verification: 'Type one line, run it, observe the output, and write what happened in your own words.', choices: [
+        choice('Ask AI for encouragement and one tiny first step.', 'good', { understanding: 7, tenacity: 10, judgment: 8, reproducibility: 5, risk: -7 }, 'Good. AI can support confidence without taking over the task.'),
+        choice('Let AI do it because reading is enough for beginners.', 'bad', { understanding: -10, tenacity: -12, judgment: -9, reproducibility: -5, risk: 20 }, 'Reading is not enough. Beginners need to type, run, make mistakes, and fix them.'),
+        choice('Ask AI to respond only with questions until I try one line.', 'good', { understanding: 8, tenacity: 11, judgment: 10, reproducibility: 6, risk: -9 }, 'Excellent. This turns AI into a coach and keeps the student active.'),
+        choice('Wait until I feel confident before coding.', 'warn', { understanding: -3, tenacity: -5, judgment: 1, reproducibility: -2, risk: 1 }, 'Confidence usually follows practice. The next move should be small, not absent.')
+      ]},
+      { type: 'Practice generator', title: 'More practice after finishing', text: 'A student finished the required vector work and wants extra practice before the quiz.', code: 'colors <- c("blue", "orange", "white")', prompt: 'Give me three similar vector practice questions. Hide the answers until I try.', tags: ['practice', 'quiz yourself', 'active learning'], verification: 'Solve each practice item first, then compare answers and explain any difference.', choices: [
+        choice('Ask for practice questions with hidden answers.', 'good', { understanding: 9, tenacity: 8, judgment: 9, reproducibility: 4, risk: -8 }, 'Strong. AI is generating practice, not replacing assignment work.'),
+        choice('Ask for the quiz answers and study them.', 'bad', { understanding: -7, tenacity: -6, judgment: -9, reproducibility: -2, risk: 15 }, 'This feels efficient, but it replaces retrieval practice with passive reading.'),
+        choice('Ask AI to explain why each answer is right after I try.', 'good', { understanding: 8, tenacity: 7, judgment: 8, reproducibility: 5, risk: -6 }, 'Good. Feedback after an attempt is a strong use of AI.'),
+        choice('Read practice problems but do not type anything in R.', 'warn', { understanding: 1, tenacity: -1, judgment: 0, reproducibility: -3, risk: 4 }, 'Practice in R requires typing and running code.')
+      ]},
+      { type: 'Peer discussion', title: 'Building a group vignette', text: 'Your group is creating an original AI appropriateness vignette for discussion.', code: '# Include: context, R task, AI prompt, evaluation, boundary, verification plan.', prompt: 'Generate a complete vignette for our group so we can submit quickly.', tags: ['discussion', 'vignette', 'collaboration'], verification: 'The group should explain why the AI use is appropriate, inappropriate, or conditional and name one concrete verification step.', choices: [
+        choice('Brainstorm real situations first, then ask AI which one has the clearest dilemma.', 'good', { understanding: 9, tenacity: 7, judgment: 9, reproducibility: 4, risk: -7 }, 'Good. The group supplies the ideas and uses AI as a sounding board.'),
+        choice('Use AI to generate the whole vignette and submit it unchanged.', 'bad', { understanding: -8, tenacity: -6, judgment: -10, reproducibility: -2, risk: 16 }, 'Not appropriate. The purpose is for the group to practice judgment.'),
+        choice('Write the vignette together, then ask whether the boundary and verification plan are specific enough.', 'good', { understanding: 10, tenacity: 8, judgment: 10, reproducibility: 6, risk: -8 }, 'Excellent. This uses AI for feedback after the group has done the core thinking.'),
+        choice('Avoid AI completely because the topic is AI ethics.', 'warn', { understanding: 2, tenacity: 2, judgment: -1, reproducibility: 0, risk: -1 }, 'Acceptable, but the deeper skill is bounded judgment, not blanket avoidance.')
+      ]}
+    ];
+
+    let state = { profile: null, stats: {}, mode: 'core', index: 0, history: [], coreDone: false };
+
+    function choice(text, quality, effect, feedback) { return { text, quality, effect, feedback }; }
+    function clamp(x) { return Math.max(0, Math.min(100, Math.round(x))); }
+    function escapeHtml(s) { return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c])); }
+
+    function showScreen(id) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function tendencyLabel(value, isRisk = false) {
+      if (isRisk) {
+        if (value <= 34) return 'Low';
+        if (value <= 60) return 'Medium';
+        return 'High';
+      }
+      if (value >= 60) return 'High';
+      if (value >= 40) return 'Medium';
+      return 'Low';
+    }
+
+    function renderProfiles() {
+      const grid = document.getElementById('profile-grid');
+      grid.innerHTML = '';
+      profiles.forEach(p => {
+        const btn = document.createElement('button');
+        btn.className = 'profile-btn';
+        btn.type = 'button';
+        btn.innerHTML =
+          '<strong>' + p.name + '</strong>' +
+          '<span>' + p.description + '</span>' +
+          '<div class="profile-tendencies" aria-label="Starting tendencies">' +
+          '<strong>Starting tendencies:</strong><br>' +
+          'Understanding: ' + tendencyLabel(p.stats.understanding) + ' | ' +
+          'Tenacity: ' + tendencyLabel(p.stats.tenacity) + ' | ' +
+          'AI Judgment: ' + tendencyLabel(p.stats.judgment) + ' | ' +
+          'Reproducibility: ' + tendencyLabel(p.stats.reproducibility) + ' | ' +
+          'Delegation Risk: ' + tendencyLabel(p.stats.risk, true) +
+          '</div>';
+        btn.addEventListener('click', () => startGame(p));
+        grid.appendChild(btn);
+      });
+    }
+
+    function startGame(profile) {
+      state = { profile, stats: {...profile.stats}, mode: 'core', index: 0, history: [], coreDone: false };
+      showScreen('game-screen');
+      renderRound();
+    }
+
+    function currentDeck() { return state.mode === 'core' ? coreScenarios : bonusScenarios; }
+
+    function renderRound() {
+      const deck = currentDeck();
+      const scenario = deck[state.index];
+      const total = deck.length;
+      const roundName = state.mode === 'core' ? 'Round' : 'Bonus Round';
+      document.getElementById('round-label').textContent = roundName + ' ' + (state.index + 1) + ' of ' + total;
+      document.getElementById('profile-label').textContent = 'Profile: ' + state.profile.name;
+      document.getElementById('progress-text').textContent = state.mode === 'core' ? 'Required path' : 'Optional bonus practice';
+      document.getElementById('progress-number').textContent = (state.index + 1) + ' / ' + total;
+      document.getElementById('progress-inner').style.width = (((state.index + 1) / total) * 100) + '%';
+      document.getElementById('scenario-type').textContent = scenario.type;
+      document.getElementById('scenario-title').textContent = scenario.title;
+      document.getElementById('scenario-text').textContent = scenario.text;
+      document.getElementById('ai-prompt').textContent = scenario.prompt;
+      document.getElementById('code-area').innerHTML = scenario.code ? '<pre><code>' + escapeHtml(scenario.code) + '</code></pre>' : '';
+      const choiceGrid = document.getElementById('choice-grid');
+      choiceGrid.innerHTML = '';
+      scenario.choices.forEach((c, i) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'btn choice';
+        btn.innerHTML = '<strong>Choice ' + (i + 1) + '</strong><br>' + escapeHtml(c.text);
+        btn.addEventListener('click', () => selectChoice(c, scenario));
+        choiceGrid.appendChild(btn);
+      });
+      document.getElementById('feedback').className = 'feedback';
+      document.getElementById('feedback-actions').innerHTML = '';
+      updateStats();
+    }
+
+    function updateStats() {
+      const pairs = [
+        ['understanding','understanding-value','understanding-meter'],
+        ['tenacity','tenacity-value','tenacity-meter'],
+        ['judgment','judgment-value','judgment-meter'],
+        ['reproducibility','repro-value','repro-meter'],
+        ['risk','risk-value','risk-meter']
+      ];
+      pairs.forEach(([key, valueId, meterId]) => {
+        const val = clamp(state.stats[key]);
+        state.stats[key] = val;
+        document.getElementById(valueId).textContent = val;
+        document.getElementById(meterId).style.width = val + '%';
+      });
+    }
+
+    function selectChoice(c, scenario) {
+      Object.keys(c.effect).forEach(k => state.stats[k] = clamp(state.stats[k] + c.effect[k]));
+      state.history.push({ scenario: scenario.title, quality: c.quality, effect: {...c.effect}, mode: state.mode, index: state.index });
+      updateStats();
+      document.getElementById('choice-grid').innerHTML = '';
+      const feedback = document.getElementById('feedback');
+      const card = document.getElementById('feedback-card');
+      feedback.className = 'feedback show';
+      card.className = 'card ' + c.quality;
+      document.getElementById('feedback-title').textContent = c.quality === 'good' ? 'Strong AI judgment' : c.quality === 'warn' ? 'Partly right, but incomplete' : 'Risky AI use';
+      document.getElementById('feedback-text').textContent = c.feedback;
+      document.getElementById('verification-text').textContent = scenario.verification;
+      renderActions();
+    }
+
+    function renderActions() {
+      const actions = document.getElementById('feedback-actions');
+      actions.innerHTML = '';
+      addAction(actions, 'Back to choices', 'btn secondary', backToChoices);
+      const deck = currentDeck();
+      const atEnd = state.index >= deck.length - 1;
+      if (!atEnd) {
+        addAction(actions, 'Continue', 'btn', () => { state.index += 1; renderRound(); });
+      } else if (state.mode === 'core') {
+        addAction(actions, 'Continue to core completion options', 'btn', () => { state.coreDone = true; showScreen('core-complete-screen'); });
+      } else {
+        addAction(actions, 'Go to discussion reflection', 'btn', showFinalScreen);
+      }
+      if (state.mode === 'bonus') {
+        addAction(actions, 'Skip to discussion reflection', 'btn light', showFinalScreen);
+      }
+    }
+
+    function backToChoices() {
+      const last = state.history[state.history.length - 1];
+      if (last && last.mode === state.mode && last.index === state.index) {
+        Object.keys(last.effect).forEach(k => state.stats[k] = clamp(state.stats[k] - last.effect[k]));
+        state.history.pop();
+      }
+      renderRound();
+    }
+
+    function addAction(parent, text, className, fn) {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = className;
+      btn.textContent = text;
+      btn.addEventListener('click', fn);
+      parent.appendChild(btn);
+    }
+
+    function startBonus() {
+      state.mode = 'bonus';
+      state.index = 0;
+      showScreen('game-screen');
+      renderRound();
+    }
+
+    function showFinalScreen() {
+      summarizeProfile();
+      showScreen('final-screen');
+    }
+
+    function summarizeProfile() {
+      const good = state.history.filter(h => h.quality === 'good').length;
+      const warn = state.history.filter(h => h.quality === 'warn').length;
+      const bad = state.history.filter(h => h.quality === 'bad').length;
+      let msg = 'You made ' + good + ' strong choices, ' + warn + ' incomplete choices, and ' + bad + ' risky choices. ';
+      if (state.stats.risk <= 35 && state.stats.judgment >= 60) msg += 'Your pattern shows strong boundaries: AI helped without taking over.';
+      else if (state.stats.risk >= 60) msg += 'Your pattern shows high delegation risk. Watch for choices that make work faster but reduce understanding.';
+      else msg += 'Your pattern is mixed. The key next step is to make each AI use conditional: attempt first, ask clearly, then verify.';
+      document.getElementById('profile-summary').textContent = msg;
+    }
+
+    function copyText(textareaId, noteId) {
+      const box = document.getElementById(textareaId);
+      box.focus();
+      box.select();
+      let copied = false;
+      try { copied = document.execCommand('copy'); } catch (e) { copied = false; }
+      document.getElementById(noteId).textContent = copied ? 'Copied.' : 'Select the text and copy it with Ctrl+C or Command+C.';
+    }
+
+    function restartGame() {
+      showScreen('start-screen');
+      renderProfiles();
+    }
+
+    document.getElementById('home-link').addEventListener('click', restartGame);
+
+    renderProfiles();
+  </script>
+</body>
+</html>

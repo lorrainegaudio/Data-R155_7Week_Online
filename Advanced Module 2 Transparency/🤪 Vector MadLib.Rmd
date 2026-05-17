@@ -376,7 +376,11 @@ length(social_media_platform)
 
 **Convert one character vector to factor class**
 
-A factor is R’s way of storing categorical data. In this activity, you will choose one character vector you already created and convert it into a factor object called `story_factor`.
+A factor is R’s way of storing categorical data. Factors often *print like words*, but R stores them internally using integer codes with category labels called **levels**.
+
+In this activity, you will choose one character vector you already created and use it to create a **new factor object** called `story_factor`.
+
+
 
 ➤  Step 1: Check the Class
 
@@ -387,6 +391,8 @@ A factor is R’s way of storing categorical data. In this activity, you will ch
 class( __ )
 ```
 
+🗣 Comment: What class is the original vector
+
 ➤  Step 2: Change Class to Factor
 
 🎯 Use `as.factor()` to convert your chosen character vector into a new object called `story_factor`.
@@ -396,17 +402,22 @@ class( __ )
 story_factor <- as.factor(x = __)
 ```
 
+🗣  The original vector does not change class. `story_factor` is a new factor object made from the selected character vector.
+
+
 ➤  Step 3: Check the Class
 
 🎯 Verify that `story_factor` has factor class, then inspect its levels.
 
 ```{r eval=FALSE}
-# ⚡ Type this in your R Notebook, Fill in the blanks
+# ⚡ Type this in your R Notebook
 class(story_factor)
 levels(story_factor)
 ```
 
-🗣 Comment: Explain which vector you converted, how the class changed, and what the levels show.
+🗣 Comment: Explain which vector you converted, how the new object’s class differs from the original vector’s class.
+
+
 
 
 # Story
