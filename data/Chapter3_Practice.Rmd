@@ -1,0 +1,34 @@
+---
+title: "Chapter 3"
+author: "Lorraine Gaudio"
+output: html_notebook
+---
+
+
+You can type normal.
+
+
+```{r}
+# Treat this like R Script
+x <- 1:10
+```
+
+
+Create memo about what you learned
+
+
+Make Fruit
+
+```{r}
+fruit <- c("apple", "bananna", "orange")
+```
+
+
+
+
+
+
+
+
+
+

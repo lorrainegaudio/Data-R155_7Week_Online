@@ -374,51 +374,91 @@ length(social_media_platform)
 
 ## Factor class
 
-**Convert one character vector to factor class**
+**Create a factor for story energy**
 
-A factor is R’s way of storing categorical data. Factors often *print like words*, but R stores them internally using integer codes with category labels called **levels**.
+A factor is R's way of storing categorical data. Factors often print like words, but R stores them internally using category labels called **levels**.
 
-In this activity, you will choose one character vector you already created and use it to create a **new factor object** called `story_factor`.
+Factors matter when categories have a meaningful order.
 
+For example, the story energy categories below work like a simple rating scale:
 
+`low` → `medium` → `high`
 
-➤  Step 1: Check the Class
+That order makes sense to a human. But if R stores the values as plain character strings, R may display them alphabetically:
 
-🎯 Select a character vector (e.g., `name`, `item`, `emotion`) and use a function `class()` to check the class of the vector.
+`high` → `low` → `medium`
 
-```{r eval=FALSE}
-# ✅ Check the class before conversion
-class( __ )
+That is not the order we want.
+
+Later in data analysis, factors help R display tables, summaries, and plots in the order that makes sense for the data.
+
+### Step 1
+
+**Create a character vector**
+
+🎯 Create a character vector called `story_energy_raw` with six values. Use only `"low"`, `"medium"`, and `"high"`. 💡 **Tip:** You will need to repeat values.
+
+```{r, eval=FALSE}
+# ⚡ Create a character vector of story energy categories
+story_energy_raw <- c(__, __, __, __, __, __)
 ```
 
-🗣 Comment: What class is the original vector
-
-➤  Step 2: Change Class to Factor
-
-🎯 Use `as.factor()` to convert your chosen character vector into a new object called `story_factor`.
-
-```{r eval=FALSE}
-# ⚡ Type this in your R Notebook, Fill in the blanks
-story_factor <- as.factor(x = __)
+```{r, eval=FALSE}
+# ✅ Check the original class
+class(story_energy_raw)
 ```
 
-🗣  The original vector does not change class. `story_factor` is a new factor object made from the selected character vector.
+🗣 Comment: What class is `story_energy_raw` before conversion?
 
-
-➤  Step 3: Check the Class
-
-🎯 Verify that `story_factor` has factor class, then inspect its levels.
-
-```{r eval=FALSE}
-# ⚡ Type this in your R Notebook
-class(story_factor)
-levels(story_factor)
+```{r, eval=FALSE}
+# ✅ Check the original class
+class(story_energy_raw)
 ```
 
-🗣 Comment: Explain which vector you converted, how the new object’s class differs from the original vector’s class.
+🗣 Comment: What class is `story_energy_raw` before conversion?
 
+```{r, eval=FALSE}
+# ✅ See how R displays the categories before conversion
+table(story_energy_raw)
+```
 
+🗣 Comment: What order does R use when it displays the character values in the table?
 
+### Step 2
+
+**Convert to factor class**
+
+🎯 Convert `story_energy_raw` into a factor called `story_energy`. Levels are set in a meaningful order.
+
+```{r eval=FALSE}
+# ⚡ Convert to factor and control the level order
+story_energy <- factor(
+  story_energy_raw,
+  levels = c("low", "medium", "high")
+)
+```
+
+### Step 3
+
+**Check the factor**
+
+🎯 Verify that `story_energy` has factor class and inspect its levels.
+
+```{r eval=FALSE}
+# ✅ Check the class and levels
+class(story_energy)
+levels(story_energy)
+```
+```{r eval=FALSE}
+# ✅ See how R displays the categories after conversion
+table(story_energy)
+```
+
+🗣 Comment: What changed after converting `story_energy_raw` into a factor?
+
+🗣 Comment: What does it mean that the levels are in a "meaningful order" for this factor? 
+
+🗣 Comment: Why might this matter later when creating a table, summary, or plot with this factor?
 
 # Story
 
@@ -448,7 +488,7 @@ story1 <- paste(
 print(story1)
 # ---------- Story 2 ----------
 # Using the factor object to pick one category
-selected_factor_value <- pick(story_factor)
+selected_energy <- pick(story_energy)
 
 story2 <- paste(
   "On a mission for a fashion comeback,", pick(name), "found", pick(item),
@@ -457,7 +497,7 @@ story2 <- paste(
   "but they", ifelse(pick(logical), "remembered", "forgot"), "to get a receipt!",
   "After posting a 'before' shot on", paste0(pick(social_media_platform), ","),
   "the post went viral", ifelse(pick(logical), "by midnight.", "by the next day."),
-  "The random category pulled from the factor vector was", paste0(selected_factor_value, "."),
+  "The official story energy level was", paste0(selected_energy, "."),
   "Their retro level was officially", paste0(pick(retro_game), " status,"),
   "and they immediately upcycled the item online for", paste0(pick(numeric), " dollars"),  
   "and sold in", pick(integer), "minutes.", 
