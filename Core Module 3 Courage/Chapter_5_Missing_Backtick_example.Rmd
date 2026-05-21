@@ -1,0 +1,68 @@
+---
+title: "Missing Backtick Example Report"
+output:
+  html_document:
+    df_print: paged
+---
+
+## Task 1: Missing Values
+
+🎯 **Goal:** Create a vector with missing quiz scores, find where the missing values are located, and calculate the mean after removing missing values.
+
+💬 **Prediction:** I think R will return `NA` if I try to calculate the mean before telling it how to handle the missing value.
+
+```{r}
+# ⚡ Code
+quiz_scores <- c(84, 91, NA, 76, 88)
+
+# ✅ Check whether the vector contains missing values
+anyNA(quiz_scores)
+
+# ✅ Find the position of the missing value
+which(is.na(quiz_scores))
+
+# ✅ Calculate the mean after removing missing values
+mean(quiz_scores, na.rm = TRUE)
+
+``
+
+✍ **Memo:** I used `anyNA()` to check whether there was a missing value. Then I used `is.na()` inside `which()` to locate the missing value. I had to add `na.rm = TRUE` because `mean()` returns `NA` when the vector contains a missing value.
+
+## Task 2: Bracket Indexing
+
+🎯 **Goal:** Use bracket indexing to select specific quiz scores.
+
+💬 **Prediction:** I think `quiz_scores[2]` will return the second value in the vector.
+
+```{r}
+# ⚡ Code
+quiz_scores[2]
+
+# ✅ Check selected values
+quiz_scores[c(1, 4)]
+
+# ✅ Check all scores except the missing value
+quiz_scores[-3]
+```
+
+🗣 **Comment:** Bracket indexing lets me select values by position. Negative indexing removes positions from the result.
+
+## Task 3: Summarizing Missing Values
+
+🎯 **Goal:** Count how many missing values are in the vector and calculate the proportion of values that are missing.
+
+```{r}
+# ⚡ Code
+sum(is.na(quiz_scores))
+mean(is.na(quiz_scores))
+```
+
+🗣 **Comment:** `sum(is.na(quiz_scores))` counts how many values are missing. `mean(is.na(quiz_scores))` gives the proportion of values that are missing because `TRUE` is treated like 1 and `FALSE` is treated like 0.
+
+## Troubleshooting Memo
+
+❓ **Question:** Why did this report fail to knit?
+
+👀 **Resource Cited:** I checked the Render tab error message and looked near the line number where the error appeared.
+
+✍ **Memo:** The first code chunk starts with an opening code fence, but it does not have a matching closing code fence before the memo and Task 2 heading. R tries to read regular Markdown text as if it were R code. The fix is to add three backticks after the final line of code in Task 1, before the memo text.

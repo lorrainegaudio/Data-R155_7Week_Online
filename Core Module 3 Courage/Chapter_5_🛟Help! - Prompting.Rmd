@@ -1,0 +1,221 @@
+---
+title: "Chapter 5"
+subtitle: "🛟 Help!: AI Prompting for Knit Errors"
+author: "by Lorraine Gaudio"
+date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
+team: "Summer 2026"
+output: 
+  html_document: # To create an HTML document from R Markdown
+    toc: false # Table of contents (TOC)
+    toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactivne scrolling
+    includes:
+      in_header: ../assets/header.html
+      after_body: ../assets/footer.html
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r eval=FALSE, include=FALSE}
+title: "Chapter 5"
+subtitle: "Help!"
+author: "by Lorraine Gaudio"
+date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
+output: 
+  pdf_document:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+    citation_package: natbib
+    fig_caption: true
+    df_print: kable # Data frame printing
+    includes:
+      in_header: ../assets/header.tex
+    latex_engine: xelatex  # Use xelatex to support fontspec
+fontsize: 12pt
+geometry: margin=1in
+mainfont: "Garamond" # Sets the font of the entire document
+sansfont: "Gotham-Book.otf" # Set sans-serif font to Gotham Book
+monofont: "Courier New" # Set monospace font to Courier New
+documentclass: scrreprt
+linkcolor: boisestateblue # Customizes the color of hyperlinks
+urlcolor: magenta # Customizes the color of URLs
+citecolor: black # Customizes the color of citations
+bibliography: references.bib # Bibliography file
+biblio-style: apalike                 # ⟵ natbib needs a .bst style
+natbiboptions: "round,authoryear"     # round brackets, Author (Year)
+# ---
+title: "Chapter 5"
+subtitle: "Help!"
+author: "Lorraine Gaudio"
+date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
+team: "Spring 2026"
+output: 
+  html_document: # To create an HTML document from R Markdown
+    toc: false # Table of contents (TOC)
+    toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactivne scrolling
+    includes:
+      in_header: ../assets/header.html
+      after_body: ../assets/footer.html
+```
+
+
+# Using an LLM to Troubleshoot Knit Errors
+
+One resource for troubleshooting a knit error, or many other coding problems, is a Large Language Model (LLM) such as ChatGPT or boisestate.ai. The goal is not to ask the LLM to complete your work. The goal is to ask for help understanding the error message, narrowing down likely causes, and deciding what to check next. However, the quality of the response you get depends heavily on how you structure your prompt and the information you provide. 
+
+Good LLM troubleshooting prompts include:
+
+- what you clicked or ran
+- the exact error message from the Render tab
+- the file name
+- the chunk name or line numbers
+- what you already checked
+- what kind of help you want: explanation, likely causes, or checklist
+
+A strong request is: “Explain what this error means and tell me what to inspect next,” not “Fix this for me.”
+
+---
+
+The same Markdown you use in your R Notebook can also be used to structure prompts for LLMs. Using Markdown when prompting an LLM can help you get a more useful response.
+
+## Missing Backtick
+
+Imagine you don't know that there is a missing backtick at the end of a code chunk. You try to knit to HTML, but it fails. You ask an LLM to help you find the error.
+
+![Figure 1. Screenshot of knit error](missing_back_tick_error.png)
+
+Figure 1 shows the error message in the Render tab. The error says Error in `parse()`. You don’t understand what “parse” means, but you know it has something to do with the code in that chunk.
+
+Below is the full Render tab error message. You do not need to understand every line of the error message. Start by looking for the file name, chunk name, line number, and the first line that names the error.
+
+```text
+  |.................                                   |  33% [unnamed-chunk-1]
+
+processing file: Chapter_5_Missing_Backtick_example.Rmd
+
+
+Error in `parse()`:
+! <text>:13:1: unexpected input
+12: 
+13: ✍
+    ^
+Backtrace:
+     ▆
+  1. └─rmarkdown::render(...)
+  2.   └─knitr::knit(knit_input, knit_output, envir = envir, quiet = quiet)
+  3.     └─knitr:::process_file(text, output)
+  4.       ├─xfun:::handle_error(...)
+  5.       ├─base::withCallingHandlers(...)
+  6.       └─knitr:::process_group(group)
+  7.         └─knitr:::call_block(x)
+  8.           └─knitr:::block_exec(params)
+  9.             └─knitr:::eng_r(options)
+ 10.               ├─knitr:::in_input_dir(...)
+ 11.               │ └─knitr:::in_dir(input_dir(), expr)
+ 12.               └─knitr (local) evaluate(...)
+ 13.                 └─evaluate::evaluate(...)
+ 14.                   ├─evaluate::parse_all(input, filename = filename)
+ 15.                   └─evaluate:::parse_all.character(input, filename = filename)
+ 16.                     └─base::parse(text = x, srcfile = src)
+                                                                                                            
+
+Quitting from Chapter_5_Missing_Backtick_example.Rmd:14-34 [unnamed-chunk-1]
+Execution halted
+```
+
+Below are three versions of the same prompt: unstructured, structured plain text, and structured Markdown.
+
+Do not paste your entire notebook into an LLM. Start with the Render tab error message, the chunk name or line numbers, and a small section of nearby code. If the LLM needs more information, you can provide it in follow-up questions. The goal is to use the LLM to help you understand the error message and decide what to check next, not to have the LLM fix your code for you.
+
+### Unstructured Prompt
+
+```text
+What do I do? I tried knitting my R notebook and it won’t work. 
+
+[paste the full Render tab error message here]
+```
+
+This prompt gives the error message, but it does not clearly explain what the student did, where the error appeared, or what kind of help they want.
+
+### Structured Plain Text Prompt
+
+The line number and chunk name are clues. A good troubleshooting prompt should include them instead of only saying that the notebook ‘won’t work'.
+
+```text
+Persona: Act as an R programming tutor.
+
+Task: Help me troubleshoot a knit error in an R Notebook (`.Rmd`). I am a beginner.
+
+What I did: I clicked Preview > Knit to HTML in RStudio.
+
+What happened: Knitting stopped at 33% and failed.
+
+[paste the full Render tab error message here]
+
+Context: The error says "Error in `parse()`". I don’t understand what “parse” means.
+
+What I want from you: 1. Explain what this error usually means in beginner-friendly terms. 2. Give me the most likely causes specifically for an R Notebook `.Rmd` file. 3. Give me a checklist of what to look for to fix it.
+```
+
+This version is better because it separates the task, error message, context, and request.
+
+
+### Structured Markdown Prompt
+
+```text
+# Persona: 
+Act as a patient R programming tutor, skilled at teaching beginners how to troubleshoot knit errors in R Notebooks (`.Rmd` files).
+
+# Task: 
+Help me troubleshoot a knit error in an R Notebook (`.Rmd`). 
+
+# What I did: 
+In RStudio, I clicked Preview → Knit to HTML.
+
+# What happened: 
+Knitting stopped at 33% and failed.
+
+# Error message (copied exactly):
+
+[paste the full Render tab error message here]
+
+# Context: 
+
+The error says it quit from Chapter_5_Missing_Backtick_example.Rmd:14-34 [unnamed-chunk-1]. I don’t understand what “parse” means.
+
+# What I want from you:
+1. Explain what “Error in parse()” means in plain language.
+2. Explain how to read this error message to find clues about where the problem is in my `.Rmd` file.
+3. Tell me the top 3 most common causes for this error in an `.Rmd` file.
+4. Give me a step-by-step check-first plan.
+
+**If you do not have enough information to answer, ask me what else you need to know.**
+```
+
+This version is strongest because Markdown headings make each part of the prompt easy for the LLM to identify.
+
+If you use an LLM while troubleshooting the 🛟 Help! Practice Space File Submission HTML report, document when and how you used it in the memo locations inside the provided report template. This will help you maintain academic integrity and reflect on your learning process. If you copy any words from an LLM, clearly mark what was copied and write your own memo explaining what you learned and why the change makes sense.
+
+
+# Summary
+
+When a notebook fails to knit, the Render tab gives you clues about what went wrong and where to start looking. A helpful LLM prompt should include what you clicked, the exact error message, the file name, the chunk name or line numbers, what you already checked, and the kind of help you want.
+
+Use the LLM as a troubleshooting tutor, not as a repair service. Ask it to explain the error, identify likely causes, and suggest what to inspect next. If you use an LLM while troubleshooting, document when and how you used it in your memo, and explain what you learned in your own words.
+
