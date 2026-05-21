@@ -1632,7 +1632,7 @@ display: none;
 <h1 class="title toc-ignore">Chapter 6</h1>
 <h3 class="subtitle">❌ Missing Values</h3>
 <h4 class="author">by Lorraine Gaudio</h4>
-<h4 class="date">Version May 20, 2026</h4>
+<h4 class="date">Version May 21, 2026</h4>
 
 </div>
 
@@ -1676,7 +1676,8 @@ and debug.</p></li>
 <div id="open-an-r-notebook" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> Open an R Notebook</h1>
 <p>Before you follow along with Chapter 6, set yourself up the same way
-you did in Chapter 5. Your work will be readable and reproducible.</p>
+you did in Chapter 5. Your work will be readable and helpful for you to
+study for review.</p>
 <p>🎯 Please open a new R Notebook in your course folder named
 <code>chapter6_notes.Rmd</code> and add a date to the YAML header. Use
 this document to take notes, practice the chapter content, and memo
@@ -2256,9 +2257,22 @@ HTML report.</p>
 <li>Save it in your course folder as
 <code>chapter6_practice.Rmd</code>.</li>
 <li>Complete each task in order.</li>
-<li>Add short memo notes explaining what your code does, what output you
-expected, and what you learned from the help page.</li>
+<li>Add short memo notes throughout your notebook. Your memo notes
+should explain what your code does, what output you expected, what
+surprised or confused you, and what you would check next if something
+did not work.</li>
 </ol>
+<p>In this Practice Space, you will see two kinds of memo prompts:</p>
+<ul>
+<li>🗣 <strong>Add Comments</strong> asks you to explain what the code or
+output shows.</li>
+<li>🪞 <strong>Reflect</strong> asks you to explain your thinking
+process, what confused you, what changed in your understanding, or what
+strategy you would use next.</li>
+</ul>
+<p>These are there to help you practice the habit of writing memos as
+you work. <strong>You can choose whether to answer one, two, or all memo
+prompts.</strong></p>
 <p>If you encounter an error, document your <strong>tenacity</strong> by
 briefly noting what happened, what you tried, and how you fixed it or
 what still confuses you. Document how you troubleshot the error and what
@@ -2266,20 +2280,26 @@ resource(s) you used to help you resolve the issue
 (<strong>transparency</strong>). Show <strong>courage</strong> by
 sharing your thinking process, even if it includes mistakes or
 confusion.</p>
-<p>Before you finish, clear your Environment and run the notebook from
-top to bottom. Then knit to HTML to check that the notebook works in
-order.</p>
 <p>You may quote AI output only when you clearly mark it as quoted text,
 either with quotation marks or a block quote using <code>&gt;</code>.
 Then hand-type your own explanation of why you are including that
 quote.</p>
+<p>Before you finish, clear your Environment and run the notebook from
+top to bottom. Then knit to HTML to check that the notebook works in
+order.</p>
 <div id="task-1" class="section level2" number="7.1">
 <h2><span class="header-section-number">7.1</span> Task 1</h2>
 <p>🧭 <strong>Help-file scavenger hunt</strong> (required vs
 default)</p>
 <ol style="list-style-type: decimal">
-<li><p>🎯 Use <code>?sample</code> to learn about the
-<code>sample()</code> function.</p></li>
+<li>🎯 Use <code>?sample</code> to learn about the <code>sample()</code>
+function.</li>
+</ol>
+<ul>
+<li>Focus first on the <code>sample()</code> Usage line, not the
+<code>sample.int()</code> line.</li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
 <li><p>In one sentence, explain how you can tell required vs default
 arguments from the <strong>Usage</strong> line.</p></li>
 <li><p>Write the Usage lines exactly as they appear (copy/paste is
@@ -2291,7 +2311,10 @@ fine), then label:</p></li>
 appear in the Usage section. How you can tell which arguments are
 required?</p></li>
 </ul>
-<p>🗣 <strong><em>Your explanation here</em></strong></p>
+<p>🗣 Add Comments: Explain how the Usage line helped you decide which
+arguments were required and which had default values.</p>
+<p>🪞 Reflect: What part of the help page was easiest to interpret? What
+part was still confusing or too technical?</p>
 </div>
 <div id="task-2" class="section level2" number="7.2">
 <h2><span class="header-section-number">7.2</span> Task 2</h2>
@@ -2319,8 +2342,11 @@ scores &lt;- c(____, NA, NA, NA)     # add 3 `NA` to the end of `scores_numbers`
 
 # ✅ Check the length of scores
 _____(scores)                 </code></pre>
-<p>🗣 <strong><em>Memo: articulate your learning process, connect ideas,
-or discuss challenges.</em></strong></p>
+<p>🗣 Add Comments: Explain why <code>scores</code> has 28 elements even
+though <code>sample()</code> only drew 25 values.</p>
+<p>🪞 Reflect: Which part of the code built the possible values, which
+part randomly selected values, and which part added missing values? How
+did checking <code>length(scores)</code> confirm your thinking?</p>
 </div>
 <div id="task-3" class="section level2" number="7.3">
 <h2><span class="header-section-number">7.3</span> Task 3</h2>
@@ -2341,13 +2367,15 @@ ____        # should print 3</code></pre>
 <pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
 average_raw &lt;- mean(____)         # what happens?</code></pre>
 <pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
-average_scores &lt;- mean(____, ____)
-# ✅ print the mean</code></pre>
-<p>In one sentence, explain why average_raw behaves the way it does (use
-the word “default”).</p>
-<p>🗣 <strong><em>Your explanation here</em></strong></p>
-<p>🗣 <strong><em>Memo: articulate your learning process, connect ideas,
-or discuss challenges.</em></strong></p>
+average_score &lt;- mean(____, ____)
+# ✅ print the mean
+____</code></pre>
+<p>🗣 Add Comments: Explain why <code>average_raw</code> returns
+<code>NA</code>. Use the word <strong>default</strong> in your
+explanation.</p>
+<p>🪞 Reflect: Before you ran the code, did you expect R to ignore the
+missing values or return <code>NA</code>? How did this task change your
+understanding of how R handles missing values?</p>
 </div>
 <div id="task-4" class="section level2" number="7.4">
 <h2><span class="header-section-number">7.4</span> Task 4</h2>
@@ -2370,22 +2398,34 @@ missing_positions &lt;- which(____(____))</code></pre>
 print(____)        # should print a logical vector
 print(____)        # should print indices of missing values
 length(____)       # should print 3</code></pre>
-<p>🗣 <strong><em>Memo: articulate your learning process, connect ideas,
-or discuss challenges.</em></strong></p>
+<p>🗣 Add Comments: Explain the difference between the output of
+<code>is.na(scores)</code> and the output of
+<code>which(is.na(scores))</code>.</p>
+<p>🪞 Reflect: Which output would be more useful if you only wanted to
+know whether values were missing? Which output would be more useful if
+you needed to replace or inspect the exact missing positions?</p>
 </div>
 <div id="task-5" class="section level2" number="7.5">
 <h2><span class="header-section-number">7.5</span> Task 5</h2>
 <p>📦 <strong>Nesting functions</strong></p>
 <p>🎯 Compute the mean of 5 random draws from <code>scores</code> in one
 line, and make sure it still works even if the draw includes
-<code>NA</code>.</p>
+<code>NA</code>. 💡 <strong>Tip:</strong> Read the nested code from the
+inside out. <code>sample()</code> should happen first. Then
+<code>mean()</code> should summarize the sampled values. Use
+<code>na.rm = TRUE</code> inside <code>mean()</code> so the mean can
+still be calculated if the sample includes <code>NA</code>.</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
 set.seed(21)
 mean_of_five &lt;- ____   
 # ✅ Check  
 mean_of_five</code></pre>
-<p>🗣 <strong><em>Memo: articulate your learning process, connect ideas,
-or discuss challenges.</em></strong></p>
+<p>🗣 Add Comments: Explain which function runs first in your nested code
+and why <code>na.rm = TRUE</code> is needed.</p>
+<p>🪞 Reflect: Was the nested version easier or harder to understand
+than writing the steps separately? If you were debugging this code,
+would you keep it nested or break it into smaller objects? Explain
+why.</p>
 </div>
 <div id="task-6" class="section level2" number="7.6">
 <h2><span class="header-section-number">7.6</span> Task 6</h2>
@@ -2396,8 +2436,11 @@ two separate objects, <code>today_date</code> and
 <pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
 today_date &lt;- ____
 now_time &lt;- ____</code></pre>
-<p>🗣 <strong><em>Memo: articulate your learning process, connect ideas,
-or discuss challenges.</em></strong></p>
+<p>🗣 Add Comments: Explain the difference between the output of
+<code>Sys.Date()</code> and <code>Sys.time()</code>.</p>
+<p>🪞 Reflect: Why might a researcher want a report to include the date
+or time when the code was run? How could a time-stamp support
+reproducibility or transparency?</p>
 </div>
 <div id="task-7" class="section level2" number="7.7">
 <h2><span class="header-section-number">7.7</span> Task 7</h2>
@@ -2419,9 +2462,11 @@ scores_clean &lt;- scores[!______(_________)]
 
 length(scores)          # should print 28
 length(scores_clean)    # should print 25</code></pre>
-<p>🗣 In one sentence, explain what the code that creates scores_clean
-does (mention indexing + <code>!</code>).</p>
-<p>🗣 <strong><em>Your explanation here</em></strong></p>
+<p>🗣 Add Comments: Explain what <code>is.na(scores)</code> identifies,
+what <code>!is.na(scores)</code> changes, and how bracket indexing uses
+that result to create <code>scores_clean</code>.</p>
+<p>🪞 Reflect: Why is removing missing values simple for one vector but
+potentially risky in a larger dataset with many columns?</p>
 <p><strong>Part B</strong> — Impute: replace NA with the mean of present
 values</p>
 <ol style="list-style-type: decimal">
@@ -2441,16 +2486,20 @@ scores_imputed[____(_)] &lt;- mean(_____, na.rm = ______)</code></pre>
 
 sum(is.na(scores_imputed))     # should print 0
 mean(scores_imputed)           # should print a number (not NA)</code></pre>
-<p>🗣 <strong><em>Memo: articulate your learning process, connect ideas,
-or discuss challenges.</em></strong></p>
+<p>🗣 Add Comments: Explain why you made a copy named
+<code>scores_imputed</code> before replacing missing values.</p>
+<p>🪞 Reflect: What assumption are you making when you replace missing
+values with the mean? Why should this choice be documented instead of
+treated as automatic?</p>
 </div>
 <div id="task-8" class="section level2" number="7.8">
 <h2><span class="header-section-number">7.8</span> Task 8</h2>
 <p>🗣 <strong>Reflection</strong></p>
 <p>In one sentence, explain the difference between a <em>function
-object</em> (e.g., mean) and a <em>function call</em> (e.g.,
-<code>mean()</code>).</p>
-<p>🗣 <strong><em>Your explanation here</em></strong></p>
+object</em> such as <code>mean</code> and a <em>function call</em> such
+as <code>mean()</code>.</p>
+<p>🪞 Reflect: What kind of mistake might happen if you type a function
+name without parentheses when you meant to run the function?</p>
 </div>
 <div id="task-9" class="section level2" number="7.9">
 <h2><span class="header-section-number">7.9</span> Task 9</h2>
@@ -2468,6 +2517,11 @@ to Canvas, as directed.</p>
 for two files with the same name. One file ends in .Rmd and one ends in
 .html. Upload the .html file. You can check which is which because one
 opens in R and the other usually opens in a web browser.</p>
+<hr />
+<p>🪞 Final Reflection: What was one place where your code did not
+behave the way you expected? What did you check or change before
+submitting? How much time did you spend completing the Practice Space?
+Did you complete the Guided Activity first?</p>
 </div>
 </div>
 

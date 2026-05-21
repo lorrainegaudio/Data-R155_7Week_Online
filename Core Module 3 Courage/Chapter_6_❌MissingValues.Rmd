@@ -102,7 +102,7 @@ In Chapter Six, you will practice how to:
 
 # Open an R Notebook
 
-Before you follow along with Chapter 6, set yourself up the same way you did in Chapter 5. Your work will be readable and reproducible.
+Before you follow along with Chapter 6, set yourself up the same way you did in Chapter 5. Your work will be readable and helpful for you to study for review.
 
 🎯 Please open a new R Notebook in your course folder named `chapter6_notes.Rmd` and add a date to the YAML header. Use this document to take notes, practice the chapter content, and memo about what you are learning.
 
@@ -485,7 +485,6 @@ Finally, you practiced two basic strategies for handling missing values: removin
 
 **Special Values** (NA, NaN, Inf, -Inf, NULL): Reserved constants in R that represent non-standard values: `NA` for missing data, `NaN` for undefined numeric results, `Inf`/`-Inf` for positive/negative infinity, and `NULL` for “no value” (an empty/null object). In practice, use `is.na()` to detect `NA` and `NaN`, `is.nan()` to detect `NaN` specifically (not `NA`), `is.infinite()`/`is.finite()` to handle infinities and other non-finite values, and `is.null()` to test for `NULL`.
 
-
 # 📝 Practice Space
 
 Fill in the blanks and answer the short prompts in your R Notebook. This Practice Space helps you check whether you can organize a notebook, read an R help page, use a function argument, and knit your work into an HTML report.
@@ -495,19 +494,27 @@ Before you begin:
 1. Create a new R Notebook in RStudio.
 2. Save it in your course folder as `chapter6_practice.Rmd`.
 3. Complete each task in order.
-4. Add short memo notes explaining what your code does, what output you expected, and what you learned from the help page.
+4. Add short memo notes throughout your notebook. Your memo notes should explain what your code does, what output you expected, what surprised or confused you, and what you would check next if something did not work.
+
+In this Practice Space, you will see two kinds of memo prompts:
+
+- 🗣 **Add Comments** asks you to explain what the code or output shows.
+- 🪞 **Reflect** asks you to explain your thinking process, what confused you, what changed in your understanding, or what strategy you would use next.
+
+These are there to help you practice the habit of writing memos as you work. **You can choose whether to answer one, two, or all memo prompts.**
 
 If you encounter an error, document your **tenacity** by briefly noting what happened, what you tried, and how you fixed it or what still confuses you. Document how you troubleshot the error and what resource(s) you used to help you resolve the issue (**transparency**). Show **courage** by sharing your thinking process, even if it includes mistakes or confusion.
 
-Before you finish, clear your Environment and run the notebook from top to bottom. Then knit to HTML to check that the notebook works in order.
-
 You may quote AI output only when you clearly mark it as quoted text, either with quotation marks or a block quote using `>`. Then hand-type your own explanation of why you are including that quote.
+
+Before you finish, clear your Environment and run the notebook from top to bottom. Then knit to HTML to check that the notebook works in order.
 
 ## Task 1
 
 🧭 **Help-file scavenger hunt** (required vs default)
 
 1. 🎯 Use `?sample` to learn about the `sample()` function. 
+  - Focus first on the `sample()` Usage line, not the `sample.int()` line.
 
 2. In one sentence, explain how you can tell required vs default arguments from the **Usage** line.
 
@@ -517,7 +524,9 @@ You may quote AI output only when you clearly mark it as quoted text, either wit
 
 - TWO default arguments for `sample()` exactly as they appear in the Usage section. How you can tell which arguments are required?
 
-🗣 ___Your explanation here___
+🗣 Add Comments: Explain how the Usage line helped you decide which arguments were required and which had default values.
+
+🪞 Reflect: What part of the help page was easiest to interpret? What part was still confusing or too technical?
 
 ## Task 2 
 
@@ -547,7 +556,9 @@ _____(scores)
 
 ```
 
-🗣 ___Memo: articulate your learning process, connect ideas, or discuss challenges.___
+🗣 Add Comments: Explain why `scores` has 28 elements even though `sample()` only drew 25 values.
+
+🪞 Reflect: Which part of the code built the possible values, which part randomly selected values, and which part added missing values? How did checking `length(scores)` confirm your thinking?
 
 ## Task 3
 
@@ -579,16 +590,14 @@ average_raw <- mean(____)         # what happens?
 
 ```{r , eval=FALSE}
 # ⚡ Type this in your R Notebook, Fill in the blanks
-average_scores <- mean(____, ____)
+average_score <- mean(____, ____)
 # ✅ print the mean
-
+____
 ```
 
-In one sentence, explain why average_raw behaves the way it does (use the word “default”). 
+🗣 Add Comments: Explain why `average_raw` returns `NA`. Use the word **default** in your explanation.
 
-🗣 ___Your explanation here___
-
-🗣 ___Memo: articulate your learning process, connect ideas, or discuss challenges.___
+🪞 Reflect: Before you ran the code, did you expect R to ignore the missing values or return `NA`? How did this task change your understanding of how R handles missing values?
 
 
 ## Task 4
@@ -617,13 +626,15 @@ print(____)        # should print indices of missing values
 length(____)       # should print 3
 ```
 
-🗣 ___Memo: articulate your learning process, connect ideas, or discuss challenges.___
+🗣 Add Comments: Explain the difference between the output of `is.na(scores)` and the output of `which(is.na(scores))`.
+
+🪞 Reflect: Which output would be more useful if you only wanted to know whether values were missing? Which output would be more useful if you needed to replace or inspect the exact missing positions?
 
 ## Task 5
 
 📦 **Nesting functions**
 
-🎯 Compute the mean of 5 random draws from `scores` in one line, and make sure it still works even if the draw includes `NA`. 
+🎯 Compute the mean of 5 random draws from `scores` in one line, and make sure it still works even if the draw includes `NA`. 💡 **Tip:** Read the nested code from the inside out. `sample()` should happen first. Then `mean()` should summarize the sampled values. Use `na.rm = TRUE` inside `mean()` so the mean can still be calculated if the sample includes `NA`.
 
 ```{r , eval=FALSE}
 # ⚡ Type this in your R Notebook, Fill in the blanks
@@ -633,7 +644,9 @@ mean_of_five <- ____
 mean_of_five
 ```
 
-🗣 ___Memo: articulate your learning process, connect ideas, or discuss challenges.___
+🗣 Add Comments: Explain which function runs first in your nested code and why `na.rm = TRUE` is needed.
+
+🪞 Reflect: Was the nested version easier or harder to understand than writing the steps separately? If you were debugging this code, would you keep it nested or break it into smaller objects? Explain why.
 
 ## Task 6
 
@@ -647,7 +660,9 @@ today_date <- ____
 now_time <- ____
 ```
 
-🗣 ___Memo: articulate your learning process, connect ideas, or discuss challenges.___
+🗣 Add Comments: Explain the difference between the output of `Sys.Date()` and `Sys.time()`.
+
+🪞 Reflect: Why might a researcher want a report to include the date or time when the code was run? How could a time-stamp support reproducibility or transparency?
 
 ## Task 7
 
@@ -672,9 +687,9 @@ length(scores)          # should print 28
 length(scores_clean)    # should print 25
 ```
 
-🗣 In one sentence, explain what the code that creates scores_clean does (mention indexing + `!`).
+🗣 Add Comments: Explain what `is.na(scores)` identifies, what `!is.na(scores)` changes, and how bracket indexing uses that result to create `scores_clean`.
 
-🗣 ___Your explanation here___
+🪞 Reflect: Why is removing missing values simple for one vector but potentially risky in a larger dataset with many columns?
 
 **Part B** — Impute: replace NA with the mean of present values
 
@@ -698,15 +713,17 @@ sum(is.na(scores_imputed))     # should print 0
 mean(scores_imputed)           # should print a number (not NA)
 ```
 
-🗣 ___Memo: articulate your learning process, connect ideas, or discuss challenges.___
+🗣 Add Comments: Explain why you made a copy named `scores_imputed` before replacing missing values.
+
+🪞 Reflect: What assumption are you making when you replace missing values with the mean? Why should this choice be documented instead of treated as automatic?
 
 ## Task 8
 
 🗣 **Reflection**
 
-In one sentence, explain the difference between a *function object* (e.g., mean) and a *function call* (e.g., `mean()`).
+In one sentence, explain the difference between a *function object* such as `mean` and a *function call* such as `mean()`.
 
-🗣 ___Your explanation here___
+🪞 Reflect: What kind of mistake might happen if you type a function name without parentheses when you meant to run the function?
 
 ## Task 9
 
@@ -720,3 +737,7 @@ Use **Run → Run All** to execute every chunk in order.
 After your notebook runs without errors, save your notebook (`.Rmd`) and knit to HTML (`.HTML`) for submission to Canvas, as directed. 
 
 💡 **Tip:** After you knit, look in your course folder for two files with the same name. One file ends in .Rmd and one ends in .html. Upload the .html file. You can check which is which because one opens in R and the other usually opens in a web browser.
+
+---
+
+🪞 Final Reflection: What was one place where your code did not behave the way you expected? What did you check or change before submitting? How much time did you spend completing the Practice Space? Did you complete the Guided Activity first?
