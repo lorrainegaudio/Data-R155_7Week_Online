@@ -495,11 +495,17 @@ Required files to submit:
 
 As you work, add short comments or memo notes explaining what your code is doing and what the output shows.
 
+- 🗣 **Add Comments** asks you to explain what the code or output shows.
+- 🪞 **Reflect** asks you to explain your thinking process, what confused you, what changed in your understanding, or what strategy you would use next.
+
+These are there to help you practice the habit of writing memos as you work. Keep responses short: 1–3 thoughtful sentences is enough. For this Practice Space, answer the 🗣 **Add Comments** prompt for each coding task. Then answer 🪞 **Reflect** prompts where your thinking, prediction, confusion, or troubleshooting changed.
+
 If you encounter an error, document your **tenacity** by briefly noting what happened, what you tried, and how you fixed it or what still confuses you. Document how you troubleshot the error and what resource(s) you used to help you resolve the issue (**transparency**).
 
-Before submitting, clear your Environment and run the notebook from top to bottom. Objects need to be created in sequential order.
+You may ask an AI to explain an error or provide you with more details to a curiosity. Do not ask AI to rewrite or complete any part of the report for you. You may quote AI output only when you clearly mark it as quoted text, either with quotation marks or a block quote using `>`. Then hand-type your own explanation of why you are including that quote.
 
-You may quote AI output only when you clearly mark it as quoted text, either with quotation marks or a block quote using `>`. Then hand-type your own explanation of why you are including that quote.
+Before you finish, clear your Environment and run the notebook from top to bottom. Then knit to HTML to check that the notebook works in order.
+
 
 ## Task 1
 
@@ -507,7 +513,7 @@ You may quote AI output only when you clearly mark it as quoted text, either wit
 
 Practice creating a named vector by pairing values with element names. Some labels and some values are missing. The blanks test both parts of the name-value pair. 💡 **Tip:** Include quotes around the element names.
 
-🎯 Create a named vector called student_counts that stores the number of students in four campus groups. Use the exact group names and counts: `"First Year"` count is 18, `"Sophomore"` count is 22, `"Junior"`count is 16, and `"Senior"` count is 14.
+🎯 Create a named vector called student_counts that stores the number of students in four campus groups. Use the exact group names and counts: `"First Year"` count is 18, `"Sophomore"` count is 22, `"Junior"` count is 16, and `"Senior"` count is 14.
 
 ```{r eval = FALSE}
 # ⚡ Type this in your R Notebook. Fill in the blanks.
@@ -522,13 +528,14 @@ student_counts <- c(
 print(student_counts)
 ```
 
-🗣 Memo (outside of the code chunk): Explain how named vectors help make values easier to understand.
+🗣 **Add Comments:** In 1–3 sentences, explain what `print(student_counts)` shows. Include how the group names help you understand what each number means.
+
+🪞 **Reflect:** Which part of this task was easier to keep track of: the values or the names? Explain how you checked that each group name matched the correct count.
 
 ```{r eval=FALSE}
 missing element names: "First Year", "Junior"
 missing values: 22, 14
 ```
-
 
 ## Task 2
 
@@ -536,7 +543,7 @@ missing values: 22, 14
 
 Practice using negative positions inside `[ ]` to remove elements from a vector.
 
-🎯 Use negative indexing to remove the 1st and 5th values from the `quiz_scores` vector.
+🎯 Use negative indexing (*`c()` with a negative sign before it*) to remove the 1st and 5th values from the `quiz_scores` vector.
 
 ```{r eval=FALSE}
 # ⚡ Type this in your R Notebook.
@@ -546,9 +553,11 @@ quiz_scores <- c(85, 92, 78, 88, 61, 95)
 quiz_scores[____(1, 5)]
 ```
 
-🗣 Explain what negative indexing does in R. 
+🗣 **Add Comments:** In 1–3 sentences, explain which quiz scores were removed and which scores stayed in the output.
 
-"Negative indexing removed __________."
+    Negative indexing removed __________.
+
+🪞 **Reflect:** How did you know that `1` and `5` meant positions, not score values? Explain what you would check if the output removed the wrong scores.
 
 ```{r eval=FALSE, include=FALSE}
 quiz_scores[-c(1, 5)]
@@ -571,6 +580,10 @@ ____["____"]
 student_counts["Junior"]
 ```
 
+🗣 **Add Comments:** In 1–3 sentences, explain what the code returns. Include both the name and the value shown in the output.
+
+🪞 **Reflect:** Does the exact spelling of `"Junior"` matter here? Why? Explain what you would check if R returned `NA` or did not find the value.
+
 ## Task 4
 
 ⚖️ **Create a logical vector**
@@ -589,9 +602,12 @@ meets_goal <- quiz_scores ____ 80
 print(meets_goal)
 ```
 
-🗣 Explain what `TRUE` and `FALSE` mean in the `meets_goal` vector.
+🗣 **Add Comments:** In 1–3 sentences, explain what each `TRUE` and `FALSE` means in `meets_goal`. Be specific about the cutoff value of 80.
 
-"TRUE means __________. FALSE means __________."
+    `TRUE` means __________. `FALSE` means __________.
+
+🪞 **Reflect:** Before running the code, how many `TRUE` values did you expect? Explain how you compared your prediction to the printed output.
+
 
 ```{r eval=FALSE, include=FALSE}
 meets_goal <- quiz_scores >= 80
@@ -614,9 +630,11 @@ passing_scores <- ____[____]
 print(passing_scores)
 ```
 
-🗣 Memo: Explain which values were kept and why.
+🗣 **Add Comments:** In 1–3 sentences, explain which scores were kept in `passing_scores` and why those scores matched the `meets_goal` mask.
 
-passing_scores kept __________ because __________.
+    `passing_scores` kept __________ because __________.
+
+🪞 **Reflect:** Explain how the logical vector worked like a filter. What would happen if `meets_goal` had `FALSE` in a position where you expected `TRUE`?
 
 
 ```{r eval=FALSE, include=FALSE}
@@ -624,13 +642,14 @@ passing_scores <- quiz_scores[meets_goal]
 ```
 
 ## Task 6
- 
- **Reflect on logical masks**
- 
-🎯 In one to two sentences, explain how the logical mask controls which values are kept.
 
+🪞 **Reflect on logical masks**
+
+🎯 In 1–3 sentences, explain how the logical mask controls which values are kept from `quiz_scores`. Use the words `TRUE`, `FALSE`, and `position` in your answer.
 
 ## Task 7
+
+✅ **Final checks before submitting**
 
 🎯 **Step 1: Sweep your Environment (start clean).**  
 Click the 🧹 **broom icon** in the Environment pane to clear objects.
@@ -639,7 +658,7 @@ Click the 🧹 **broom icon** in the Environment pane to clear objects.
 Use **Run → Run All** to execute every chunk in order.
 
 🎯 **Step 3: Save and submit.**  
-After your notebook runs without errors, save your notebook (`.Rmd`) for submission to Canvas, as directed. 
+After your notebook runs without errors, save your notebook (`chapter4_practice.Rmd`) and save your workspace (`chapter4_practice.RData`) for submission to Canvas.
 
 # References
 

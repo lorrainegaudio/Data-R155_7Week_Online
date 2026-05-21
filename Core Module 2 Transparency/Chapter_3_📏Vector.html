@@ -1632,7 +1632,7 @@ display: none;
 <h1 class="title toc-ignore">Chapter 3</h1>
 <h3 class="subtitle">📏 Vector</h3>
 <h4 class="author">by Lorraine Gaudio</h4>
-<h4 class="date">Version May 20, 2026</h4>
+<h4 class="date">Version May 21, 2026</h4>
 
 </div>
 
@@ -2495,15 +2495,33 @@ format (HTML/PDF/Word), and options for rendering.</p>
 </ul>
 <p>As you work, add short comments or memo notes explaining what your
 code is doing and what the output shows.</p>
+<ul>
+<li>🗣 <strong>Add Comments</strong> asks you to explain what the code or
+output shows.</li>
+<li>🪞 <strong>Reflect</strong> asks you to explain your thinking
+process, what confused you, what changed in your understanding, or what
+strategy you would use next.</li>
+</ul>
+<p>These are there to help you practice the habit of writing memos as
+you work. Keep responses short: 1–3 thoughtful sentences is enough. For
+this Practice Space, answer the 🗣 <strong>Add Comments</strong> prompt
+for each coding task. Then answer 🪞 <strong>Reflect</strong> prompts
+where your thinking, prediction, confusion, or troubleshooting
+changed.</p>
 <p>If you encounter an error, document your <strong>tenacity</strong> by
 briefly noting what happened, what you tried, and how you fixed it or
-what still confuses you.</p>
-<p>Before submitting, clear your Environment and run the notebook from
-top to bottom. Objects need to be created in sequential order.</p>
-<p>All work must be hand-typed by you in your own voice. Do not copy and
-paste from AI. You make quote AI output anywhere (clear quotation marks
-or quote (<code>&gt;</code>) before the paragraph). Hand-type a
-explanation of why you’re including that quote.</p>
+what still confuses you. Document how you troubleshot the error and what
+resource(s) you used to help you resolve the issue
+(<strong>transparency</strong>).</p>
+<p>You may ask an AI to explain an error or provide you with more
+details to a curiosity. Do not ask AI to rewrite or complete any part of
+the report for you. You may quote AI output only when you clearly mark
+it as quoted text, either with quotation marks or a block quote using
+<code>&gt;</code>. Then hand-type your own explanation of why you are
+including that quote.</p>
+<p>Before you finish, clear your Environment and run the notebook from
+top to bottom. Then knit to HTML to check that the notebook works in
+order.</p>
 <div id="task-1" class="section level2" number="7.1">
 <h2><span class="header-section-number">7.1</span> Task 1</h2>
 <p>🛠 <strong>Build numeric vectors</strong></p>
@@ -2554,20 +2572,24 @@ vector on the right side of the <code>^</code> operator. 💡
 The <code>exponents</code> vector will store the exponent positions.</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
 
-# Step 1: create the exponent values
-exponents &lt;- ___:___
+# Step 1: create the exponent values 0 through 10
+exponents &lt;- 0:10
 
 # Step 2: raise the base to each exponent value
-binary_powers &lt;- ___ ^ exponents</code></pre>
+binary_powers &lt;- 2 ___ exponents</code></pre>
 <pre class="r"><code># ✅ Check the length of the binary_powers vector
 _____(binary_powers)
 print(binary_powers)</code></pre>
-<p>🗣 Add Comments: “# The output shows ___ elements (values) in the
+<p>🗣 Add Comment: “# The output shows ___ elements (values) in the
 <code>binary_powers</code> vector.”</p>
-<p>🗣 How does R applies the exponentiation operator <code>^</code>? Why
-does the output producing __ elements (values) in the
-<code>binary_powers</code> vector? Does the vector start with 1 and grow
-by doubling?</p>
+<p>🗣 Add Comments: In 1–3 sentences, explain what
+<code>length(binary_powers)</code> and <code>print(binary_powers)</code>
+show. Include how many values are in the vector and why the first value
+is 1.</p>
+<p>🪞 Reflect: Before running the code, did you expect
+<code>2 ^ exponents</code> to create one answer or many answers? In 1–3
+sentences, explain how this task changed or confirmed your understanding
+of vectorized math in R.</p>
 </div>
 <div id="task-4" class="section level2" number="7.4">
 <h2><span class="header-section-number">7.4</span> Task 4</h2>
@@ -2595,9 +2617,12 @@ subtracting one vector from another.</em></p>
 from the anomaly vector.</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook. Fill in the blanks.
 anomaly[c(_, _, _)]</code></pre>
-<p>🗣 Add Comment: # The output shows __________</p>
-<p>🗣 <strong><em>Memo: articulate your learning process, connect ideas,
-or discuss challenges.</em></strong></p>
+<p>🗣 Add Comments: In 1–3 sentences, explain which values R returned
+from <code>anomaly</code> and how the positions <code>2</code>,
+<code>4</code>, and <code>6</code> told R what to select.</p>
+<p>🪞 Reflect: How did you decide which numbers belonged inside
+<code>c(_, _, _)</code>? In 1–3 sentences, explain how you checked that
+your indexing matched the task.</p>
 </div>
 <div id="task-6" class="section level2" number="7.6">
 <h2><span class="header-section-number">7.6</span> Task 6</h2>
@@ -2620,9 +2645,12 @@ nerdy_palette &lt;- c(
 )</code></pre>
 <pre class="r"><code># ⚡ Type this in your R Notebook. Fill in the blanks.
 nerdy_palette[c(_______, _______)]</code></pre>
-<p>🗣 Add Comment: # The output shows __________</p>
-<p>🗣 <strong><em>Memo: articulate your learning process, connect ideas,
-or discuss challenges.</em></strong></p>
+<p>🗣 Add Comments: In 1–3 sentences, explain which color codes R
+returned and how the names <code>&quot;Matrix Green&quot;</code> and
+<code>&quot;Command Red&quot;</code> helped R find them.</p>
+<p>🪞 Reflect: How is using names to index <code>nerdy_palette</code>
+different from using numeric positions? In 1–3 sentences, explain which
+method felt clearer to you for this task and why.</p>
 </div>
 <div id="task-7" class="section level2" number="7.7">
 <h2><span class="header-section-number">7.7</span> Task 7</h2>
@@ -2644,17 +2672,23 @@ last_two &lt;- change[c(___, ___)]</code></pre>
 <pre class="r"><code># ✅ Print both outputs
 print(________)
 _____(last_two)</code></pre>
-<p>🗣 Add Comment: # The output shows __________.</p>
-<p>🗣 <strong><em>Memo: articulate your learning process, connect ideas,
-or discuss challenges.</em></strong></p>
+<p>🗣 Add Comments: In 1–3 sentences, explain what values appear in
+<code>positive_change</code> and <code>last_two</code>. Be specific
+about which part of the code selected values greater than zero and which
+part selected the final two positions.</p>
+<p>🪞 Reflect: Which part of this task required a logical test, and
+which part required numeric positions? In 1–3 sentences, explain how you
+kept those two indexing strategies separate.</p>
 </div>
 <div id="task-8" class="section level2" number="7.8">
 <h2><span class="header-section-number">7.8</span> Task 8</h2>
 <p>🧠 <strong>Reflect on coercion</strong></p>
-<p>🎯 In one sentence, explain why numeric values may be coerced to
-character values if you mix them inside a single vector.</p>
-<p>🗣 Your explanation: # Numeric values may be coerced to character
-values because __________.</p>
+<p>🎯 Explain why numeric values may be coerced to character values if
+you mix them inside a single vector.</p>
+<p>🗣 Add Comments: Why does R turn numeric values into character values
+when numbers and text are mixed inside one vector?</p>
+<p>🪞 Reflect: What would you check in R to confirm that coercion
+happened? Name one function or output you would use.</p>
 </div>
 <div id="task-9" class="section level2" number="7.9">
 <h2><span class="header-section-number">7.9</span> Task 9</h2>

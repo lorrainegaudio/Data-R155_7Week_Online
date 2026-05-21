@@ -1632,7 +1632,7 @@ display: none;
 <h1 class="title toc-ignore">Chapter 4</h1>
 <h3 class="subtitle">🏗️Structures</h3>
 <h4 class="author">by Lorraine Gaudio</h4>
-<h4 class="date">Version May 14, 2026</h4>
+<h4 class="date">Version May 21, 2026</h4>
 
 </div>
 
@@ -2190,17 +2190,33 @@ format (HTML/PDF/Word), and options for rendering.</p>
 </ul>
 <p>As you work, add short comments or memo notes explaining what your
 code is doing and what the output shows.</p>
+<ul>
+<li>🗣 <strong>Add Comments</strong> asks you to explain what the code or
+output shows.</li>
+<li>🪞 <strong>Reflect</strong> asks you to explain your thinking
+process, what confused you, what changed in your understanding, or what
+strategy you would use next.</li>
+</ul>
+<p>These are there to help you practice the habit of writing memos as
+you work. Keep responses short: 1–3 thoughtful sentences is enough. For
+this Practice Space, answer the 🗣 <strong>Add Comments</strong> prompt
+for each coding task. Then answer 🪞 <strong>Reflect</strong> prompts
+where your thinking, prediction, confusion, or troubleshooting
+changed.</p>
 <p>If you encounter an error, document your <strong>tenacity</strong> by
 briefly noting what happened, what you tried, and how you fixed it or
 what still confuses you. Document how you troubleshot the error and what
 resource(s) you used to help you resolve the issue
 (<strong>transparency</strong>).</p>
-<p>Before submitting, clear your Environment and run the notebook from
-top to bottom. Objects need to be created in sequential order.</p>
-<p>You may quote AI output only when you clearly mark it as quoted text,
-either with quotation marks or a block quote using <code>&gt;</code>.
-Then hand-type your own explanation of why you are including that
-quote.</p>
+<p>You may ask an AI to explain an error or provide you with more
+details to a curiosity. Do not ask AI to rewrite or complete any part of
+the report for you. You may quote AI output only when you clearly mark
+it as quoted text, either with quotation marks or a block quote using
+<code>&gt;</code>. Then hand-type your own explanation of why you are
+including that quote.</p>
+<p>Before you finish, clear your Environment and run the notebook from
+top to bottom. Then knit to HTML to check that the notebook works in
+order.</p>
 <div id="task-1" class="section level2" number="7.1">
 <h2><span class="header-section-number">7.1</span> Task 1</h2>
 <p>🧑‍🎓 <strong>Create a named vector</strong></p>
@@ -2211,8 +2227,8 @@ around the element names.</p>
 <p>🎯 Create a named vector called student_counts that stores the number
 of students in four campus groups. Use the exact group names and counts:
 <code>&quot;First Year&quot;</code> count is 18, <code>&quot;Sophomore&quot;</code> count is
-22, <code>&quot;Junior&quot;</code>count is 16, and <code>&quot;Senior&quot;</code> count is
-14.</p>
+22, <code>&quot;Junior&quot;</code> count is 16, and <code>&quot;Senior&quot;</code> count
+is 14.</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook. Fill in the blanks.
 student_counts &lt;- c(
   ______ = 18,
@@ -2223,8 +2239,12 @@ student_counts &lt;- c(
 
 # ✅ Check the vector
 print(student_counts)</code></pre>
-<p>🗣 Memo (outside of the code chunk): Explain how named vectors help
-make values easier to understand.</p>
+<p>🗣 <strong>Add Comments:</strong> In 1–3 sentences, explain what
+<code>print(student_counts)</code> shows. Include how the group names
+help you understand what each number means.</p>
+<p>🪞 <strong>Reflect:</strong> Which part of this task was easier to
+keep track of: the values or the names? Explain how you checked that
+each group name matched the correct count.</p>
 <pre class="r"><code>missing element names: &quot;First Year&quot;, &quot;Junior&quot;
 missing values: 22, 14</code></pre>
 </div>
@@ -2233,15 +2253,20 @@ missing values: 22, 14</code></pre>
 <p>➖ <strong>Use negative indexing</strong></p>
 <p>Practice using negative positions inside <code>[ ]</code> to remove
 elements from a vector.</p>
-<p>🎯 Use negative indexing to remove the 1st and 5th values from the
+<p>🎯 Use negative indexing (<em><code>c()</code> with a negative sign
+before it</em>) to remove the 1st and 5th values from the
 <code>quiz_scores</code> vector.</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook.
 quiz_scores &lt;- c(85, 92, 78, 88, 61, 95)
 
 # ⚡ Fill in the blank to remove positions 1 and 5.
 quiz_scores[____(1, 5)]</code></pre>
-<p>🗣 Explain what negative indexing does in R.</p>
-<p>“Negative indexing removed __________.”</p>
+<p>🗣 <strong>Add Comments:</strong> In 1–3 sentences, explain which quiz
+scores were removed and which scores stayed in the output.</p>
+<pre><code>Negative indexing removed __________.</code></pre>
+<p>🪞 <strong>Reflect:</strong> How did you know that <code>1</code> and
+<code>5</code> meant positions, not score values? Explain what you would
+check if the output removed the wrong scores.</p>
 </div>
 <div id="task-3" class="section level2" number="7.3">
 <h2><span class="header-section-number">7.3</span> Task 3</h2>
@@ -2253,6 +2278,12 @@ name.</p>
 vector you created in Task 1.</p>
 <pre class="r"><code># ⚡ Fill in the blank with the exact element name.
 ____[&quot;____&quot;]</code></pre>
+<p>🗣 <strong>Add Comments:</strong> In 1–3 sentences, explain what the
+code returns. Include both the name and the value shown in the
+output.</p>
+<p>🪞 <strong>Reflect:</strong> Does the exact spelling of
+<code>&quot;Junior&quot;</code> matter here? Why? Explain what you would check if
+R returned <code>NA</code> or did not find the value.</p>
 </div>
 <div id="task-4" class="section level2" number="7.4">
 <h2><span class="header-section-number">7.4</span> Task 4</h2>
@@ -2268,9 +2299,13 @@ meets_goal &lt;- quiz_scores ____ 80
 
 # ✅ Check the logical vector
 print(meets_goal)</code></pre>
-<p>🗣 Explain what <code>TRUE</code> and <code>FALSE</code> mean in the
-<code>meets_goal</code> vector.</p>
-<p>“TRUE means __________. FALSE means __________.”</p>
+<p>🗣 <strong>Add Comments:</strong> In 1–3 sentences, explain what each
+<code>TRUE</code> and <code>FALSE</code> means in
+<code>meets_goal</code>. Be specific about the cutoff value of 80.</p>
+<pre><code>`TRUE` means __________. `FALSE` means __________.</code></pre>
+<p>🪞 <strong>Reflect:</strong> Before running the code, how many
+<code>TRUE</code> values did you expect? Explain how you compared your
+prediction to the printed output.</p>
 </div>
 <div id="task-5" class="section level2" number="7.5">
 <h2><span class="header-section-number">7.5</span> Task 5</h2>
@@ -2284,17 +2319,26 @@ passing_scores &lt;- ____[____]
 
 # ✅ Check the new vector
 print(passing_scores)</code></pre>
-<p>🗣 Memo: Explain which values were kept and why.</p>
-<p>passing_scores kept __________ because __________.</p>
+<p>🗣 <strong>Add Comments:</strong> In 1–3 sentences, explain which
+scores were kept in <code>passing_scores</code> and why those scores
+matched the <code>meets_goal</code> mask.</p>
+<pre><code>`passing_scores` kept __________ because __________.</code></pre>
+<p>🪞 <strong>Reflect:</strong> Explain how the logical vector worked
+like a filter. What would happen if <code>meets_goal</code> had
+<code>FALSE</code> in a position where you expected
+<code>TRUE</code>?</p>
 </div>
 <div id="task-6" class="section level2" number="7.6">
 <h2><span class="header-section-number">7.6</span> Task 6</h2>
-<p><strong>Reflect on logical masks</strong></p>
-<p>🎯 In one to two sentences, explain how the logical mask controls
-which values are kept.</p>
+<p>🪞 <strong>Reflect on logical masks</strong></p>
+<p>🎯 In 1–3 sentences, explain how the logical mask controls which
+values are kept from <code>quiz_scores</code>. Use the words
+<code>TRUE</code>, <code>FALSE</code>, and <code>position</code> in your
+answer.</p>
 </div>
 <div id="task-7" class="section level2" number="7.7">
 <h2><span class="header-section-number">7.7</span> Task 7</h2>
+<p>✅ <strong>Final checks before submitting</strong></p>
 <p>🎯 <strong>Step 1: Sweep your Environment (start
 clean).</strong><br />
 Click the 🧹 <strong>broom icon</strong> in the Environment pane to
@@ -2303,7 +2347,8 @@ clear objects.</p>
 Use <strong>Run → Run All</strong> to execute every chunk in order.</p>
 <p>🎯 <strong>Step 3: Save and submit.</strong><br />
 After your notebook runs without errors, save your notebook
-(<code>.Rmd</code>) for submission to Canvas, as directed.</p>
+(<code>chapter4_practice.Rmd</code>) and save your workspace
+(<code>chapter4_practice.RData</code>) for submission to Canvas.</p>
 </div>
 </div>
 <div id="references" class="section level1" number="8">
