@@ -461,9 +461,9 @@ sum(is.na(imputed))       # Imputed vector – should print 0
 
 # Summary
 
-In this chapter, you strengthened your R workflow by learning how to recognize and handle special values in R. You practiced the difference between NA, which means information is missing, and NaN, which means a numeric result is undefined. You also learned that missing values can quietly affect your calculations because many R functions return NA unless you tell them how to handle missingness.
+In this chapter, you strengthened your R workflow by learning how to recognize and handle special values in R. You practiced the difference between `NA`, which means information is missing, and `NaN`, which means a numeric result is undefined. You also learned that missing values can quietly affect your calculations because many R functions return `NA` unless you tell them how to handle missingness.
 
-You built a practical missing-values workflow. You practiced using anyNA() to check whether missing values exist, is.na() to identify which values are missing, which() to locate their positions, sum(is.na(x)) to count missing values, and mean(is.na(x)) to calculate the proportion missing. You also practiced using na.rm = TRUE so summary functions can calculate results while ignoring missing values.
+You built a practical missing-values workflow. You practiced using `anyNA()` to check whether missing values exist, `is.na()` to identify which values are missing, `which()` to locate their positions, `sum(is.na(x))` to count missing values, and `mean(is.na(x))` to calculate the proportion missing. You also practiced using `na.rm = TRUE` so summary functions can calculate results while ignoring missing values.
 
 Finally, you practiced two basic strategies for handling missing values: removing missing values with logical indexing and replacing missing values with a simple imputed value. You also practiced nesting function calls so that one function’s result can be passed directly into another function. Your main takeaway is that strong R work depends on checking assumptions, understanding defaults, documenting your choices, and making sure your code is not only running, but producing results you can trust.
 

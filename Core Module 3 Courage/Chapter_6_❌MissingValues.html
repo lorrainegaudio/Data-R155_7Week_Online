@@ -1639,28 +1639,38 @@ display: none;
 
 <div id="overview" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> Overview</h1>
-<p>In this chapter, you’ll build the core R habits that prevent your
-analysis from being quietly wrong. You’ll learn how built-in functions
-summarize vectors, how to read help files to tell what a function
-requires versus what it assumes by default, and how those defaults
-directly affect results. Then you’ll focus on missing data—what NA
-means, how missing values “propagate” through calculations, how to
-detect and locate missing values, and how to make deliberate choices
-about what to do next (remove missing values or use simple imputation).
-You’ll also practice nesting functions to solve multi-step problems
-efficiently while still keeping your code understandable. This fits
-where you are in the course because you are moving from “R runs” to “R
-is correct”: you’re learning to verify assumptions, interpret defaults,
-and handle messy data the way real researchers must in order to produce
-results that others can trust (CLO1), troubleshoot systematically
-(CLO2), and document your reasoning and resources transparently
-(CLO3).</p>
-<p>In Chapter Six you will learn how to:</p>
+<p>In this chapter, you will practice R habits that help prevent your
+analysis from being quietly wrong. Code can run without producing a
+useful or trustworthy result. This chapter focuses on checking
+assumptions, understanding function defaults, and handling missing
+values deliberately.</p>
+<p>You will work with special values like <code>NA</code> and
+<code>NaN</code>, practice summary functions, detect and locate missing
+values, and compare two basic ways to handle missing data: removing
+missing values and replacing them with a simple summary value. You will
+also practice nesting functions, which means putting one function inside
+another to solve multi-step problems.</p>
+<p>In Chapter Six, you will practice how to:</p>
 <ul>
-<li><p>🗜️ Summarize vectors with built‑in, <em>vectorized</em>
-functions.</p></li>
-<li><p>📦 Nest functions to build compact pipelines.</p></li>
-<li><p>⚡ Handle missing values with na.rm.</p></li>
+<li><p>🕳️ Recognize <code>NA</code> as missing information and
+<code>NaN</code> as an undefined numeric result.</p></li>
+<li><p>🦠 Describe how missing values can affect calculations in
+R.</p></li>
+<li><p>⚙️ Recognize that many R functions have default arguments that
+affect results.</p></li>
+<li><p>🧹 Use <code>na.rm = TRUE</code> to tell summary functions to
+ignore missing values.</p></li>
+<li><p>🚨 Use <code>anyNA()</code> to check whether a vector contains
+missing values.</p></li>
+<li><p>🔍 Use <code>is.na()</code> and <code>which()</code> to identify
+where missing values are located.</p></li>
+<li><p>📋 Use <code>sum(is.na(x))</code> and <code>mean(is.na(x))</code>
+to summarize how much data is missing.</p></li>
+<li><p>🩹 Recognize the difference between removing missing values and
+imputing missing values with a summary value.</p></li>
+<li><p>🧅 Read nested function calls from the inside out.</p></li>
+<li><p>🕸️ Explain why compact code can be efficient but harder to read
+and debug.</p></li>
 </ul>
 </div>
 <div id="open-an-r-notebook" class="section level1" number="2">
@@ -2104,10 +2114,8 @@ the mean of the observed values. It is good practice to name objects in
 meaningful ways.</p>
 <p>We’re doing three actions on the same object
 (<code>imputed</code>):</p>
-<ol style="list-style-type: decimal">
-<li>identify missing positions, (2) compute a replacement value, and (3)
-write the replacements back.</li>
-</ol>
+<p>🎯 (1) identify missing positions, (2) compute a replacement value,
+and (3) write the replacements back.</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook
 imputed[is.na(imputed)] &lt;- mean(imputed, na.rm = TRUE)
 imputed</code></pre>
@@ -2120,14 +2128,16 @@ input contains missing values.</p>
 <strong><code>imputed[</code></strong><code>is.na(imputed)</code><strong><code>]</code></strong>.</p>
 <p>The object we are using to find the missing positions is inside
 brackets: <strong><code>is.na(imputed)</code></strong>.</p>
+<p><strong>The general replacement pattern is</strong>:</p>
+<pre class="r"><code>object[positions_to_replace] &lt;- replacement_value</code></pre>
 <blockquote>
 <p>🧐 <strong>Notice:</strong> You might think, “The missing values came
 from <code>Large_Vec</code>, so I should check <code>Large_Vec</code>.”
 But the rule is to use the same object we’re editing, or we risk
-indexing the wrong thing later.</p>
+indexing the wrong thing later. The object we are summarizing to compute
+the replacement value (mean):
+<strong><code>mean(imputed, na.rm = TRUE)</code></strong></p>
 </blockquote>
-<p>The object we are summarizing to compute the replacement value
-(mean): <strong><code>mean(imputed, na.rm = TRUE)</code></strong></p>
 <blockquote>
 <p>🧐 <strong>Notice:</strong> You might think, “mean of observed
 values” means “mean of the original” and want to use
@@ -2150,23 +2160,35 @@ of missing values in the original vector, which should be greater than
 1. The second <code>sum(is.na(imputed))</code> call counts the missing
 values in the imputed vector, which should be 0, confirming that all
 missing values have been replaced.</p>
+<hr />
 </div>
 </div>
 </div>
 <div id="summary" class="section level1" number="5">
 <h1><span class="header-section-number">5</span> Summary</h1>
-<p>In Chapter 6, you learned that R has special values for non-standard
-situations, especially <code>NA</code> (missing information) and
-<code>NaN</code> (undefined arithmetic), and you practiced built-in
-summary functions that reduce a vector to a single value. You built a
-practical missing-values workflow: detect missingness
-(<code>anyNA()</code>), locate missing values (<code>is.na()</code> and
-<code>which()</code>), summarize how much is missing
-(<code>sum(is.na(x)</code>) and <code>mean(is.na(x))</code>), and handle
-missing data by either removing missing values or imputing them with a
-summary value. Finally, you practiced nesting function calls to combine
-steps into one expression and discussed the trade-off between compact
-code and readability.</p>
+<p>In this chapter, you strengthened your R workflow by learning how to
+recognize and handle special values in R. You practiced the difference
+between <code>NA</code>, which means information is missing, and
+<code>NaN</code>, which means a numeric result is undefined. You also
+learned that missing values can quietly affect your calculations because
+many R functions return <code>NA</code> unless you tell them how to
+handle missingness.</p>
+<p>You built a practical missing-values workflow. You practiced using
+<code>anyNA()</code> to check whether missing values exist,
+<code>is.na()</code> to identify which values are missing,
+<code>which()</code> to locate their positions,
+<code>sum(is.na(x))</code> to count missing values, and
+<code>mean(is.na(x))</code> to calculate the proportion missing. You
+also practiced using <code>na.rm = TRUE</code> so summary functions can
+calculate results while ignoring missing values.</p>
+<p>Finally, you practiced two basic strategies for handling missing
+values: removing missing values with logical indexing and replacing
+missing values with a simple imputed value. You also practiced nesting
+function calls so that one function’s result can be passed directly into
+another function. Your main takeaway is that strong R work depends on
+checking assumptions, understanding defaults, documenting your choices,
+and making sure your code is not only running, but producing results you
+can trust.</p>
 </div>
 <div id="chapter-terms" class="section level1" number="6">
 <h1><span class="header-section-number">6</span> Chapter Terms</h1>
