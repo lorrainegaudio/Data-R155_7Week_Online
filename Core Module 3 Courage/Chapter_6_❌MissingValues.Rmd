@@ -74,21 +74,39 @@ output:
 
 # Overview
 
-In this chapter, you’ll build the core R habits that prevent your analysis from being quietly wrong. You’ll learn how built-in functions summarize vectors, how to read help files to tell what a function requires versus what it assumes by default, and how those defaults directly affect results. Then you’ll focus on missing data—what NA means, how missing values “propagate” through calculations, how to detect and locate missing values, and how to make deliberate choices about what to do next (remove missing values or use simple imputation). You’ll also practice nesting functions to solve multi-step problems efficiently while still keeping your code understandable. This fits where you are in the course because you are moving from “R runs” to “R is correct”: you’re learning to verify assumptions, interpret defaults, and handle messy data the way real researchers must in order to produce results that others can trust (CLO1), troubleshoot systematically (CLO2), and document your reasoning and resources transparently (CLO3).
+In this chapter, you will practice R habits that help prevent your analysis from being quietly wrong. Code can run without producing a useful or trustworthy result. This chapter focuses on checking assumptions, understanding function defaults, and handling missing values deliberately.
 
-In Chapter Six you will learn how to:
+You will work with special values like `NA` and `NaN`, practice summary functions, detect and locate missing values, and compare two basic ways to handle missing data: removing missing values and replacing them with a simple summary value. You will also practice nesting functions, which means putting one function inside another to solve multi-step problems.
 
-- 🗜️ Summarize vectors with built‑in, *vectorized* functions.
+In Chapter Six, you will practice how to:
 
-- 🛟 Read help files to discover arguments and defaults.
+- 🕳️ Recognize `NA` as missing information and `NaN` as an undefined numeric result.
 
-- 📦 Nest functions to build compact pipelines.
+- 🦠 Describe how missing values can affect calculations in R.
 
-- ⚡ Handle missing values with na.rm.
+- ⚙️ Recognize that many R functions have default arguments that affect results.
+
+- 🧹 Use `na.rm = TRUE` to tell summary functions to ignore missing values.
+
+- 🚨 Use `anyNA()` to check whether a vector contains missing values.
+
+- 🔍 Use `is.na()` and `which()` to identify where missing values are located.
+
+- 📋 Use `sum(is.na(x))` and `mean(is.na(x))` to summarize how much data is missing.
+
+- 🩹 Recognize the difference between removing missing values and imputing missing values with a summary value.
+
+- 🧅 Read nested function calls from the inside out.
+
+- 🕸️ Explain why compact code can be efficient but harder to read and debug.
 
 # Open an R Notebook
 
-Before you follow along with Chapter 6, set yourself up the same way you did in Chapter 5. Your work will to be readable and reproducible. 🎯 Please open a new R Notebook in your course folder named `chapter6_notes.Rmd` and add a date to the YAML header using either method. Use this document to take notes and practice the chapter content. 
+Before you follow along with Chapter 6, set yourself up the same way you did in Chapter 5. Your work will be readable and reproducible.
+
+🎯 Please open a new R Notebook in your course folder named `chapter6_notes.Rmd` and add a date to the YAML header. Use this document to take notes, practice the chapter content, and memo about what you are learning.
+
+The **YAML header** is the setup block at the very top of an R Notebook. It tells R Markdown the document title, author, date, and output type.
 
 1. Open RStudio → File → New File → R Notebook.
 
@@ -96,28 +114,54 @@ Before you follow along with Chapter 6, set yourself up the same way you did in 
 
 3. In your YAML header at the top:
 
-- Update the title to match this chapter.
+- Update the `title` to match this chapter.
 
-- Include a date (hard-coded or dynamic, your choice).
+- Include a `date` (hard-coded or dynamic, your choice).
 
-4. Use headings as you work. At minimum, create section headings that match the chapter structure (e.g., `# Special Values`, `# Built-in Functions`, `# Help Files`, `# Missing Values Workflow`, `# Nesting`). This creates a readable outline.
+- Add your name as the `author`.
 
-5. Memo as you go.
+For example, your YAML header might look like this:
 
-- Outside chunks: write normal text.
+```{r echo=FALSE, results='asis'}
+cat("```yaml
+---
+title: \"Chapter 6 Notes\"
+author: \"[Your Name]\"
+date: \"`r Sys.Date()`\"
+output: html_notebook
+---
+```")
+```
 
-- Inside chunks: use # for memo comments (otherwise R tries to run the text).
+The date can be typed directly, such as "`2026-05-20`", or it can be dynamic using `r knitr::inline_expr("Sys.Date()")` so the document updates the date automatically when it renders.
 
-- If you hit an error: keep the broken line commented out and write a one-sentence note about what you changed to fix it.
+4. Remove the default content.
 
-**Bottom line**: You are practicing Chapter 6 content inside a Chapter 5-style report.
+5. Use headings as you work. At minimum, create section headings that match the chapter structure (e.g., `# Special Values`, `# Built-in Functions`, `# Missing Values Workflow`, `# Nesting`). This creates a readable outline.
 
-# Special Values
+6. Memo as you go.
+
+- Inside chunks: use `#` for code comments (otherwise R tries to run the text as code).
+
+- Outside chunks: write normal text without a `#`.
+  - If you hit an error, write a one-sentence note about what you changed to fix it. Learned something new? Write a one-sentence note about that too. 
+  - Create these notes as a resource for you to review later.
+  
+---
+
+Next, you’ll focus on what NA means, how missing values “propagate” through calculations, and how to detect and locate missing values.
+
+# Missing Values Workflow
+
+The `na.rm` argument in the `mean()` function has a default value of `FALSE`, meaning that if you don't specify it, the function will include `NA` values in its calculation. 
+
+## Special Values
+
+In R, **missing values** are represented by the **special value** symbol `NA` (which stands for "Not Available"). 
 
 R has several **special values** that represent non-standard data states. Two common ones are `NA` and `NaN`.
 
 - **`NA`** ("Not Available") signals *missing* information: the value simply was not recorded.
-
 - **`NaN`** ("Not a Number") signals an *undefined* numeric result, such as 0 divided by 0.
 
 ```{r , eval=FALSE}
@@ -127,128 +171,12 @@ R has several **special values** that represent non-standard data states. Two co
 NA         # Built-in constant representing a missing value
 ```
 
-🗣 R prints `NA` and `NaN` in the Console so you can spot them quickly. Even though they look similar, treat them differently: `NA` means "value absent"; `NaN` means "math error".
+🗣 R prints `NA` and `NaN` in the Console so you can spot them quickly. Even though they look similar, they do not mean exactly the same thing.
 
-We will mostly focus on `NA` in this chapter, but keep in mind that `NaN` is another special value you may encounter when working with numeric data.
+- `NA` means the value is absent or unknown.
+- `NaN` means the result is not a valid number, usually because the math operation is undefined.
 
-# Built-in Functions
-
-Many built-in summary functions take a whole vector as input and return one summary value (or a small set of values). These are summary (reduction) functions that take many values and return one value.
-
-## Function Objects vs. Function Calls
-
-A **function object** is the stored code that performs a task. For example, `mean` is a function object that calculates the average of a numeric vector. The stored code sums the values and divides by the number of values.
-
-```{r}
-# ⚡ Type this in your R Notebook
-mean
-```
-
-🗣 Don’t worry if what prints looks cryptic. This is proof that `mean` is stored code you can inspect.
-
-A **function call** runs the stored code. To call a function, you type the function name followed by parentheses `()`. Inside the parentheses, you must provide any **required arguments**. For example, to calculate the mean of a numeric vector, you call the `mean()` function and provide the vector as an argument. The vector is a **required argument** because the function needs it to perform the calculation. 
-
-📜 The SYNTAX (basic): 
-
-`mean(x)`
-
-where `x` is the numeric vector you want to summarize.
-
-🎯 Calculate the mean of the cursed sequence. 
-
-```{r}
-# ⚡ Type this in your R Notebook
-cursed_seq <- c(4, 8, 15, 16, 23, 42)  
-
-mean(cursed_seq)                     
-```
-
-🗣 The `mean()` function calculates the average of the numbers in the `cursed_seq` vector by summing them up and dividing by the count of numbers.
-
-# Help Files
-
-Nobody memorizes every argument. You look them up. `?function_name` opens the help file. The **files pane** (usually bottom-right) contains several tabs, including the **Help tab**, which displays the documentation for R functions.
-
-## No Required Arguments
-
-Some functions do not have a required argument. For example, the `Sys.Date()` function returns the current date without needing any input.
-
-🎯 Call the `Sys.Date()` function to get the current date from your computer's operating system. 
-
-```{r}
-# ⚡ Type this in your R Notebook
-Sys.Date()
-```
-
-🗣 The `Sys.Date()` function retrieves the current date from the system clock and returns it as a Date object.
-
-🎯 Open the help file for the `Sys.Date()` function.
-
-```{r, eval=FALSE}
-# ⚡ Type this in your R Notebook
-?Sys.Date
-```
-
-🗣 The `Sys.Date` help page opens in the **help tab** in the **files pane**. Note that `Sys.Date()` has no required arguments.
-
-Scroll through the help file to find information about the function's usage, arguments, and examples.
-
-- **Usage**: shows the function signature and defaults.
-
-- **Arguments**: what each argument does.
-
-- **Examples**: copy/run examples to learn patterns.
-
-## Required Arguments
-
-🎯 Open the help file for the `mean()` function. Scroll through the help file to find information about the function's usage, arguments, and examples.
-
-- **Usage**: shows the function signature and defaults.
-
-- **Arguments**: what each argument does.
-
-- **Examples**: copy/run examples to learn patterns.
-
-```{r, eval=FALSE}
-# ⚡ Type this in your R Notebook
-?mean   
-help(mean)
-```
-
-🗣 The mean **help page** opens in the **help tab** in the **files pane**. `mean.default(x, trim = 0, na.rm = FALSE, …)` shows that `x` is a required argument, while `trim` and `na.rm` have default values.
-
-## Default Arguments
-
-**Default arguments** are inputs that a function uses in situations when you did not provide that argument. For example, the `trim` argument in the `mean()` function allows you to exclude a certain percentage of the lowest and highest values before calculating the mean.
-
-The SYNTAX (with one default argument):
- 
- `mean(x, trim = 0)`
-
-🎯 Calculate the trimmed mean of the cursed sequence, removing 20% of the lowest and highest values before computing the mean.
- 
-```{r}
-# ⚡ Type this in your R Notebook
-mean(cursed_seq, trim = 0.2)  # drop 20% from each end first
-```
-
-🗣 The `mean()` function first removes 20% of the lowest and highest values from the `cursed_seq` vector, then calculates the mean of the remaining values. With 6 values and `trim = 0.2`, R trims 4 and 42, then averages 8, 15, 16, and 23.
-
-*How can you tell which arguments are required?*
-
-The main clue that `x` is required is that it has no `=` sign or default value next to it in the usage section. The other arguments have `=` signs, showing the default values that R will use if you don't provide your own.
-
-Some functions use `...` (dot-dot-dot). That means “additional optional arguments may be allowed,” not required ones. For now, ignore `...` until you are more advanced.
-
-- no `=` → required 
-
-- `=` → default/optional
-
-# Missing Values Workflow
-
-The `na.rm` argument in the `mean()` function has a default value of `FALSE`, meaning that if you don't specify it, the function will include `NA` values in its calculation. 
-
-In R, **missing values** are represented by the **special value** symbol `NA` (which stands for "Not Available"). Missing values can occur in datasets for various reasons, such as data entry errors, non-responses in surveys, or data corruption. R *will* do the operation, but the result becomes `NA` because the value is unknown (e.g., `5 + NA` returns `NA`, not an error). This is called **propagation**.
+We will mostly focus on `NA` in this chapter because missing values are common in real datasets. Missing values can occur in datasets because of incomplete data entries such as non-responses in surveys, or when joining two datasets. R *will* do the operation, but the result becomes `NA` because the value is unknown (e.g., `5 + NA` returns `NA`; that's not an error; that's nothing.). This is called **propagation**.
 
 📜 The SYNTAX (with na.rm default argument):
 
@@ -334,31 +262,54 @@ which(logical_NA)   # Returns index 3 directly
 
 🗣 The `is.na()` function creates a logical vector `logical_NA` indicating which elements are missing, while the `which()` function extracts the *indices* of those missing values (see **Positional Indexing**).
 
+## Which Missing-Value Function Should I Use?
+
+Several functions help you work with missing values. They answer different questions.
+
+| Question | Function | What it returns |
+|---|---|---|
+| Are there any missing values? | `anyNA(x)` | One `TRUE` or `FALSE` answer |
+| Which values are missing? | `is.na(x)` | A logical vector |
+| What positions are missing? | `which(is.na(x))` | Numeric index positions |
+| How many values are missing? | `sum(is.na(x))` | A count |
+| What proportion is missing? | `mean(is.na(x))` | A proportion |
+
+The key is to choose the function that matches your question. If you only need a quick yes/no check, use `anyNA()`. If you need the exact positions, use `which(is.na())`.
+
 # Nesting Function Calls
 
-**Nesting function calls** is where you put one function call inside another, so the output of the inner function becomes an argument to the outer function. This works because functions return values, and R can immediately pass that returned value into the next function call.
-
-Nesting is the simplest form of function composition. Building a multi-step transformation by combining small, single-purpose functions.
+**Nesting function calls** means putting one function call inside another function call. The output of the inner function becomes an argument to the outer function. This works because functions return values. R can immediately pass a returned value into the next function.
 
 🎯 Use `sample()` to randomly select 5 numbers from the vector `travel_jumps`, then calculate the mean of those sampled numbers by nesting the `sample()` function inside the `mean()` function.
 
 ```{r , eval=FALSE}
 # ⚡ Type this in your R Notebook
-# Non-nesting version
+# create travel_jumps vector
 travel_jumps <- seq(from = 1887, to = 2052, by = 33)   
-travel_jumps_sample <- sample(travel_jumps, size = 5, replace = TRUE)
-mean(travel_jumps_sample)
 
-# Nesting version
+# Read nested code from the inside out
 mean(sample(travel_jumps, size = 5, replace = TRUE))  # sample then average
-
-# Nesting version without creating the travel_jumps object
-mean(sample(seq(from = 1887, to = 2052, by = 33), size = 5, replace = TRUE))
-
 ```
-🗣 The first lines of code show multiple steps, each with a single purpose: create the sequence, sample the sequence, then find the mean. The Nesting version shows that the sequence is first sampled, and then the sample mean is calculated. The final Nesting version shows that the sequence is first calculated, then sampled, and finally, the sample mean is computed.  
 
-Real work is rarely one step. Nesting is the base-R way to express that workflow without writing a ton of intermediate objects. However, nesting creates parentheses-heavy code that’s harder to read and debug. In later chapters, we will learn how to pipe multi-step workflows. 
+R reads this as:
+
+1. Run `sample(travel_jumps, size = 5, replace = TRUE)` first.
+2. Return 5 sampled values.
+3. Pass those 5 values into `mean()`.
+4. Calculate the average.
+
+Nesting is the simplest form of function composition. It builds a multi-step transformation by combining small, single-purpose functions.
+
+```{r , eval=FALSE}
+# Nesting with three functions; creating the travel_jumps object
+mean(sample(seq(from = 1887, to = 2052, by = 33), size = 5, replace = TRUE))
+```
+
+🗣 The nesting example with three functions shows that the sequence is first calculated, then sampled, and finally, the sample mean is computed.  
+
+---
+
+Real work is rarely one step. Nesting is the base-R way to express that workflow without writing a ton of intermediate objects. However, nesting creates parentheses-heavy code that’s harder to read and debug. In later chapters, we will learn how to pipe multi-step workflows. For now, we'll practice finding missing values with nesting functions.
 
 ## Locating Missing Values with Nesting
 
@@ -384,11 +335,11 @@ which(is.na(LargeVec))                    # ▶ Where are the gaps?
 
 ## Summarizing "Missingness"
 
-As a researcher, knowing *how much* data is missing guides your next step. 
+As a researcher, knowing *how much* data is missing guides your next step.
 
-- A single `NA` might be harmless.
+A single `NA` might be harmless. If half of your data is missing, that might be big problem.
 
-- 50% missing will bias results and needs attention.
+For example, if 1 out of 20 values is missing, then 5% of the vector is missing. If 10 out of 20 values are missing, then 50% of the vector is missing. Those situations should not be treated the same way. If and how you analyze this data depends on how much is missing.
 
 🎯 Use `sum()` and `mean()` with `is.na()` to summarize missing values in a large vector.
 
@@ -402,7 +353,11 @@ mean(is.na(LargeVec))
 
 ## Imputation
 
-Now that you can *detect* and *locate* gaps, you have to decide what to do about them. There is no universal “best” choice—each option makes assumptions. If you don’t know why values are missing, be cautious.
+Now that you can *detect* and *locate* gaps, you have to decide what to do about them. There is no universal “best” choice because each option makes assumptions.
+
+In this chapter, we'll use mean imputation is a practice method for learning replacement logic. It is not automatically the best choice in real research. Replacing missing values with the mean can make the data look more complete than it really is, and it can distort the distribution, especially the variance.
+
+If you do not know why values are missing, be cautious.
 
 - **Option 1**: Remove missing values (complete-case analysis). Simple and common, but you may drop a lot of data (and potentially bias results).
 
@@ -416,9 +371,15 @@ In this chapter we’re practicing on a single vector, so removing missing value
 
 - break analyses that require the full row structure (plots, models, group summaries).
 
-🧩 **Example**: Imagine a class dataset with `student_id`, `major`, `exam1`, and `exam2`. If `exam2` is missing for some students, removing those students from the analysis (rows) means we'd also lose their exam1 scores and their major. If our goal is “average Exam 1 by major,” dropping rows because Exam 2 is missing can silently change the story. This is especially true if missing Exam 2 happens more in one major than another.
+---
 
-The bottom line is that there is no one-size-fits-all solution. If you only need a quick summary of one variable, removing `NA`s is often reasonable. If you need to keep rows aligned across variables (or you’re comparing groups), you may choose imputation. What ever you choose, you will need to document that choice and why. This is one reason why writing memos around your analysis is so important.
+🌳 Imagine a class dataset with `student_id`, `major`, `exam1`, and `exam2`. If `exam2` is missing for some students, removing those students from the analysis (rows) means we'd also lose their exam1 scores and their major. If our goal is “average Exam 1 by major,” dropping rows because Exam 2 is missing can silently change the story. This is especially true if missing Exam 2 happens more in one major than another.
+
+---
+
+The bottom line is that there is no one-size-fits-all solution. If you only need a quick summary of one variable, removing `NA`s is often reasonable. If you need to keep rows aligned across variables, or you are comparing groups, you may consider imputation.
+
+Whatever you choose, you need to document that choice and explain why it made sense for your goal. This is one reason why writing memos around your analysis is so important.
 
 Next, you’ll practice both strategies on a vector so you can see the trade-off clearly. Later, you’ll apply the same decision logic to multi-column datasets.
 
@@ -460,7 +421,7 @@ imputed <- LargeVec     # Make a copy to preserve original
 
 We’re doing three actions on the same object (`imputed`):
 
-(1) identify missing positions, (2) compute a replacement value, and (3) write the replacements back.
+🎯 (1) identify missing positions, (2) compute a replacement value, and (3) write the replacements back.
 
 ```{r , eval=FALSE}
 # ⚡ Type this in your R Notebook
@@ -474,11 +435,15 @@ The object we are editing is on the left side: **`imputed[`**`is.na(imputed)`**`
 
 The object we are using to find the missing positions is inside brackets: **`is.na(imputed)`**. 
 
-🧐 You might think, “The missing values came from `Large_Vec`, so I should check `Large_Vec`.” But the rule is to use the same object we’re editing, or we risk indexing the wrong thing later.
+**The general replacement pattern is**:
 
-The object we are summarizing to compute the replacement value (mean): **`mean(imputed, na.rm = TRUE)`**
+```r
+object[positions_to_replace] <- replacement_value
+```
 
-🧐 You might think, “mean of observed values” means “mean of the original” and want to use `LargeVec`. But `imputed` currently equals `Large_Vec`, so the mean is identical either way at that moment. As soon as you start changing imputed, mixing names can cause logic bugs. You might replace values in one object using positions or summaries computed from a different object. 
+> 🧐 **Notice:** You might think, “The missing values came from `Large_Vec`, so I should check `Large_Vec`.” But the rule is to use the same object we’re editing, or we risk indexing the wrong thing later. The object we are summarizing to compute the replacement value (mean): **`mean(imputed, na.rm = TRUE)`**
+
+> 🧐 **Notice:** You might think, “mean of observed values” means “mean of the original” and want to use `LargeVec`. But `imputed` currently equals `Large_Vec`, so the mean is identical either way at that moment. As soon as you start changing imputed, mixing names can cause logic bugs. You might replace values in one object using positions or summaries computed from a different object. 
 
 In summary, wherever a element in `imputed` is missing, we replace those spots with the mean of `imputed` *while ignoring missing values so it can calculate the mean*.
 
@@ -492,11 +457,15 @@ sum(is.na(imputed))       # Imputed vector – should print 0
 
 🗣 The first `sum(is.na(LargeVec))` call counts the number of missing values in the original vector, which should be greater than 1. The second `sum(is.na(imputed))` call counts the missing values in the imputed vector, which should be 0, confirming that all missing values have been replaced.
 
-
+---
 
 # Summary
 
-In Chapter 6, you learned that R has special values for non-standard situations, especially `NA` (missing information) and `NaN` (undefined arithmetic), and you practiced built-in summary functions that reduce a vector to a single value. You also learned how to read R help files to determine what arguments are required versus optional defaults, using `mean()` as an example (including `trim` and `na.rm`). You built a practical missing-values workflow: detect missingness (`anyNA()`), locate missing values (`is.na()` and `which()`), summarize how much is missing (`sum(is.na(x)`) and `mean(is.na(x))`), and handle missing data by either removing missing values or imputing them with a summary value. Finally, you practiced nesting function calls to combine steps into one expression and discussed the trade-off between compact code and readability. 
+In this chapter, you strengthened your R workflow by learning how to recognize and handle special values in R. You practiced the difference between NA, which means information is missing, and NaN, which means a numeric result is undefined. You also learned that missing values can quietly affect your calculations because many R functions return NA unless you tell them how to handle missingness.
+
+You built a practical missing-values workflow. You practiced using anyNA() to check whether missing values exist, is.na() to identify which values are missing, which() to locate their positions, sum(is.na(x)) to count missing values, and mean(is.na(x)) to calculate the proportion missing. You also practiced using na.rm = TRUE so summary functions can calculate results while ignoring missing values.
+
+Finally, you practiced two basic strategies for handling missing values: removing missing values with logical indexing and replacing missing values with a simple imputed value. You also practiced nesting function calls so that one function’s result can be passed directly into another function. Your main takeaway is that strong R work depends on checking assumptions, understanding defaults, documenting your choices, and making sure your code is not only running, but producing results you can trust.
 
 # Chapter Terms
 
@@ -519,13 +488,20 @@ In Chapter 6, you learned that R has special values for non-standard situations,
 
 # 📝 Practice Space
 
-Fill in the blanks to complete the code. 
+Fill in the blanks and answer the short prompts in your R Notebook. This Practice Space helps you check whether you can organize a notebook, read an R help page, use a function argument, and knit your work into an HTML report.
 
-Before you begin, make sure you have created a new R Notebook in the Source pane and saved it as `chapter6_practice.Rmd` in your course folder.
+Before you begin:
 
-Remember to document your tenacity on a memo if you encounter any errors while completing the tasks. 
+1. Create a new R Notebook in RStudio.
+2. Save it in your course folder as `chapter6_practice.Rmd`.
+3. Complete each task in order.
+4. Add short memo notes explaining what your code does, what output you expected, and what you learned from the help page.
 
-*R Notebooks can look “fine” even when they are not reproducible because your Environment may still contain objects from earlier work. Start with a clean environment and run everything in order.*
+If you encounter an error, document your **tenacity** by briefly noting what happened, what you tried, and how you fixed it or what still confuses you. Document how you troubleshot the error and what resource(s) you used to help you resolve the issue (**transparency**). Show **courage** by sharing your thinking process, even if it includes mistakes or confusion.
+
+Before you finish, clear your Environment and run the notebook from top to bottom. Then knit to HTML to check that the notebook works in order.
+
+You may quote AI output only when you clearly mark it as quoted text, either with quotation marks or a block quote using `>`. Then hand-type your own explanation of why you are including that quote.
 
 ## Task 1
 

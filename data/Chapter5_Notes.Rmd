@@ -1,0 +1,62 @@
+---
+title: "Chapter5 Notes"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    df_print: paged
+---
+
+
+# Notebook set up
+
+The **YAML** is at the top of the Rmd and has three `-` negative signs on the first and last line. I added `date:` and used inline R code to make a _dynamic_ report date. 
+
+## Markdown structure
+
+Heading levels are controlled by the number of `#` when used outside of code chunks.
+Compare the type with the image of the knit result.
+
+### Task 1
+
+🎯 Make a comment inside a code chunk
+
+```{r}
+# ⚡ This is a comment inside a code chunk.
+cursed_seq <- c(4, 8, 15, 16, 23, 42)
+```
+
+🗣 The `#` symbol has two different meanings in R Notebooks.
+
+
+## Knit to HTML
+
+Notes about Knit
+
+# Built-in Functions
+
+```{r}
+mean
+```
+
+
+## Help Files
+
+```{r}
+?mean
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

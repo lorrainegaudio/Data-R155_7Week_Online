@@ -1632,7 +1632,7 @@ display: none;
 <h1 class="title toc-ignore">Chapter 6</h1>
 <h3 class="subtitle">❌ Missing Values</h3>
 <h4 class="author">by Lorraine Gaudio</h4>
-<h4 class="date">Version May 05, 2026</h4>
+<h4 class="date">Version May 20, 2026</h4>
 
 </div>
 
@@ -1659,7 +1659,6 @@ results that others can trust (CLO1), troubleshoot systematically
 <ul>
 <li><p>🗜️ Summarize vectors with built‑in, <em>vectorized</em>
 functions.</p></li>
-<li><p>🛟 Read help files to discover arguments and defaults.</p></li>
 <li><p>📦 Nest functions to build compact pipelines.</p></li>
 <li><p>⚡ Handle missing values with na.rm.</p></li>
 </ul>
@@ -1667,11 +1666,14 @@ functions.</p></li>
 <div id="open-an-r-notebook" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> Open an R Notebook</h1>
 <p>Before you follow along with Chapter 6, set yourself up the same way
-you did in Chapter 5. Your work will to be readable and reproducible. 🎯
-Please open a new R Notebook in your course folder named
-<code>chapter6_notes.Rmd</code> and add a date to the YAML header using
-either method. Use this document to take notes and practice the chapter
-content.</p>
+you did in Chapter 5. Your work will be readable and reproducible.</p>
+<p>🎯 Please open a new R Notebook in your course folder named
+<code>chapter6_notes.Rmd</code> and add a date to the YAML header. Use
+this document to take notes, practice the chapter content, and memo
+about what you are learning.</p>
+<p>The <strong>YAML header</strong> is the setup block at the very top
+of an R Notebook. It tells R Markdown the document title, author, date,
+and output type.</p>
 <ol style="list-style-type: decimal">
 <li><p>Open RStudio → File → New File → R Notebook.</p></li>
 <li><p>Save it in your course folder as:
@@ -1679,200 +1681,85 @@ content.</p>
 <li><p>In your YAML header at the top:</p></li>
 </ol>
 <ul>
-<li><p>Update the title to match this chapter.</p></li>
-<li><p>Include a date (hard-coded or dynamic, your choice).</p></li>
+<li><p>Update the <code>title</code> to match this chapter.</p></li>
+<li><p>Include a <code>date</code> (hard-coded or dynamic, your
+choice).</p></li>
+<li><p>Add your name as the <code>author</code>.</p></li>
 </ul>
+<p>For example, your YAML header might look like this:</p>
+<pre class="yaml"><code>---
+title: &quot;Chapter 6 Notes&quot;
+author: &quot;[Your Name]&quot;
+date: &quot;`r Sys.Date()`&quot;
+output: html_notebook
+---</code></pre>
+<p>The date can be typed directly, such as “<code>2026-05-20</code>”, or
+it can be dynamic using <code>r Sys.Date()</code> so the document
+updates the date automatically when it renders.</p>
 <ol start="4" style="list-style-type: decimal">
+<li><p>Remove the default content.</p></li>
 <li><p>Use headings as you work. At minimum, create section headings
 that match the chapter structure (e.g., <code># Special Values</code>,
-<code># Built-in Functions</code>, <code># Help Files</code>,
+<code># Built-in Functions</code>,
 <code># Missing Values Workflow</code>, <code># Nesting</code>). This
 creates a readable outline.</p></li>
 <li><p>Memo as you go.</p></li>
 </ol>
 <ul>
-<li><p>Outside chunks: write normal text.</p></li>
-<li><p>Inside chunks: use # for memo comments (otherwise R tries to run
-the text).</p></li>
-<li><p>If you hit an error: keep the broken line commented out and write
-a one-sentence note about what you changed to fix it.</p></li>
+<li><p>Inside chunks: use <code>#</code> for code comments (otherwise R
+tries to run the text as code).</p></li>
+<li><p>Outside chunks: write normal text without a <code>#</code>.</p>
+<ul>
+<li>If you hit an error, write a one-sentence note about what you
+changed to fix it. Learned something new? Write a one-sentence note
+about that too.</li>
+<li>Create these notes as a resource for you to review later.</li>
+</ul></li>
 </ul>
-<p><strong>Bottom line</strong>: You are practicing Chapter 6 content
-inside a Chapter 5-style report.</p>
+<hr />
+<p>Next, you’ll focus on what NA means, how missing values “propagate”
+through calculations, and how to detect and locate missing values.</p>
 </div>
-<div id="special-values" class="section level1" number="3">
-<h1><span class="header-section-number">3</span> Special Values</h1>
+<div id="missing-values-workflow" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Missing Values
+Workflow</h1>
+<p>The <code>na.rm</code> argument in the <code>mean()</code> function
+has a default value of <code>FALSE</code>, meaning that if you don’t
+specify it, the function will include <code>NA</code> values in its
+calculation.</p>
+<div id="special-values" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Special Values</h2>
+<p>In R, <strong>missing values</strong> are represented by the
+<strong>special value</strong> symbol <code>NA</code> (which stands for
+“Not Available”).</p>
 <p>R has several <strong>special values</strong> that represent
 non-standard data states. Two common ones are <code>NA</code> and
 <code>NaN</code>.</p>
 <ul>
-<li><p><strong><code>NA</code></strong> (“Not Available”) signals
-<em>missing</em> information: the value simply was not
-recorded.</p></li>
-<li><p><strong><code>NaN</code></strong> (“Not a Number”) signals an
-<em>undefined</em> numeric result, such as 0 divided by 0.</p></li>
+<li><strong><code>NA</code></strong> (“Not Available”) signals
+<em>missing</em> information: the value simply was not recorded.</li>
+<li><strong><code>NaN</code></strong> (“Not a Number”) signals an
+<em>undefined</em> numeric result, such as 0 divided by 0.</li>
 </ul>
 <pre class="r"><code># ⚡ Type this in your R Notebook
 0 / 0      # Produces NaN – undefined arithmetic
 
 NA         # Built-in constant representing a missing value</code></pre>
 <p>🗣 R prints <code>NA</code> and <code>NaN</code> in the Console so you
-can spot them quickly. Even though they look similar, treat them
-differently: <code>NA</code> means “value absent”; <code>NaN</code>
-means “math error”.</p>
-<p>We will mostly focus on <code>NA</code> in this chapter, but keep in
-mind that <code>NaN</code> is another special value you may encounter
-when working with numeric data.</p>
-</div>
-<div id="built-in-functions" class="section level1" number="4">
-<h1><span class="header-section-number">4</span> Built-in Functions</h1>
-<p>Many built-in summary functions take a whole vector as input and
-return one summary value (or a small set of values). These are summary
-(reduction) functions that take many values and return one value.</p>
-<div id="function-objects-vs.-function-calls" class="section level2" number="4.1">
-<h2><span class="header-section-number">4.1</span> Function Objects
-vs. Function Calls</h2>
-<p>A <strong>function object</strong> is the stored code that performs a
-task. For example, <code>mean</code> is a function object that
-calculates the average of a numeric vector. The stored code sums the
-values and divides by the number of values.</p>
-<pre class="r"><code># ⚡ Type this in your R Notebook
-mean</code></pre>
-<pre><code>## function (x, ...) 
-## UseMethod(&quot;mean&quot;)
-## &lt;bytecode: 0x000001c5b6b2d230&gt;
-## &lt;environment: namespace:base&gt;</code></pre>
-<p>🗣 Don’t worry if what prints looks cryptic. This is proof that
-<code>mean</code> is stored code you can inspect.</p>
-<p>A <strong>function call</strong> runs the stored code. To call a
-function, you type the function name followed by parentheses
-<code>()</code>. Inside the parentheses, you must provide any
-<strong>required arguments</strong>. For example, to calculate the mean
-of a numeric vector, you call the <code>mean()</code> function and
-provide the vector as an argument. The vector is a <strong>required
-argument</strong> because the function needs it to perform the
-calculation.</p>
-<p>📜 The SYNTAX (basic):</p>
-<p><code>mean(x)</code></p>
-<p>where <code>x</code> is the numeric vector you want to summarize.</p>
-<p>🎯 Calculate the mean of the cursed sequence.</p>
-<pre class="r"><code># ⚡ Type this in your R Notebook
-cursed_seq &lt;- c(4, 8, 15, 16, 23, 42)  
-
-mean(cursed_seq)                     </code></pre>
-<pre><code>## [1] 18</code></pre>
-<p>🗣 The <code>mean()</code> function calculates the average of the
-numbers in the <code>cursed_seq</code> vector by summing them up and
-dividing by the count of numbers.</p>
-</div>
-</div>
-<div id="help-files" class="section level1" number="5">
-<h1><span class="header-section-number">5</span> Help Files</h1>
-<p>Nobody memorizes every argument. You look them up.
-<code>?function_name</code> opens the help file. The <strong>files
-pane</strong> (usually bottom-right) contains several tabs, including
-the <strong>Help tab</strong>, which displays the documentation for R
-functions.</p>
-<div id="no-required-arguments" class="section level2" number="5.1">
-<h2><span class="header-section-number">5.1</span> No Required
-Arguments</h2>
-<p>Some functions do not have a required argument. For example, the
-<code>Sys.Date()</code> function returns the current date without
-needing any input.</p>
-<p>🎯 Call the <code>Sys.Date()</code> function to get the current date
-from your computer’s operating system.</p>
-<pre class="r"><code># ⚡ Type this in your R Notebook
-Sys.Date()</code></pre>
-<pre><code>## [1] &quot;2026-05-05&quot;</code></pre>
-<p>🗣 The <code>Sys.Date()</code> function retrieves the current date
-from the system clock and returns it as a Date object.</p>
-<p>🎯 Open the help file for the <code>Sys.Date()</code> function.</p>
-<pre class="r"><code># ⚡ Type this in your R Notebook
-?Sys.Date</code></pre>
-<p>🗣 The <code>Sys.Date</code> help page opens in the <strong>help
-tab</strong> in the <strong>files pane</strong>. Note that
-<code>Sys.Date()</code> has no required arguments.</p>
-<p>Scroll through the help file to find information about the function’s
-usage, arguments, and examples.</p>
+can spot them quickly. Even though they look similar, they do not mean
+exactly the same thing.</p>
 <ul>
-<li><p><strong>Usage</strong>: shows the function signature and
-defaults.</p></li>
-<li><p><strong>Arguments</strong>: what each argument does.</p></li>
-<li><p><strong>Examples</strong>: copy/run examples to learn
-patterns.</p></li>
+<li><code>NA</code> means the value is absent or unknown.</li>
+<li><code>NaN</code> means the result is not a valid number, usually
+because the math operation is undefined.</li>
 </ul>
-</div>
-<div id="required-arguments" class="section level2" number="5.2">
-<h2><span class="header-section-number">5.2</span> Required
-Arguments</h2>
-<p>🎯 Open the help file for the <code>mean()</code> function. Scroll
-through the help file to find information about the function’s usage,
-arguments, and examples.</p>
-<ul>
-<li><p><strong>Usage</strong>: shows the function signature and
-defaults.</p></li>
-<li><p><strong>Arguments</strong>: what each argument does.</p></li>
-<li><p><strong>Examples</strong>: copy/run examples to learn
-patterns.</p></li>
-</ul>
-<pre class="r"><code># ⚡ Type this in your R Notebook
-?mean   
-help(mean)</code></pre>
-<p>🗣 The mean <strong>help page</strong> opens in the <strong>help
-tab</strong> in the <strong>files pane</strong>.
-<code>mean.default(x, trim = 0, na.rm = FALSE, …)</code> shows that
-<code>x</code> is a required argument, while <code>trim</code> and
-<code>na.rm</code> have default values.</p>
-</div>
-<div id="default-arguments" class="section level2" number="5.3">
-<h2><span class="header-section-number">5.3</span> Default
-Arguments</h2>
-<p><strong>Default arguments</strong> are inputs that a function uses in
-situations when you did not provide that argument. For example, the
-<code>trim</code> argument in the <code>mean()</code> function allows
-you to exclude a certain percentage of the lowest and highest values
-before calculating the mean.</p>
-<p>The SYNTAX (with one default argument):</p>
-<p><code>mean(x, trim = 0)</code></p>
-<p>🎯 Calculate the trimmed mean of the cursed sequence, removing 20% of
-the lowest and highest values before computing the mean.</p>
-<pre class="r"><code># ⚡ Type this in your R Notebook
-mean(cursed_seq, trim = 0.2)  # drop 20% from each end first</code></pre>
-<pre><code>## [1] 15.5</code></pre>
-<p>🗣 The <code>mean()</code> function first removes 20% of the lowest
-and highest values from the <code>cursed_seq</code> vector, then
-calculates the mean of the remaining values. With 6 values and
-<code>trim = 0.2</code>, R trims 4 and 42, then averages 8, 15, 16, and
-23.</p>
-<p><em>How can you tell which arguments are required?</em></p>
-<p>The main clue that <code>x</code> is required is that it has no
-<code>=</code> sign or default value next to it in the usage section.
-The other arguments have <code>=</code> signs, showing the default
-values that R will use if you don’t provide your own.</p>
-<p>Some functions use <code>...</code> (dot-dot-dot). That means
-“additional optional arguments may be allowed,” not required ones. For
-now, ignore <code>...</code> until you are more advanced.</p>
-<ul>
-<li><p>no <code>=</code> → required</p></li>
-<li><p><code>=</code> → default/optional</p></li>
-</ul>
-</div>
-</div>
-<div id="missing-values-workflow" class="section level1" number="6">
-<h1><span class="header-section-number">6</span> Missing Values
-Workflow</h1>
-<p>The <code>na.rm</code> argument in the <code>mean()</code> function
-has a default value of <code>FALSE</code>, meaning that if you don’t
-specify it, the function will include <code>NA</code> values in its
-calculation.</p>
-<p>In R, <strong>missing values</strong> are represented by the
-<strong>special value</strong> symbol <code>NA</code> (which stands for
-“Not Available”). Missing values can occur in datasets for various
-reasons, such as data entry errors, non-responses in surveys, or data
-corruption. R <em>will</em> do the operation, but the result becomes
-<code>NA</code> because the value is unknown (e.g., <code>5 + NA</code>
-returns <code>NA</code>, not an error). This is called
-<strong>propagation</strong>.</p>
+<p>We will mostly focus on <code>NA</code> in this chapter because
+missing values are common in real datasets. Missing values can occur in
+datasets because of incomplete data entries such as non-responses in
+surveys, or when joining two datasets. R <em>will</em> do the operation,
+but the result becomes <code>NA</code> because the value is unknown
+(e.g., <code>5 + NA</code> returns <code>NA</code>; that’s not an error;
+that’s nothing.). This is called <strong>propagation</strong>.</p>
 <p>📜 The SYNTAX (with na.rm default argument):</p>
 <p><code>mean(x, na.rm = FALSE)</code></p>
 <p>where <code>na.rm</code> is a logical argument that tells the
@@ -1933,8 +1820,9 @@ values first.</p>
 </tbody>
 </table>
 <hr />
-<div id="detecting-missing-values" class="section level2" number="6.1">
-<h2><span class="header-section-number">6.1</span> Detecting Missing
+</div>
+<div id="detecting-missing-values" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> Detecting Missing
 Values</h2>
 <p>A quick yes/no check prevents surprises later in your workflow.</p>
 <ul>
@@ -1954,8 +1842,8 @@ anyNA(Vector_NA)              # TRUE means “Something is missing!&quot;</code>
 <p>🗣 If was my data and I saw <code>FALSE</code>, I could relax; the
 vector has no gaps. Seeing TRUE tells me to investigate further.</p>
 </div>
-<div id="locating-missing-values" class="section level2" number="6.2">
-<h2><span class="header-section-number">6.2</span> Locating Missing
+<div id="locating-missing-values" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> Locating Missing
 Values</h2>
 <p>There are two useful functions to find the exact positions of missing
 values in a vector:</p>
@@ -1985,45 +1873,99 @@ which(logical_NA)   # Returns index 3 directly</code></pre>
 <code>which()</code> function extracts the <em>indices</em> of those
 missing values (see <strong>Positional Indexing</strong>).</p>
 </div>
+<div id="which-missing-value-function-should-i-use" class="section level2" number="3.4">
+<h2><span class="header-section-number">3.4</span> Which Missing-Value
+Function Should I Use?</h2>
+<p>Several functions help you work with missing values. They answer
+different questions.</p>
+<table>
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Question</th>
+<th>Function</th>
+<th>What it returns</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Are there any missing values?</td>
+<td><code>anyNA(x)</code></td>
+<td>One <code>TRUE</code> or <code>FALSE</code> answer</td>
+</tr>
+<tr class="even">
+<td>Which values are missing?</td>
+<td><code>is.na(x)</code></td>
+<td>A logical vector</td>
+</tr>
+<tr class="odd">
+<td>What positions are missing?</td>
+<td><code>which(is.na(x))</code></td>
+<td>Numeric index positions</td>
+</tr>
+<tr class="even">
+<td>How many values are missing?</td>
+<td><code>sum(is.na(x))</code></td>
+<td>A count</td>
+</tr>
+<tr class="odd">
+<td>What proportion is missing?</td>
+<td><code>mean(is.na(x))</code></td>
+<td>A proportion</td>
+</tr>
+</tbody>
+</table>
+<p>The key is to choose the function that matches your question. If you
+only need a quick yes/no check, use <code>anyNA()</code>. If you need
+the exact positions, use <code>which(is.na())</code>.</p>
 </div>
-<div id="nesting-function-calls" class="section level1" number="7">
-<h1><span class="header-section-number">7</span> Nesting Function
+</div>
+<div id="nesting-function-calls" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Nesting Function
 Calls</h1>
-<p><strong>Nesting function calls</strong> is where you put one function
-call inside another, so the output of the inner function becomes an
-argument to the outer function. This works because functions return
-values, and R can immediately pass that returned value into the next
-function call.</p>
-<p>Nesting is the simplest form of function composition. Building a
-multi-step transformation by combining small, single-purpose
-functions.</p>
+<p><strong>Nesting function calls</strong> means putting one function
+call inside another function call. The output of the inner function
+becomes an argument to the outer function. This works because functions
+return values. R can immediately pass a returned value into the next
+function.</p>
 <p>🎯 Use <code>sample()</code> to randomly select 5 numbers from the
 vector <code>travel_jumps</code>, then calculate the mean of those
 sampled numbers by nesting the <code>sample()</code> function inside the
 <code>mean()</code> function.</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook
-# Non-nesting version
+# create travel_jumps vector
 travel_jumps &lt;- seq(from = 1887, to = 2052, by = 33)   
-travel_jumps_sample &lt;- sample(travel_jumps, size = 5, replace = TRUE)
-mean(travel_jumps_sample)
 
-# Nesting version
-mean(sample(travel_jumps, size = 5, replace = TRUE))  # sample then average
-
-# Nesting version without creating the travel_jumps object
+# Read nested code from the inside out
+mean(sample(travel_jumps, size = 5, replace = TRUE))  # sample then average</code></pre>
+<p>R reads this as:</p>
+<ol style="list-style-type: decimal">
+<li>Run <code>sample(travel_jumps, size = 5, replace = TRUE)</code>
+first.</li>
+<li>Return 5 sampled values.</li>
+<li>Pass those 5 values into <code>mean()</code>.</li>
+<li>Calculate the average.</li>
+</ol>
+<p>Nesting is the simplest form of function composition. It builds a
+multi-step transformation by combining small, single-purpose
+functions.</p>
+<pre class="r"><code># Nesting with three functions; creating the travel_jumps object
 mean(sample(seq(from = 1887, to = 2052, by = 33), size = 5, replace = TRUE))</code></pre>
-<p>🗣 The first lines of code show multiple steps, each with a single
-purpose: create the sequence, sample the sequence, then find the mean.
-The Nesting version shows that the sequence is first sampled, and then
-the sample mean is calculated. The final Nesting version shows that the
-sequence is first calculated, then sampled, and finally, the sample mean
-is computed.</p>
+<p>🗣 The nesting example with three functions shows that the sequence is
+first calculated, then sampled, and finally, the sample mean is
+computed.</p>
+<hr />
 <p>Real work is rarely one step. Nesting is the base-R way to express
 that workflow without writing a ton of intermediate objects. However,
 nesting creates parentheses-heavy code that’s harder to read and debug.
-In later chapters, we will learn how to pipe multi-step workflows.</p>
-<div id="locating-missing-values-with-nesting" class="section level2" number="7.1">
-<h2><span class="header-section-number">7.1</span> Locating Missing
+In later chapters, we will learn how to pipe multi-step workflows. For
+now, we’ll practice finding missing values with nesting functions.</p>
+<div id="locating-missing-values-with-nesting" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> Locating Missing
 Values with Nesting</h2>
 <p>🎯 Create a large vector with some missing values using
 <code>sample()</code> and <code>c()</code>.</p>
@@ -2047,15 +1989,17 @@ function determines the indices of those <code>TRUE</code> values. The
 numbers are the numeric indices (position) of the <code>NA</code>
 values.</p>
 </div>
-<div id="summarizing-missingness" class="section level2" number="7.2">
-<h2><span class="header-section-number">7.2</span> Summarizing
+<div id="summarizing-missingness" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> Summarizing
 “Missingness”</h2>
 <p>As a researcher, knowing <em>how much</em> data is missing guides
 your next step.</p>
-<ul>
-<li><p>A single <code>NA</code> might be harmless.</p></li>
-<li><p>50% missing will bias results and needs attention.</p></li>
-</ul>
+<p>A single <code>NA</code> might be harmless. If half of your data is
+missing, that might be big problem.</p>
+<p>For example, if 1 out of 20 values is missing, then 5% of the vector
+is missing. If 10 out of 20 values are missing, then 50% of the vector
+is missing. Those situations should not be treated the same way. If and
+how you analyze this data depends on how much is missing.</p>
 <p>🎯 Use <code>sum()</code> and <code>mean()</code> with
 <code>is.na()</code> to summarize missing values in a large vector.</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook
@@ -2071,12 +2015,17 @@ of missing values by taking the mean of the logical vector returned by
 <code>FALSE</code> as 0. Fifty percent missing values yield a mean of
 0.5.</p>
 </div>
-<div id="imputation" class="section level2" number="7.3">
-<h2><span class="header-section-number">7.3</span> Imputation</h2>
+<div id="imputation" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> Imputation</h2>
 <p>Now that you can <em>detect</em> and <em>locate</em> gaps, you have
-to decide what to do about them. There is no universal “best”
-choice—each option makes assumptions. If you don’t know why values are
-missing, be cautious.</p>
+to decide what to do about them. There is no universal “best” choice
+because each option makes assumptions.</p>
+<p>In this chapter, we’ll use mean imputation is a practice method for
+learning replacement logic. It is not automatically the best choice in
+real research. Replacing missing values with the mean can make the data
+look more complete than it really is, and it can distort the
+distribution, especially the variance.</p>
+<p>If you do not know why values are missing, be cautious.</p>
 <ul>
 <li><p><strong>Option 1</strong>: Remove missing values (complete-case
 analysis). Simple and common, but you may drop a lot of data (and
@@ -2096,26 +2045,29 @@ also throw away valid information in other columns. That can:</p>
 <li><p>break analyses that require the full row structure (plots,
 models, group summaries).</p></li>
 </ul>
-<p>🧩 <strong>Example</strong>: Imagine a class dataset with
-<code>student_id</code>, <code>major</code>, <code>exam1</code>, and
-<code>exam2</code>. If <code>exam2</code> is missing for some students,
-removing those students from the analysis (rows) means we’d also lose
-their exam1 scores and their major. If our goal is “average Exam 1 by
-major,” dropping rows because Exam 2 is missing can silently change the
-story. This is especially true if missing Exam 2 happens more in one
-major than another.</p>
+<hr />
+<p>🌳 Imagine a class dataset with <code>student_id</code>,
+<code>major</code>, <code>exam1</code>, and <code>exam2</code>. If
+<code>exam2</code> is missing for some students, removing those students
+from the analysis (rows) means we’d also lose their exam1 scores and
+their major. If our goal is “average Exam 1 by major,” dropping rows
+because Exam 2 is missing can silently change the story. This is
+especially true if missing Exam 2 happens more in one major than
+another.</p>
+<hr />
 <p>The bottom line is that there is no one-size-fits-all solution. If
 you only need a quick summary of one variable, removing <code>NA</code>s
-is often reasonable. If you need to keep rows aligned across variables
-(or you’re comparing groups), you may choose imputation. What ever you
-choose, you will need to document that choice and why. This is one
-reason why writing memos around your analysis is so important.</p>
+is often reasonable. If you need to keep rows aligned across variables,
+or you are comparing groups, you may consider imputation.</p>
+<p>Whatever you choose, you need to document that choice and explain why
+it made sense for your goal. This is one reason why writing memos around
+your analysis is so important.</p>
 <p>Next, you’ll practice both strategies on a vector so you can see the
 trade-off clearly. Later, you’ll apply the same decision logic to
 multi-column datasets.</p>
 <hr />
-<div id="option-1" class="section level3" number="7.3.1">
-<h3><span class="header-section-number">7.3.1</span> Option 1</h3>
+<div id="option-1" class="section level3" number="4.3.1">
+<h3><span class="header-section-number">4.3.1</span> Option 1</h3>
 <p><strong>Remove missing values</strong></p>
 <p>🎯 Use indexing with !is.na() to keep only the observed (non-missing)
 values in LargeVec.</p>
@@ -2129,8 +2081,8 @@ The brackets <code>[...]</code> then use that logical vector to select
 only the elements you want.</p>
 <hr />
 </div>
-<div id="option-2" class="section level3" number="7.3.2">
-<h3><span class="header-section-number">7.3.2</span> Option 2</h3>
+<div id="option-2" class="section level3" number="4.3.2">
+<h3><span class="header-section-number">4.3.2</span> Option 2</h3>
 <p><strong>Impute missing values (replace NA with the mean)</strong></p>
 <p><strong>Impute</strong> means “fill in missing values.” A common
 simple imputation method is to replace missing values with the mean of
@@ -2168,19 +2120,23 @@ input contains missing values.</p>
 <strong><code>imputed[</code></strong><code>is.na(imputed)</code><strong><code>]</code></strong>.</p>
 <p>The object we are using to find the missing positions is inside
 brackets: <strong><code>is.na(imputed)</code></strong>.</p>
-<p>🧐 You might think, “The missing values came from
-<code>Large_Vec</code>, so I should check <code>Large_Vec</code>.” But
-the rule is to use the same object we’re editing, or we risk indexing
-the wrong thing later.</p>
+<blockquote>
+<p>🧐 <strong>Notice:</strong> You might think, “The missing values came
+from <code>Large_Vec</code>, so I should check <code>Large_Vec</code>.”
+But the rule is to use the same object we’re editing, or we risk
+indexing the wrong thing later.</p>
+</blockquote>
 <p>The object we are summarizing to compute the replacement value
 (mean): <strong><code>mean(imputed, na.rm = TRUE)</code></strong></p>
-<p>🧐 You might think, “mean of observed values” means “mean of the
-original” and want to use <code>LargeVec</code>. But
-<code>imputed</code> currently equals <code>Large_Vec</code>, so the
-mean is identical either way at that moment. As soon as you start
-changing imputed, mixing names can cause logic bugs. You might replace
-values in one object using positions or summaries computed from a
-different object.</p>
+<blockquote>
+<p>🧐 <strong>Notice:</strong> You might think, “mean of observed
+values” means “mean of the original” and want to use
+<code>LargeVec</code>. But <code>imputed</code> currently equals
+<code>Large_Vec</code>, so the mean is identical either way at that
+moment. As soon as you start changing imputed, mixing names can cause
+logic bugs. You might replace values in one object using positions or
+summaries computed from a different object.</p>
+</blockquote>
 <p>In summary, wherever a element in <code>imputed</code> is missing, we
 replace those spots with the mean of <code>imputed</code> <em>while
 ignoring missing values so it can calculate the mean</em>.</p>
@@ -2197,16 +2153,13 @@ missing values have been replaced.</p>
 </div>
 </div>
 </div>
-<div id="summary" class="section level1" number="8">
-<h1><span class="header-section-number">8</span> Summary</h1>
+<div id="summary" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> Summary</h1>
 <p>In Chapter 6, you learned that R has special values for non-standard
 situations, especially <code>NA</code> (missing information) and
 <code>NaN</code> (undefined arithmetic), and you practiced built-in
-summary functions that reduce a vector to a single value. You also
-learned how to read R help files to determine what arguments are
-required versus optional defaults, using <code>mean()</code> as an
-example (including <code>trim</code> and <code>na.rm</code>). You built
-a practical missing-values workflow: detect missingness
+summary functions that reduce a vector to a single value. You built a
+practical missing-values workflow: detect missingness
 (<code>anyNA()</code>), locate missing values (<code>is.na()</code> and
 <code>which()</code>), summarize how much is missing
 (<code>sum(is.na(x)</code>) and <code>mean(is.na(x))</code>), and handle
@@ -2215,30 +2168,8 @@ summary value. Finally, you practiced nesting function calls to combine
 steps into one expression and discussed the trade-off between compact
 code and readability.</p>
 </div>
-<div id="chapter-terms" class="section level1" number="9">
-<h1><span class="header-section-number">9</span> Chapter Terms</h1>
-<p><strong>Arguments</strong>: Inputs that you provide to functions to
-customize their behavior. Arguments are specified within the parentheses
-of a function call and can modify how the function operates or what data
-it processes.</p>
-<p><strong>Default Arguments</strong>: Inputs that already have a preset
-value in the function definition and are used automatically when you
-don’t provide your own (e.g., <code>mean(..., na.rm = FALSE)</code> by
-default).</p>
-<p><strong>Function Call</strong>: The act of running a function by
-writing its name followed by parentheses, optionally supplying arguments
-inside (e.g., <code>mean(x)</code>).</p>
-<p><strong>Function Object</strong>: A function stored as an R object
-(functions are “first-class” in R, meaning you can assign them to names,
-pass them to other functions, and inspect them).</p>
-<p><strong>Help Page</strong>: Documentation for R functions and
-packages that provides information on usage, arguments, and examples.
-Accessed using <code>?function_name</code> or
-<code>help(function_name)</code>.</p>
-<p><strong>Help Tab</strong>: Located in the Files/Plots/Packages/Help
-pane, this tab provides access to R documentation, package vignettes,
-and search functionality to find help topics related to R functions and
-packages.</p>
+<div id="chapter-terms" class="section level1" number="6">
+<h1><span class="header-section-number">6</span> Chapter Terms</h1>
 <p><strong>Impute</strong>: To replace missing or unusable values (e.g.,
 <code>NA</code>) with substituted values—often a plausible estimate
 based on the observed data (such as mean/median imputation or
@@ -2280,12 +2211,9 @@ be determined without the missing information. This is often called
 <strong>NA propagation</strong>, and it’s why many summary functions
 return <code>NA</code> unless you explicitly remove missing values
 (e.g., <code>na.rm = TRUE</code>).</p>
-<p><strong>Required Arguments</strong>: Inputs a function needs because
-they have no default value in the function definition; you must supply
-them in the call (or the function can’t do its job). <strong>Special
-Values</strong> (NA, NaN, Inf, -Inf, NULL): Reserved constants in R that
-represent non-standard values: <code>NA</code> for missing data,
-<code>NaN</code> for undefined numeric results,
+<p><strong>Special Values</strong> (NA, NaN, Inf, -Inf, NULL): Reserved
+constants in R that represent non-standard values: <code>NA</code> for
+missing data, <code>NaN</code> for undefined numeric results,
 <code>Inf</code>/<code>-Inf</code> for positive/negative infinity, and
 <code>NULL</code> for “no value” (an empty/null object). In practice,
 use <code>is.na()</code> to detect <code>NA</code> and <code>NaN</code>,
@@ -2294,19 +2222,37 @@ use <code>is.na()</code> to detect <code>NA</code> and <code>NaN</code>,
 handle infinities and other non-finite values, and
 <code>is.null()</code> to test for <code>NULL</code>.</p>
 </div>
-<div id="practice-space" class="section level1" number="10">
-<h1><span class="header-section-number">10</span> 📝 Practice Space</h1>
-<p>Fill in the blanks to complete the code.</p>
-<p>Before you begin, make sure you have created a new R Notebook in the
-Source pane and saved it as <code>chapter6_practice.Rmd</code> in your
-course folder.</p>
-<p>Remember to document your tenacity on a memo if you encounter any
-errors while completing the tasks.</p>
-<p><em>R Notebooks can look “fine” even when they are not reproducible
-because your Environment may still contain objects from earlier work.
-Start with a clean environment and run everything in order.</em></p>
-<div id="task-1" class="section level2" number="10.1">
-<h2><span class="header-section-number">10.1</span> Task 1</h2>
+<div id="practice-space" class="section level1" number="7">
+<h1><span class="header-section-number">7</span> 📝 Practice Space</h1>
+<p>Fill in the blanks and answer the short prompts in your R Notebook.
+This Practice Space helps you check whether you can organize a notebook,
+read an R help page, use a function argument, and knit your work into an
+HTML report.</p>
+<p>Before you begin:</p>
+<ol style="list-style-type: decimal">
+<li>Create a new R Notebook in RStudio.</li>
+<li>Save it in your course folder as
+<code>chapter6_practice.Rmd</code>.</li>
+<li>Complete each task in order.</li>
+<li>Add short memo notes explaining what your code does, what output you
+expected, and what you learned from the help page.</li>
+</ol>
+<p>If you encounter an error, document your <strong>tenacity</strong> by
+briefly noting what happened, what you tried, and how you fixed it or
+what still confuses you. Document how you troubleshot the error and what
+resource(s) you used to help you resolve the issue
+(<strong>transparency</strong>). Show <strong>courage</strong> by
+sharing your thinking process, even if it includes mistakes or
+confusion.</p>
+<p>Before you finish, clear your Environment and run the notebook from
+top to bottom. Then knit to HTML to check that the notebook works in
+order.</p>
+<p>You may quote AI output only when you clearly mark it as quoted text,
+either with quotation marks or a block quote using <code>&gt;</code>.
+Then hand-type your own explanation of why you are including that
+quote.</p>
+<div id="task-1" class="section level2" number="7.1">
+<h2><span class="header-section-number">7.1</span> Task 1</h2>
 <p>🧭 <strong>Help-file scavenger hunt</strong> (required vs
 default)</p>
 <ol style="list-style-type: decimal">
@@ -2325,8 +2271,8 @@ required?</p></li>
 </ul>
 <p>🗣 <strong><em>Your explanation here</em></strong></p>
 </div>
-<div id="task-2" class="section level2" number="10.2">
-<h2><span class="header-section-number">10.2</span> Task 2</h2>
+<div id="task-2" class="section level2" number="7.2">
+<h2><span class="header-section-number">7.2</span> Task 2</h2>
 <p>🛠 <strong>Build a random data set</strong></p>
 <p>🎯 Create <code>scores</code> as <strong>28 values</strong>. That is
 <strong>25</strong> random integers from <strong>60–100</strong> + 3
@@ -2354,8 +2300,8 @@ _____(scores)                 </code></pre>
 <p>🗣 <strong><em>Memo: articulate your learning process, connect ideas,
 or discuss challenges.</em></strong></p>
 </div>
-<div id="task-3" class="section level2" number="10.3">
-<h2><span class="header-section-number">10.3</span> Task 3</h2>
+<div id="task-3" class="section level2" number="7.3">
+<h2><span class="header-section-number">7.3</span> Task 3</h2>
 <p>⚠️ <strong>Handle missing data</strong></p>
 <p>🎯 Using <code>scores</code> from Task 2:</p>
 <ol style="list-style-type: decimal">
@@ -2381,8 +2327,8 @@ the word “default”).</p>
 <p>🗣 <strong><em>Memo: articulate your learning process, connect ideas,
 or discuss challenges.</em></strong></p>
 </div>
-<div id="task-4" class="section level2" number="10.4">
-<h2><span class="header-section-number">10.4</span> Task 4</h2>
+<div id="task-4" class="section level2" number="7.4">
+<h2><span class="header-section-number">7.4</span> Task 4</h2>
 <p>🔎 <strong>Locate missing values</strong></p>
 <p>🎯 Using <code>scores</code> from Task 2:</p>
 <ol style="list-style-type: decimal">
@@ -2405,8 +2351,8 @@ length(____)       # should print 3</code></pre>
 <p>🗣 <strong><em>Memo: articulate your learning process, connect ideas,
 or discuss challenges.</em></strong></p>
 </div>
-<div id="task-5" class="section level2" number="10.5">
-<h2><span class="header-section-number">10.5</span> Task 5</h2>
+<div id="task-5" class="section level2" number="7.5">
+<h2><span class="header-section-number">7.5</span> Task 5</h2>
 <p>📦 <strong>Nesting functions</strong></p>
 <p>🎯 Compute the mean of 5 random draws from <code>scores</code> in one
 line, and make sure it still works even if the draw includes
@@ -2419,8 +2365,8 @@ mean_of_five</code></pre>
 <p>🗣 <strong><em>Memo: articulate your learning process, connect ideas,
 or discuss challenges.</em></strong></p>
 </div>
-<div id="task-6" class="section level2" number="10.6">
-<h2><span class="header-section-number">10.6</span> Task 6</h2>
+<div id="task-6" class="section level2" number="7.6">
+<h2><span class="header-section-number">7.6</span> Task 6</h2>
 <p>🕰 <strong>Quick time-stamp</strong></p>
 <p>🎯 Use <code>Sys.Date()</code> and <code>Sys.time()</code> to create
 two separate objects, <code>today_date</code> and
@@ -2431,8 +2377,8 @@ now_time &lt;- ____</code></pre>
 <p>🗣 <strong><em>Memo: articulate your learning process, connect ideas,
 or discuss challenges.</em></strong></p>
 </div>
-<div id="task-7" class="section level2" number="10.7">
-<h2><span class="header-section-number">10.7</span> Task 7</h2>
+<div id="task-7" class="section level2" number="7.7">
+<h2><span class="header-section-number">7.7</span> Task 7</h2>
 <p>🧹 <strong>Handling Missing Values</strong></p>
 <p>🎯 Using scores from Task 2:</p>
 <p><strong>Part A</strong> — Remove <code>NA</code> values
@@ -2476,16 +2422,16 @@ mean(scores_imputed)           # should print a number (not NA)</code></pre>
 <p>🗣 <strong><em>Memo: articulate your learning process, connect ideas,
 or discuss challenges.</em></strong></p>
 </div>
-<div id="task-8" class="section level2" number="10.8">
-<h2><span class="header-section-number">10.8</span> Task 8</h2>
+<div id="task-8" class="section level2" number="7.8">
+<h2><span class="header-section-number">7.8</span> Task 8</h2>
 <p>🗣 <strong>Reflection</strong></p>
 <p>In one sentence, explain the difference between a <em>function
 object</em> (e.g., mean) and a <em>function call</em> (e.g.,
 <code>mean()</code>).</p>
 <p>🗣 <strong><em>Your explanation here</em></strong></p>
 </div>
-<div id="task-9" class="section level2" number="10.9">
-<h2><span class="header-section-number">10.9</span> Task 9</h2>
+<div id="task-9" class="section level2" number="7.9">
+<h2><span class="header-section-number">7.9</span> Task 9</h2>
 <p>🎯 <strong>Step 1: Sweep your Environment (start
 clean).</strong><br />
 Click the 🧹 <strong>broom icon</strong> in the Environment pane to

@@ -1,5 +1,5 @@
 ---
-title: "Chapter 6 Practice"
+title: "Chapter 5 Practice"
 author: "Jane Goodall"
 date: "`r Sys.Date()`"
 output:

@@ -84,8 +84,6 @@ The coding focus in this chapter is numeric vectors. You will build vectors, che
 
 By the end of Chapter 3, you should be able to start a notebook correctly, write short memos, build numeric vectors, perform vector arithmetic, run your notebook from top to bottom, and save the correct files for submission.
 
-Revised Learning Outcomes
-
 In Chapter Three, you will learn how to:
 
 - 📝 Create, rename, and save an R Notebook (`.Rmd`).
@@ -323,6 +321,20 @@ x / y
 
 🗣 When including two calculations in the same code chunk, both results are shown in order, below the code chunk. 
 
+🎯 Try creating a sequence of powers of 3 using the exponent operator `^`. Create a vector named `small_exponents` that contains the integers from 0 to 4, then create a new vector named `powers_of_three` that raises 3 to the power of each element in `small_exponents`.
+
+```{r}
+# ⚡ Type this in your R Notebook
+small_exponents <- 0:4
+powers_of_three <- 3 ^ small_exponents
+
+powers_of_three
+length(powers_of_three)
+```
+
+🗣 R reads `3 ^ small_exponents` as “raise 3 to each value stored in `small_exponents`.” The vector `small_exponents` tells R which exponents to use. The length tells us how many powers were created, not how large the biggest value is.
+
+---
 
 🌳 For more information on R Markdown code chunks, refer to the [R Notebook documentation](https://bookdown.org/yihui/rmarkdown/notebook.html#using-notebooks).
 
@@ -781,20 +793,29 @@ print(growth)
 
 🔢 **Exponents and vectorized math**
 
-🎯 Create a numeric vector named `binary_powers` that contains the powers of $2$ from $2^0$ to $2^10$ using the `^` operator and the `exponents` vector.
+🎯 Create a numeric vector named `binary_powers` that contains the powers of 2 from \(2^0\) through \(2^{10}\).
 
-```{r , eval=FALSE}
+First, create a vector that stores the exponent values. Then use that vector on the right side of the `^` operator. 💡 **Tip:** Do not build the exponent vector out of powers. The `exponents` vector will store the exponent positions.
+
+```{r, eval=FALSE}
 # ⚡ Type this in your R Notebook, Fill in the blanks
-exponents <- __:__
-__________ <- 2__exponents
+
+# Step 1: create the exponent values
+exponents <- ___:___
+
+# Step 2: raise the base to each exponent value
+binary_powers <- ___ ^ exponents
 ```
 
 ```{r , eval=FALSE}
 # ✅ Check the length of the binary_powers vector
 _____(binary_powers)
+print(binary_powers)
 ```
 
-🗣 Add Comment:  # The output shows ___ elements (values) in the `binary_powers` vector.
+🗣 Add Comments:  "# The output shows ___ elements (values) in the `binary_powers` vector."
+
+🗣 How does R applies the exponentiation operator `^`? Why does the output producing __ elements (values) in the `binary_powers` vector? Does the vector start with 1 and grow by doubling? 
 
 ## Task 4
 

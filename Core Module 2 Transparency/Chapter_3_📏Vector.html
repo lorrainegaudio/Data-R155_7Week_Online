@@ -1632,7 +1632,7 @@ display: none;
 <h1 class="title toc-ignore">Chapter 3</h1>
 <h3 class="subtitle">📏 Vector</h3>
 <h4 class="author">by Lorraine Gaudio</h4>
-<h4 class="date">Version May 14, 2026</h4>
+<h4 class="date">Version May 20, 2026</h4>
 
 </div>
 
@@ -1661,7 +1661,6 @@ values.</p>
 correctly, write short memos, build numeric vectors, perform vector
 arithmetic, run your notebook from top to bottom, and save the correct
 files for submission.</p>
-<p>Revised Learning Outcomes</p>
 <p>In Chapter Three, you will learn how to:</p>
 <ul>
 <li><p>📝 Create, rename, and save an R Notebook
@@ -1934,6 +1933,25 @@ x / y</code></pre>
 [1] 2.000000 1.333333 1.200000</code></pre>
 <p>🗣 When including two calculations in the same code chunk, both
 results are shown in order, below the code chunk.</p>
+<p>🎯 Try creating a sequence of powers of 3 using the exponent operator
+<code>^</code>. Create a vector named <code>small_exponents</code> that
+contains the integers from 0 to 4, then create a new vector named
+<code>powers_of_three</code> that raises 3 to the power of each element
+in <code>small_exponents</code>.</p>
+<pre class="r"><code># ⚡ Type this in your R Notebook
+small_exponents &lt;- 0:4
+powers_of_three &lt;- 3 ^ small_exponents
+
+powers_of_three</code></pre>
+<pre><code>## [1]  1  3  9 27 81</code></pre>
+<pre class="r"><code>length(powers_of_three)</code></pre>
+<pre><code>## [1] 5</code></pre>
+<p>🗣 R reads <code>3 ^ small_exponents</code> as “raise 3 to each value
+stored in <code>small_exponents</code>.” The vector
+<code>small_exponents</code> tells R which exponents to use. The length
+tells us how many powers were created, not how large the biggest value
+is.</p>
+<hr />
 <p>🌳 For more information on R Markdown code chunks, refer to the <a href="https://bookdown.org/yihui/rmarkdown/notebook.html#using-notebooks">R
 Notebook documentation</a>.</p>
 <hr />
@@ -2528,15 +2546,28 @@ print(growth)</code></pre>
 <h2><span class="header-section-number">7.3</span> Task 3</h2>
 <p>🔢 <strong>Exponents and vectorized math</strong></p>
 <p>🎯 Create a numeric vector named <code>binary_powers</code> that
-contains the powers of <span class="math inline">\(2\)</span> from <span class="math inline">\(2^0\)</span> to <span class="math inline">\(2^10\)</span> using the <code>^</code> operator
-and the <code>exponents</code> vector.</p>
+contains the powers of 2 from <span class="math inline">\(2^0\)</span>
+through <span class="math inline">\(2^{10}\)</span>.</p>
+<p>First, create a vector that stores the exponent values. Then use that
+vector on the right side of the <code>^</code> operator. 💡
+<strong>Tip:</strong> Do not build the exponent vector out of powers.
+The <code>exponents</code> vector will store the exponent positions.</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
-exponents &lt;- __:__
-__________ &lt;- 2__exponents</code></pre>
+
+# Step 1: create the exponent values
+exponents &lt;- ___:___
+
+# Step 2: raise the base to each exponent value
+binary_powers &lt;- ___ ^ exponents</code></pre>
 <pre class="r"><code># ✅ Check the length of the binary_powers vector
-_____(binary_powers)</code></pre>
-<p>🗣 Add Comment: # The output shows ___ elements (values) in the
-<code>binary_powers</code> vector.</p>
+_____(binary_powers)
+print(binary_powers)</code></pre>
+<p>🗣 Add Comments: “# The output shows ___ elements (values) in the
+<code>binary_powers</code> vector.”</p>
+<p>🗣 How does R applies the exponentiation operator <code>^</code>? Why
+does the output producing __ elements (values) in the
+<code>binary_powers</code> vector? Does the vector start with 1 and grow
+by doubling?</p>
 </div>
 <div id="task-4" class="section level2" number="7.4">
 <h2><span class="header-section-number">7.4</span> Task 4</h2>
