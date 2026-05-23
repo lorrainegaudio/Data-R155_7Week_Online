@@ -26,63 +26,50 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Overview
 
-*This is both Module 4 and 5*
+In this guided activity, you will connect GitHub, Git, and RStudio so they can work together. You will create a small GitHub repository, clone it into RStudio as a project, make changes locally, commit those changes, push them to GitHub, and practice pulling a change back down from GitHub.
 
-TODO: WRITE AN OVERVIEW AND WHY LEARNING THE CHAPTER CONTENT IS IMPORTANT.
+This activity may feel picky because the steps must happen in order. That is normal. GitHub setup is not difficult because any one step is impossible. It is difficult because skipping one small setup step can break the whole workflow.
 
-![](https://intro2r.com/github_r.html)
+By the end of this activity, you will 
 
-In Chapter 9 you will learn how to:
+- 🐙 have a working GitHub repository that proves your setup works.
 
-- Courage Skill Highlight
 
-Students can attempt a task first (even imperfectly), then seek help with a clear question and evidence (code + error + what they think is happening).
 
-Students can share imperfect work in a discussion/lab setting and revise based on feedback.
+## What You Will Create
 
-- Git
+- You will create one public GitHub repository named: `data-r155-github-practice`.
 
-- Github
+- Your final repository should include:
 
-- RStudio Projects
+```
+data-r155-github-practice/
+  README.md
+  .gitignore
+  github_practice.Rmd
+```
 
-- Workflow
+- Your local project folder will look more like this:
 
-![Happy git with R](https://happygitwithr.com/)
+```
+DATA-R155/
+  data-r155-github-practice/
+    data-r155-github-practice.Rproj
+    README.md
+    .gitignore
+    github_practice.Rmd
+    data/
+```
 
-## What is Git?
+🗣 Your computer has the full working project folder. GitHub only shows the files that Git is tracking and that you push online.
 
-**Git**: a collection of individual commands you execute in the shell
 
-- Version control system
 
-- Help collaborate in a group
 
-- Tracks changes
+### GitHub, Git, and RStudio
 
-Repository: a set of files stored by a provider
+**GitHub** is the online place where your repository lives. **Git** is the version-control tool that tracks changes. RStudio is where you will edit your files and use the Git pane to commit and push your work.
 
-- GitHub is a repository hosting service for your Git-based projects online.
-
-- Allows others access to your project in nearly real time
-
-- Remote storage
-
-- Access and edit locally
-
-### Privacy and Github
-
-Covers (short, concrete):
-
-- Why `data/` exists: so later you can ignore it when you start using GitHub.
-
-- The mechanism they’ll use later: a .gitignore can exclude folders like `data/` from commits.
-
-- A simple rule of thumb:
-
-1. OK to upload: public/open data, de-identified data you’re allowed to share
-
-2. Do not upload: human-subjects data, protected/controlled data, anything you promised to keep private
 
 
 
@@ -176,8 +163,6 @@ Make sure you have the latest versions of R and RStudio installed. This will ens
 OR
 
 ![git scm mac](http://git-scm.com/downloads)
-
-*Dr. John Ziker revised instructions*
 
 1. Download Xcode from the App Store
 
