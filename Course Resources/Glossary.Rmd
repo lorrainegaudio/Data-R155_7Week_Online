@@ -148,6 +148,10 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **ggplot2**: An R package for data visualization based on the grammar of graphics. It builds plots by combining data, mappings, and geometric layers.
 
+**Git**: A version-control tool that tracks changes to files over time so you can save snapshots, review what changed, and return to earlier versions if needed. In this course, Git records the history of your R project files on your computer. [git-scm.com](git-scm.com)
+
+**GitHub**: An online platform for storing and sharing Git repositories. In this course, GitHub is the web-based location where your repository lives, while Git tracks changes locally and RStudio provides the Git pane you use to commit and push your work. [docs.github.com](docs.github.com)
+
 **Global Options**: A settings window that controls how RStudio behaves across projects and sessions. This is where you can set defaults like appearance, saving behavior, code formatting, and how RStudio runs R.
 
 **Graphical User Interface** (GUI): A point-and-click interface that lets you interact with software using menus, buttons, and file browsers instead of typing commands. In RStudio, the Import Dataset wizard is a GUI tool that helps you select a file and then outputs the R code (including the file path) needed to reproduce the import, so you can copy that code into your R script.

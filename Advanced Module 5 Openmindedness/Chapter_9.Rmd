@@ -28,13 +28,15 @@ knitr::opts_chunk$set(echo = TRUE)
 
 In this guided activity, you will connect GitHub, Git, and RStudio so they can work together. You will create a small GitHub repository, clone it into RStudio as a project, make changes locally, commit those changes, push them to GitHub, and practice pulling a change back down from GitHub.
 
-This activity may feel picky because the steps must happen in order. That is normal. GitHub setup is not difficult because any one step is impossible. It is difficult because skipping one small setup step can break the whole workflow.
+You are not expected to learn how to write Git commands from memory. RStudio provides a beginner-friendly way to use Git, but its built-in Git tools are limited, so learning Git commands is necessary to take full advantage of Git. Git can be confusing at first, so the chapter keeps things simple, allows practical low-tech workarounds when useful, and recommends storing files over GitHub’s size limits elsewhere with links in the project documentation.
 
 By the end of this activity, you will 
 
 - 🐙 have a working GitHub repository that proves your setup works.
 
+- 🐙 understand the relationship between GitHub, Git, and RStudio.
 
+- 🐙 know the workflow: Pull, Edit, Commit, and Push.
 
 ## What You Will Create
 
@@ -61,60 +63,85 @@ DATA-R155/
     data/
 ```
 
-🗣 Your computer has the full working project folder. GitHub only shows the files that Git is tracking and that you push online.
+![Figure 1. Diagram of the folder structure on your computer and your GitHub Repository](Folder_Structure.png)
+
+Figure 1 shows the folder structure this activity guides you to build for both your local computer and your GitHub Repository. Your computer has the full working project folder. 
+
+GitHub only shows the files that Git is tracking and that you push online. This structure protects confidential data in the `data/` folder from being uploaded to GitHub. The .`gitignore` file tells Git which files or folders to ignore when committing changes, such as the `data/` folder.
+
+The `README.md` file is a markdown file that serves as the landing page for your GitHub repository.  
+
+The `github_practice.Rmd` file is an R Markdown document where you will practice editing, committing, and pushing changes to GitHub. 
 
 
+---
 
 
-### GitHub, Git, and RStudio
+## GitHub, Git, and RStudio
 
 **GitHub** is the online place where your repository lives. **Git** is the version-control tool that tracks changes. RStudio is where you will edit your files and use the Git pane to commit and push your work.
 
+You are using three connected locations:
+
+| Place           | What it means                                | What you do there                            |
+| --------------- | -------------------------------------------- | -------------------------------------------- |
+| GitHub.com      | The online copy of your project              | Create the repository and verify pushed work |
+| Your computer   | The local copy of your project folder        | Store and organize files                     |
+| RStudio Project | The R working space connected to that folder | Edit files, commit changes, pull, and push   |
 
 
-
-## Plan
-
-Part 1: Initial Set Up
-
-1.  Install Git
-
-2. Get Git talking to GitHub
-
-3. Make RStudio talk to your local Git
+> GitHub is the online copy. Your computer has the local copy. RStudio helps you work inside the local project folder.
 
 
-💡 **Tip:** Merge conflicts issues happen if you don't *always* "Pull" first.
+Optional reading: [Git, GitHub and how repositories work](https://docs.github.com/en/get-started/using-git/about-git)
 
-Part 2: New Projects Workflow
+---
 
-1. Create a repo folder in GitHub
+### Version Control
 
-2. Make RStudio Project
+**Version control** means tracking changes to files over time. Instead of saving files with names like `final`, `final2`, and `REALLY_FINAL`, Git lets you save meaningful checkpoints called **commits**.
 
-3. Make is a Git repository
+Each commit has a short message explaining what changed.
 
-4. Pull to access latest version
+🎯 As you work today, your goal is to create several commits that show your workflow:
 
-5. Periodically make a commit
+1. Edit the README from RStudio.
+2. Ignore the local data/ folder.
+3. Add an R Markdown practice file.
+4. Practice pulling from GitHub and pushing from RStudio.
+5. Complete the final evidence checklist.
 
-6. Push To GitHub
+✅ Verify you understand that a commit is a checkpoint, not just a file save.
 
-# Part 1
+🗣 Saving a file updates the file on your computer. Committing records a version-control checkpoint. Pushing sends that checkpoint to GitHub.
 
-Account set up and learning Git
 
-1. Register for free GitHub Account
+Optional reading: [More about Version Control](https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control)
 
-2. Install or update R and Studio
+### Steup Order
 
-3. Install Git
+GitHub setup is difficult for novice coders because skipping one small step can break the setup. Just like when you are writing R code, GitHub setup order includes a verification step. Verify each action was successful before moving on. Do not skip ahead. If you complete tasks out of order, you may have to start over. 
 
-4. Introduce yourself to Git
+🎯 Complete the setup in this order:
 
-5. Configure a SSH keys
+1. Install or verify you have Git.
+2. Configure your Git identity.
+3. Check that RStudio can find Git.
+4. Create a GitHub account and Log into GitHub.
+5. Create and store a Personal Access Token.
+6. Create a GitHub repository.
+7. Clone that repository into RStudio.
+8. Practice pull, edit, commit, and push.
 
-## Register for free GitHub Account
+
+💡 **Tip**: If something does not work, and you're stuck, use the course support options to get help. You can do hard things!
+
+---
+
+# GitHub Account
+
+
+Register for free GitHub Account
 
 The first step is to Register a GitHub Account.
 
@@ -130,25 +157,69 @@ Your username tips:
 
 - all lower case, 
 
-- separate words with a hyphen “-”
+- separate words with a hyphen “-” or underscore “_” if needed.
 
-## Install or update R and Studio
 
-Make sure you have the latest versions of R and RStudio installed. This will ensure compatibility with Git and GitHub.
+# Update R and RStudio
 
-![Download R and RStudio](https://posit.co/download/rstudio-desktop/)
+R and RStudio are updated frequently. From time to time, when you open RStudio, you will be notified in a pop up window that you need to download the latest versions installed. Having the most up-to-date version will ensure compatibility with Git and GitHub. 💡 **Tip**: It is good practice to always update R or RStudio when prompted. Outdated versions of R can result is incompatibilities with downloaded packages, Git and GitHub. 
+
+![Download R and RStudio at https://posit.co/download/rstudio-desktop/](https://posit.co/download/rstudio-desktop/)
+
+
+# Git Installation
+
+As you are beginning to understand, **Git** is the tool that tracks file changes. RStudio can use Git, but Git must be installed on your computer first. 
+
+## Version Control Enabled
+
+Git tools appear after version control is enabled for an RStudio Project.
+
+🎯 From the Tools menu, click Global Options
+
+![Figure 2. Tools menu is selected and Global Options is at the bottom of the list](Tools_Global Options.png)
+
+Figure 2 shows the drop down list from selecting "Tools." An orange arrow is pointing at Global Options. Select Global Options to open the Global Options window.
+
+🗣 This opens the Global Options window. On the left side of the window is a list of options.
+
+🎯 Click on the Git/SVN tab
+
+![Figure 3. Git/SVN option item shows version control settings.](Tools_Global Options_VersionControl.png)
+
+In Figure 3, the Git/SVN option is highlighted. An orange arrow is pointing at the check box for "Enable version control interface for RStudio projects." Make sure this box is checked in your RStudio. Click Apply and Ok to save changes.
 
 ## Install Git
 
-### Windows: Git Bash
+First, check whether Git is already installed by opening the Terminal in RStudio or your operating system and typing `git --version`. This is common for Mac and Linux users. Windows users usually need to install Git.
 
-![gitforwindows](https://gitforwindows.org/)
+### Check for Git
 
-1. Accept the defaults
+Method A.
 
-2. RStudio for Windows prefers for Git to be installed below C:/Program Files
+In RStudio, you can check if Git is installed by going to Tools > Global Options > Git/SVN. If Git is installed, you will see the path to the Git executable. If not, you will see a message that says "Git executable not found."
 
-    C:/Program Files/Git/bin/git.exe
+Method B.
+
+Additionally, you can check for Git in the terminal by typing `which git` and that will show you where Git is installed on your system. You can type `git --version` to check the version of Git installed. 
+
+![Figure 4. Screenshot of both the Terminal pane and the Git/SVN option window in Global Options.](check_for_git.png)
+
+In Figure 4, the Git/SVN option window in Global Options shows the path to the Git executable as well, confirming that Git is installed and recognized by RStudio. The Terminal pane shows the command `which git` and the output is `/mingw64/bin/git`, which indicates that Git is installed and located at that path. Your path will likely be different, but the key is that it shows a path to Git rather than an error message. The `git --version` command also shows the version of Git installed. If Git is not installed, it will return an error message, such as `git: command not found`.
+
+If git is not installed, you will need to install it before you can use GitHub with RStudio. Follow the instructions below to install Git on your operating system. If Git is already installed, you can skip to the next section to configure your Git identity.
+
+### Install Git
+
+Installation depends on your operating system: Windows users should install Git for Windows/Git Bash, Mac users should download and install Git, and Linux users can install Git through their package manager.
+
+
+🎯 
+
+
+
+
+
 
 ### macOS: Xcode command line tools
 
@@ -177,6 +248,20 @@ OR
 OR
 
 ![git scm (linux)](https://git-scm.com/download/linux)
+
+
+### Windows: Git Bash
+
+![gitforwindows](https://gitforwindows.org/)
+
+1. Accept the defaults
+
+2. RStudio for Windows prefers for Git to be installed below C:/Program Files
+
+    C:/Program Files/Git/bin/git.exe
+
+
+
 
 ## Introduce yourself to Git
 
@@ -400,6 +485,12 @@ e. Click Commit
 
 Workflow
 
+"it’s fairly easy to screw up your local Git repository, especially when you’re new at this."
+"Your life is much easier if this is baked into your workflow"
+
+"If you’ve recently pushed your work to GitHub, it’s easy to grab a fresh copy, patch things up with the changes that only exist locally, and get on with your life."
+
+
 ## Create a R Markdown Document
 
 File > New File > R Markdown
@@ -481,6 +572,25 @@ list.files("data")
 
 
 # Chapter Terms
+
+
+**Commit**: A saved checkpoint in Git that records a specific set of file changes with a message describing what changed. In this course, a commit is the version-control equivalent of saying, “save this meaningful stage of my work.”
+
+**data/** Folder: A project folder used to store dataset files separately from scripts, notebooks, and output files. Keeping data in a dedicated folder makes file paths clearer, keeps the project organized, and helps others find the raw or prepared data needed to reproduce the analysis. The data/ directory is also a common convention in R project structures.
+
+**Git**: A version-control tool that tracks changes to files over time so you can save snapshots, review what changed, and return to earlier versions if needed. Git records the history of your R project files on your computer. 
+
+**GitHub**: An online platform for storing and sharing Git repositories. GitHub is the web-based location where your repository lives, while Git tracks changes locally and RStudio provides the Git pane you use to commit and push your work. 
+
+**.gitignore**: A plain-text file that tells Git which files or folders not to track or commit, such as temporary files, system files, rendered outputs, or large/private data files. A .gitignore file is usually placed in the root of a repository so the ignore rules apply consistently across the project.
+
+**Pull**: Updating your local project with changes from the remote repository on GitHub. Pull before you start working so your RStudio project has the newest files before you edit, commit, and push. Technically, `git pull` fetches remote changes and merges them into your current local branch.
+
+**Push**: Sending your local commits from your computer to the remote repository on GitHub. Pushing is how the work you committed in RStudio becomes visible in your online GitHub repository.
+
+**README.md**: A Markdown file that explains what a repository contains and how to use it. On GitHub, the README is usually the first file people see when they open a repository, so it should provide key orientation such as the project purpose, file structure, setup steps, and important notes.
+
+**Version Control**: A system for tracking changes to files over time so you can review earlier versions, understand what changed, and return to a previous checkpoint if needed. In Git, these meaningful checkpoints are called commits, which are better than saving files with names like `final`, `final2`, or `REALLY_FINAL`. 
 
 
 # 📝 Practice Space
