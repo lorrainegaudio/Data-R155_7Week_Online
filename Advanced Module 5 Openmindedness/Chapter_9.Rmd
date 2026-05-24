@@ -28,7 +28,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 In this guided activity, you will connect GitHub, Git, and RStudio so they can work together. You will create a small GitHub repository, clone it into RStudio as a project, make changes locally, commit those changes, push them to GitHub, and practice pulling a change back down from GitHub.
 
-You are not expected to learn how to write Git commands from memory. RStudio provides a beginner-friendly way to use Git, but its built-in Git tools are limited, so learning Git commands is necessary to take full advantage of Git. Git can be confusing at first, so the chapter keeps things simple, allows practical low-tech workarounds when useful, and recommends storing files over GitHub’s size limits elsewhere with links in the project documentation.
+In this course, you are not expected to learn how to write Git commands from memory. Git can be confusing at first, so the chapter keeps things simple with low-tech workarounds when useful. RStudio provides a beginner-friendly way to use Git, but its built-in Git tools are limited, so learning Git commands is necessary to take full advantage of Git. *To learn more about Git, check out the 1 credit hour course CS 155 - Introduction to Version Control.*
 
 By the end of this activity, you will 
 
@@ -38,90 +38,11 @@ By the end of this activity, you will
 
 - 🐙 know the workflow: Pull, Edit, Commit, and Push.
 
-## What You Will Create
+## Step up Order
 
-- You will create one public GitHub repository named: `data-r155-github-practice`.
+GitHub setup is difficult for novice coders because **skipping one small step can break the setup**. Just like when you are writing R code, GitHub setup order includes a verification step. **Verify each action** was successful before moving on. Do not skip ahead. If you complete tasks out of order, you may have to start over! 
 
-- Your final repository should include:
-
-```
-data-r155-github-practice/
-  README.md
-  .gitignore
-  github_practice.Rmd
-```
-
-- Your local project folder will look more like this:
-
-```
-DATA-R155/
-  data-r155-github-practice/
-    data-r155-github-practice.Rproj
-    README.md
-    .gitignore
-    github_practice.Rmd
-    data/
-```
-
-![Figure 1. Diagram of the folder structure on your computer and your GitHub Repository](Folder_Structure.png)
-
-Figure 1 shows the folder structure this activity guides you to build for both your local computer and your GitHub Repository. Your computer has the full working project folder. 
-
-GitHub only shows the files that Git is tracking and that you push online. This structure protects confidential data in the `data/` folder from being uploaded to GitHub. The .`gitignore` file tells Git which files or folders to ignore when committing changes, such as the `data/` folder.
-
-The `README.md` file is a markdown file that serves as the landing page for your GitHub repository.  
-
-The `github_practice.Rmd` file is an R Markdown document where you will practice editing, committing, and pushing changes to GitHub. 
-
-
----
-
-## GitHub, Git, and RStudio
-
-**GitHub** is the online place where your repository lives. **Git** is the version-control tool that tracks changes. RStudio is where you will edit your files and use the Git pane to commit and push your work.
-
-You are using three connected locations:
-
-| Place           | What it means                                | What you do there                            |
-| --------------- | -------------------------------------------- | -------------------------------------------- |
-| GitHub.com      | The online copy of your project              | Create the repository and verify pushed work |
-| Your computer   | The local copy of your project folder        | Store and organize files                     |
-| RStudio Project | The R working space connected to that folder | Edit files, commit changes, pull, and push   |
-
-
-> GitHub is the online copy. Your computer has the local copy. RStudio helps you work inside the local project folder.
-
-
-Optional reading: [Git, GitHub and how repositories work](https://docs.github.com/en/get-started/using-git/about-git){target="_blank" rel="noopener noreferrer"}
-
----
-
-### Version Control
-
-**Version control** means tracking changes to files over time. Instead of saving files with names like `final`, `final2`, and `REALLY_FINAL`, Git lets you save meaningful checkpoints called **commits**.
-
-Each commit has a short message explaining what changed.
-
-🎯 As you work today, your goal is to create several commits that show your workflow:
-
-1. Edit the README from RStudio.
-2. Ignore the local data/ folder.
-3. Add an R Markdown practice file.
-4. Practice pulling from GitHub and pushing from RStudio.
-5. Complete the final evidence checklist.
-
-✅ Verify you understand that a commit is a checkpoint, not just a file save.
-
-🗣 Saving a file updates the file on your computer. Committing records a version-control checkpoint. Pushing sends that checkpoint to GitHub.
-
-
-Optional reading: [More about Version Control](https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control){target="_blank" rel="noopener noreferrer"}
-
-### Steup Order
-
-GitHub setup is difficult for novice coders because skipping one small step can break the setup. Just like when you are writing R code, GitHub setup order includes a verification step. Verify each action was successful before moving on. Do not skip ahead. If you complete tasks out of order, you may have to start over. 
-
-🎯 Complete the setup in this order:
+🎯 In this guided activity, you will:
 
 1. Install or verify you have Git.
 2. Configure your Git identity.
@@ -137,26 +58,61 @@ GitHub setup is difficult for novice coders because skipping one small step can 
 
 ---
 
+# GitHub, Git, and RStudio
+
+**GitHub** is the online place where your repository lives. **Git** is the **version control** tool that tracks changes. RStudio is where you will edit your files and use the Git pane to commit and push your work.
+
+You are using three connected locations:
+
+| Place           | What it means                                | What you do there                            |
+| --------------- | -------------------------------------------- | -------------------------------------------- |
+| GitHub.com      | The online copy of your project              | Create the repository and verify pushed work |
+| Your computer   | The local copy of your project folder        | Store and organize files                     |
+| RStudio Project | The R working space connected to that folder | Edit files, commit changes, pull, and push   |
+
+
+> GitHub is the online copy. Your computer has the local copy. RStudio helps you work inside the local project folder.
+
+Optional reading: [Git, GitHub and how repositories work](https://docs.github.com/en/get-started/using-git/about-git){target="_blank" rel="noopener noreferrer"}
+
+---
+
+### Version Control
+
+**Version control** means tracking changes to files over time. It is like save checkpoints in a video game. Git lets you save meaningful checkpoints called **commits**. As you make progress, you create checkpoints you can return to if something breaks or you want to try a different path.  
+
+Version control is basically a time machine for files. You can rewind to earlier versions, compare changes over time, or restore something that was accidentally deleted. Commits let you safely experiment without losing earlier work. 
+
+🌳 [Click here for more about version control](https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control){target="_blank" rel="noopener noreferrer"}
+
+---
+
 # GitHub Account
 
+GitHub hosts your online repository online. Register for free GitHub Account.
 
-Register for free GitHub Account
+## Sign up
 
-The first step is to Register a GitHub Account.
+🎯 If you do not already have an account, the first step is to Register a GitHub Account.
+
+[Sign up for GitHub: https://github.com/signup](https://github.com/signup){target="_blank" rel="noopener noreferrer"}
+
+💡**Tip**: Choose a username you would not mind showing to a professor, research mentor, internship supervisor, or future employer.
 
 Your username tips:
 
 - short, 
-
 - professional, 
-
 - memorable, 
-
 - timeless, 
-
 - all lower case, 
-
 - separate words with a hyphen “-” or underscore “_” if needed.
+
+## Login
+
+🎯 Go to GitHub and log in:
+
+[Github: github.com](https://github.com/login){target="_blank" rel="noopener noreferrer"}
 
 ## Configure SSH keys
 
@@ -344,8 +300,7 @@ Now that we all have Git installed, we need to configure our Git identity.
 
 ## Introduce yourself to Git
 
-Your **Git identity** means the name and email Git attaches to your commits. This does not write code for you. It labels your work.
-
+Your **Git identity** means the name and email Git attaches to your commits. This labels your work.
 
 🎯 Click the Terminal tab in the bottom left pane (next to the Console). "Introduce" yourself to Git in the Terminal typing in the following commands, replacing the name and email with your own. 💡**Tip:** Use the email associated with your GitHub account. 
 
@@ -355,20 +310,27 @@ git config --global user.name "Your Name"
 git config --global user.email "example@u.boisestate.edu"
 ```
 
-✅ Verify you see your u`ser.name `and u`ser.email.`
+✅ Verify you see your `user.name `and `user.email.`
 
 ```bash    
 git config --global --list
 ```
 
-Initial default branch
+🗣 This tells Git who is making the commits on your computer.
 
-  git config --global init.defaultBranch main
+![Figure 5. screenshot of a Git introduction.](git_identity.png)
 
-GitHub has “main” as the default initial branch 
+In Figure 5, the Terminal tab in RStudio shows the commands used to set the Git identity. The command `git config --global user.name "Your Name"` sets the user name for Git commits, and `git config --global user.email "example@u.boisestate.edu"` sets the email address. The command `git config --global --list` displays the current Git configuration, confirming that the user name and email have been set correctly. The output shows the user name and email that will be associated with Git commits made from your computer. 
+
+The `init.defaultBranch` is also shown, which indicates the default branch name for new Git repositories which is often set to `main` or `master` depending on the Git version and configuration. In this example, `windows.appendatomically=false` is also shown, which is a Git configuration specific to Windows that controls how Git handles file updates on Windows systems. 
+
+You do not need to worry about the `init.defaultBranch` or `windows.appendatomically` settings for this activity. The key is that your user name and email are correctly set in the Git configuration.
+
+---
 
 
-# Part 2
+
+# RStudio and Git
 
 Prove local Git can talk to GitHub
 
@@ -512,14 +474,43 @@ e. Click Commit
 
 5. Confirm in GitHub
 
-# Part 4
-
-Workflow
+# Part 4 Workflow
 
 "it’s fairly easy to screw up your local Git repository, especially when you’re new at this."
 "Your life is much easier if this is baked into your workflow"
 
 "If you’ve recently pushed your work to GitHub, it’s easy to grab a fresh copy, patch things up with the changes that only exist locally, and get on with your life."
+
+Each commit has a short message explaining what changed.
+
+Your goal is to create several commits that show your workflow:
+
+1. Edit the README from RStudio.
+2. Ignore the local data/ folder.
+3. Add an R Markdown practice file.
+4. Practice pulling from GitHub and pushing from RStudio.
+5. Complete the final evidence checklist.
+
+✅ Verify you understand that a commit is a checkpoint, not just a file save.
+
+🗣 Saving a file updates the file on your computer. Committing records a version-control checkpoint. Pushing sends that checkpoint to GitHub.
+
+## Final Repository Structure
+
+A **repository** is a project folder tracked by Git.
+
+You will create one public GitHub repository named `data-r155-github-practice`.
+
+![Figure 1. Diagram of the folder structure on your computer and your GitHub Repository](Folder_Structure.png)
+
+Figure 1 shows the folder structure this activity guides you to build for both your local computer and your GitHub Repository. Your computer has the full working project folder. 
+
+GitHub only shows the files that Git is tracking and that you push online. This structure protects confidential data in the `data/` folder from being uploaded to GitHub. The .`gitignore` file tells Git which files or folders to ignore when committing changes, such as the `data/` folder.
+
+The `README.md` file is a markdown file that serves as the landing page for your GitHub repository.  
+
+The `github_practice.Rmd` file is an R Markdown document where you will practice editing, committing, and pushing changes to GitHub. 
+
 
 
 ## Create a R Markdown Document
@@ -622,6 +613,8 @@ list.files("data")
 **Push**: Sending your local commits from your computer to the remote repository on GitHub. Pushing is how the work you committed in RStudio becomes visible in your online GitHub repository.
 
 **README.md**: A Markdown file that explains what a repository contains and how to use it. On GitHub, the README is usually the first file people see when they open a repository, so it should provide key orientation such as the project purpose, file structure, setup steps, and important notes.
+
+**Repository**: A project folder tracked by Git that stores the project files and each file’s revision history. A repository can live locally on your computer or remotely on a platform like GitHub, where it can be backed up, shared, and updated with commits, pulls, and pushes.
 
 **Version Control**: A system for tracking changes to files over time so you can review earlier versions, understand what changed, and return to a previous checkpoint if needed. In Git, these meaningful checkpoints are called commits, which are better than saving files with names like `final`, `final2`, or `REALLY_FINAL`. 
 

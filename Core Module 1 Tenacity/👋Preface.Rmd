@@ -71,7 +71,7 @@ RStudio does not include R. You must install R first, then RStudio Desktop, whic
 
 ## Download and Install R
 
-1. Go to the [CRAN R Project for Statistical Computing](https://cran.r-project.org/) website.
+1. Go to the [CRAN R Project for Statistical Computing](https://cran.r-project.org/){target="_blank" rel="noopener noreferrer"} website.
 
 2. Download the correct file for your operating system. 
 
@@ -79,7 +79,7 @@ a. **Windows**: Click on the "Download R for Windows" link if you are using Wind
 
 b. **macOS**: Click "Download R for macOS" if you are using a Mac. You will download a `.pkg` file. Open the file and accept defaults. You’ll get both the R framework and the R.app GUI.
 
-c. **Linux**: Click the [Linux folder of the Cran website](https://cran.r-project.org/bin/linux/) link and follow your distribution’s installation instructions.
+c. **Linux**: Click the [Linux folder of the Cran website](https://cran.r-project.org/bin/linux/){target="_blank" rel="noopener noreferrer"} link and follow your distribution’s installation instructions.
 
 ![Figure 1. The basic R console (RGui) on Windows.](r_console.png)
 
@@ -87,7 +87,7 @@ If you double-click the R icon after installation, you may see a window like thi
 
 ## Download and Install RStudio
 
-1. Go to the [RStudio download page](https://posit.co/download/rstudio-desktop/).
+1. Go to the [RStudio download page](https://posit.co/download/rstudio-desktop/){target="_blank" rel="noopener noreferrer"}.
 
 2. Choose the installer for your operating system and run it, accepting defaults.
 
@@ -107,16 +107,16 @@ c. **Linux**: Select the installer that matches your Linux distribution (for exa
 If you prefer a video walkthrough, you can watch a short tutorial:
 
 **Windows**:
-[How to install R and RStudio - a practical guide](https://www.youtube.com/watch?v=aiBWLfHeWGE)
+[How to install R and RStudio - a practical guide](https://www.youtube.com/watch?v=aiBWLfHeWGE){target="_blank" rel="noopener noreferrer"}
 
 **macOS**:
-[How to Correctly install R and RStudio on MacOS (2025)](https://www.youtube.com/watch?v=8NvvydRwxEI)
+[How to Correctly install R and RStudio on MacOS (2025)](https://www.youtube.com/watch?v=8NvvydRwxEI){target="_blank" rel="noopener noreferrer"}
 
 **Linux**:
-[How To Install R and RStudio on Ubuntu 24.04 LTS](https://www.youtube.com/watch?v=7RSq4uuS36A)
+[How To Install R and RStudio on Ubuntu 24.04 LTS](https://www.youtube.com/watch?v=7RSq4uuS36A){target="_blank" rel="noopener noreferrer"}
 
 
-[R for Ecologists (Lesson 1) Installing R and RStudio](https://youtu.be/YKvkXKeGoa8?si=YAMM-MpMqtQX-6ep)
+[R for Ecologists (Lesson 1) Installing R and RStudio](https://youtu.be/YKvkXKeGoa8?si=YAMM-MpMqtQX-6ep){target="_blank" rel="noopener noreferrer"}
 
 # Chapter Terms
 
@@ -128,6 +128,6 @@ If you prefer a video walkthrough, you can watch a short tutorial:
 
 # References
 
-Kisselburgh, L., & Beever, J. (2022). The Ethics of Privacy in Research and Design: Principles, Practices, and Potential. In B. P. Knijnenburg, X. Page, P. Wiseniewski, H. R. Lipford, N. Proferes, & J. Romano (Eds.), Modern Socio-Technical Perspectives on Privacy (pp. 395–426). Springer. https://doi.org/10.1007/978-3-030-82786-1
+Kisselburgh, L., & Beever, J. (2022). The Ethics of Privacy in Research and Design: Principles, Practices, and Potential. In B. P. Knijnenburg, X. Page, P. Wiseniewski, H. R. Lipford, N. Proferes, & J. Romano (Eds.), Modern Socio-Technical Perspectives on Privacy (pp. 395–426). Springer. [https://doi.org/10.1007/978-3-030-82786-1](https://doi.org/10.1007/978-3-030-82786-1){target="_blank" rel="noopener noreferrer"}
 
 Shardlow, M., & Przybyła, P. (2024). Deanthropomorphising NLP: can a language model be conscious?. PloS one, 19(12), e0307521.
