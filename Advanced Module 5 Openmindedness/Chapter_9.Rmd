@@ -76,7 +76,6 @@ The `github_practice.Rmd` file is an R Markdown document where you will practice
 
 ---
 
-
 ## GitHub, Git, and RStudio
 
 **GitHub** is the online place where your repository lives. **Git** is the version-control tool that tracks changes. RStudio is where you will edit your files and use the Git pane to commit and push your work.
@@ -93,7 +92,7 @@ You are using three connected locations:
 > GitHub is the online copy. Your computer has the local copy. RStudio helps you work inside the local project folder.
 
 
-Optional reading: [Git, GitHub and how repositories work](https://docs.github.com/en/get-started/using-git/about-git)
+Optional reading: [Git, GitHub and how repositories work](https://docs.github.com/en/get-started/using-git/about-git){target="_blank" rel="noopener noreferrer"}
 
 ---
 
@@ -116,7 +115,7 @@ Each commit has a short message explaining what changed.
 🗣 Saving a file updates the file on your computer. Committing records a version-control checkpoint. Pushing sends that checkpoint to GitHub.
 
 
-Optional reading: [More about Version Control](https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control)
+Optional reading: [More about Version Control](https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control){target="_blank" rel="noopener noreferrer"}
 
 ### Steup Order
 
@@ -158,129 +157,6 @@ Your username tips:
 - all lower case, 
 
 - separate words with a hyphen “-” or underscore “_” if needed.
-
-
-# Update R and RStudio
-
-R and RStudio are updated frequently. From time to time, when you open RStudio, you will be notified in a pop up window that you need to download the latest versions installed. Having the most up-to-date version will ensure compatibility with Git and GitHub. 💡 **Tip**: It is good practice to always update R or RStudio when prompted. Outdated versions of R can result is incompatibilities with downloaded packages, Git and GitHub. 
-
-![Download R and RStudio at https://posit.co/download/rstudio-desktop/](https://posit.co/download/rstudio-desktop/)
-
-
-# Git Installation
-
-As you are beginning to understand, **Git** is the tool that tracks file changes. RStudio can use Git, but Git must be installed on your computer first. 
-
-## Version Control Enabled
-
-Git tools appear after version control is enabled for an RStudio Project.
-
-🎯 From the Tools menu, click Global Options
-
-![Figure 2. Tools menu is selected and Global Options is at the bottom of the list](Tools_Global Options.png)
-
-Figure 2 shows the drop down list from selecting "Tools." An orange arrow is pointing at Global Options. Select Global Options to open the Global Options window.
-
-🗣 This opens the Global Options window. On the left side of the window is a list of options.
-
-🎯 Click on the Git/SVN tab
-
-![Figure 3. Git/SVN option item shows version control settings.](Tools_Global Options_VersionControl.png)
-
-In Figure 3, the Git/SVN option is highlighted. An orange arrow is pointing at the check box for "Enable version control interface for RStudio projects." Make sure this box is checked in your RStudio. Click Apply and Ok to save changes.
-
-## Install Git
-
-First, check whether Git is already installed by opening the Terminal in RStudio or your operating system and typing `git --version`. This is common for Mac and Linux users. Windows users usually need to install Git.
-
-### Check for Git
-
-Method A.
-
-In RStudio, you can check if Git is installed by going to Tools > Global Options > Git/SVN. If Git is installed, you will see the path to the Git executable. If not, you will see a message that says "Git executable not found."
-
-Method B.
-
-Additionally, you can check for Git in the terminal by typing `which git` and that will show you where Git is installed on your system. You can type `git --version` to check the version of Git installed. 
-
-![Figure 4. Screenshot of both the Terminal pane and the Git/SVN option window in Global Options.](check_for_git.png)
-
-In Figure 4, the Git/SVN option window in Global Options shows the path to the Git executable as well, confirming that Git is installed and recognized by RStudio. The Terminal pane shows the command `which git` and the output is `/mingw64/bin/git`, which indicates that Git is installed and located at that path. Your path will likely be different, but the key is that it shows a path to Git rather than an error message. The `git --version` command also shows the version of Git installed. If Git is not installed, it will return an error message, such as `git: command not found`.
-
-If git is not installed, you will need to install it before you can use GitHub with RStudio. Follow the instructions below to install Git on your operating system. If Git is already installed, you can skip to the next section to configure your Git identity.
-
-### Install Git
-
-Installation depends on your operating system: Windows users should install Git for Windows/Git Bash, Mac users should download and install Git, and Linux users can install Git through their package manager.
-
-
-🎯 
-
-
-
-
-
-
-### macOS: Xcode command line tools
-
-1. Go to the shell and enter one of these commands to elicit an offer to install developer command line tools:
-
-    git --version
-
-    git config
-
-2. Accept the offer, click install
-
-OR
-
-![git scm mac](http://git-scm.com/downloads)
-
-1. Download Xcode from the App Store
-
-2. Use “Terminal” app on Mac for next step
-
-### Linux: distro’s package manager
-
-1. Ubuntu or Debian Linux: sudo apt-get install git
-
-2. Fedora or RedHat Linux: sudo yum install git
-
-OR
-
-![git scm (linux)](https://git-scm.com/download/linux)
-
-
-### Windows: Git Bash
-
-![gitforwindows](https://gitforwindows.org/)
-
-1. Accept the defaults
-
-2. RStudio for Windows prefers for Git to be installed below C:/Program Files
-
-    C:/Program Files/Git/bin/git.exe
-
-
-
-
-## Introduce yourself to Git
-
-Introduce yourself to Git in shell
-
-    git config --global user.name "Your Name"
-    git config --global user.email "example@u.boisestate.edu"
-
-*Use the email associated with your GitHub account*
-
-Check Git understood
-
-    git config --global --list
-
-Initial default branch
-
-  git config --global init.defaultBranch main
-
-GitHub has “main” as the default initial branch 
 
 ## Configure SSH keys
 
@@ -336,6 +212,161 @@ a. From the shell: `ssh -T git@github.com`
 3. The **private key** must remain confidential and secure. It is used for authentication.
 
 4. You Never Share Your Private Key
+
+
+# Update R and RStudio
+
+R and RStudio are updated frequently. From time to time, when you open RStudio, you will be notified in a pop up window that you need to download the latest versions installed. Having the most up-to-date version will ensure compatibility with Git and GitHub. 💡 **Tip**: It is good practice to always update R or RStudio when prompted. Outdated versions of R can result is incompatibilities with downloaded packages, Git and GitHub. 
+
+[Download R and RStudio at https://posit.co/download/rstudio-desktop/](https://posit.co/download/rstudio-desktop/){target="_blank" rel="noopener noreferrer"}
+
+
+# Git Installation
+
+As you are beginning to understand, **Git** is the tool that tracks file changes. RStudio can use Git, but Git must be installed on your computer first. 
+
+## Version Control Enabled
+
+Git tools appear after version control is enabled for an RStudio Project.
+
+🎯 From the Tools menu, click Global Options
+
+![Figure 2. Tools menu is selected and Global Options is at the bottom of the list](Tools_Global Options.png)
+
+Figure 2 shows the drop down list from selecting "Tools." An orange arrow is pointing at Global Options. Select Global Options to open the Global Options window.
+
+🗣 This opens the Global Options window. On the left side of the window is a list of options.
+
+🎯 Click on the Git/SVN tab
+
+![Figure 3. Git/SVN option item shows version control settings.](Tools_Global Options_VersionControl.png)
+
+In Figure 3, the Git/SVN option is highlighted. An orange arrow is pointing at the check box for "Enable version control interface for RStudio projects." Make sure this box is checked in your RStudio. Click Apply and Ok to save changes.
+
+## Install Git
+
+First, check whether Git is already installed by opening the Terminal in RStudio or your operating system and typing `git --version`. This is common for Mac and Linux users. Windows users usually need to install Git.
+
+### Check for Git
+
+Method A.
+
+In RStudio, you can check if Git is installed by going to Tools > Global Options > Git/SVN. If Git is installed, you will see the path to the Git executable. If not, you will see a message that says "Git executable not found."
+
+Method B.
+
+Additionally, you can check for Git in the terminal by typing `which git` and that will show you where Git is installed on your system. You can type `git --version` to check the version of Git installed. 
+
+💡 **Tip:** Git is sensitive to command syntax and spelling, so type commands carefully.
+
+![Figure 4. Screenshot of both the Terminal pane and the Git/SVN option window in Global Options.](check_for_git.png)
+
+In Figure 4, the Git/SVN option window in Global Options shows the path to the Git executable as well, confirming that Git is installed and recognized by RStudio. The Terminal pane shows the command `which git` and the output is `/mingw64/bin/git`, which indicates that Git is installed and located at that path. Your path will likely be different, but the key is that it shows a path to Git rather than an error message. The `git --version` command also shows the version of Git installed. If Git is not installed, it will return an error message, such as `git: command not found`.
+
+🎯 Type `git --version` in the terminal to check if Git is installed.
+
+```bash
+git --version
+```
+
+
+![✅ Check `git --version` output](git_not_installed_error.png)
+
+If git is not installed, you will need to install it before you can use GitHub with RStudio. Follow the instructions below to install Git on your operating system. If Git is already installed, you can skip to the next section to configure your Git identity.
+
+### Install Git
+
+Installation depends on your operating system: Windows users should install Git for Windows/Git Bash, Mac users should download and install Git, and Linux users can install Git through their package manager.
+
+If you found that you do not have Git installed, navigate to the section that describes how to install Git for your operating system. 
+
+### macOS: Xcode command line tools
+
+1. Go to the shell and enter one of these commands to elicit an offer to install developer command line tools:
+
+```bash
+git --version
+git config
+```
+
+2. Accept the offer, click install
+
+OR
+
+[git scm mac](http://git-scm.com/downloads){target="_blank" rel="noopener noreferrer"}
+
+1. Download Xcode from the App Store
+
+2. Use “Terminal” app on Mac for next step
+
+### Linux: distro’s package manager
+
+1. Ubuntu or Debian Linux: sudo apt-get install git
+
+2. Fedora or RedHat Linux: sudo yum install git
+
+OR
+
+[git scm (linux)](https://git-scm.com/download/linux){target="_blank" rel="noopener noreferrer"}
+
+
+### Windows: Git Bash
+
+🎯 Install Git if it is not already installed.
+
+[Instructor Demonstration Video. Watch an RStudio Update and Git install on a Windows computer.](https://boisestate.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=21199429-d002-49ac-be8b-b3fa0017c302){target="_blank" rel="noopener noreferrer"}
+
+[Link to Download Git for Windows](https://git-scm.com/install/windows){target="_blank" rel="noopener noreferrer"}
+
+1. Accept the defaults
+
+2. RStudio for Windows prefers for Git to be installed below C:/Program Files
+
+    C:/Program Files/Git/bin/git.exe
+    
+💡 **Tip:** Keep the default installation path to ensure RStudio can find Git.
+    
+### After Installation
+
+🎯 In RStudio, go to the Terminal tab and type:
+
+```bash
+git --version
+```
+
+✅ Verify you see a Git version number. See Figure 4 for more details. If you see a version number, Git is installed. If you see an error, Git is not installed correctly yet or RStudio cannot find it. Without Git installed, you cannot progress forward with the activity. Reach out
+
+💡**Tip:** After installing Git, you may need to restart RStudio before RStudio recognizes it.
+
+---
+
+Now that we all have Git installed, we need to configure our Git identity.
+
+## Introduce yourself to Git
+
+Your **Git identity** means the name and email Git attaches to your commits. This does not write code for you. It labels your work.
+
+
+🎯 Click the Terminal tab in the bottom left pane (next to the Console). "Introduce" yourself to Git in the Terminal typing in the following commands, replacing the name and email with your own. 💡**Tip:** Use the email associated with your GitHub account. 
+
+
+```bash
+git config --global user.name "Your Name"
+git config --global user.email "example@u.boisestate.edu"
+```
+
+✅ Verify you see your u`ser.name `and u`ser.email.`
+
+```bash    
+git config --global --list
+```
+
+Initial default branch
+
+  git config --global init.defaultBranch main
+
+GitHub has “main” as the default initial branch 
+
 
 # Part 2
 
@@ -579,6 +610,8 @@ list.files("data")
 **data/** Folder: A project folder used to store dataset files separately from scripts, notebooks, and output files. Keeping data in a dedicated folder makes file paths clearer, keeps the project organized, and helps others find the raw or prepared data needed to reproduce the analysis. The data/ directory is also a common convention in R project structures.
 
 **Git**: A version-control tool that tracks changes to files over time so you can save snapshots, review what changed, and return to earlier versions if needed. Git records the history of your R project files on your computer. 
+
+**Git Identity**: The name and email address that Git attaches to each commit to show who authored the work. Your Git identity is set with `user.name` and `user.email`; it labels your commits so the project history shows who made each checkpoint.
 
 **GitHub**: An online platform for storing and sharing Git repositories. GitHub is the web-based location where your repository lives, while Git tracks changes locally and RStudio provides the Git pane you use to commit and push your work. 
 
