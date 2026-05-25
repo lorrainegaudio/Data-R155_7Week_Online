@@ -1,11 +1,12 @@
 ---
-title: "Chapter 9: Git and GitHub"
+title: "Chapter 9" 
+subtitle: "Git and GitHub"
 author: "Lorraine Gaudio"
 date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
-team: "Spring 2026"
+team: "Summer 2026"
 output: 
   html_document: # To create an HTML document from R Markdown
-    toc: false # Table of contents (TOC)
+    toc: true # Table of contents (TOC)
     toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
     toc_float: # Float the table of contents to the left of the main document
       collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
@@ -36,7 +37,9 @@ By the end of this activity, you will
 
 - 🐙 understand the relationship between GitHub, Git, and RStudio.
 
-- 🐙 know the workflow: Pull, Edit, Commit, and Push.
+- 🐙 know the workflow: Open Project → Pull → Edit → Save → Stage → Commit → Push.
+
+- 🐙 know where to go to find Git and GitHub support on Campus.
 
 ## Step up Order
 
@@ -52,7 +55,7 @@ GitHub setup challenges novice coders because **skipping one small step can brea
 6. Create a GitHub account and log into [GitHub](#github).
 7. [Configure SSH keys](#configure-ssh-keys).
 8. [Create a GitHub repository](#make-github-repo) and [clone that repository into RStudio](#clone-github-via-rstudio).
-9. Practice [local changes](#local-changes) and the full [pull, edit, commit, and push](#pull-edit-commit-and-push) workflow.
+9. Practice [local changes](#local-changes) and the full [workflow](#workflow)
 10. Review your [final repository structure](#final-repository-structure).
 11. Create a `.gitignore` file to support [data privacy and organization](#data-privacy-and-organization).
 
@@ -76,15 +79,9 @@ You are using three connected locations:
 
 > GitHub is the online copy. Your computer has the local copy. RStudio helps you work inside the local project folder.
 
-Optional reading: [Git, GitHub and how repositories work](https://docs.github.com/en/get-started/using-git/about-git){target="_blank" rel="noopener noreferrer"}
-
----
-
 **Version control** means tracking changes to files over time. It is like save checkpoints in a video game. Git lets you save meaningful checkpoints called **commits**. As you make progress, you create checkpoints you can return to if something breaks or you want to try a different path.  
 
 Version control is basically a time machine for files. You can rewind to earlier versions, compare changes over time, or restore something that was accidentally deleted. Commits let you safely experiment without losing earlier work. 
-
-🌳 [Click here for more about version control](https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control){target="_blank" rel="noopener noreferrer"}
 
 ---
 
@@ -572,9 +569,7 @@ lastname-data
 
 **Log into GitHub**
 
-🎯 Go to GitHub and log in:
-
-[Github: github.com](https://github.com/login){target="_blank" rel="noopener noreferrer"}
+🎯 Go to [Github](https://github.com/login){target="_blank" rel="noopener noreferrer"} and log in.
 
 🎯 Log in with the account you created.
 
@@ -986,7 +981,7 @@ We'll use this file to practice editing in RStudio.
 
 Your repository now exists online on GitHub. Let's get it onto your computer.
 
-# Copy the SSH Repository Link {#copy-ssh-repo-link}
+# Copy SSH Repository Link {#copy-ssh-repo-link}
 
 Now you need the repository link. Because you already set up SSH keys, you should copy the SSH link, not the HTTPS link.
 
@@ -1200,19 +1195,21 @@ It is usually near the Environment, History, Connections, and Tutorial panes in 
 
 **Commit the change**
 
-🎯 Click Commit.
+🎯 Click Commit button in the Git pane's menu bar.
 
-🎯 In the commit message box, type:
+The Commit window opens. It shows the staged file and a box for a commit message.
+
+🎯 In the `Commit message` box, type:
 
 ```text
-Commit from RStudio
+First Commit from RStudio
 ```
 
 🎯 Click Commit.
 
-✅ Verify that the Commit window does not show a red error message and instead reports that the commit completed successfully.
+🗣 A **commit** is a labeled checkpoint. It records what changed.
 
-🗣 A commit is a labeled checkpoint. It records what changed.
+✅ Verify that the Commit window does not show a red error message and instead reports that the commit completed successfully.
 
 💡 **Tip:** If you see a red error message, do not keep clicking Commit or Push repeatedly. Read the first error line carefully. Errors like `Permission denied (publickey)` usually mean there is a GitHub SSH setup problem, while authentication errors may mean GitHub cannot verify your account. Take a screenshot of the error and use the module's support options.
 
@@ -1222,21 +1219,23 @@ Commit from RStudio
 
 🎯 Click **Push**.
 
-✅ Verify that the push finishes without an error.
+You can find the Push button in the Git pane's menu bar, usually near the Commit button. It is also in the Commit window after you make a commit.
 
 🗣 Push sends your local commit from RStudio up to GitHub.
 
-💡 Tip: If you see a message about authentication or permission denied, your SSH setup may need help. Use the support option instead of changing random settings.
+✅ Verify that the push finishes without an error.
 
-Step 7
+💡 **Tip:** Push errors are a very common issue. One reason they happen is when your local repository is “behind” GitHub. This usually means the GitHub version changed after you cloned or last pulled. If you see a message about `fetch first`, `non-fast-forward`, or being “behind,” stop and use the **Pull** button in RStudio before trying Push again. To prevent Push errors, always follow the [workflow](#workflow) explained in the next section.
 
-Confirm the change on GitHub
+## Step 7
+
+**Confirm the change on GitHub**
 
 🎯 Return to your GitHub repository page in your browser.
 
 🎯 Refresh the page.
 
-🎯 Open or view README.md.
+🎯 Open or view `README.md`.
 
 ✅ Verify that you can see this line on GitHub:
 
@@ -1244,128 +1243,349 @@ A line I wrote in RStudio.
 
 🗣 If the line appears on GitHub, your RStudio project successfully pushed a local change to your online GitHub repository.
 
-📸 Screenshot suggestion: Take a screenshot showing the updated README on GitHub.
+📸 Screenshot showing the updated README on GitHub.
 
+---
 
+Congratulations! You have successfully made a local change in RStudio, committed it, pushed it to GitHub, and confirmed that the change appears on GitHub. This is the basic workflow for using Git and GitHub with RStudio. 
+
+Now let's talk about how to make this workflow a regular part of your work process. To learn the full workflow, start by closing RStudio. Opening RStudio is part of the steps in the workflow and you'll want to practice it from the beginning.
 
 # Workflow {#workflow}
 
-"it’s fairly easy to screw up your local Git repository, especially when you’re new at this."
-"Your life is much easier if this is baked into your workflow"
+A **Git workflow** is the repeatable order you follow when you sit down to work on a project connected to GitHub.
 
-"If you’ve recently pushed your work to GitHub, it’s easy to grab a fresh copy, patch things up with the changes that only exist locally, and get on with your life."
+For this course, your workflow is:
 
-Each commit has a short message explaining what changed.
+```text
+Open Project → Pull → Edit → Save → Stage → Commit → Push
+```
 
-Your goal is to create several commits that show your workflow:
+This order matters. Pulling first checks whether GitHub has changes that your local computer does not have yet. That helps prevent push errors later. Git and GitHub are much easier to use when this workflow becomes automatic.
 
-1. Edit the README from RStudio.
-2. Ignore the local data/ folder.
-3. Add an R Markdown practice file.
-4. Practice pulling from GitHub and pushing from RStudio.
-5. Complete the final evidence checklist.
+## Step 1
 
-✅ Verify you understand that a commit is a checkpoint, not just a file save.
+**Open file system**
 
-🗣 Saving a file updates the file on your computer. Committing records a version-control checkpoint. Pushing sends that checkpoint to GitHub.
+When you turn on your computer to start working, you'll want to start by opening finder/file explorer and navigating to your project folder (e.g, `DATA-R155/data-r155-github-practice/data-r155-github-practice.Rproj`).
 
-## Final Repository Structure {#final-repository-structure}
+With RStudio closed, open your file system (Finder on Mac, File Explorer on Windows) and navigate to the folder where you saved your RStudio project. You should see a file with the extension `.Rproj` in that folder.
 
-A **repository** is a project folder tracked by Git.
+## Step 2
 
-You will create one public GitHub repository named `data-r155-github-practice`.
+**Open the project**
 
-![Figure 1. Diagram of the folder structure on your computer and your GitHub Repository](Folder_Structure.png)
+open the project by double-clicking the `.Rproj` file in **Finder/File Explorer**. That is the most beginner-friendly because it ensures the correct project folder. You can also open RStudio session and then open your project inthe file tab, if it is not already open. Personally, I prefer to open the project from the file system because it guarantees I am in the right place.
 
-Figure 1 shows the folder structure this activity guides you to build for both your local computer and your GitHub Repository. Your computer has the full working project folder. 
+🗣 RStudio opens with the project name in the top-right corner. 
 
-GitHub only shows the files that Git is tracking and that you push online. This structure protects confidential data in the `data/` folder from being uploaded to GitHub. The .`gitignore` file tells Git which files or folders to ignore when committing changes, such as the `data/` folder.
+✅ Verify that the project name is correct and that you can see the project files in the Files pane.
 
-The `README.md` file is a markdown file that serves as the landing page for your GitHub repository.  
+## Step 3
 
-The `github_practice.Rmd` file is an R Markdown document where you will practice editing, committing, and pushing changes to GitHub. 
+**Pull before working**
 
-## Pull, edit, commit, and Push {#pull-edit-commit-and-push}
+After you open your project, the first thing you should do is **Pull**. 
 
-### Create a R Markdown Document
+**Pull** means to grab changes from GitHub and bring them into your local project. Pulling is like saying, “What’s new on GitHub since I last worked?” If you are the only person using the repository, you will likely see "Already up to date." when you pull. That is normal. It means there are no new changes on GitHub that you don't have locally.
 
+🎯 In RStudio, find the Git pane.
+
+🎯 Click Pull.
+
+✅ Verify that the pull finishes without a red error message.
+
+🗣 Pulling first helps make sure your local project matches the version on GitHub before you make new edits.
+
+💡 **Tip**: If you see a message that says “Already up to date,” that is good. It means GitHub does not have newer changes for your project right now.
+
+## Step 4
+
+**Edit a file**
+
+🎯 In RStudio, go to:
+
+```text
 File > New File > R Markdown
+```
 
-1. Make sure your project is open
+🎯 Give the document this title:
 
-2. Give it an informative title (Spaces and Punctuation)
+```text
+GitHub Practice
+```
 
-3. Output format of HTML (Can change later)
+🎯 Choose HTML as the output format.
 
-4. Save “first.rmd” in RStudio project folder (Do not nest in folder)
+🎯 Click OK or Create.
 
-No need to set a working directory again!
+✅ Verify that a new R Markdown file opens in RStudio.
 
-### Edit the R Markdown Document
+🗣 This file is currently open in RStudio, but it is not saved in your project folder yet.
 
-1. Add some text and code
+> 🧐 Notice: These directions use an R Markdown file named `github_practice.Rmd`. If you prefer Quarto and already know how to use it, you may create `github_practice.qmd` instead. If you choose Quarto, treat every mention of `.Rmd` in the directions as `.qmd`.
 
-2. Save
+## Step 5
 
-3. Commit 
+**Save the file**
 
-4. Push to GitHub
+🎯 Go to:
 
-## Data Privacy and Organization {#data-privacy-and-organization}
+```text
+File > Save As ...
+```
 
-Covers:
+🎯 Save the file in your project folder with this name:
 
-1.. Minimum viable structure (what you described): keep the data in the same folder as the R Notebook so relative paths are simple.
+```text
+github_practice.Rmd
+```
+✅ Verify that `github_practice.Rmd` appears in the Files pane next to `README.md`.
 
-2. Best practice structure: create a `data/` folder and move raw files into it:
-
--`Intro_to_R/`
--- `chapter9_notes.Rmd`
--- `data/`
---- `myfile.csv`
---- `myfile.xlsx`
-
-Introduce RStudio Projects: a way to keep everything together and keep a stable working directory.
-
-### Privacy and Github
-
-Covers (short, concrete):
-
-- Why `data/` exists: so later you can ignore it when you start using GitHub.
-
-- The mechanism they’ll use later: a .gitignore can exclude folders like `data/` from commits.
-
-- A simple rule of thumb:
-
-1. OK to upload: public/open data, de-identified data you’re allowed to share
-
-2. Do not upload: human-subjects data, protected/controlled data, anything you promised to keep private
+🗣 The file should be saved in the main project folder. 
 
 
-gitignore: a file that tells Git which files or folders to ignore when committing changes. This is useful for keeping sensitive data or large files out of your GitHub repository.
+## Step 6
 
-In Chapter 7, you learned to store data in the same folder as your R Notebook. This is the minimum viable structure for a project, but it can get messy as you add more files. A better practice is to create a `data/` folder and move your raw data files into it. This way, your project folder stays organized, and you can easily manage your data files.
+**Stage the file**
 
-Your structure becomes:
+Recall that **Stage** means selecting the file or files that should be included in the next commit.
 
--`Intro_to_R/`
--- `chapter9_notes.Rmd`
--- `data/`
---- `myfile.csv`
---- `myfile.xlsx`
+🎯 Go to the Git pane.
 
-**🎯 Goal** Store your data in a `data/` folder then check 
+🎯 Check the Staged box next to:
 
-```{r}
-# Check your R notebook's working directory files
+```text
+github_practice.Rmd
+```
+
+💡 **Tip**: Only stage files you want to record version control. Be careful not to stage protected data or propitiatory information.
+
+## Step 7
+
+**Commit the file**
+
+Commit means creating a labeled checkpoint in Git.
+
+🎯 Click Commit.
+
+🎯 In the commit message box, type:
+
+```text
+Add GitHub practice R Markdown file
+```
+
+🎯 Click Commit.
+
+✅ Verify that the Commit window does not show a red error message and instead reports that the commit completed successfully.
+
+🗣 The commit saved a checkpoint in your local Git history.
+
+💡 **Tip**: If you see a red error message, do not keep clicking Commit. Read the first error line, take a screenshot, and use the module's support options.
+
+## Step 8
+
+**Push the commit to GitHub**
+
+Push means sending your local commit to GitHub.
+
+🎯 Click Push.
+
+✅ Verify that the push finishes without a red error message.
+
+🗣 Push sends your committed work from your computer to GitHub.
+
+💡 Tip: Push errors can happen if your local repository is behind GitHub. If you see a message about `fetch first`, `non-fast-forward`, or being “behind,” stop and use the Pull button before trying Push again. If you get stuck here, take a screenshot and contact the module's support options.
+
+## Step 9
+
+**Confirm the file on GitHub**
+
+🎯 Return to your GitHub repository page in your browser.
+
+🎯 Refresh the page.
+
+✅ In your GitHub repository, verify that you can see:
+
+```text
+github_practice.Rmd
+```
+
+🗣 If the file appears on GitHub, your Pull → Edit → Save → Stage → Commit → Push workflow worked.
+
+
+# Data Privacy & Organization {#data-privacy-and-organization}
+
+A data folder (**`data\`**) is a folder where project data files are stored. A **`.gitignore`** file tells Git which files or folders to ignore when committing changes.
+
+In earlier course work, you may have stored a data file in the same folder as your R Notebook. That is a minimum workable structure, but it can get messy as projects grow. A better practice is to create a data/ folder and keep data files there.
+
+In this section, you will learn how to keep the `data/` folder on your local computer. You will use `.gitignore` to prevent Git from pushing any files stored in the `data/` folder to GitHub.
+
+**GitHub Sharing Guidelines**:
+
+| Usually OK to upload to GitHub            | Do not upload to GitHub                |
+| ----------------------------------------- | -------------------------------------- |
+| Code you wrote                            | Human-subjects data                    |
+| R Markdown or Quarto files                | Private, protected, or restricted data |
+| README files                              | Passwords, tokens, or keys             |
+| Public/open data you are allowed to share | Anything you promised to keep private  |
+
+
+🗣 GitHub is useful for code and documentation. It is not automatically safe for every dataset.
+
+## Step 1
+
+**Pull first**
+
+🎯 In RStudio, click **Pull** before making edits.
+
+✅ Verify that the pull finishes without a red error message.
+
+## Step 2
+
+**Create a data folder**
+
+🎯 In the RStudio Files pane, click New Folder.
+
+🎯 Name the folder: "data"
+
+✅ Verify that the d`ata/ `folder appears in your Files pane.
+
+## Step 3
+
+**Create a .gitignore file**
+
+🎯 In RStudio, go to:
+
+```text
+File > New File > Text File
+```
+
+🎯 Add these lines:
+
+```text
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+.positai
+data/
+```
+
+🎯 Save the file in the main project folder with this exact name: `.gitignore`
+
+✅ Verify that `.gitignore` appears in the same folder as `README.md` and `github_practice.Rmd`.
+
+💡 **Tip**: The period at the beginning matters. The file **must** be named `.gitignore`, not `gitignore.txt`.
+
+🗣 The line `data/` tells Git to ignore the local data folder.
+
+## Step 4
+
+**Check the project files with R**
+
+You can use R to check what files and folders are visible from the project.
+
+🎯 In `github_practice.Rmd`, add this code chunk:
+
+```{r eval=FALSE}
 list.files()
 list.files("data")
 ```
 
-🗣 After moving the files into data/, you must include the `data/` in the file path.
+🎯 Add a short memo below the code chunk:
+
+```markdown
+🗣 The first command shows files and folders in my project folder. The second command checks what is inside the data folder.
+```
+
+🎯 Save `github_practice.Rmd`.
+
+✅ Verify that `github_practice.Rmd` is saved.
+
+> 🧐 **Notice:** To load data into R, you must include `data/` in the file path when loading those files.
+
+## Step 5
+
+**Stage only the files that should go to GitHub**
+
+🎯 Go to the Git pane.
+
+🎯 Stage these files:
+
+```text
+github_practice.Rmd
+.gitignore
+```
+
+✅ Verify that .`gitignore` and `github_practice.Rmd` are staged.
+
+✅ Verify that `data/` is not shown in the Git pane as an option to be staged.
+
+🗣 By staging `.gitignore`, you are committing the rule to Git to not track the `data/` folder.
+
+💡 **Tip**: If `data/` appears in the Git pane after you saved `.gitignore`, go back and review that `data/` is in `.gitignore` and `.gitignore` is spelled correctly. 
+
+## Step 6
+
+**Commit the data privacy rule**
+
+🎯 Click Commit.
+
+🎯 Use this commit message:
+
+```text
+Add data folder ignore rule
+```
+
+🎯 Click Commit.
+
+✅ Verify that the commit completes successfully.
+
+🗣 This commit records your data privacy and organization rule on GitHub.
+
+## Step 7
+
+**Push the data privacy rule to GitHub**
+
+🎯 Click Push.
+
+✅ Verify that the push finishes without a red error message.
+
+🗣 This sends `.gitignore` and your updated R Markdown file to GitHub.
+
+## Step 8
+
+**Confirm the repository on GitHub**
+
+🎯 Return to your GitHub repository page.
+
+🎯 Refresh the page.
+
+✅ Verify that GitHub shows:
+
+```text
+README.md
+github_practice.Rmd
+.gitignore
+```
+✅ Verify that GitHub does not show: `data/`
+
+---
+
+## Check Point: Final Repository Structure {#final-repository-structure}
+
+✅ If your local computer folder  and GitHub repo structure matches  the diagram below, you have completed the activity. 
+
+![Figure 1. Diagram of the folder structure on your computer and your GitHub Repository](Folder_Structure.png)
+
+---
+
 
 # Summary
 
+You have now completed the full GitHub, Git, and RStudio setup workflow. You created a GitHub repository, connected it to an RStudio Project, made local changes, committed those changes as checkpoints, pushed your work to GitHub, and practiced the habit of pulling before editing. You also used `.gitignore` to keep the `data/` folder local, which helps protect files that should not be uploaded online. This workflow is not something you need to memorize perfectly today, but it is something you should practice systematically: **Open Project → Pull → Edit → Save → Stage → Commit → Push**. RStudio gives you buttons for Pull, Commit, and Push, but you still need to make careful decisions about what files belong in each commit and what files should stay private. 
 
 # Chapter Terms
 
@@ -1404,4 +1624,22 @@ list.files("data")
 
 # References
 
+Bryan, J., the STAT 545 TAs, & Hester, J. (n.d.). *Happy Git and GitHub for the useR*. [Happy Git and GitHub for the useR](https://happygitwithr.com/){target="_blank" rel="noopener noreferrer"}
 
+Douglas, A., Roos, D., Mancini, F., Couto, A., & Lusseau, D. (2026, January 15). *An Introduction to R*. [Version control with Git and GitHub](https://intro2r.com/github_r.html){target="_blank" rel="noopener noreferrer"}
+
+GitHub Docs. (n.d.). *About Git*. [Git, GitHub and how repositories work](https://docs.github.com/en/get-started/using-git/about-git){target="_blank" rel="noopener noreferrer"}
+
+GitHub Docs. (n.d.). *Adding a new SSH key to your GitHub account*. [Add a new SSH key to GitHub](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account){target="_blank" rel="noopener noreferrer"}
+
+GitHub Docs. (n.d.). *Generating a new SSH key and adding it to the ssh-agent*. [Generate a new SSH key](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent){target="_blank" rel="noopener noreferrer"}
+
+GitHub Docs. (n.d.). *Testing your SSH connection*. [Test your SSH connection](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/testing-your-ssh-connection){target="_blank" rel="noopener noreferrer"}
+
+GitHub Docs. (n.d.). *Ignoring files*. [Use .gitignore to keep files out of GitHub](https://docs.github.com/en/get-started/git-basics/ignoring-files){target="_blank" rel="noopener noreferrer"}
+
+Posit. (n.d.). *RStudio User Guide: Version Control*. [Use Git and GitHub with RStudio](https://docs.posit.co/ide/user/ide/guide/tools/version-control.html){target="_blank" rel="noopener noreferrer"}
+
+Software Carpentry. (n.d.). *Version Control with Git*. [Follow Software Carpentry: Version Control with Git](https://swcarpentry.github.io/git-novice/index.html){target="_blank" rel="noopener noreferrer"}
+
+Chacon, S., & Straub, B. (2014). *Pro Git* (2nd ed.). Apress. [Git basics: Getting a Git repository](https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository){target="_blank" rel="noopener noreferrer"}
