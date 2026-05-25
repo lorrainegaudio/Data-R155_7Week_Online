@@ -1632,7 +1632,7 @@ display: none;
 <h1 class="title toc-ignore">Chapter 7</h1>
 <h3 class="subtitle">📤 Importing Data</h3>
 <h4 class="author">by Lorraine Gaudio</h4>
-<h4 class="date">Version May 05, 2026</h4>
+<h4 class="date">Version May 25, 2026</h4>
 
 </div>
 
@@ -1649,6 +1649,13 @@ name doesn’t match, or the package you need wasn’t loaded. You will
 learn a simple, reliable workflow: download the data, put it in the same
 folder as your R Notebook, confirm R can see it, and then import it with
 the correct function.</p>
+<p>Watch how this chapter models autonomy. Build these habits,
+documenting them in your practice space report. Autonomy means taking
+initiative when something does not work: checking where R is looking,
+confirming the file name, reading the message, and reaching out for
+support when you are genuinely stuck. The goal is not to solve every
+problem alone. The goal is to stay in control of your learning instead
+of letting a file-path error stop your progress.</p>
 <p>This chapter is also structured differently: Many of the Practice
 Space tasks are built into the walkthrough. If you complete each step as
 you go, you will finish the chapter with a working notebook that can
@@ -1656,27 +1663,24 @@ Knit successfully and reload your datasets from a clean start.</p>
 <p>By the end of Chapter 7, a successful student will be able to:</p>
 <ul>
 <li><p>📊 Define tabular data and describe how rows and columns map to
-observations and variables in a data frame.
-(Remember/Understand)</p></li>
+observations and variables in a data frame.</p></li>
 <li><p>📂 Explain how the working directory affects file imports and
-compare the working directory used in the Console vs. during Knit.
-(Understand/Analyze)</p></li>
+compare the working directory used in the Console vs. during
+Knit.</p></li>
 <li><p>🗂️ Organize downloaded data files in the correct folder and
-verify file visibility using <code>list.files()</code>. (Apply)</p></li>
+verify file visibility using <code>list.files()</code>.</p></li>
 <li><p>📦 Install required packages once and load required packages in
-an R Notebook so code runs from top to bottom when knitted.
-(Apply)</p></li>
+an R Notebook so code runs from top to bottom when knitted.</p></li>
 <li><p>💾 Load datasets from Base R and from installed packages using
 <code>data()</code> and confirm that the dataset is available in the
-Environment. (Apply)</p></li>
+Environment.</p></li>
 <li><p>📥 Import CSV and Excel files using <code>read_csv()</code> and
 <code>read_excel()</code> and interpret the import feedback
-(rows/columns and column types at a basic level).
-(Apply/Understand)</p></li>
+(rows/columns and column types at a basic level).</p></li>
 <li><p>🆘 Troubleshoot common import failures (missing packages, wrong
 file location, wrong file name) using targeted checks
 (<code>getwd()</code>, <code>list.files()</code>,
-<code>library()</code>). (Analyze/Apply)</p></li>
+<code>library()</code>).</p></li>
 </ul>
 </div>
 <div id="tabular-data" class="section level1" number="2">
@@ -1707,8 +1711,8 @@ directory. If R can’t find your file, it can’t import it. This is a
 common source of frustration for beginners.</p>
 <p>The first step to loading data into R is learning how to manage your
 files and folders so that R can find your data when you run code in the
-Console or an R Script and when you Knit a Notebook (<em>or
-Markdown/Quarto</em>).</p>
+Console or an R Script and when you Knit a Notebook (or
+Markdown/Quarto).</p>
 <div id="working-directory" class="section level2" number="3.1">
 <h2><span class="header-section-number">3.1</span> Working
 Directory</h2>
@@ -1721,10 +1725,14 @@ the Console.</strong> The real difference shows up when you Knit,
 because knitting runs in a fresh session and uses the Notebook file
 location as the working directory. That means your notebook must include
 everything needed to run from the top, including correct file paths.</p>
-<p><strong>🎯 Goal</strong></p>
+<p>📖 <strong>Review</strong></p>
 <p>Make R able to find your data files when you (1) run code in the
 Console and (2) when you Knit an R Notebook document.</p>
-<p><strong>🎯 Goal Step 1</strong>: Run in the Console.</p>
+<div id="step-1" class="section level3" number="3.1.1">
+<h3><span class="header-section-number">3.1.1</span> Step 1</h3>
+<p>📖 <strong>Chapter 1 Review</strong></p>
+<p>Check your working directory in the Console</p>
+<p>🎯 Run in the <strong>Console</strong>.</p>
 <pre class="r"><code># ⚡ Type this in the Console  
 getwd()  # shows current project folder
 list.files()  # shows files in current folder</code></pre>
@@ -1735,18 +1743,32 @@ Image of the instructor’s Console after running getwd() and list.files()
 as an example of an output.
 </p>
 </div>
-<p>🗣 When ran in the Console, the file path is the working directory for
-RStudio. In this example, the working directory is
-“C:/Users/Lorraine/Documents” in the console.</p>
-<p><strong>🎯 Goal Step 2</strong>: Create an R Notebook and include the
-same code in a code chunk then test <strong>Knit</strong>.</p>
+<p>✅ In the console, look directly under the <code>getwd()</code> and
+<code>list.files()</code> chunk. Confirm that the folder path matches
+where you think the working directory is located.</p>
+<p>🗣 When I run <code>getwd()</code>, I am checking where R is currently
+“looking.” When I run <code>list.files()</code>, I am checking what R
+can actually see from that location. If the file I need is not listed,
+my next move is to check whether the file is in the right folder and
+whether the file name matches exactly.</p>
+</div>
+</div>
+<div id="step-2" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> Step 2</h2>
+<p><strong>Create a Notebook</strong> and check the working directory
+when you Knit.</p>
+<p>🎯 Create an R Notebook and include the same code in a code chunk
+then test <strong>Knit</strong>.</p>
 <ol style="list-style-type: decimal">
-<li><p>Open an R Notebook Go to <code>File</code> &gt;
-<code>New File</code> &gt; <code>R Notebook</code></p></li>
-<li><p>Edit the YAML Header</p></li>
+<li><p>Open an R Notebook Go to
+<code>File &gt; New File &gt; R Notebook</code></p></li>
+<li><p>Edit the YAML Header and delete the default text. The YAML header
+should look like this:</p></li>
 </ol>
 <pre class="yaml"><code>---
-title: &quot;Chapter 7 Practice&quot;
+title: &quot;Chapter 7 Notes&quot;
+author: &quot;[Your Name]&quot;
+date: &quot;`r Sys.Date()`&quot;
 output: html_notebook
 ---</code></pre>
 <ol start="3" style="list-style-type: decimal">
@@ -1763,11 +1785,17 @@ chapter.</em></p></li>
 </ol>
 <pre class="r"><code># ⚡ Type this in the R Notebook code chunk
 getwd()  # shows current project folder</code></pre>
-<pre><code>## [1] &quot;C:/Users/Eva Lorraine Gaudio/OneDrive/Documents/BSU/Teaching/Data-R155/Data-R155_7Week_Online/🌱 Core Module 4 🧭 Autonomy&quot;</code></pre>
+<pre><code>## [1] &quot;C:/Users/Eva Lorraine Gaudio/OneDrive/Documents/BSU/Teaching/Data-R155/Data-R155_7Week_Online/Core Module 4 Autonomy&quot;</code></pre>
 <pre class="r"><code>list.files()  # shows files in current folder</code></pre>
-<pre><code>## [1] &quot;car_prices.xlsx&quot;              &quot;Chapter_7_📤ImportingData.Rmd&quot;
-## [3] &quot;getwd_in_console.png&quot;         &quot;Packages.png&quot;                
-## [5] &quot;Values_Transport_dplace.csv&quot;</code></pre>
+<pre><code>##  [1] &quot;car_prices.xlsx&quot;               &quot;Chapter_7_📤ImportingData.html&quot;
+##  [3] &quot;Chapter_7_📤ImportingData.Rmd&quot;  &quot;Chapter_8_👈Indexing.html&quot;     
+##  [5] &quot;Chapter_8_👈Indexing.Rmd&quot;       &quot;field_sightings.csv&quot;          
+##  [7] &quot;getwd_in_console.png&quot;          &quot;Packages.png&quot;                 
+##  [9] &quot;Transcriptions&quot;                &quot;Values_Transport_dplace.csv&quot;</code></pre>
+<p>✅ Verify: In the knitted notebook output, look directly under the
+getwd() and list.files() chunk. Confirm that the folder path matches
+where you saved chapter7_practice.Rmd. Then check whether the file list
+includes the notebook file itself.</p>
 <p>🗣 The working directory of a R Notebook is the folder where the
 notebook is saved. In this example, the file path of the R Notebook file
 creating this HTML chapter is “C:/Users/Eva Lorraine
@@ -1787,6 +1815,9 @@ your data files are in the same folder as your Rmd file. <em>In Chapter
 9, you will learn how to nest data files in a sub-folder.</em></p>
 <pre class="r"><code># ⚡ Set your working directory to the folder where your data files are located. For example:
 setwd(&quot;C:/Users/Eva Lorraine Gaudio/OneDrive/Documents/BSU/Teaching/Data-R155/Data-R155/Module_4&quot;)</code></pre>
+<p>Error in setwd(“C:/Users/Eva Lorraine
+Gaudio/OneDrive/Documents/BSU/Teaching/Data-R155/Data-R155/Module_4”) :
+cannot change working directory</p>
 <p>🗣 Review Chapter 1 for more methods for setting your working
 directory.</p>
 <p>For the remainder of this chapter, we will use the workflow of
@@ -1794,8 +1825,8 @@ loading data files that are in the same folder as your R Notebook. This
 is a common and simple way to manage your files for data analysis
 projects.</p>
 </div>
-<div id="downloading-data" class="section level2" number="3.2">
-<h2><span class="header-section-number">3.2</span> Downloading Data</h2>
+<div id="downloading-data" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> Downloading Data</h2>
 <p>You’ll need to download the two data files for this chapter from
 Canvas and save them in the same folder as your R Notebook.</p>
 <p>Find the files in Canvas associated with this chapter.</p>
@@ -1804,8 +1835,8 @@ Activity (Core; 1 hr 30 min) → Datasets</strong></p>
 <p>Next, you’ll need to move the downloaded files out of Downloads and
 into your course folder (the same folder where your notebook is
 saved).</p>
-<div id="folder-structure" class="section level3" number="3.2.1">
-<h3><span class="header-section-number">3.2.1</span> Folder
+<div id="folder-structure" class="section level3" number="3.3.1">
+<h3><span class="header-section-number">3.3.1</span> Folder
 Structure</h3>
 <p>A good folder structure helps you keep track of your files and makes
 it easier to find what you need when you need it. In this chapter, we’ll
@@ -1813,10 +1844,10 @@ use this folder structure to make the file path simple.</p>
 <p>-<code>Intro_to_R/</code> – <code>chapter7_practice.Rmd</code> –
 <code>Values_Transport_dplace.csv</code> –
 <code>car_prices.xlsx</code></p>
-<p><strong>🎯 Goal</strong> Download the data files for this chapter and
-place them in the same folder as your R Notebook. Then use
-<code>list.files()</code> to check that R can see the files. <em>This is
-Task 2 of the Practice Space at the end of this chapter.</em></p>
+<p>🎯 Download the data files for this chapter and place them in the
+same folder as your R Notebook. Then use <code>list.files()</code> to
+check that R can see the files. <em>This is Task 2 of the Practice Space
+at the end of this chapter.</em></p>
 <p>💡 <strong>Tip:</strong> Avoid these common mistakes</p>
 <ul>
 <li><p>Do not leave the files in your Downloads folder.</p></li>
@@ -1824,8 +1855,8 @@ Task 2 of the Practice Space at the end of this chapter.</em></p>
 <li><p>Make sure the filenames match exactly (spelling and underscores
 matter).</p></li>
 </ul>
-<p><strong>🎯 Goal</strong> Check that R can see the files you
-downloaded by running <code>list.files()</code> in your R Notebook.</p>
+<p>🎯 Check that R can see the files you downloaded by running
+<code>list.files()</code> in your R Notebook.</p>
 <pre class="r"><code># ✅ Type this in your R Notebook
 list.files()  # shows files in current folder</code></pre>
 <p>🗣 After downloading the data files for this chapter, you should see
@@ -1859,8 +1890,8 @@ Packages</h3>
 <p>You need to download the package before you can use it. <strong>You
 only need to install the package once.</strong> <em>Although, packages
 will need to be updated from time to time.</em></p>
-<p><strong>🎯 Goal:</strong> Install the packages you need for this
-chapter as a <em>one time action</em>.</p>
+<p>🎯 Install the packages you need for this chapter as a <em>one time
+action</em>.</p>
 <p>Method A: <strong>GUI method to install packages.</strong></p>
 <p><strong>Bottom-right pane → Packages tab → Install → type the package
 name.</strong></p>
@@ -1889,9 +1920,8 @@ knitting, but it’s a bad practice because it is slow, unreliable, may
 fail on restricted machines. Use <code>install.packages()</code> in the
 <strong>Console</strong> or comment out <code>#</code> the installation
 code in the Notebook chunk after running once.</p>
-<p><strong>🎯 Goal</strong> Install the packages <code>readr</code>,
-<code>readxl</code>, and <code>dslabs</code> using
-<code>install.packages()</code>.</p>
+<p>🎯 Install the packages <code>readr</code>, <code>readxl</code>, and
+<code>dslabs</code> using <code>install.packages()</code>.</p>
 <pre class="r"><code># ⚡ Type this in your Console to install packages
 install.packages(&quot;dslabs&quot;)                # You can install one package at a time
 install.packages(c(&quot;readr&quot;, &quot;readxl&quot;))    # You use c()</code></pre>
@@ -1920,11 +1950,10 @@ the package available for use. <strong>Every time you start a new R
 session, you will need to load the packages you want to use.</strong> To
 ensure your R Notebook works when you Knit it, you should include the
 <code>library()</code> calls in your R Notebook.</p>
-<p><strong>🎯 Goal</strong> Load the packages <code>readr</code>,
-<code>readxl</code>, and <code>dslabs</code> into your R session
-<strong>using a notebook code chunk</strong> so it load <em>every
-time</em> when you Knit. <em>This is Task 3 of the Practice Space at the
-end of this chapter.</em></p>
+<p>🎯 Load the packages <code>readr</code>, <code>readxl</code>, and
+<code>dslabs</code> into your R session <strong>using a notebook code
+chunk</strong> so it load <em>every time</em> when you Knit. <em>This is
+Task 3 of the Practice Space at the end of this chapter.</em></p>
 <pre class="r"><code># ⚡ Type this in your R Notebook to load packages
 library(dslabs)  # For more datasets</code></pre>
 <pre><code>## Warning: package &#39;dslabs&#39; was built under R version 4.5.2</code></pre>
@@ -1978,8 +2007,7 @@ Datasets</h3>
 can use for practice and learning. These datasets are part of the base R
 installation and are available without needing to install any additional
 packages. .</p>
-<p><strong>🎯 Goal:</strong> View a list of datasets that are already in
-R</p>
+<p>🎯 View a list of datasets that are already in R</p>
 <pre class="r"><code># ⚡ Type this in your Console to see the available datasets in base R
 data(package = &quot;datasets&quot;)</code></pre>
 <p>🗣 This opens a list of datasets that come from R by default. You can
@@ -1989,9 +2017,8 @@ availability more explicit. You’ll do this by loading the selected
 dataset into your environment using the <code>data()</code> function.
 Throughout the remainder of this course, we will often use
 <code>mtcars</code> from base R.</p>
-<p><strong>🎯 Goal:</strong> Load the <code>mtcars</code> dataset from
-base R. <em>This is Task 4 of the Practice Space at the end of this
-chapter.</em></p>
+<p>🎯 Load the <code>mtcars</code> dataset from base R. <em>This is Task
+4 of the Practice Space at the end of this chapter.</em></p>
 <pre class="r"><code># ⚡ Type this in your R Notebook to load the mtcars dataset
 data(&quot;mtcars&quot;)</code></pre>
 <p>🗣 After running this code, the <code>mtcars</code> dataset is loaded
@@ -2020,9 +2047,9 @@ datasets for data science education from Harvard/X data-science
 labs.</p>
 <pre class="r"><code># ⚡ Type this in your Console to see what datasets are available from dslabs
 data(package = &quot;dslabs&quot;)         </code></pre>
-<p><strong>🎯 Goal:</strong> Load the <code>movielens</code> dataset
-from the <code>dslabs</code> package. <em>This is Task 5 of the Practice
-Space at the end of this chapter.</em></p>
+<p>🎯 Load the <code>movielens</code> dataset from the
+<code>dslabs</code> package. <em>This is Task 5 of the Practice Space at
+the end of this chapter.</em></p>
 <pre class="r"><code># ⚡ Type this in your R Notebook to load the &quot;movielens&quot; dataset
 data(&quot;movielens&quot;, package = &quot;dslabs&quot;)</code></pre>
 <p>🗣 The <code>movielens</code> dataset from the <code>dslabs</code>
@@ -2064,10 +2091,10 @@ associated with the R Notebook location. When the CSV file is in the
 same folder as your R Notebook, you use the file name without a
 path.</p>
 <p><code>df &lt;- read_csv(&quot;file.csv&quot;)</code></p>
-<p><strong>🎯 Goal:</strong> Import the CSV file
-<code>Values_Transport_dplace.csv</code> into R using
-<code>read_csv()</code> and store it as <code>dplace_df</code>. <em>This
-is Task 6 of the Practice Space at the end of this chapter.</em></p>
+<p>🎯 Import the CSV file <code>Values_Transport_dplace.csv</code> into
+R using <code>read_csv()</code> and store it as <code>dplace_df</code>.
+<em>This is Task 6 of the Practice Space at the end of this
+chapter.</em></p>
 <pre class="r"><code># ⚡ Type this in your R Notebook to import the CSV file
 dplace_df &lt;- read_csv(&quot;Values_Transport_dplace.csv&quot;)</code></pre>
 <pre><code>## Rows: 185 Columns: 7
@@ -2124,10 +2151,10 @@ notebook</strong></p>
 the R Notebook’s folder. Saving the file in the exact same folder as
 your R Notebook allows you to use the file name without a path.</p>
 <p><code>df &lt;- read_excel(&quot;file.xlsx&quot;)</code></p>
-<p><strong>🎯 Goal:</strong> Import the Excel file
-<code>car_prices.xlsx</code> to R using <code>read_excel()</code> and
-store it as <code>car_prices_df</code>. <em>This is Task 7 of the
-Practice Space at the end of this chapter.</em></p>
+<p>🎯 Import the Excel file <code>car_prices.xlsx</code> to R using
+<code>read_excel()</code> and store it as <code>car_prices_df</code>.
+<em>This is Task 7 of the Practice Space at the end of this
+chapter.</em></p>
 <pre class="r"><code># ⚡ Type this in your R Notebook to import the Excel file
 car_prices_df &lt;- read_excel(&quot;car_prices.xlsx&quot;)</code></pre>
 <p>🗣 The <code>read_excel()</code> function reads the Excel file and
@@ -2256,16 +2283,16 @@ verify you did not miss anything.</p>
 Complete them after you finish the guided steps.</p>
 <div id="task-1" class="section level2" number="8.1">
 <h2><span class="header-section-number">8.1</span> Task 1</h2>
-<p>Run <code>getwd()</code> and <code>list.files()</code> in your
+<p>🎯 Run <code>getwd()</code> and <code>list.files()</code> in your
 Console. Then create an R Notebook and include the same code in a code
 chunk then test Knit. Write a memo explaining the difference (if any) in
 file paths when you run the code in the Console vs the R Notebook.</p>
 </div>
 <div id="task-2" class="section level2" number="8.2">
 <h2><span class="header-section-number">8.2</span> Task 2</h2>
-<p>Download the data files for this chapter and place them in the same
-folder as your R Notebook. Then use <code>list.files()</code> to check
-that R can see the files.</p>
+<p>🎯 Download the data files for this chapter and place them in the
+same folder as your R Notebook. Then use <code>list.files()</code> to
+check that R can see the files.</p>
 <p>Files for this chapter:</p>
 <ul>
 <li><p><code>Values_Transport_dplace.csv</code></p></li>
@@ -2274,27 +2301,27 @@ that R can see the files.</p>
 </div>
 <div id="task-3" class="section level2" number="8.3">
 <h2><span class="header-section-number">8.3</span> Task 3</h2>
-<p>Load the packages <code>readr</code>, <code>readxl</code>, and
+<p>🎯 Load the packages <code>readr</code>, <code>readxl</code>, and
 <code>dslabs</code> into your R session.</p>
 </div>
 <div id="task-4" class="section level2" number="8.4">
 <h2><span class="header-section-number">8.4</span> Task 4</h2>
-<p>Load the <code>mtcars</code> dataset from base R.</p>
+<p>🎯 Load the <code>mtcars</code> dataset from base R.</p>
 </div>
 <div id="task-5" class="section level2" number="8.5">
 <h2><span class="header-section-number">8.5</span> Task 5</h2>
-<p>Load the <code>movielens</code> dataset from the <code>dslabs</code>
-package.</p>
+<p>🎯 Load the <code>movielens</code> dataset from the
+<code>dslabs</code> package.</p>
 </div>
 <div id="task-6" class="section level2" number="8.6">
 <h2><span class="header-section-number">8.6</span> Task 6</h2>
-<p>Import the CSV file <code>Values_Transport_dplace.csv</code> to R
+<p>🎯 Import the CSV file <code>Values_Transport_dplace.csv</code> to R
 using <code>read_csv()</code> and store it as
 <code>dplace_df</code>.</p>
 </div>
 <div id="task-7" class="section level2" number="8.7">
 <h2><span class="header-section-number">8.7</span> Task 7</h2>
-<p>Import the Excel file <code>car_prices.xlsx</code> to R using
+<p>🎯 Import the Excel file <code>car_prices.xlsx</code> to R using
 <code>read_excel()</code> and store it as
 <code>car_prices_df</code>.</p>
 </div>
