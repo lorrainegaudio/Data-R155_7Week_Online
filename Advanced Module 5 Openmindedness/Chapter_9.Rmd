@@ -40,25 +40,28 @@ By the end of this activity, you will
 
 ## Step up Order
 
-GitHub setup is difficult for novice coders because **skipping one small step can break the setup**. Just like when you are writing R code, GitHub setup order includes a verification step. **Verify each action** was successful before moving on. Do not skip ahead. If you complete tasks out of order, you may have to start over! 
+GitHub setup challenges novice coders because **skipping one small step can break the set up**. Just like when you are writing R code, GitHub setup includes verification steps. **Verify each action** was successful before moving on. Do not skip ahead. If you complete tasks out of order, you may have to start over! 
 
 🎯 In this guided activity, you will:
 
-1. Install or verify you have Git.
-2. Configure your Git identity.
-3. Check that RStudio can find Git.
-4. Create a GitHub account and Log into GitHub.
-5. Create and store a Personal Access Token.
-6. Create a GitHub repository.
-7. Clone that repository into RStudio.
-8. Practice pull, edit, commit, and push.
+1. Learn how [GitHub, Git, and RStudio](#github-git-and-rstudio) work together.
+2. [Update R and RStudio](#update-r-and-rstudio) if needed.
+3. Check that RStudio can find [Git](#git).
+4. [Install Git](#install-git) or verify you have Git.
+5. [Configure your Git identity](#configure-git-identity).
+6. Create a GitHub account and log into [GitHub](#github).
+7. [Configure SSH keys](#configure-ssh-keys).
+8. [Create a GitHub repository](#make-github-repo) and [clone that repository into RStudio](#clone-github-via-rstudio).
+9. Practice [local changes](#local-changes) and the full [pull, edit, commit, and push](#pull-edit-commit-and-push) workflow.
+10. Review your [final repository structure](#final-repository-structure).
+11. Create a `.gitignore` file to support [data privacy and organization](#data-privacy-and-organization).
 
 
 💡 **Tip**: If something does not work, and you're stuck, use the course support options to get help. You can do hard things!
 
 ---
 
-# GitHub, Git, and RStudio
+# GitHub, Git, and RStudio {#github-git-and-rstudio}
 
 **GitHub** is the online place where your repository lives. **Git** is the **version control** tool that tracks changes. RStudio is where you will edit your files and use the Git pane to commit and push your work.
 
@@ -77,8 +80,6 @@ Optional reading: [Git, GitHub and how repositories work](https://docs.github.co
 
 ---
 
-### Version Control
-
 **Version control** means tracking changes to files over time. It is like save checkpoints in a video game. Git lets you save meaningful checkpoints called **commits**. As you make progress, you create checkpoints you can return to if something breaks or you want to try a different path.  
 
 Version control is basically a time machine for files. You can rewind to earlier versions, compare changes over time, or restore something that was accidentally deleted. Commits let you safely experiment without losing earlier work. 
@@ -87,202 +88,363 @@ Version control is basically a time machine for files. You can rewind to earlier
 
 ---
 
-# GitHub Account
-
-GitHub hosts your online repository online. Register for free GitHub Account.
-
-## Sign up
-
-🎯 If you do not already have an account, the first step is to Register a GitHub Account.
-
-[Sign up for GitHub: https://github.com/signup](https://github.com/signup){target="_blank" rel="noopener noreferrer"}
-
-💡**Tip**: Choose a username you would not mind showing to a professor, research mentor, internship supervisor, or future employer.
-
-Your username tips:
-
-- short, 
-- professional, 
-- memorable, 
-- timeless, 
-- all lower case, 
-- separate words with a hyphen “-” or underscore “_” if needed.
-
-## Login
-
-🎯 Go to GitHub and log in:
-
-[Github: github.com](https://github.com/login){target="_blank" rel="noopener noreferrer"}
-
-## Configure SSH keys
-
-Connecting Tools
-
-Personal Access Token (PAT)
-
-OR
-
-SSH Keys
-
-PATs are convenient but easily compromised.
-
-SSH Keys never leave your machine, allow for more control and provides better security, but are more challenging to set up. 
-
-![Mac users instructions](https://gist.github.com/brennanMKE/8e09593ca4064deab59da807077d8f53) for creating an SSH key.
-
-### Setup SSH 
-
-**SSH keys**: two long strings of characters used to authenticate a user’s identity when connecting to a remote server. 
-Generate these keys on your local computer using an SSH utility.
-
-1. From the shell: `ssh-keygen -t rsa -b 4096`
-
-2. Follow prompts to create your keys. By default, they’ll be saved in `~/.ssh/id_rsa` (private key) and `~/.ssh/id_rsa.pub` (public key).
-
-3. Add your public key to GitHub
-
-a. Go to settings > SSH and GPG keys
-
-b. Click “New SSH key”
-
-c. Copy public key into key field
-
-d. Give device a title
-
-4. Test Connection
-
-a. From the shell: `ssh -T git@github.com`
-
-1. Randomness and Key Generation:
-
-- The ssh-keygen command generates an RSA key pair (consisting of a private key and a public key).
-
-- The process starts by creating a random seed (using entropy sources like keyboard timings and mouse movements).
-
-- This randomness is essential for security.
-
-2. Mathematical Algorithms:
-
-- The RSA algorithm is used to create the key pair.
-
-3. The **private key** must remain confidential and secure. It is used for authentication.
-
-4. You Never Share Your Private Key
-
-
-# Update R and RStudio
+# Update R and RStudio {#update-r-and-rstudio}
 
 R and RStudio are updated frequently. From time to time, when you open RStudio, you will be notified in a pop up window that you need to download the latest versions installed. Having the most up-to-date version will ensure compatibility with Git and GitHub. 💡 **Tip**: It is good practice to always update R or RStudio when prompted. Outdated versions of R can result is incompatibilities with downloaded packages, Git and GitHub. 
 
 [Download R and RStudio at https://posit.co/download/rstudio-desktop/](https://posit.co/download/rstudio-desktop/){target="_blank" rel="noopener noreferrer"}
 
 
-# Git Installation
+# Git {#git}
 
 As you are beginning to understand, **Git** is the tool that tracks file changes. RStudio can use Git, but Git must be installed on your computer first. 
 
-## Version Control Enabled
-
 Git tools appear after version control is enabled for an RStudio Project.
 
-🎯 From the Tools menu, click Global Options
+Before downloading anything, check whether RStudio can already find Git. If RStudio can find Git, you do not need to install it again.
+
+**RStudio Git integration** means RStudio can use Git inside an RStudio Project. When this works, RStudio knows where Git is installed on your computer.
+
+### Step 1
+
+**Open version control settings**
+
+🎯 From the **Tools** menu, click **Global Options**.
 
 ![Figure 2. Tools menu is selected and Global Options is at the bottom of the list](Tools_Global Options.png)
 
-Figure 2 shows the drop down list from selecting "Tools." An orange arrow is pointing at Global Options. Select Global Options to open the Global Options window.
+🗣 This opens the Global Options window. On the left side of the window is a list of settings.
 
-🗣 This opens the Global Options window. On the left side of the window is a list of options.
+### Step 2
 
-🎯 Click on the Git/SVN tab
+**View Git/SVN settings**
+
+🎯 Click the **Git/SVN** tab.
 
 ![Figure 3. Git/SVN option item shows version control settings.](Tools_Global Options_VersionControl.png)
 
-In Figure 3, the Git/SVN option is highlighted. An orange arrow is pointing at the check box for "Enable version control interface for RStudio projects." Make sure this box is checked in your RStudio. Click Apply and Ok to save changes.
+🎯 Make sure the box for **Enable version control interface for RStudio projects** is **checked.**
 
-## Install Git
+🎯 Look for the box labeled **Git executable**.
 
-First, check whether Git is already installed by opening the Terminal in RStudio or your operating system and typing `git --version`. This is common for Mac and Linux users. Windows users usually need to install Git.
+✅ Verify what you see:
 
-### Check for Git
+- If you see a file path in the **Git executable** box, RStudio has found Git.
+- If the Git executable box is empty, or RStudio says Git was not found, you need to install Git.
 
-Method A.
+🗣 The Git executable path tells RStudio where Git lives on your computer. 
 
-In RStudio, you can check if Git is installed by going to Tools > Global Options > Git/SVN. If Git is installed, you will see the path to the Git executable. If not, you will see a message that says "Git executable not found."
+💡 **Tip:** Do not worry if your path looks different from someone else’s. Windows, Mac, and Linux store Git in different places.
 
-Method B.
+### Step 3
 
-Additionally, you can check for Git in the terminal by typing `which git` and that will show you where Git is installed on your system. You can type `git --version` to check the version of Git installed. 
+**Save the setting**
 
-💡 **Tip:** Git is sensitive to command syntax and spelling, so type commands carefully.
+🎯 If the **Enable version control interface for RStudio projects** box was not checked, check it now.
 
-![Figure 4. Screenshot of both the Terminal pane and the Git/SVN option window in Global Options.](check_for_git.png)
+🎯 Click **Apply**.
 
-In Figure 4, the Git/SVN option window in Global Options shows the path to the Git executable as well, confirming that Git is installed and recognized by RStudio. The Terminal pane shows the command `which git` and the output is `/mingw64/bin/git`, which indicates that Git is installed and located at that path. Your path will likely be different, but the key is that it shows a path to Git rather than an error message. The `git --version` command also shows the version of Git installed. If Git is not installed, it will return an error message, such as `git: command not found`.
+🎯 Click **OK**.
+
+✅ Verify that the Global Options window closes.
+
+🗣 You have now checked whether RStudio is ready to use Git.
+
+## RStudio Terminal Check
+
+The Git/SVN tab is the main check for this activity. The Terminal check is optional, but it can help confirm that Git works.
+
+![Figure 4. Screenshot of both the Terminal pane and the Git/SVN option window in Global Options.](check_for_git.png) 
+
+In Figure 4, the Git/SVN option window in Global Options shows the path to the Git executable as well, confirming that Git is installed and recognized by RStudio. The Terminal pane shows the command which git and the output is /mingw64/bin/git, which indicates that Git is installed and located at that path. Your path will likely be different, but the key is that it shows a path to Git rather than an error message. The git --version command also shows the version of Git installed. If Git is not installed, it will return an error message, such as git: command not found.
+
+### Step 1
+
+🎯 In RStudio, open the **Terminal** tab.
+
+If you do not see the Terminal tab, go to:
+
+```text
+Tools > Terminal > New Terminal
+```
+
+### Step 2
 
 🎯 Type `git --version` in the terminal to check if Git is installed.
 
 ```bash
 git --version
 ```
+### Step 3
+
+✅ Verify what happens:
+
+- If you see a Git version number, Git is installed.
+- If you see an error message, Git may not be installed or RStudio may not be able to find it.
+
+![Figure 5. git --version output examples](git_not_installed_error.png)
+
+🗣 The Terminal check confirms whether Git responds to a command. The Git/SVN tab confirms whether RStudio knows where Git is installed.
 
 
-![✅ Check `git --version` output](git_not_installed_error.png)
+---
 
-If git is not installed, you will need to install it before you can use GitHub with RStudio. Follow the instructions below to install Git on your operating system. If Git is already installed, you can skip to the next section to configure your Git identity.
+## Checkpoint: Do You Need to Install Git?
 
-### Install Git
+✅ If RStudio shows a Git executable path, skip the install directions and continue to [Configure Git Identity](#configure-git-identity).
 
-Installation depends on your operating system: Windows users should install Git for Windows/Git Bash, Mac users should download and install Git, and Linux users can install Git through their package manager.
+
+✅ If RStudio does not show a Git executable path, continue to the install directions for your operating system:
+
+- [macOS: Install Git](#install-git-macos)
+- [Linux: Install Git](#install-git-linux)
+- [Windows: Git Bash](#install-git-windows)
+
+---
+
+# Install Git {#install-git}
+
+Installation depends on your operating system: Windows users should install Git for Windows/Git Bash. If needed, Mac users should install Git through Xcode Command Line Tools, and Linux users can install Git through their package manager.
 
 If you found that you do not have Git installed, navigate to the section that describes how to install Git for your operating system. 
 
-### macOS: Xcode command line tools
+## macOS: Install Git {#install-git-macos}
 
-1. Go to the shell and enter one of these commands to elicit an offer to install developer command line tools:
+Most Macs have git. If for some reason you do not have Git installed, follow this 3 step process.
+
+Most Mac computers can install Git through **Xcode Command Line Tools**. For this installation step, use the **Mac Terminal app**, not RStudio. You do **not** need to install the full Xcode app from the App Store for this course. 
+
+### Step 1
+
+**Open the Mac Terminal app**
+
+🎯  Here's how:
+
+1. Press `Command + Space` to open Spotlight Search.
+2. Type `Terminal`.
+3. Press `Return`.
+
+### Step 2
+
+**Type the command to install Git**
+
+🎯 In the Mac Terminal app, type:
+
+```bash
+xcode-select --install
+```
+
+**Complete the installation process**
+
+🎯 When the installation window appears:
+
+1. Click Install.
+2. Agree to the license terms.
+3. Wait for the installation to finish.
+4. Click Done when prompted.
+
+### Step 3
+
+**✅ Verify Git installed correctly.**
+
+🎯 Close the Mac Terminal app, reopen it, and type:
 
 ```bash
 git --version
-git config
+```
+You should see a Git version number.
+
+🗣 If you see a Git version number, Git is already installed. Return to RStudio and continue to [Configure Git Identity](#configure-git-identity).
+
+💡 **Tip**: The Mac Terminal app and the RStudio Terminal tab look similar because both let you type commands. For installing Git on a Mac, you start with the Mac Terminal app, but after Git is installed, please use the RStudio Terminal for the remainder of the set up activity.
+
+
+## Linux: Install Git {#install-git-linux}
+
+Most Linux computers either already have Git installed or can install it through the Linux system's **package manager**. A package manager is the tool Linux uses to install and update software.
+
+For this installation step, use your **Linux Terminal app**, not RStudio. After Git is installed, return to RStudio and check whether RStudio can find it.
+
+### Step 1
+
+**Open the Linux Terminal app**
+
+🎯 Open the Terminal app on your Linux computer.
+
+How you open Terminal depends on your Linux version, but common options include:
+
+- Press `Ctrl + Alt + T`
+- Open the application menu and search for `Terminal`
+- Right-click on the desktop and choose `Open Terminal`, if that option appears
+
+### Step 2
+
+**Check whether Git is already installed**
+
+🎯 In the Linux Terminal app, type:
+
+```bash
+git --version
 ```
 
-2. Accept the offer, click install
+✅ Verify what happens:
 
-OR
+- If you see a Git version number, Git is already installed. Return to RStudio and continue to the **Configure Git Identity** section.
+- If you see an error such as git: command not found, Git is not installed yet. Continue with the installation steps below.
 
-[git scm mac](http://git-scm.com/downloads){target="_blank" rel="noopener noreferrer"}
+### Step 3
 
-1. Download Xcode from the App Store
+**Choose the command for your Linux version**
 
-2. Use “Terminal” app on Mac for next step
+Linux has different versions, called distributions. The installation command depends on your distribution.
 
-### Linux: distro’s package manager
+🎯 Use the command that matches your Linux system.
 
-1. Ubuntu or Debian Linux: sudo apt-get install git
+**Ubuntu or Debian**
 
-2. Fedora or RedHat Linux: sudo yum install git
+```bash
+sudo apt update
+sudo apt install git
+```
 
-OR
+**Fedora**
 
-[git scm (linux)](https://git-scm.com/download/linux){target="_blank" rel="noopener noreferrer"}
+```bash
+sudo dnf install git
+```
+
+**Red Hat, CentOS, or older Fedora systems**
+
+```bash
+sudo yum install git
+```
+
+**Arch Linux**
+
+```Bash
+sudo pacman -S git
+```
+
+**openSuSE**
+
+```bash
+sudo zypper install git
+```
+
+### Step 4
+
+**Complete the installation process**
+
+🎯 If Terminal asks for your password, type your computer password and press `Enter`.
+
+You may not see the password characters while you type. That is normal.
+
+🎯 If Terminal asks whether you want to continue, type:
+
+```bash
+y
+```
+
+Then press `Enter`.
+
+### Step 5
+
+**✅ Verify Git installed correctly**
+
+🎯 Close the Linux Terminal app, reopen it, and type:
+
+```bash
+git --version
+```
+
+You should see a Git version number.
+
+🗣 If you see a Git version number, Git is installed on your Linux computer. Return to RStudio and continue to [Configure Git Identity](#configure-git-identity).
+
+💡 Tip: The Linux Terminal app and the RStudio Terminal tab look similar because both let you type commands. For installing Git on Linux, start with the Linux Terminal app. After Git is installed, please use the RStudio Terminal for the remainder of the setup activity.
+
+## Windows: Git Bash {#install-git-windows}
+
+Most Windows computers do not come with Git already installed. Windows users usually need to install **Git for Windows**, which includes **Git Bash**. Here is how to install Git on your Windows computer when it is not already installed.
+
+▶️ Watch the demonstration video if you want a visual walkthrough:
+
+[Lorraine's Demonstration Video. Watch an RStudio Update and Git install on a Windows computer.](https://boisestate.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=21199429-d002-49ac-be8b-b3fa0017c302){target="_blank" rel="noopener noreferrer"}
 
 
-### Windows: Git Bash
+### Step 1 
 
-🎯 Install Git if it is not already installed.
-
-[Instructor Demonstration Video. Watch an RStudio Update and Git install on a Windows computer.](https://boisestate.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=21199429-d002-49ac-be8b-b3fa0017c302){target="_blank" rel="noopener noreferrer"}
+🎯 Go to the official Git for Windows download page:
 
 [Link to Download Git for Windows](https://git-scm.com/install/windows){target="_blank" rel="noopener noreferrer"}
 
-1. Accept the defaults
+### Step 2 
 
-2. RStudio for Windows prefers for Git to be installed below C:/Program Files
+🎯 Click the download link for the current 64-bit Git for Windows Setup.
 
-    C:/Program Files/Git/bin/git.exe
-    
-💡 **Tip:** Keep the default installation path to ensure RStudio can find Git.
-    
-### After Installation
+💡 **Tip:** Choose the regular installer, not the portable version.
+
+### Step 3 
+
+Move through the installation process:
+
+🎯 Open the downloaded installer file.
+
+It will usually have a name like: `Git-2.XX.X-64-bit.exe`
+
+🎯 Work through the installer screens.
+
+For this course, keep the default options unless your computer gives you a clear reason not to.
+
+- Keep the default installation location. It is usually something like "`C:\Program Files\Git`"
+- Choosing the default editor used by Git.
+- Keep the recommended/default PATH environment option.
+- Keep the default HTTPS transport backend.
+- Keep the default line ending conversions.
+- Keep the default terminal emulator option.
+  
+🎯 Click Install.
+
+🎯 When the installer finishes, click Finish.
+
+### Step 4 
+
+✅ Verify that Git Bash was installed.
+
+1. Click the Windows Start menu.
+2. Search for Git Bash.
+3. Open Git Bash.
+4. Type:
+
+```bash
+git --version
+```
+
+You should see a Git version number.
+
+🗣 If Git Bash opens and shows a Git version number, Git is installed on your Windows computer. Return to RStudio and continue to [Configure Git Identity](#configure-git-identity).
+
+---
+
+Now that we all have Git installed, we need to configure our Git identity.
+
+# Configure Git Identity {#configure-git-identity}
+
+Your **Git identity** means the name and email Git attaches to your commits. This labels your work.
+
+## Step 1
+
+🎯 Click the Terminal tab in the bottom left pane (next to the Console). 
+
+If you do not see the Terminal tab, go to:
+
+```text
+Tools > Terminal > New Terminal
+```
+
+---
+
+## Checkpoint: RStudio Terminal Check
 
 🎯 In RStudio, go to the Terminal tab and type:
 
@@ -290,19 +452,19 @@ OR
 git --version
 ```
 
-✅ Verify you see a Git version number. See Figure 4 for more details. If you see a version number, Git is installed. If you see an error, Git is not installed correctly yet or RStudio cannot find it. Without Git installed, you cannot progress forward with the activity. Reach out
+✅ Verify you see a Git version number. See Figure 4 for more details. If you see a version number, Git is installed. If you see an error, Git is not installed correctly yet or RStudio cannot find it. 
 
 💡**Tip:** After installing Git, you may need to restart RStudio before RStudio recognizes it.
 
+Without Git installed, you cannot progress forward with the activity. Reach out for help. You can use the activity support options to get help with Git installation.
+
 ---
 
-Now that we all have Git installed, we need to configure our Git identity.
+## Step 2
 
-## Introduce yourself to Git
+**"Introduce" yourself to Git** 
 
-Your **Git identity** means the name and email Git attaches to your commits. This labels your work.
-
-🎯 Click the Terminal tab in the bottom left pane (next to the Console). "Introduce" yourself to Git in the Terminal typing in the following commands, replacing the name and email with your own. 💡**Tip:** Use the email associated with your GitHub account. 
+In the Terminal, type in the following commands, replacing the name and email with your own. 💡**Tip:** Use the email associated with your GitHub account. 
 
 
 ```bash
@@ -328,153 +490,765 @@ You do not need to worry about the `init.defaultBranch` or `windows.appendatomic
 
 ---
 
+Now that Git is installed, your Git identity is configured, and RStudio is ready, we can connect your local R workflow to GitHub.
 
+# GitHub {#github}
 
-# RStudio and Git
+**GitHub** is the website that will host your online repository. A repository is a project folder that Git can track. In this course, you will use GitHub so your RStudio project can have an online copy.
 
-Prove local Git can talk to GitHub
+Before you continue, make sure Git is installed, your Git identity is configured, and RStudio can find Git.
 
-1. Make a Repo on GitHub
+## Step 1
 
-2. Clone the Repo in Shell
+**Open the GitHub sign-up page**
 
-3. Make a local change
+🎯 If you do not already have a GitHub account, go to the GitHub sign-up page:
 
-## Make a Repo on GitHub
+[Sign up for GitHub: https://github.com/signup](https://github.com/signup){target="_blank" rel="noopener noreferrer"}
 
-1. Go to ![GitHub.com](https://github.com) and make sure you are logged in.
+🎯 Keep this activity page open in another tab so you can return to the directions.
 
-2. Near “Repositories”, click the big green “New” button. 
+✅ Verify that you are on the GitHub sign-up page.
 
-3. Repository template: No template
+## Step 2
 
-4. Repository name: myrepo
+**Create your account**
 
-5. Description: “My first repo”
+🎯 Follow the GitHub prompts to create a free personal account.
 
-6. Public
+You will usually be asked for:
 
-7. Initialize: Add a README file
+1. An email address.
+2. A password.
+3. A username.
 
-8. Click green “Create repository”
+💡 **Tip:** Use an email address you can access right now. GitHub may send a verification email before your account is fully ready.
 
-9. In Local tab, select HTTPS SSH
+## Step 3
 
-10. Copy
+**Choose a username**
 
-## Clone Repo in Shell
+Your GitHub username may be visible on your public repositories, commits, and profile. Choose a username you would not mind showing to a professor, research mentor, internship supervisor, or future employer.
 
-1. Paste Copied: 
+💡 **Tip**: A good username is:
 
-    git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY.git
+- short,
+- professional,
+- memorable,
+- timeless,
+- easy to type,
+- all lowercase if possible,
+- separated with a hyphen `-` or underscore `_` if needed.
 
-2. Make working directory
+Examples of reasonable username styles:
 
-    cd myrepo
-    ls
-    head README.md
-    git remote show origin
+```text
+firstname-lastname
+firstnamelastname
+firstinitial-lastname
+lastname-data
+```
+💡 **Tip**: Avoid usernames that are too silly, hard to spell, tied to a temporary joke, too personal, likely to embarrass you later.
 
-## Make a local change
+🗣 Your GitHub username should be professional enough for academic or career use.
 
-1. Add line to README
+## Step 4
 
+**✅ Verify your email address**
 
-    echo "A line I wrote on my local computer  " >> README.md
-    git status
+🎯 Check the email account you used to sign up for GitHub.
 
+🎯 Look for an email from GitHub.
 
-2. Send to GitHub
+🎯 Follow the verification instructions in that email.
 
-    git add README.md
-    git commit -m "A commit from my local computer"
-    git push
-    
-💡 **Tip:**When finished, delete folder corresponding to the local repo
+✅ Verify that your GitHub email address is confirmed.
 
-    cd ..
-    rm -rf myrepo/
+🗣 If your email is not verified, some GitHub features may not work correctly.
 
+💡 **Tip**: If you do not see the email, check your spam, junk, promotions, or clutter folder.
 
-# Part 3
+## Step 5
 
-Connecting Tools: Connect RStudio to GitHub
+**Log into GitHub**
 
-Prove RStudio can talk to GitHub
+🎯 Go to GitHub and log in:
 
-1. Make a repo on GitHub
+[Github: github.com](https://github.com/login){target="_blank" rel="noopener noreferrer"}
 
-2. Clone GitHub via RStudio
+🎯 Log in with the account you created.
 
-3. Make Local changes, save and commit
+✅ Verify that you can see your GitHub dashboard or profile menu.
 
-4. Confirm the local change in GitHub
+🗣 If you can log in and see your GitHub account, you are just about ready to configure SSH keys.
 
-## Make a repo on GitHub
+## Step 6
 
-1. Go to ![GitHub](https://github.com) and make sure you are logged in.
+**Keep your GitHub information available**
 
-2. Near “Repositories”, click the big green “New” button. 
+🎯 Write down or save your GitHub username somewhere safe.
 
-3. Repository template: No template
+✅ Verify that you know your GitHub username.
 
-4. Repository name: `myrepo`
+🗣 You will need your GitHub username later when you create and submit your repository link.
 
-5. Description: “My second repo”
+💡 **Tip:** Set up dual authentication to keep your account secure. 
 
-6. Public
+---
 
-7. Initialize: Add a README file
 
-8. Click green “Create repository”
+# Configure SSH Keys {#configure-ssh-keys}
 
-9. In Local tab, select HTTPS SSH
+**SSH keys** help your computer prove to GitHub that it is allowed to connect to your account. This lets RStudio and GitHub communicate without asking for your GitHub password every time.
 
-10. Copy repository URL
+An SSH key setup creates two related files on your computer:
 
-## Clone GitHub via RStudio
+| Key file | What it does | Should you share it? |
+|---|---|---|
+| Private key | Stays on your computer and proves your identity | No. Never share it. |
+| Public key | Gets copied into GitHub | Yes. This is the one GitHub needs. |
 
-Start a new project
+🗣 The public key is like a lock you give to GitHub. The private key is like the matching key that stays on your computer.
 
-1. File > New Project > Version Control > Git
+💡 **Tip:** Never paste your private key into Canvas, email, a discussion board, ChatGPT, or a shared document.
 
-2. Paste repository URL
+Official GitHub reference pages:
 
-3. Accept the default (project name and GitHub repo name must match)
+- [Generate a new SSH key](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent){target="_blank" rel="noopener noreferrer"}
+- [Add a new SSH key to GitHub](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account){target="_blank" rel="noopener noreferrer"}
+- [Test your SSH connection](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/testing-your-ssh-connection){target="_blank" rel="noopener noreferrer"}
 
-4. PAY ATTENTION to where you are saving your project locally
+---
 
-5. Open in a new session
+## Step 1
 
-6. Create Project
+**Open the correct terminal**
 
-7. Notice the README.md file on your computer
+For this step, use a terminal that can run Git and SSH commands.
 
-## Local changes
+🎯 Open the correct terminal for your operating system:
 
-1. Open README.md in RStudio
+| Operating system | Use this terminal |
+|---|---|
+| Windows | Git Bash |
+| macOS | Mac Terminal app or RStudio Terminal |
+| Linux | Linux Terminal app or RStudio Terminal |
 
-2. Add line to README
+✅ Verify that you have a terminal window open.
 
-    “A line I wrote in RStudio"
+💡 **Tip:** Windows users should use **Git Bash** for this step. It was installed when you installed Git for Windows.
 
-3. Commit
+---
 
-a. Click Git tab
+## Step 2
 
-b. Check “Staged” box for README.md
+**Check whether you already have an SSH key**
 
-c. Click “Commit”
+Before creating a new key, check whether your computer already has one.
 
-d. Type message “Commit from R”
+🎯 In the terminal, type:
 
-e. Click Commit
+```bash
+ls -al ~/.ssh
+```
+✅ Look for files with names like: `id_rsa` and `id_rsa.pub` or `id_ed25519` and `id_ed25519.pub`.
 
-4. Push
+🗣 Files ending in .pub are public keys. Files without .pub are private keys.
 
-5. Confirm in GitHub
+If you already see `id_ed25519` and `id_ed25519.pub`, you may already have an SSH key. You can still continue carefully, but do not delete existing keys.
 
-# Part 4 Workflow
+## Step 3
+
+**Generate a new SSH key**
+
+🎯 In the terminal, type the command below. Replace the email address with the email you used for your GitHub account.
+
+
+```bash
+ssh-keygen -t ed25519 -C "your_email@example.com"
+```
+
+If your computer says `Ed25519` is not supported, use this backup command instead:
+
+```bash
+ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+```
+
+✅ Verify that the command starts the key creation process.
+
+🗣 Git is creating a public/private key pair on your computer.
+
+## Step 4
+
+**Accept the default file location**
+
+When you run the `ssh-keygen` command, it will ask where to save the key files.
+
+After you run the command, Terminal will ask where to save the key.
+
+You will see something like:
+
+```text
+Enter file in which to save the key (/Users/yourname/.ssh/id_ed25519):
+```
+
+or on Windows: 
+
+```text
+Enter file in which to save the key (/c/Users/yourname/.ssh/id_ed25519):
+```
+
+🎯 Press `Enter` to accept the default location.
+
+✅ Verify that you did not type a new file name.
+
+💡 **Tip**: The default location is the easiest choice. Do not rename the file unless you already know what you are doing.
+
+## Step 5
+
+**Choose a passphrase**
+
+Terminal may ask for a passphrase.
+
+You may see:
+
+```text
+Enter passphrase (empty for no passphrase):
+```
+🎯 Choose one option:
+
+For stronger security, type a passphrase you can remember.
+For fewer setup complications in this beginner activity, press Enter to leave it empty.
+
+If you type a passphrase, Terminal will ask you to type it again.
+
+✅ Verify that the SSH key was created.
+
+🗣 If the key was created successfully, you should see a message that includes the file location and a fingerprint.
+
+💡 **Tip**: If you type a passphrase, you may need to enter it again later when using Git. That is normal.
+
+## Step 6
+
+**Copy the public key**
+
+You need to copy the public key. The public key file ends in `.pub`.
+
+Use the command for your operating system.
+
+**Windows using Git Bash**
+
+🎯 Type:
+
+```bash
+cat ~/.ssh/id_ed25519.pub
+```
+
+**macOS**
+
+🎯 Type:
+
+```bash
+pbcopy < ~/.ssh/id_ed25519.pub
+```
+
+**Linux**
+
+🎯 Type:
+
+```bash
+cat ~/.ssh/id_ed25519.pub
+```
+Then carefully highlight and copy the full output.
+
+✅ Verify that you copied the public key, not the private key.
+
+🗣 The public key usually starts with ssh-ed25519 and ends with your email address.
+
+💡 **Tip**: Copy the whole public key as one long line. Do not add spaces, line breaks, or extra text.
+
+## Step 7
+
+**Open GitHub SSH key settings**
+
+🎯 In your browser, go to [GitHub](https://github.com/login){target="_blank" rel="noopener noreferrer"}
+
+🎯 Make sure you are logged in.
+
+🎯 Click your profile picture or icon in the top-right corner.
+
+🎯 Click Settings.
+
+🎯 In the left menu, click SSH and GPG keys.
+
+✅ Verify that you are on the SSH and GPG keys page.
+
+📸 Screenshot showing the GitHub Settings sidebar with SSH and GPG keys highlighted.
+
+## Step 8
+
+**Add the SSH key to GitHub**
+
+🎯 Click `New SSH key`.
+
+🎯 In the `Title` box, type a name that helps you recognize this computer.
+
+Examples: 
+
+```text
+My laptop
+Windows laptop
+MacBook for DATA-R155
+Home computer
+Purple Rhino  # This is the name of my computer
+```
+🎯 For Key type, choose `Authentication Key`.
+
+🎯 In the Key box, paste the public key you copied.
+
+🎯 Click Add SSH key.
+
+GitHub may ask you to confirm your password.
+
+✅ Verify that the new key appears in your SSH keys list.
+
+📸 Screenshot of the New SSH key form before clicking Add SSH key. Use a fake key or blur/crop the key box if needed.
+
+📸 Screenshot after the key appears in your GitHub SSH keys list.
+
+🗣 GitHub now recognizes your computer’s SSH public key.
+
+## Step 9
+
+**Test the SSH connection**
+
+Now test whether your computer can authenticate with GitHub.
+
+🎯 Return to your RStudio terminal.
+
+🎯 Type:
+
+```bash
+ssh -T git@github.com
+```
+
+The first time, you may see a message like this:
+
+```text
+Are you sure you want to continue connecting (yes/no/[fingerprint])?
+```
+
+🎯 Type: `yes` then press `Enter`.
+
+✅ Verify that you see a success message like this:
+
+```text
+Hi USERNAME! You've successfully authenticated, but GitHub does not provide shell access.
+```
+
+🗣 This message means your SSH connection works. The phrase “does not provide shell access” is normal. 
+
+📸 Screenshot of the successful terminal message.
+
+💡 **Tip**: If you see Permission denied (publickey), GitHub did not accept your SSH key. Check that you copied the `.pub` public key and added it to the correct GitHub account.
+
+---
+
+## Checkpoint: SSH Setup Complete
+
+✅ You have completed this section if:
+
+- You created or found an SSH key on your computer.
+- You copied the public key, not the private key.
+- You added the public key to GitHub.
+- You tested the connection with `ssh -T git@github.com`.
+- You saw the message: `You've successfully authenticated`.
+
+🗣 Your computer can now authenticate with GitHub using SSH.
+
+---
+
+If SSH is working, you are ready to create a GitHub repository and clone it into RStudio.
+
+# Make GitHub Repo {#make-github-repo}
+
+A GitHub **repository**, often called a repo, is the online project folder that GitHub stores for you. In this section, you will create a new repository on GitHub. Then you will copy its SSH link so RStudio can clone it onto your computer.
+
+We'll start working on the GitHub website. Then, we'll move back into RStudio.
+
+## Step 1
+
+**Open GitHub**
+
+🎯 In your browser, go to [GitHub](https://github.com/login){target="_blank" rel="noopener noreferrer"}
+
+🎯 Make sure you are logged in.
+
+✅ Verify that you can see your GitHub profile icon in the top-right corner.
+
+
+## Step 2
+
+**Start a new repository**
+
+🎯 Find the `Repositories` area on your GitHub home page.
+
+🎯 Click the green `New` button.
+
+If you do not see the green `New` button:
+
+1. Click your profile icon in the top-right corner.
+2. Click Your repositories.
+3. Click New.
+
+✅ Verify that you are on a page called something like "Create a new repository."
+
+📸 Screenshot showing the green New button.
+
+## Step 3
+
+**Name the repository**
+
+🎯 In the `Repository name` box, type:
+
+```text
+data-r155-github-practice
+```
+
+> 🧐 **Notice:** GitHub repository names should not contain spaces.
+
+✅ Verify that your repository name is exactly `data-r155-github-practice`.
+
+🗣 This name tells you, GitHub, and me (grading) what the repository is for.
+
+💡 **Tip**: In the future, when selecting a repo name, use lowercase letters and hyphens. That keeps the name easy to read and easy to type.
+
+## Step 4
+
+**Add a short description**
+
+🎯 In the Description box, type:
+
+```text
+GitHub practice for DATA-R155
+```
+
+🗣 The description is a short note explaining the purpose of the repository.
+
+## Step 5
+
+**Choose repository visibility**
+
+🎯 Choose Public.
+
+🗣 Public means the repository can be viewed online. For this activity, public is useful because I need to check that your GitHub workflow is working.
+
+💡 **Tip**: Do not put private data, passwords, tokens, or sensitive files in a public repository. More on that later.
+
+## Step 6
+
+**Add a README file**
+
+A `README` file is the front page of your repository. It explains what the repository is for.
+
+🎯 Check the box for `Add a README file`
+
+🗣 Adding a `README` gives the repository one starter file. 
+
+We'll use this file to practice editing in RStudio.
+
+## Step 7
+
+**Leave the other options alone**
+
+🎯 Leave these options unchanged:
+
+- Repository template: No template
+- `.gitignore`: None (for now). 
+  - You will create and edit a `.gitignore` file later in the workflow activity.
+- License: None
+
+## Step 8
+
+**Create the repository**
+
+🎯 Click the green `Create repository` button.
+
+✅ You should see:
+
+- the repository name,
+- a file called `README.md`,
+- a green Code button.
+
+📸 Screenshot showing the finished repository page with README.md.
+
+---
+
+Your repository now exists online on GitHub. Let's get it onto your computer.
+
+# Copy the SSH Repository Link {#copy-ssh-repo-link}
+
+Now you need the repository link. Because you already set up SSH keys, you should copy the SSH link, not the HTTPS link.
+
+## Step 1
+
+**Open the Code menu**
+
+🎯 On your repository page, click the green Code button.
+
+🎯 Make sure you are in the Local tab.
+
+🎯 Choose `SSH`.
+
+✅ Verify that the link starts with:
+
+```text
+git@github.com:
+```
+
+It should look something like this:
+
+```markdown
+git@github.com:YOUR-USERNAME/data-r155-github-practice.git
+```
+
+🗣 The SSH link tells RStudio to connect to GitHub using the SSH key you already set up.
+
+💡 **Tip**: If the link starts with `https://`, you selected HTTPS. Switch to SSH before copying.
+
+## Step 2
+
+**Copy the SSH link**
+
+🎯 Click the copy button next to the SSH link.
+
+✅ Verify that you copied the SSH link.
+
+📸 Screenshot of the Code menu with SSH selected.
+
+🗣 You are now ready to clone this GitHub repository into RStudio.
+
+# Clone GitHub via RStudio {#clone-github-via-rstudio}
+
+**Clone** means copy a GitHub repository onto your computer. RStudio will create a new project folder from the GitHub repository.
+
+This is the part where students often get confused: cloning creates a new folder on your computer. That new folder is not a mistake. It is your local project folder.
+
+## Step 1
+
+**Start a new RStudio Project**
+
+🎯 Open RStudio.
+
+🎯 Go to:
+
+```text
+File > New Project
+```
+
+🎯 Click:
+
+```text
+Version Control
+```
+
+🎯 Click:
+
+```text
+Git
+```
+
+✅ Verify that you see a screen asking for a repository URL.
+
+## Step 2
+
+**Paste the SSH repository link**
+
+🎯 In the `Repository URL` box, paste the SSH link you copied from GitHub.
+
+> 🧐 **Notice:** This is the link we copied in [Copy the SSH Repository  Link](#copy-ssh-repo-link) section. If you did not copy the SSH link, go back and copy it now.
+
+## Step 3
+
+**Check the project directory name**
+
+RStudio will fill in the project directory name automatically.
+
+🎯 The project directory name should be:
+
+```text
+data-r155-github-practice
+```
+
+💡 **Tip**: Ideally, the GitHub repository name and the RStudio project folder name should match. That makes it easier to stay organized.
+
+## Step 4
+
+**Choose where to save the project folder**
+
+This is important. You are choosing where the cloned project folder will live on your computer.
+
+🎯 Create the project as a **subdirectory** by selecting choose your course folder. For example: `DATA-R155/`
+
+Your final folder structure should look something like this:
+
+```text
+DATA-R155/
+  data-r155-github-practice/
+```
+
+✅ Verify that you are not saving the project randomly in Downloads or another random location on your computer.
+
+🗣 RStudio will create the `data-r155-github-practice/` folder for you!
+
+💡 **Tip**: Folder organization matters. A lot of Git and RStudio confusion comes from saving projects in random places.
+
+## Step 5
+
+**Create the project**
+
+🎯 Choose to open in a **new session**, if that option appears.
+
+🎯 Click `Create Project`.
+
+✅ Verify that RStudio opens a project named:
+
+```text
+data-r155-github-practice
+```
+
+🗣 RStudio displays the active project name in the top-right corner of the RStudio window. If you do not see the project name, you may not be in the project yet.
+
+## Step 6
+
+**Check the local project files**
+
+🎯 Look in the RStudio Files pane.
+
+✅ Verify that you can see:
+
+```text
+README.md
+data-r155-github-practice.Rproj
+```
+
+You may also see hidden Git files, depending on your settings.
+
+🗣 The `README.md` file came from GitHub. The `.Rproj` file was created by RStudio.
+
+📸 Screenshot showing the RStudio Files pane with README.md and the `.Rproj` file.
+
+---
+
+With the repository cloned, you have a local project folder on your computer that is connected to the online GitHub repository. Now you can make changes in RStudio and push them to GitHub.
+
+# Local Changes {#local-changes}
+
+A **local change** is a change you make on your own computer. In this section, you will edit the `README` file in RStudio, commit the change, push it to GitHub, and confirm that GitHub received it.
+
+## Step 1
+
+**Open `README.md`**
+
+🎯 In the RStudio Files pane, click:
+
+`README.md`
+
+🗣 The `README.md` file opens in the source pane.
+
+## Step 2
+
+**Edit the `README`**
+
+🎯 Add this line to the `README`:
+
+```text
+A line I wrote in RStudio.
+```
+
+🎯 Save the file.
+
+✅ Verify that the file is saved.
+
+🗣 You changed the file on your computer. Git should now notice that `README.md` has changed.
+
+## Step 3
+
+**Open the Git pane**
+
+🎯 Find the **Git pane** in RStudio.
+
+It is usually near the Environment, History, Connections, and Tutorial panes in the upper right area.
+
+✅ Verify that `README.md` appears in the Git pane.
+
+💡 **Tip**: If you do not see the Git pane, make sure you are inside the RStudio Project created from the GitHub repository.
+
+## Step 4
+
+**Stage the file**
+
+🎯 In the Git pane, check the **Staged** box next to:
+
+`README.md`
+
+✅ Verify that `README.md` is checked.
+
+🗣 Staging means, “include this file in the next commit.”
+
+## Step 5
+
+**Commit the change**
+
+🎯 Click Commit.
+
+🎯 In the commit message box, type:
+
+```text
+Commit from RStudio
+```
+
+🎯 Click Commit.
+
+✅ Verify that the Commit window does not show a red error message and instead reports that the commit completed successfully.
+
+🗣 A commit is a labeled checkpoint. It records what changed.
+
+💡 **Tip:** If you see a red error message, do not keep clicking Commit or Push repeatedly. Read the first error line carefully. Errors like `Permission denied (publickey)` usually mean there is a GitHub SSH setup problem, while authentication errors may mean GitHub cannot verify your account. Take a screenshot of the error and use the module's support options.
+
+## Step 6
+
+**Push the commit to GitHub**
+
+🎯 Click **Push**.
+
+✅ Verify that the push finishes without an error.
+
+🗣 Push sends your local commit from RStudio up to GitHub.
+
+💡 Tip: If you see a message about authentication or permission denied, your SSH setup may need help. Use the support option instead of changing random settings.
+
+Step 7
+
+Confirm the change on GitHub
+
+🎯 Return to your GitHub repository page in your browser.
+
+🎯 Refresh the page.
+
+🎯 Open or view README.md.
+
+✅ Verify that you can see this line on GitHub:
+
+A line I wrote in RStudio.
+
+🗣 If the line appears on GitHub, your RStudio project successfully pushed a local change to your online GitHub repository.
+
+📸 Screenshot suggestion: Take a screenshot showing the updated README on GitHub.
+
+
+
+# Workflow {#workflow}
 
 "it’s fairly easy to screw up your local Git repository, especially when you’re new at this."
 "Your life is much easier if this is baked into your workflow"
@@ -495,7 +1269,7 @@ Your goal is to create several commits that show your workflow:
 
 🗣 Saving a file updates the file on your computer. Committing records a version-control checkpoint. Pushing sends that checkpoint to GitHub.
 
-## Final Repository Structure
+## Final Repository Structure {#final-repository-structure}
 
 A **repository** is a project folder tracked by Git.
 
@@ -511,9 +1285,9 @@ The `README.md` file is a markdown file that serves as the landing page for your
 
 The `github_practice.Rmd` file is an R Markdown document where you will practice editing, committing, and pushing changes to GitHub. 
 
+## Pull, edit, commit, and Push {#pull-edit-commit-and-push}
 
-
-## Create a R Markdown Document
+### Create a R Markdown Document
 
 File > New File > R Markdown
 
@@ -527,7 +1301,7 @@ File > New File > R Markdown
 
 No need to set a working directory again!
 
-## Edit the R Markdown Document
+### Edit the R Markdown Document
 
 1. Add some text and code
 
@@ -537,7 +1311,7 @@ No need to set a working directory again!
 
 4. Push to GitHub
 
-## Data Folder Structure
+## Data Privacy and Organization {#data-privacy-and-organization}
 
 Covers:
 
@@ -595,6 +1369,7 @@ list.files("data")
 
 # Chapter Terms
 
+**Clone**: To copy a Git repository from GitHub or another remote location onto your computer. Cloning creates a new local project folder that contains the repository files and Git history, so you can work on the project in RStudio and later commit, pull, and push changes.
 
 **Commit**: A saved checkpoint in Git that records a specific set of file changes with a message describing what changed. In this course, a commit is the version-control equivalent of saying, “save this meaningful stage of my work.”
 
@@ -604,26 +1379,28 @@ list.files("data")
 
 **Git Identity**: The name and email address that Git attaches to each commit to show who authored the work. Your Git identity is set with `user.name` and `user.email`; it labels your commits so the project history shows who made each checkpoint.
 
+**Git Pane**: The RStudio tab that shows Git-tracked file changes for the current project and provides point-and-click controls for common Git actions, such as viewing differences, staging files, committing, pulling, pushing, and viewing history. The Git pane appears only when Git version control is enabled for the project, and it is usually located near the Environment and History panes.
+
 **GitHub**: An online platform for storing and sharing Git repositories. GitHub is the web-based location where your repository lives, while Git tracks changes locally and RStudio provides the Git pane you use to commit and push your work. 
 
 **.gitignore**: A plain-text file that tells Git which files or folders not to track or commit, such as temporary files, system files, rendered outputs, or large/private data files. A .gitignore file is usually placed in the root of a repository so the ignore rules apply consistently across the project.
+
+**Local Change**: A file edit, addition, or deletion made in the project folder on your own computer before it is pushed to GitHub. Git can detect local changes in the working tree, but they are not part of the project history until you commit them, and they are not visible in the online repository until you push them.
 
 **Pull**: Updating your local project with changes from the remote repository on GitHub. Pull before you start working so your RStudio project has the newest files before you edit, commit, and push. Technically, `git pull` fetches remote changes and merges them into your current local branch.
 
 **Push**: Sending your local commits from your computer to the remote repository on GitHub. Pushing is how the work you committed in RStudio becomes visible in your online GitHub repository.
 
-**README.md**: A Markdown file that explains what a repository contains and how to use it. On GitHub, the README is usually the first file people see when they open a repository, so it should provide key orientation such as the project purpose, file structure, setup steps, and important notes.
+**README.md**: A Markdown file that explains what a repository contains and how to use it. On GitHub, the `README.md` is usually the first file people see when they open a repository, so it should provide key orientation such as the project purpose, file structure, setup steps, and important notes.
 
 **Repository**: A project folder tracked by Git that stores the project files and each file’s revision history. A repository can live locally on your computer or remotely on a platform like GitHub, where it can be backed up, shared, and updated with commits, pulls, and pushes.
 
-**Version Control**: A system for tracking changes to files over time so you can review earlier versions, understand what changed, and return to a previous checkpoint if needed. In Git, these meaningful checkpoints are called commits, which are better than saving files with names like `final`, `final2`, or `REALLY_FINAL`. 
+**Staged**: Marked for inclusion in the next Git commit. In RStudio’s Git pane, checking the Staged box tells Git, “include this file’s current changes in the checkpoint I am about to create.” Staging does not send the file to GitHub yet; it only prepares the selected change for the next commit.
 
+**Subdirectory**: A folder located inside another folder, also called a **subfolder**. When you create a project as a subdirectory of a course folder, the new project folder is nested inside that larger folder (e.g, `DATA-R155/data-r155-github-practice/`). This keeps related files organized in a clear folder structure.
 
-# 📝 Practice Space
+**Version Control**: A system for tracking changes to files over time so you can review earlier versions, understand what changed, and return to a previous checkpoint if needed. In Git, these meaningful checkpoints are called commits, which are better than keep version history across many file copies. 
 
-## Task 1
-
-## Task 2
 
 # References
 
