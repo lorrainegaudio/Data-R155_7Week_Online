@@ -68,6 +68,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Code Chunks**: Fenced blocks in an R Markdown/Notebook document where R code is written and executed, usually starting with <code>&#96;&#96;&#96;{r}</code>. Only code inside a chunk runs, and its output (including plots and tables) appears directly below the chunk when executed.
 
+**Columns**: The vertical fields in a data frame or table. In tidy tabular data, each column usually represents one variable, such as a name, category, measurement, count, or logical value. In R, each column in a data frame is a vector, and all columns must have the same number of rows.
+
 **Column index**: The index used to select columns in a data frame or matrix (the second slot inside brackets: `x[, j]`).
 
 **Comparison Operators**: Operators that create or combine logical elements. The most common are comparison operators—`==`, `!=`, `<`, `>`, `<=`, `>=`—which return `TRUE`/`FALSE`
@@ -336,11 +338,13 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Replacement**: A sampling method where a selected value is put back before the next draw, so it can be chosen again. In R, this is controlled by replace = TRUE in functions like `sample()`.
 
-**Required Arguments**: Inputs a function needs because they have no default value in the function definition; you must supply them in the call (or the function can’t do its job). 
+**Required Arguments**: Inputs a function needs because they have no default value in the function definition; you must supply them in the call (or the function can’t do its job).
 
 **Reproducibility**: The ability to get the same computational results again by using the same data, code, steps, and analysis conditions.
 
 **Research Journal**: A running record of your R analysis process. This inlcudes what question you asked, what code you tried (including failed attempts), what outputs you got, and what decisions you made along the way. In practice, it’s maintained in an R script or R Markdown/Notebook with dated notes, comments, and citations so you (or someone else) can retrace, verify, and reproduce the work.
+
+**Rows**: The horizontal records in a data frame or table. In tidy tabular data, each row usually represents one observation, case, or unit being measured, such as one person, car, state, experiment, or survey response.
 
 **Row index**: The index used to select rows in a data frame or matrix (the first slot inside brackets: `x[i, ]`)
 

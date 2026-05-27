@@ -195,7 +195,7 @@ Method B. **File Menu**
 2. Select Save As....
 
 ```{r, eval=FALSE}
-# Save your script in your course folder (e.g., Intro_to_R)
+# Save your script in your course folder (e.g., DATA-R155)
 # File name: chapter2_notes
 # Save a type: R
 ```

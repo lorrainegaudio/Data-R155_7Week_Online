@@ -82,11 +82,11 @@ In earlier chapters, you learned how to write R code, use built-in functions, an
 
 Most import problems are not “R problems.” They are **file management problems**: the file is in the wrong folder, the file name doesn’t match, or the package you need wasn’t loaded. You will learn a simple, reliable workflow: download the data, put it in the same folder as your R Notebook, confirm R can see it, and then import it with the correct function.
 
-Watch how this chapter models autonomy. Build these habits, documenting them in your practice space report. Autonomy means taking initiative when something does not work: checking where R is looking, confirming the file name, reading the message, and reaching out for support when you are genuinely stuck. The goal is not to solve every problem alone. The goal is to stay in control of your learning instead of letting a file-path error stop your progress.
+Watch how this chapter models 🧭 autonomy. Build these habits, documenting them in your practice space report. Autonomy means taking initiative when something does not work: checking where R is looking, confirming the file name, reading the message, and reaching out for support when you are genuinely stuck. The goal is not to solve every problem alone. The goal is to stay in control of your learning instead of letting a file-path error stop your progress.
 
-This chapter is also structured differently: Many of the Practice Space tasks are built into the walkthrough. If you complete each step as you go, you will finish the chapter with a working notebook that can Knit successfully and reload your datasets from a clean start.
+This chapter is also structured differently: Many of the Practice Space tasks are built into the guided activity. If you complete each step as you go, you will finish the chapter with a working notebook that can Knit successfully and reload your datasets from a clean start.
 
-By the end of Chapter 7, a successful student will be able to:
+By the end of Chapter 7, you will be able to:
 
 - 📊 Define tabular data and describe how rows and columns map to observations and variables in a data frame. 
 
@@ -102,59 +102,96 @@ By the end of Chapter 7, a successful student will be able to:
 
 - 🆘 Troubleshoot common import failures (missing packages, wrong file location, wrong file name) using targeted checks (`getwd()`, `list.files()`, `library()`). 
 
-# Tabular data
 
-Tabular data is data that is arranged in a table format where rows represent observations and columns represent variables. This is the most common format for datasets you analyze in R. When you import data into R, it is often stored as a data frame.
+# Data Management {#data-management}
 
-A **data frame** (df) is the most common way to store tabular data in R. It is a two-dimensional table made of rows and columns. Data frames are rectangular. Every column must have the same number of rows. In other words, each column must be the same length, because every row must have a value (or an `NA`) for every column.
+One of the most common stumbling blocks to importing data is knowing where a file is stored on your computer.
 
-Rows usually represent observations (cases, people, states, experiments, etc.). Columns usually represent variables (measurements you recorded). A data frame can store different data types in different columns (numbers, characters, logical values, etc.). A practical way to think about a data frame is a collection of columns, where each column is a vector. 
- 
-# Data Management
+A **file path** is the address to a file. When you write import code, R uses the file path to find the file you want to load. If R looks in the wrong folder, the import will fail even if your code is almost correct.
 
-One of the most common stumbling blocks to importing data is knowing the file path. A **file path** is the “address” to a file. When you write import code, R looks for the file relative to the working directory. If R can’t find your file, it can’t import it. This is a common source of frustration for beginners. 
+The first step to loading data into R is learning how to manage your files and folders so that R can find your data when you run code in the Console, run code in an Rmd file, or knit a Notebook, R Markdown, or Quarto document.
 
-The first step to loading data into R is learning how to manage your files and folders so that R can find your data when you run code in the Console or an R Script and when you Knit a Notebook (or Markdown/Quarto).
+## Folder Structure
 
-## Working Directory
+Your course work should be stored in your main course folder:
 
-In Chapter 1, you learned how to use `getwd()` and `setwd()` to manage your working directory. This is crucial for importing data because R needs to know where to find the files you want to load.
+`Intro_to_R`
 
-**Running chunks interactively often uses the same session as the Console.** The real difference shows up when you Knit, because knitting runs in a fresh session and uses the Notebook file location as the working directory. That means your notebook must include everything needed to run from the top, including correct file paths.
+For this chapter, create a new folder inside your `Intro_to_R` folder called:
 
-📖 **Review**
+`Module_4`
 
-Make R able to find your data files when you (1) run code in the Console and (2) when you Knit an R Notebook document.
+💡 **Tip:** Use `Module_4` instead of `Module 4` because spaces in folder or file names can cause issues in RStudio. R’s file-handling functions and the underlying operating system (especially Windows) have specific rules for how paths are interpreted. For example, when you try to open an R Markdown file with spaces in its name, the IDE may treat the space as a special character and fail to locate it. 
 
-### Step 1
+Your folder structure should look like this:
 
-📖 **Chapter 1 Review**
-
-Check your working directory in the Console
-
-🎯 Run in the **Console**.
-
-```{r, eval=FALSE}
-# ⚡ Type this in the Console  
-getwd()  # shows current project folder
-list.files()  # shows files in current folder
+```text
+Intro_to_R/
+└── Module_4/
 ```
 
-```{r, echo=FALSE, fig.cap="Image of the instructor's Console after running getwd() and list.files() as an example of an output.", out.width="75%"}
-knitr::include_graphics("getwd_in_console.png")
+### How to read folder structure diagrams 
+
+Here is how to read that folder structure:
+
+- `Intro_to_R/` is your main course folder.
+- └── `Module_4/` means `Module_4` is inside the `Intro_to_R` folder.
+- The `/` at the end means the item is a folder, not a file.
+- The indentation matters. Anything indented farther to the right is nested inside the folder above it.
+
+You may also see folder diagrams that use more symbols:
+
+```text
+Intro_to_R/
+├── Module_1/
+│   ├── rstudio.png
+│   ├── chapter1_practice.RData
+│   ├── chapter2_practice.R
+│   ├── chapter2_practice.RData
+│   └── chapter2_notes.R
+├── Module_2/
+│   ├── chapter3_practice.Rmd
+│   ├── chapter3_practice.RData
+│   ├── chapter3_notes.Rmd
+│   ├── chapter4_practice.Rmd
+│   └── chapter4_notes.Rmd
+├── Module_3/
+│   ├── chapter5_practice.Rmd
+│   ├── chapter5_practice.html
+│   ├── chapter5_notes.Rmd
+│   ├── chapter6_practice.Rmd
+│   ├── chapter6_practice.html
+│   └── chapter6_notes.Rmd
+└── Module_4/
+    ├── chapter7_practice.Rmd
+    ├── chapter7_practice.html
+    ├── Values_Transport_dplace.csv
+    └── car_prices.xlsx
 ```
 
-✅ In the console, look directly under the `getwd()` and `list.files()` chunk. Confirm that the folder path matches where you think the working directory is located.
+Here is how to read this diagram:
 
-🗣 When I run `getwd()`, I am checking where R is currently "looking." When I run `list.files()`, I am checking what R can actually see from that location. If the file I need is not listed, my next move is to check whether the file is in the right folder and whether the file name matches exactly. 
+- Intro_to_R/ is the main course folder.
+- `Module_1/`, `Module_2/`, `Module_3/`, and `Module_4/` are folders inside `Intro_to_R/.`
+- The `/` at the end means the item is a folder, not a file.
+- `├──` marks an item when more files or folders come after it at the same level.
+- `└──` marks the last item inside a folder.
+- `│` is a visual guide. It shows that the folder structure continues below at that same level.
+- Indentation shows nesting. Files indented under `Module_4/` are inside the `Module_4/` folder.
+- `chapter7_practice.Rmd`, `Values_Transport_dplace.csv`, and `car_prices.xlsx` are inside Module_4/.
+- Those three files are not directly inside `Intro_to_R/`; they are one level deeper.
 
-## Step 2
+🧭 Organize your course work in a folder structure that makes sense to you. The important thing is that your **Rmd file and your data files are in the same folder** so that R can find them when you run code or knit your notebook. 
 
-**Create a Notebook** and check the working directory when you Knit.
+---
 
-🎯 Create an R Notebook and include the same code in a code chunk then test **Knit**.
+This activity will walk you through the process of placing the activity Rmd file and data files in the same folder. We'll start by creating and saving the R Notebook Rmd file inside your new `Module_4` folder.
 
-1. Open an R Notebook Go to `File > New File > R Notebook`
+## Create/Save Chapter 7 Notebook
+
+🎯 Create an R Notebook 
+
+1. Open an R Notebook: Go to `File > New File > R Notebook`
 
 2. Edit the YAML Header and delete the default text. The YAML header should look like this:
 
@@ -162,7 +199,7 @@ knitr::include_graphics("getwd_in_console.png")
 ```{r echo=FALSE, results='asis'}
 cat("```yaml
 ---
-title: \"Chapter 7 Notes\"
+title: \"Chapter 7 Practice\"
 author: \"[Your Name]\"
 date: \"`r Sys.Date()`\"
 output: html_notebook
@@ -170,95 +207,282 @@ output: html_notebook
 ```")
 ```
 
-3. Save your R Notebook `File` > `Save As...`, choose your course folder, name the file `chapter7_practice`.
+3. Change `[Your Name]` to your actual name and clear the default text in the body of the notebook. 
 
-4. Clear the default text and add a new code chunk with the same code as above.
+4. Save your R Notebook `File` > `Save As...`, choose your course folder, name the file `chapter7_practice`.
 
-5. Knit the R Notebook. 
-
-6. Write a memo in your Notebook explaining the difference (if any) in file paths when *you* run the code in the Console vs. the Knit R Notebook. *This is Task 1 of the Practice Space at the end of this chapter.*
-
-```{r}
-# ⚡ Type this in the R Notebook code chunk
-getwd()  # shows current project folder
-list.files()  # shows files in current folder
+```text
+Intro_to_R/
+└── Module_4/
+    └── chapter7_practice.Rmd
 ```
 
-✅ Verify: In the knitted notebook output, look directly under the getwd() and list.files() chunk. Confirm that the folder path matches where you saved chapter7_practice.Rmd. Then check whether the file list includes the notebook file itself.
+> 🧐 **Notice:** The guided activity is using `chapter7_practice.Rmd` as the file name because completing this guided activity will help you get started in the Practice Space file submission.
 
-🗣 The working directory of a R Notebook is the folder where the notebook is saved. In this example, the file path of the R Notebook file creating this HTML chapter is "C:/Users/Eva Lorraine Gaudio/OneDrive/Documents/BSU/Teaching/Data-R155/Data-R155/Module_4". The items listed includes the R Notebook itself (Chapter_7.Rmd). 
+## Downloading Data {#downloading-data}
 
-If your working directory is is set to the same location as your R Notebook, you will see the same file path and files when you run the code in the Console and when you Knit the R Notebook. If your working directory is not set to the same location as your R Notebook, you will see a different file path and files when you run the code in the Console vs when you Knit the R Notebook.
+You will need two data files for this chapter:
 
-What this means for loading data is that if you are *not* using an Rmd file, you need to make sure your working directory is set to the folder where your data files are located or address the file path correctly. When you are using an Rmd file, you only need to make sure your data files are in the same folder as your Rmd file. *In Chapter 9, you will learn how to nest data files in a sub-folder.*
+- `Values_Transport_dplace.csv`
+- `car_prices.xlsx`
 
-```{r eval=FALSE}
-# ⚡ Set your working directory to the folder where your data files are located. For example:
-setwd("C:/Users/Eva Lorraine Gaudio/OneDrive/Documents/BSU/Teaching/Data-R155/Data-R155/Module_4")
+Find these data files in the `📤Importing Data Guided Activity` instructions page. Click the download links. Do not open the downloaded files.
+
+> ⚠️ Common Pain Point: After you download `Values_Transport_dplace.csv`, do **not** open it. This is especially important on some **Mac** computers. When you double-click a `.csv` file, your Mac may open it in **Numbers**. A `.numbers` file is a completely different file format used by Apple Numbers.
+
+After you download the files, move them out of your `Downloads/` folder and into your `Module_4/` folder. 
+
+Moving the files is part of the data workflow. R can only import a file if the file is in the place where R is looking or if you give R the correct file path. In this chapter, we are keeping the workflow simple by putting the notebook and data files in the same folder.
+
+🎯 Download the data files for this chapter and place them in your `Module_4` folder with your Rmd file. **This is Task 1 of the Practice Space at the end of this chapter.**
+
+By the time you are done, your folder structure should look like this:
+
+```text
+Intro_to_R/
+└── Module_4/
+    ├── chapter7_practice.Rmd
+    ├── Values_Transport_dplace.csv
+    └── car_prices.xlsx
 ```
 
-Error in setwd("C:/Users/Eva Lorraine Gaudio/OneDrive/Documents/BSU/Teaching/Data-R155/Data-R155/Module_4") : 
-  cannot change working directory
+🗣 Your Rmd file and both data files should be in the same folder.
 
-🗣 Review Chapter 1 for more methods for setting your working directory.
+---
 
-For the remainder of this chapter, we will use the workflow of loading data files that are in the same folder as your R Notebook. This is a common and simple way to manage your files for data analysis projects. 
 
-## Downloading Data
 
-You'll need to download the two data files for this chapter from Canvas and save them in the same folder as your R Notebook.
+### Need help moving the downloaded files?
 
-Find the files in Canvas associated with this chapter. 
+🧭 If you already know how to move files from Downloads into your `Module_4` folder, skip ahead to [Working Directory](#working-directory).
 
-**Canvas → Modules → Module 4 → 4.01 Importing Data Guided Activity (Core; 1 hr 30 min) → Datasets**
+If you are not sure how to move downloaded files, follow the steps for your computer: [macOS](#macOS) or [Windows](#windows).
 
-Next, you'll need to move the downloaded files out of Downloads and into your course folder (the same folder where your notebook is saved). 
+#### macOS {#macOS}
 
-### Folder Structure
+**Move files from Downloads into `Module_4`**
 
-A good folder structure helps you keep track of your files and makes it easier to find what you need when you need it. In this chapter, we'll use this folder structure to make the file path simple.
+1. Open **Finder**.
+   - Finder is the blue-and-white face icon in the Dock.
 
--`Intro_to_R/`
--- `chapter7_practice.Rmd`
--- `Values_Transport_dplace.csv`
--- `car_prices.xlsx`
+2. Open your **Downloads** folder.
+   - In the Finder sidebar, click **Downloads**.
+   - Look for these two files:
+     - `Values_Transport_dplace.csv`
+     - `car_prices.xlsx`
 
-🎯  Download the data files for this chapter and place them in the same folder as your R Notebook. Then use `list.files()` to check that R can see the files. *This is Task 2 of the Practice Space at the end of this chapter.*
+3. Open a second Finder window.
+   - At the top of your screen, click **File → New Finder Window**.
+   - You can also press **Command + N**.
+   - If this does not work, click once on Finder first, then try again.
 
-💡 **Tip:** Avoid these common mistakes
+4. In the second Finder window, go to your course folder.
+   - Find and open your `Intro_to_R` folder.
+   - Inside `Intro_to_R`, open the `Module_4` folder.
 
-- Do not leave the files in your Downloads folder.
+5. Put the two Finder windows next to each other.
+   - One window should show **Downloads**.
+   - One window should show `Intro_to_R/Module_4/`.
 
-- Do not open the CSV in Excel (it can change formatting).
+6. Select both data files in Downloads.
+   - Click `Values_Transport_dplace.csv`.
+   - Hold the **Command** key.
+   - While holding **Command**, click `car_prices.xlsx`.
+   - Both files should now be selected.
 
-- Make sure the filenames match exactly (spelling and underscores matter).
+7. Drag the selected files into the `Module_4` Finder window.
+   - Click and hold on one of the selected files.
+   - Drag the files into the open `Module_4` window.
+   - Release the mouse or trackpad.
 
-🎯 Check that R can see the files you downloaded by running `list.files()` in your R Notebook.
+✅ Verify it worked.
+   - Click inside the `Module_4` Finder window.
+   - You should see:
+     - `chapter7_practice.Rmd`
+     - `Values_Transport_dplace.csv`
+     - `car_prices.xlsx`
+
+🗣 If you can see all three files in the `Module_4` window, the move was successful.
+
+🧭 If something is wrong:
+
+- If one or both data files are still in Downloads, drag them into `Module_4` again.
+- If you cannot find a file, return to Canvas and download it again.
+- If dragging does not work, try:
+  - selecting the file and pressing **Command + C** to copy,
+  - opening the `Module_4` folder,
+  - then pressing **Command + V** to paste.
+- If the file opens in Numbers or Excel instead of moving, close the program without saving changes and return to Finder.
+- If you accidentally changed the file type or are unsure what happened, delete the file and download a fresh copy from Canvas.
+
+R will not be able to import the files correctly unless the notebook file and both data files are together inside `Intro_to_R/Module_4/`.
+
+🧭 Without the files in the correct location, you cannot progress forward with the activity. Continue for a few minutes troubleshooting but if you feel stuck, reach out for help from a classmate, friend, your instructor, or visit [The Zone](https://www.boisestate.edu/oit/assistance/){target="_blank" rel="noopener noreferrer"}
+
+---
+
+If your files are in the correct folder, move to [Working Directory](#working-directory)
+
+#### Windows {#windows}
+
+**Move files from Downloads into `Module_4`**
+
+1. Open **File Explorer**.
+   - File Explorer is the yellow folder icon on the taskbar.
+   - You can also right-click the Start button and choose **File Explorer**.
+
+2. Open your **Downloads** folder.
+   - In the left sidebar, click **Downloads**.
+   - Look for these two files:
+     - `Values_Transport_dplace.csv`
+     - `car_prices.xlsx`
+
+3. Open a second File Explorer window.
+   - Right-click the File Explorer icon on the taskbar.
+   - Click **File Explorer** to open another window.
+
+4. In the second File Explorer window, go to your course folder.
+   - Find and open your `Intro_to_R` folder.
+   - Inside `Intro_to_R`, open the `Module_4` folder.
+
+5. Put the two File Explorer windows next to each other.
+   - One window should show **Downloads**.
+   - One window should show `Intro_to_R\Module_4\`.
+
+6. Select both data files in Downloads.
+   - Click `Values_Transport_dplace.csv`.
+   - Hold the **Ctrl** key.
+   - While holding **Ctrl**, click `car_prices.xlsx`.
+   - Both files should now be selected.
+
+7. Drag the selected files into the `Module_4` File Explorer window.
+   - Click and hold on one of the selected files.
+   - Drag the files into the open `Module_4` window.
+   - Release the mouse.
+
+✅ Verify it worked.
+   - Click inside the `Module_4` File Explorer window.
+   - You should see:
+     - `chapter7_practice.Rmd`
+     - `Values_Transport_dplace.csv`
+     - `car_prices.xlsx`
+
+🗣 If you can see all three files in the `Module_4` window, the move was successful.
+
+🧭 If something is wrong:
+
+- If one or both data files are still in Downloads, drag them into `Module_4` again.
+- If you cannot find a file, return to Canvas and download it again.
+- If dragging does not work, try:
+  - selecting the file and pressing **Ctrl + C** to copy,
+  - opening the `Module_4` folder,
+  - then pressing **Ctrl + V** to paste.
+- If the file opens in Excel instead of moving, close Excel without saving changes and return to File Explorer.
+- If you accidentally changed the file type or are unsure what happened, delete the file and download a fresh copy from Canvas.
+
+R will not be able to import the files correctly unless the notebook file and both data files are together inside `Intro_to_R\Module_4\`.
+
+🧭 Without the files in the correct location, you cannot progress forward with the activity. Continue for a few minutes troubleshooting but if you feel stuck, reach out for help from a classmate, friend, your instructor, or visit [The Zone](https://www.boisestate.edu/oit/assistance/){target="_blank" rel="noopener noreferrer"}
+
+---
+
+If you can see the files in the correct location, then you are ready to move on to the next step: checking your **working directory** and confirming that R can see the files you just moved.
+
+## Working Directory {#working-directory}
+
+In Chapter 1, you learned how to use `getwd()` and `setwd()` to manage your working directory. This is crucial for importing data because R needs to know where to find the files you want to load.
+
+**Running chunks interactively often uses the same session as the Console.** The real difference shows up when you Knit, because knitting runs in a fresh session and uses the Notebook file location as the working directory. That means your notebook must include everything needed to run from the top, including correct file paths.
+
+🎯 Make R able to find your data files when you (1) run code in the Console and (2) when you Knit an R Notebook document.
+
+### Console
+
+**Check your working directory in the Console**
+
+🎯 Run in the **Console**.
 
 ```{r, eval=FALSE}
-# ✅ Type this in your R Notebook
-list.files()  # shows files in current folder
+# ⚡ Type this in the Console  
+getwd()       
+list.files()  
 ```
 
-🗣 After downloading the data files for this chapter, you should see them listed when you run `list.files()`. This means that R can find the files and you are ready to import them into R. 
+```{r, echo=FALSE, fig.cap="Image of the instructor's Console after running getwd() and list.files() as an example of an output.", out.width="75%"}
+knitr::include_graphics("getwd_in_console.png")
+```
 
-💡 **Tip:** If you do not see the files listed, use File Explorer / Finder to check that you placed them to the correct folder (the same folder as your R Notebook) and that the file names are correct. 
+✅ In the knitted notebook output, look directly under the `getwd()` and `list.files()` ub the console output. Confirm that the folder path matches where you saved `chapter7_practice.Rmd`. Then check whether the file list includes the notebook file itself.
 
-# Import in R
+🗣 When you run `getwd()`, you are checking where R is currently "looking." When you run `list.files()`, you are checking what R can actually see from that location. 
+
+🧭 If the file you need is not listed, your next move is to check whether the file is in the right folder or whether the working directory is set to the folder location where the desired file is saved. 
+
+---
+
+The Notebook works differently because when you Knit, R starts a fresh session and sets the working directory to the folder where the Notebook is saved. Let's see that in action!
+
+### R Notebook
+
+**Check your working directory in the Notebook**
+
+### Step 1 
+
+🎯  Add a new code chunk with the same code as above.
+
+```{r, eval=FALSE}
+# ⚡ Type this in your notebook
+getwd() 
+list.files()
+```
+
+### Step 2
+
+**💡 Test knit.** 
+
+🎯  Click the Knit button at the top of the R Notebook editor pane. This will run all the code in your notebook from top to bottom in a fresh R session and create an HTML document as output.
+
+### Step 3
+
+**✅  Verify**
+
+Review the output under the `getwd()` and `list.files()` chunk in the resulting HTML.
+
+✅ In the knitted notebook output, look directly under the `getwd()` and `list.files()` chunk. Confirm that the folder path matches where you saved `chapter7_practice.Rmd`. Then check whether the file list includes the notebook file itself.
+
+You should see the files for this chapter listed in the output:
+
+```text
+[1] "car_prices.xlsx"              "chapter7_practice.Rmd"        "Values_Transport_dplace.csv"
+```
+
+🗣 The working directory of an R Notebook is the folder where the notebook is saved. 
+
+🗣  **Write a memo** in your Notebook explaining the difference in file paths when you run the code in the Console vs. the Knit R Notebook. **This is Task 2 of the Practice Space at the end of this chapter.**
+
+🧭 What this means for loading data is that R must be able to find your data file from the working directory it is using. If you are working in the Console or an R script, check or set the working directory yourself. When you are working in an Rmd (or qmd) file, you will keep the data files in the same folder as the Rmd file unless you provide a specific file path to use.
+
+> 🌳 In `Chapter 9: Git and GitHub`, you will learn how to organize data files in a subfolder.
+
+---
+
+For the remainder of this chapter, we will use the workflow where you load data files that are in the same folder as your R Notebook. This is a common and simple way to manage your files. 
+
+# Import in R {#import-in-r}
 
 This section shows you how to prepare R to import datasets. You will (1) install the packages needed for this chapter one time, and (2) load those packages every time you start a new R session so your notebook can run from top to bottom when you Knit.
 
-## 📦 Packages refresher
+## 📦 Packages refresher {#packages-refresher}
 
 To import data, we will need to use functions from additional packages that are not part of the base installation of R. A **package** is a collection of functions, data, and documentation that extends the capabilities of R. You were first introduced to the concept of packages in chapter 3 when you downloaded packages (e.g., `rmarkdown`) to run your R Notebook.
 
 ### Installing Packages
 
-You need to download the package before you can use it. **You only need to install the package once.** *Although, packages will need to be updated from time to time.* 
+You need to download the package before you can use it. **You only need to install the package once.** Packages will need to be updated from time to time. 
 
 🎯 Install the packages you need for this chapter as a *one time action*.
 
-Method A: **GUI method to install packages.**
+🧭 Method A: **GUI method to install packages.**
 
 **Bottom-right pane → Packages tab → Install → type the package name.**
 
@@ -268,21 +492,24 @@ In the bottom-right **Files Pane**, you will see a tab called "Packages." This i
 
 🗣 After you click Install, notice the lines of code and message(s) that result in the Console. The code is what you would have to type if you were installing packages without using the GUI (Method B).
 
-Method B: **Type the code in the Console to install packages.**
+🧭 Method B: **Type the code in the Console to install packages.**
 
 Often times, you will use the function `install.packages()` to install a package. In this chapter, we need the packages `readr`, `readxl`, `dslabs` package, which provides functions for reading and writing data files. 
-
-💡 **Tip:** We do not include `install.packages()` lines in knitted work. It can run during knitting, but it’s a bad practice because it is slow, unreliable, may fail on restricted machines. Use `install.packages()` in the **Console** or comment out `#` the installation code in the Notebook chunk after running once.
 
 🎯 Install the packages `readr`, `readxl`, and `dslabs` using `install.packages()`.
 
 ```{r, eval=FALSE}
 # ⚡ Type this in your Console to install packages
 install.packages("dslabs")                # You can install one package at a time
-install.packages(c("readr", "readxl"))    # You use c()
+install.packages(c("readr", "readxl"))    # Or you use c()
 ```
 
 🗣 The `install.packages()` function is used to install packages from CRAN. It is normal to see a Warning message in your console. This code installs the `dslabs`, `readr`, and `readxl` packages. The `c()` function combines the package names into a vector, allowing you to install multiple packages at once. 
+
+**💡 Test knit.**
+
+> ⚠️ Common Pain Point: `install.packages()` lines will not run successfully in a knitted notebook because of the way that knitting works. If you include `install.packages()` lines in your R Notebook, make sure to comment them out with `#` after you run them once in the Console.
+
 
 ```{r}
 # ✅ Check
@@ -291,45 +518,54 @@ packageVersion("readr")
 packageVersion("readxl")
 ```
 
-🗣 After installing the packages, you can check the version of each package using the `packageVersion()` function. 
+✅ Each `packageVersion()` line should print a version number. A version number means the package is installed on your computer. If you get an error saying there is no package with that name, the package did not install successfully.
+
+---
+
+After installing packages, you need to load them into your R session to use their functions. This is done with the `library()` function, which we will cover next.
 
 ### Loading Packages
 
 After installing the package, you need to load it into your R session using the `library()` function. This makes the functions in the package available for use. **Every time you start a new R session, you will need to load the packages you want to use.** To ensure your R Notebook works when you Knit it, you should include the `library()` calls in your R Notebook.
 
-🎯 Load the packages `readr`, `readxl`, and `dslabs` into your R session **using a notebook code chunk** so it load *every time* when you Knit. *This is Task 3 of the Practice Space at the end of this chapter.*
+💡 **Tip:** Add headings and format your report as you work. 🎯 Add the heading # Library Packages.
+
+🎯 Load the packages `readr`, `readxl`, and `dslabs` into your R session **using a notebook code chunk** so it load *every time* when you Knit. **This is Task 3 of the Practice Space at the end of this chapter.**
 
 ```{r}
-# ⚡ Type this in your R Notebook to load packages
+# ⚡ Type this in a code chunk in the R Notebook to load packages
 library(dslabs)  # For more datasets
 library(readr)   # For reading CSV files
 library(readxl)  # For reading Excel files
 ```
 
-🗣 `library()` usually prints messages as "Warning". Warning messages from `library()` might tell you which version of the package you are using. This Warning message means that the package was successfully loaded into R. Messages will also tell you if a package failed to load. 
+🗣 `library()` may print startup messages, and those messages are not automatically a problem. An error means the package did not load. A normal message usually tells you additional information such as the version.
+
+**💡 Test knit.**
 
 ---
 
-💡 **Tip:** A common error is to forget to load the package after installing it. If you try to use a function from a package that you haven’t loaded, you will get an error message saying that the function is not found. For example, if you try to use `read_csv()` without loading `readr`, you will get an error message like this:
+Your folder system, notebook, and packages are now set up to import data. The next step is to learn how to load different sources of tabular data.
 
-```
-Error in read_csv("data/Values_Transport_dplace.csv") : could not find function "read_csv"
-```
-🗣 This error means that R doesn’t know where to find the `read_csv()` function because the `readr` package hasn’t been loaded. To fix this, make sure you have the line `library(readr)` in a R Notebook code chunk *before* you try to use `read_csv()`.
+# Tabular data {#tabular-data}
+
+**Tabular data** is data that is arranged in a table format where rows represent observations and columns represent variables. This is the most common format for datasets and what most people think of when they think about data. When you import data into R, it is often stored as a data frame.
+
+A **data frame** (df) is the most common way to store tabular data in R. It is a two-dimensional table made of rows and columns. Data frames are rectangular. Every column must have the same number of rows. In other words, each column must be the same length, because every row must have a value (or an `NA`) for every column.
+
+**Rows** usually represent observations (cases, people, states, experiments, etc.). **Columns** usually represent variables (measurements you recorded). A data frame can store different data types in different columns (numbers, characters, logical values, etc.). A practical way to think about a data frame is a collection of columns, where each column is a vector. 
 
 ---
 
-# Loading Data
+This section shows two common ways to bring data into your R session.
 
-This section shows two ways datasets can enter your R session. 
+1. You can load datasets that already come with R or with an installed package. These are fast and reliable for practice.
 
-1. Datasets that come with R or with a package (fast and reliable for practice).
+2. You can import data files from your computer, such as CSV or Excel files. These require the correct package, file name, and file path.
 
-2. External files you download (like CSV and Excel files), which require correct file names and file paths.
+We will practice both in this chapter because future chapters will ask you to use built-in package data and imported data files.
 
-We'll practice both of these methods in this chapter as future chapters will rely on your ability to load either type of datasets.
-
-## Package Datasets
+## Package Datasets {#package-datasets}
 
 To load package datasets, use the `data()` function with the name of the dataset and the package it comes from. 
 
@@ -337,7 +573,7 @@ To load package datasets, use the `data()` function with the name of the dataset
 
 ### Base R Datasets
 
-Base R comes with a set of built-in `datasets` that you can use for practice and learning. These datasets are part of the base R installation and are available without needing to install any additional packages. .
+Base R comes with a set of built-in `datasets` that you can use for practice and learning. These datasets are part of the base R installation and are available without needing to install any additional packages.
 
 🎯 View a list of datasets that are already in R
 
@@ -348,9 +584,9 @@ data(package = "datasets")
 
 🗣 This opens a list of datasets that come from R by default. You can see the name of the dataset and a brief description of it. 
 
-These dataset are already available but you can make their availability more explicit. You'll do this by loading the selected dataset into your environment using the `data()` function. Throughout the remainder of this course, we will often use `mtcars` from base R. 
+These datasets are already available but you can make their availability more explicit. You'll do this by loading the selected dataset into your environment using the `data()` function. Throughout the remainder of this course, we will often use `mtcars` from base R. 
 
-🎯 Load the `mtcars` dataset from base R. *This is Task 4 of the Practice Space at the end of this chapter.*
+🎯 Load the `mtcars` dataset from base R. **This is Task 4 of the Practice Space at the end of this chapter.**
 
 ```{r}
 # ⚡ Type this in your R Notebook to load the mtcars dataset
@@ -359,9 +595,12 @@ data("mtcars")
 
 🗣 After running this code, the `mtcars` dataset is loaded into your R environment. 
 
-You can click the object in your environment to view the data. Alternatively, you can run the code `View(mtcars)`. Either method will open a new window in RStudio that displays the tabular data.  
+✅ Look in the Environment pane for `mtcars`. You can click the object in your environment to view the data. Alternatively, you can run the code `View(mtcars)`. Either method will open a new window in RStudio that displays the data.  
 
-💡 **Tip:** Something interesting about the `mtcars` dataset is that it has row names (labels for rows). These are not a normal “data column.” The metadata attached to the table and row names can be convenient for display, but they can also cause confusion later because they don’t behave like a regular variable. In most real projects, identifiers should be stored as a real column, not as row names.
+
+> 🧐 **Notice:** Something interesting about the `mtcars` dataset is that it has row names (labels for rows). These are not a normal “data column.” The metadata attached to the table and row names can be convenient for display, but they can also cause confusion later because they don’t behave like a regular variable. In most real projects, identifiers should be stored as a real column, not as row names.
+
+**💡 Test knit.**
 
 ### Curated Datasets
 
@@ -372,16 +611,28 @@ In addition to the base R datasets, there are packages that you can install that
 data(package = "dslabs")         
 ```
 
-🎯 Load the `movielens` dataset from the `dslabs` package. *This is Task 5 of the Practice Space at the end of this chapter.*
+🎯 Load the `movielens` dataset from the `dslabs` package. **This is Task 5 of the Practice Space at the end of this chapter.**
 
 ```{r}
 # ⚡ Type this in your R Notebook to load the "movielens" dataset
 data("movielens", package = "dslabs")
 ```
 
-🗣 The `movielens` dataset from the `dslabs` package is loaded into the R environment. You can click the object in your environment to view the data.
+🗣 The `movielens` dataset from the `dslabs` package is loaded into the R environment. 
 
-## External Files
+✅ You can click the object in your environment to view the data.
+
+> 🌱 Chapter 8 will teach you how to explore tabular data in more detail.
+
+🧭 If a dataset does not appear, your next step is to check the sequence of your notebook. Code that loads packages and data must come before code that uses those objects.
+
+**💡 Test knit.**
+
+---
+
+These datasets are great for practice, but in real projects, you will often need to import data from external files. The next section shows you how to do that.
+
+## External Files {#external-files}
 
 Often, you will need to load data from external files that you have downloaded or created. The most common file formats for data are **CSV** (`.csv`) and **Excel** (`.xlsx`). To load these files into R, you will need to use functions from the `readr` and `readxl` packages, respectively.
 
@@ -389,99 +640,122 @@ Often, you will need to load data from external files that you have downloaded o
 
 Importing a CSV (`read_csv`) requires the package `readr` that we loaded earlier. If you forget to load (`library()`) the `readr` package first, you will get an error message when you try to use the `read_csv()` function.
 
-Method A (optional): **Use Import Dataset to generate code**
+Because we are using an R Notebook, you will use a simple file path because your file is saved in the same location as the R Notebook. 
 
-If the file is not in your working directory, you must include a path. 
-
-📜 The basic SYNTAX: `df <- read_csv("path/to/your/file.csv")`
-
-There is an **GUI path** option.
-
-**Environment pane → Import Dataset → From Text (readr) → browse your files to locate.** 
-RStudio inserts code like: `df_name <- read_csv("??file_path/file_name.csv")` Look at your console to see the code that was generated. The complete file path with show in the Console.
-
-Method B (required): **Type `read_csv()` in your notebook**
-
-Because we are using an R Notebook, you will use the file path associated with the R Notebook location. When the CSV file is in the same folder as your R Notebook, you use the file name without a path.
+📜 The basic SYNTAX:
 
 `df <- read_csv("file.csv")`
 
-🎯 Import the CSV file `Values_Transport_dplace.csv` into R using `read_csv()` and store it as `dplace_df`. *This is Task 6 of the Practice Space at the end of this chapter.*
+🎯 Import the CSV file `Values_Transport_dplace.csv` into R using `read_csv()` and store it as `dplace_df`. **This is Task 6 of the Practice Space at the end of this chapter.**
 
 ```{r message=TRUE, warning=TRUE}
 # ⚡ Type this in your R Notebook to import the CSV file
 dplace_df <- read_csv("Values_Transport_dplace.csv")
 ```
 
-🗣 The `read_csv()` function reads the CSV file and creates a data frame called `dplace_df` that contains the data from the CSV file. You can click on `dplace_df` in your environment to view the imported data. When loading, R prints an import summary to confirm what it found. The `dplace_df` contains 185 rows with 7 columns. The `Delimiter: ","` tells you it detected a comma-separated file. Column specification lists how `readr` parsed each column. In this case, `chr (3)` means 3 character columns: `id`, `name`, `sub_case` and `dbl (4)` means 4 numeric (double) columns: `domainelement_pk`, `pk`, `valueset_pk`, `year`. *Chapter 8 will teach you have to explore the data in more detail.*
+🗣 The `read_csv()` function reads the CSV file and creates `dplace_df`, a data frame that contains the data from the CSV file.
 
-💡 **Tips:** Common import problems
+✅ You can click on `dplace_df` in your Environment to view the imported data.
 
-- “cannot open file” → run `getwd()` and `list.files()` and confirm the filename matches exactly.
+> 🧐 **Notice:** When loading, R prints an import summary to confirm what it found. The `dplace_df` data frame contains 185 rows and 7 columns. `Delimiter: ","` means R detected a comma-separated file. The column specification shows how `readr` interpreted each column. In this case, `chr (3)` means 3 character columns: `id`, `name`, and `sub_case`. `dbl (4)` means 4 numeric columns: `domainelement_pk`, `pk`, `valueset_pk`, and `year`.
 
-- Columns look wrong → the file may not be truly comma-delimited; preview with the GUI import window to confirm the delimiter.
+**💡 Test knit.**
+
+---
+
+🧭 If the import does not work, read the first line of the error message and check the most likely problem first.
+
+- If the error says the file cannot be opened or does not exist, R cannot find `Values_Transport_dplace.csv`.
+  - Check the spelling, capitalization, underscores, and `.csv` ending.
+  - Check that the file is in the same folder as your Rmd file.
+
+- If the columns look wrong, the file may not have been read as a comma-separated file.
+  - Make sure you did not open and resave the CSV file in Numbers or Excel.
+  - If you are unsure, delete the file and download a fresh copy.
+  
+- If the error says could not find function `read_csv`, the `readr` package is not loaded.
+  - Run `library(readr)` in a code chunk before the import code.
+
+🛠 **Break Things!** Test a common error on purpose. Close and reopen RStudio, then run this line **before** running `library(readr)`:
+
+```{r eval=FALSE}
+dplace_df <- read_csv("Values_Transport_dplace.csv")
+```
+
+You should see an error saying R cannot find the `read_csv()` function. This does not mean the CSV file is broken. It means the package that contains `read_csv()` has not been loaded yet.
+
+💡 **Tip:** Any time the you reopen RStudio, run all code chunks to load your packages and data into R Studio again.
+
+---
 
 ### Read Excel
 
 Importing an Excel file requires the package `readxl` that we loaded earlier. If you did not load the `readxl` package, you will get an error message when you try to use `read_excel()`.
 
-Method A (optional): **Use Import Dataset to generate code**
+**Type `read_excel()` in your notebook**
 
-If the file is not in your working directory, you must include a path. 
-
-📜 The basic SYNTAX: `df <- read_xlsx("??file_path/file.xlsx")`
-
-The **GUI path** method described above for importing a CSV file, but select **From Excel (readxl)** instead of "From Text (readr)". 
-
-**Environment pane → Import Dataset → From Excel (readxl) → browse your files to locate.**
-
-Method B (required): **Type `read_excel()` in your notebook**
-
-When using an R Notebook, you will the file path that directs from the R Notebook's folder. Saving the file in the exact same folder as your R Notebook allows you to use the file name without a path.
+Saving the data file in the exact same folder as your R Notebook allows you to use the file name without a path.
 
 `df <- read_excel("file.xlsx")`
 
-🎯 Import the Excel file `car_prices.xlsx` to R using `read_excel()` and store it as `car_prices_df`. *This is Task 7 of the Practice Space at the end of this chapter.*
+🎯 Import the Excel file `car_prices.xlsx` to R using `read_excel()` and store it as `car_prices_df`. **This is Task 7 of the Practice Space at the end of this chapter.**
 
 ```{r message=TRUE, warning=TRUE}
 # ⚡ Type this in your R Notebook to import the Excel file
 car_prices_df <- read_excel("car_prices.xlsx")
 ```
 
+> 🧐 **Notice:** **Be patient when you load an Excel file.** R may take a few seconds to read an Excel file, especially if the file is large, has complex formatting, or if you are importing more than one sheet. Very large Excel files can take longer to import. The limit is usually the computer’s available memory and processing power, not RStudio itself. However, opening a very large dataset in RStudio’s data viewer can slow down the RStudio window a lot. 
+
 🗣 The `read_excel()` function reads the Excel file and creates a data frame called `car_prices_df` that contains the data from the Excel file. You can click on `car_prices_df` in your environment to view the imported data.
 
-💡 **Tip:** If the Excel file is open on your computer, R can't load it. Always close the Excel file before trying to import it into R.
+💡 **Tip:** If the Excel import fails, check if the Excel file is open on your computer. Always close the Excel file before trying to import it into R.
 
-#### Multiple Sheets
+✅ Look in the Environment pane for `car_prices_df`. Click the object or run `head(car_prices_df)` to confirm that the rows and columns look like car price data.
+
+View the data frame by clicking on `car_prices_df` in your Environment pane or by running `View(car_prices_df)`.
+
+🧭 If the Excel import does not look right, check three things before asking for help: whether the file is listed in `list.files()`, whether the file name is spelled exactly as `car_prices.xlsx`, and whether the workbook has more than one sheet.
+
+**💡 Test knit.**
+
+#### 🌳 Multiple Sheets
 
 Excel files can contain multiple sheets. By default, `read_excel()` reads the first sheet. If your Excel file has multiple sheets, you can specify which sheet to read using the `sheet` argument. You can specify the sheet by name or by number.
 
 ```{r}
 # Optional Example
 excel_sheets("car_prices.xlsx")
-car_prices_sheet2 <- read_excel("car_prices.xlsx", sheet = 1)
+car_prices_sheet1 <- read_excel("car_prices.xlsx", sheet = 1)
 ```
 
-🗣 The `excel_sheets()` function lists the names of the sheets in the Excel file. The `read_excel()` function with the `sheet` argument reads the specified sheet from the Excel file. In this example, `sheet = 1` reads the first sheet. You can also specify the sheet by name, for example, `sheet = "Sheet1"` or `sheet = "car_prices"` if that is the name of the sheet.
+🗣 The `excel_sheets()` function lists the names of the sheets in the Excel file. The `read_excel()` function with the `sheet` argument reads the specified sheet from the Excel file. 
 
+🧭  `sheet = 1` reads the first sheet but you can also specify the sheet by name. For example, `sheet = "car_prices"`.
 
+**💡 Test knit.**
+
+---
 
 # Summary
 
-In this chapter, you learned how datasets enter R and why file management is the most common reason imports fail. We started by defining tabular data as a table where rows represent observations and columns represent variables, and you learned that imported tabular data is usually stored in a data frame. Because data frames are rectangular, every column must have the same number of rows; when a value is missing, it should appear as NA.
+In this chapter, you learned how datasets enter R and why file management is a common reason imports fail. We started by defining tabular data as a table where rows represent observations and columns represent variables. You also learned that imported tabular data is usually stored in a data frame, which is rectangular: every column has the same number of rows, and missing values should appear as `NA`.
 
-You also learned how the working directory controls where R looks for files. You used `getwd()` to print the current working directory and `list.files()` to list the files R can “see” in that folder. You compared running code in the Console to Knit behavior, and you learned that knitting runs code in a fresh session, so your notebook must include everything needed to run from top to bottom, including correct file names and file locations. To prevent “cannot open file” errors, you practiced saving your downloaded data files in the same folder as your R Notebook and verifying that the filenames appear in `list.files()` before importing.
+You also learned how the working directory controls where R looks for files. You used `getwd()` to print the current working directory and `list.files()` to list the files R can see in that folder. You compared running code in the Console to knitting an Rmd file, where code chunks usually use the Rmd file’s folder as the working directory. To prevent “cannot open file” errors, you practiced saving downloaded data files in the same folder as your R Notebook and checking that the filenames appear in `list.files()` before importing.
 
-Finally, you practiced the core import workflows used throughout the course. You installed packages one time with `install.packages()` and verified installation with `packageVersion()`, then loaded packages each session with library() so your notebook can Knit successfully. You loaded datasets that come with R or packages using `data()` (for example, `data("mtcars")` and `data("movielens", package = "dslabs")`). You imported external files using `readr::read_csv()` for CSV files and `readxl::read_excel(`) for Excel files, and you learned to interpret import feedback at a basic level (rows, columns, and column types). When something did not work, you used targeted troubleshooting checks that confirmed the working directory (`getwd()`), file visibility (`list.files()`), and that packages were loaded (`library()`).
+Finally, you practiced the core import workflows used throughout the course. You installed packages with `install.packages()`, verified installation with `packageVersion()`, and loaded packages each session with `library()`. You loaded built-in and package datasets with `data()`, then imported external files with `readr::read_csv()` for CSV files and `readxl::read_excel()` for Excel files. When something did not work, you used targeted checks for the working directory, file visibility, and loaded packages.
 
+The larger learning goal is that you now have a repeatable import workflow: place the file, check where R is looking, confirm R can see the file, load the right package, import the data, and verify the result. This supports autonomy because you have a clear next step when something goes wrong. You do not have to guess, freeze, or wait for someone to notice you are stuck; you can investigate the problem, gather evidence, and ask for targeted help when needed.
 
 # Chapter Terms
+
+**Columns**: The vertical fields in a data frame or table. In tidy tabular data, each column usually represents one variable, such as a name, category, measurement, count, or logical value. In R, each column in a data frame is a vector, and all columns must have the same number of rows.
 
 **CSV** (Comma-Separated Values): A plain-text file (`.csv`) for rectangular (row-and-column) data where each row is a line and values are separated by commas. Because it’s plain text, CSV is widely compatible across software, but it does not reliably preserve spreadsheet features like formulas, cell formatting, or multiple sheets.
 
 **Data Frame**: A two-dimensional R object for tabular data, organized as rows and columns. Each column is a vector (or factor) with the same number of rows, columns can have different data types, and the object has class "`data.frame`".
 
-**Excel** (.xlsx): A Microsoft Excel workbook file (`.xlsx`) that can store one or more worksheets, along with spreadsheet features like formulas and formatting. `.xlsx` uses the Office Open XML format (the “x” indicates an XML-based file without macros).
+**Excel** (`.xlsx`): A Microsoft Excel workbook file (`.xlsx`) that can store one or more worksheets, along with spreadsheet features like formulas and formatting. `.xlsx` uses the Office Open XML format (the “x” indicates an XML-based file without macros).
 
 **File Path**: A text “address” that tells the computer (and R) where a file or folder is located. Paths can be absolute (the full location from the start of the file system) or relative (interpreted relative to your current working directory). In R, `getwd()` shows the current working directory that relative paths are based on, and `file.path()` helps build paths in an operating-system-safe way.
 
@@ -489,65 +763,205 @@ Finally, you practiced the core import workflows used throughout the course. You
 
 **Package**: An installable collection of R code—functions, documentation, and sometimes datasets—that adds new features beyond base R. Packages are commonly installed from CRAN and then loaded with `library()` so you can use their tools in your session.
 
+**Rows**: The horizontal records in a data frame or table. In tidy tabular data, each row usually represents one observation, case, or unit being measured, such as one person, car, state, experiment, or survey response.
+
 **Tabular Data**: Data arranged in a table (a rectangular structure) where rows represent records/observations and columns represent variables/attributes. This row–column layout is the standard format used by spreadsheets, databases, and data frames.
 
 **Working Directory**: The folder on your computer that R treats as the default “home base” for the current session. When you read files (e.g., `read.csv("data.csv")`) or save outputs (e.g., `write.csv(df, "results.csv")`) using relative paths, R looks in (and writes to) the working directory unless you specify a full path. You can view or change it using Session → Set Working Directory, and you can check it with `getwd()` or change it with `setwd("path/to/folder")`.
 
 # 📝 Practice Space
 
-The Practice Space is your learning check for Chapter 7. It is designed to confirm you can set up your files, load packages, and import data into R successfully.
+In most chapters, the Guided Activity helps you create a notes file first, and then the Practice Space asks you to create a separate practice file.
 
-Tasks 1–7 are integrated into the Guided Activity. If you worked through the chapter and completed each step, you have already completed Tasks 1–7. You will still list them here as a checklist so you can verify you did not miss anything.
+Chapter 7 works differently because importing data is not only about typing the correct R function. Importing data requires understanding your folder structure and careful step-by-step verification and troubleshooting. For this reason, the Guided Activity helps you begin building the same `chapter7_practice.Rmd` file that you will use for this Practice Space.
 
-Tasks 9–13 are multiple-choice questions that check key concepts. Complete them after you finish the guided steps.
+After completing the Guided Activity, please tidy the formatting and add comments to your `chapter7_practice.Rmd` file. The practice space below gives you a checklist of the tasks to complete and prompts for writing comments and reflections. 
+
+By the end of this Practice Space, your Module_4 folder should contain:
+
+```text
+Intro_to_R/
+└── Module_4/
+    ├── chapter7_practice.Rmd
+    ├── chapter7_practice.RData
+    ├── Values_Transport_dplace.csv
+    └── car_prices.xlsx
+```
+
+Your R environment should contain:
+
+- `mtcars`
+- `movielens`
+- `dplace_df`
+- `car_prices_df`
+
+In this Practice Space, you will see two kinds of memo prompts:
+
+- 🗣 Add Comments asks you to explain what the code or output shows.
+- 🪞 Reflect asks you to explain your thinking process, what confused you, what changed in your understanding, or what strategy you would use next.
+
+These are there to help you practice writing memos as you work. In each task, you can choose whether to answer one, two, or all memo prompts.
+
+**Autonomy** is the habit of taking ownership of your thinking, choices, code, and learning process while using help responsibly. Show autonomy by checking your own file locations, reading your output carefully, using error messages as evidence, and explaining what you would check next if something did not work.
+
+If you encounter an error, document your **tenacity** by briefly noting what happened, what you tried, and how you fixed it or what still confuses you. Document how you troubleshot the error and what resource(s) you used to help you resolve the issue (**transparency**). Show **courage** by sharing your thinking process, even if it includes mistakes or confusion.
+
+You may quote AI output only when you clearly mark it as quoted text, either with quotation marks or a block quote using `>`. Then hand-type your own explanation of why you are including that quote.
+
+Before you finish, clear your Environment and run the notebook from top to bottom. Then knit to HTML to check that the notebook works in order.
 
 ## Task 1
 
-🎯 Run `getwd()` and `list.files()` in your Console. Then create an R Notebook and include the same code in a code chunk then test Knit. Write a memo explaining the difference (if any) in file paths when you run the code in the Console vs the R Notebook.
+**🗂 Organize your files**
 
-## Task 2
-
-🎯 Download the data files for this chapter and place them in the same folder as your R Notebook. Then use `list.files()` to check that R can see the files.
+🎯 Download the two data files for this chapter and place them in the same folder as your R Notebook.
 
 Files for this chapter: 
 
 - `Values_Transport_dplace.csv`
-
 - `car_prices.xlsx`
+
+
+✅ Check your folder in Finder or File Explorer. You should be able to see your Rmd file and both data files together in the same folder.
+
+🗣 Add Comments: Explain why keeping the Rmd file and the data files in the same folder makes importing data simpler in this chapter.
+
+## Task 2
+
+**📁 Check where R is looking**
+
+🎯 Run `getwd()` and `list.files()` in the **Console**. Then include the same code in a code chunk of your R Notebook and test Knit. 
+
+### Step 1
+
+Type and Run this code in the Console first 
+
+```{r eval=FALSE}
+getwd()
+list.files()
+```
+
+### Step 2
+
+Add a code chunk in your R Notebook, write the same code in that code chunk, then 🧶 knit your notebook.
+
+```{r eval=FALSE}
+# ⚡ Type this in your notebook
+getwd()
+list.files()
+```
+
+### Step 3
+
+✅ Check the resulting HTML and compare with Console output. 
+
+🪞 Reflect: Did R look in the same folder both times, or different folders? What does this tell you about how R handles file paths when you run code in the Console vs. when you Knit an R Notebook? Why would this matter when you are importing data? 
 
 ## Task 3
 
+**📦 Load packages**
+
 🎯 Load the packages `readr`, `readxl`, and `dslabs` into your R session.
+
+```{r, eval=FALSE}
+_______(readr)
+_______(readxl)
+_______(dslabs)
+```
+
+✅ Check that the packages are installed by running `packageVersion() `for each package.
+
+```{r, eval=FALSE}
+_______(_______)
+_______(_______)
+_______(_______)
+```
+
+🗣 Add Comments: Explain the difference between installing a package one time and loading a package each time you start a new R session.
 
 ## Task 4
 
+**🚗 Load a Base R dataset**
+
 🎯 Load the `mtcars` dataset from base R.
+
+```{r, eval=FALSE}
+_______(_______)
+```
+
+✅ Check that `mtcars` loaded correctly.
+
+🗣 Add Comments: Explain why `mtcars` can be loaded with `data()` instead of imported from a file on your computer.
 
 ## Task 5
 
+**🎬 Load a curated package dataset**
+
 🎯 Load the `movielens` dataset from the `dslabs` package.
+
+```{r, eval=FALSE}
+_______(_______, package = "_______")
+```
+
+✅ Check that `movielens` loaded correctly.
+
+🗣 Add Comments: Explain what the `package = "dslabs"` part tells R to do.
 
 ## Task 6
 
+**📄 Import a CSV file**
+
 🎯 Import the CSV file `Values_Transport_dplace.csv` to R using `read_csv()` and store it as `dplace_df`.
+
+```{r, eval=FALSE}
+dplace_df <- _______(_______)
+```
+
+✅ Check that the data imported correctly.
+
+🪞 Reflect: Explain how you knew the CSV import worked. Use evidence from the import summary or your checks, such as the number of rows and columns, the comma delimiter, or the column types. Then name one likely cause of an error if this import failed: the file was not in the same folder as the Rmd file, the file name was typed differently, or `library(readr)` had not been run.
 
 ## Task 7
 
+**📊 Import an Excel file**
+
 🎯 Import the Excel file `car_prices.xlsx` to R using `read_excel()` and store it as `car_prices_df`.
 
+```{r, eval=FALSE}
+car_prices_df <- _______(_______)
+```
+
+✅ Check that the data imported correctly.
+
+🪞 Reflect: Explain how importing an Excel file is similar to and different from importing a CSV file. Name the package/function used for the Excel file, explain why the file can be imported with only `"car_prices.xlsx"` instead of a longer file path, and describe one thing you would check if the import failed or the data did not look right.
+
 ## Task 8
+
+**💾 Save your workspace for submission**
 
 🎯 Save your workspace (`chapter7_practice.RData`) for submission. 
 
 This file should contain: 
 
 - `car_prices_df` (the data frame created by importing the Excel file)
-
 - `dplace_df` (the data frame created by importing the CSV file)
-
 - `movielens` (the data frame created by loading the dataset from the `dslabs` package)
-
 - `mtcars` (the data frame created by loading the dataset from base R)
+
+```{r, eval=FALSE}
+save(
+  car_prices_df,
+  dplace_df,
+  movielens,
+  mtcars,
+  file = "chapter7_practice.RData"
+)
+```
+
+🌳 Optional: Show off your coding skills add `car_prices_sheet1` by editing the code above. Only do this if `car_prices_sheet1` is in your environment. 
+
+✅ Check that the `.RData` file was created and is saved in your module folder. 
+
 
 ## Task 9
 

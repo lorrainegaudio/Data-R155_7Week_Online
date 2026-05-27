@@ -339,7 +339,7 @@ Keep your coursework organized by creating a dedicated folder for this course on
 # Outside of RStudio:
 # 1. Open your file explorer (e.g., File Explorer on Windows, Finder on macOS).
 # 2. Navigate to a location where you want to create the folder (e.g., Documents).
-# 3. Create a new folder named "Intro_to_R". 
+# 3. Create a new folder named "DATA-R155". 
 ```
 
 🗣 Remember the location of this folder. You will need it in the next step.
@@ -381,7 +381,7 @@ Method B. **Files Pane**
 # ✅ Check the working directory again
 getwd()
 ```
-🗣 R prints the updated working directory path in the Console. The printed path should end in your course folder name (e.g., .../Intro_to_R).
+🗣 R prints the updated working directory path in the Console. The printed path should end in your course folder name (e.g., .../DATA-R155).
 
 ## Save Workspace
 

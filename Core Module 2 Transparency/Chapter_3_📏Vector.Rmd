@@ -223,7 +223,7 @@ output: html_notebook
 
 1. Go to `File` > `Save As...`.
 
-2. Choose your course folder (e.g., `Intro_to_R`)
+2. Choose your course folder (e.g., `Data-R155`)
 
 3. Name the file `chapter3_notes`.
 
