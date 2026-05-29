@@ -80,80 +80,94 @@ natbiboptions: "round,authoryear"     # round brackets, Author (Year)
 
 # Overview
 
-Bracket indexing is one of the main ways you “point R” at the exact rows and columns you need. Real analysis rarely uses an entire dataset at once. Instead, analysts will select columns, filter rows, recode values or create new columns using subsetting, extraction, and insertion. 
+Bracket indexing is one of the main ways you tell R exactly which rows, columns, or values you want to use. Real data analysis rarely uses an entire dataset all at once. Analysts often need to select a few columns, filter rows, extract one column for a summary, correct data-entry problems, or create a new column for later analysis.
 
-In this chapter's guided activity you’ll practice those skills using the `field_sightings` dataset, a simulated bird-banding dataset where birds are recorded as **Tagged** or **Untagged** and tagged birds can have a band color. The data frame has two columns: `Status` and `Band_Color`. Then, you'll use `Values_Transport_dplace.csv` in Practice Space to generalize your understanding, applying your new skills on a different dataset.
+In this chapter, you will practice those skills using the `field_sightings` dataset, a simulated bird-banding dataset where birds are recorded as Tagged or Untagged, and tagged birds can have a band color. The data frame has two columns: `Status` and `Band_Color`. In the Practice Space, you will apply the same indexing patterns to `Values_Transport_dplace.csv` using columns such as `id`, `name`, `sub_case`, and `year`.
+
+These skills matter because indexing is how you point R at the part of the data you actually mean. If you select the wrong rows, extract the wrong kind of object, or overwrite values without checking first, later analysis can become unreliable. This chapter helps you build the habit of checking what your code returned before moving on.
 
 By the end of Chapter 8, you will be able to:
 
-- 📥 Use a loaded CSV into R as a data frame.
+-  📥 Use a loaded CSV file as a data frame in R.
+  🧩 Apply the subsetting template `df[rows, cols]` to select data by 📍 position, 🏷️ name, and 🔍 logical mask.
+-  🔎 Check whether your indexing code returned the rows, columns, object type, and values you expected.
+-  ⚠️ Explain how missing values can propagate through logical masks and create confusing filtering results.
+-  🧭 Use `which()` to turn logical conditions into row positions when you want to avoid carrying `NA` values into a subset.
+-  🧪 Extract one column as “the thing itself” using `[[ ]]` or `$` so you can pass the values into functions like `unique()` or `table()`.
+-  🛠️ Use subassignment to overwrite selected values in a copied data frame and insert a new column.
+-  🎯 Use code chunk options to manage long outputs and make your R Notebook easier to read.
 
-- 🧩 Apply the subsetting template to select data by 📍 positions, 🏷️ names, and 🔍 logical mask. 
+# Activity Setup {#activity-setup}
 
-- ⚠️ Explain missing value propagation in logical masks.
+🧭 Chapter 7 introduced you folder organization and how to import data into R. This section will lightly review what you learned, providing you with additional practice. If you need a more detailed refresher on how to import data, start by reviewing Chapter 7 📤 Importing Data.
 
-- 🧪 Extract one column as “the thing itself” using [[ ]] or $ so you can pass it into functions like unique() or table().
+## Create/Save Chapter 8 Notebook {#create-notebook}
 
-- 🛠️ Experiment with subassignment methods to overwrite and insert values.
+🎯 Create an R Notebook, edit the YAML, and save in `Module_4/` 
 
-- 🎯 Use code chunk options to manage long outputs in your R Notebook.
+1. Open an R Notebook: Go to `File > New File > R Notebook`
 
-
-# Set Up
-
-To begin this guided activity, you'll want to 
-
-1. Download `field_sightings.csv` and `Values_Transport_dplace.csv` from Canvas and save them in the same folder as your course R Notebooks. 
-
-2. Open, format, and save an R Notebook in your course folder. 
-
-## Download and Save
-
-The final folder structure for this chapter will look like this:
-
-      -`Intro_to_R/`
-      -- `chapter8_notes.Rmd`
-      -- `chapter8_practice.Rmd` 
-      -- `Values_Transport_dplace.csv`
-      -- `field_sightings.csv`
-
-## Open an R Notebook
-
-To follow along Chapter 8, 🎯 please open a new R Notebook in your course folder named `chapter8_notes.Rmd` and add a date to the YAML header. While your here, **include your name as the author**! See the example of a YAML below. Use this document to take notes and practice the chapter content. 
-
-1. Open RStudio → File → New File → R Notebook.
-
-2. Save it in your course folder as: `chapter8_notes.Rmd`.
-
-3. In your YAML header at the top:
+2. Edit the YAML Header and delete the default text. The YAML header should look like this:
 
 
 ```{r echo=FALSE, results='asis'}
 cat("```yaml
 ---
-title: \"Chapter 8 Practice: Bracket Indexing\"
-author: \"Your Name Here\"
+title: \"Chapter 8 Notes\"
+author: \"[Your Name]\"
 date: \"`r Sys.Date()`\"
 output: html_notebook
 ---
 ```")
 ```
 
-4. Remove the default content in the R Notebook and replace it with your notes and code as you work through the chapter.
+3. Change `[Your Name]` to your actual name and clear the default text in the body of the notebook. 
 
-5. Use headings as you work. At minimum, create section headings that match the chapter structure (e.g., `## Load Data`, `## Bracket Indexing`, `## Subsetting`, `## Extraction`, `## Insertion`. This creates a readable outline.
+4. Save your R Notebook `File` > `Save As...`, choose your course folder, name the file `chapter8_notes`.
 
-6. Memo as you go.
+Suggested file structure:
 
-- Outside chunks: write normal text.
+```text
+Intro_to_R/
+└── Module_4/
+    ├── chapter8_notes.Rmd   # Add the guided activity file to your `Module_4/` folder
+    ├── chapter7_practice.Rmd
+    ├── Values_Transport_dplace.csv
+    └── car_prices.xlsx
+```
 
-- Inside chunks: use `#` for any code comments (otherwise R tries to run the text).
+## Downloading Data {#downloading-data}
 
-- If you hit an error: keep the broken line commented out and write a one-sentence note about what you changed to fix it.
+You will need two data files for this chapter:
 
-## Load Data
+- `Values_Transport_dplace.csv`
+- `field_sightings.csv`
 
-The `field_sightings.csv` dataset contains **simulated** (randomly generated) values. The dataset theme is based on the pretend situation where field biologists observed and recorded a population of species of birds. Bird banding is a scientific method used to track and study individual birds, providing valuable data on their movements, behavior, and population dynamics. In our senerio, most birds observed were "Untagged," but a small number have been previously captured and marked with colored leg bands, "Tagged". The color of the bands might provide information about the bird's history, such as where it was banded or its age.
+You should already have `Values_Transport_dplace.csv` in your folder. Find the `field_sightings.csv` data file in the **👈 Indexing Guided Activity** instructions page. 
+
+🎯 Click the download link. **Do not open the downloaded csv.**
+
+🎯 Move the CSV into your `Module_4/` folder with your Rmd file.
+
+```text
+Intro_to_R/
+└── Module_4/
+    ├── chapter8_notes.Rmd   
+    ├── chapter7_practice.Rmd
+    ├── Values_Transport_dplace.csv
+    ├── car_prices.xlsx
+    └── field_sightings.csv   # Add the CSV file to your `Module_4/` folder
+```
+
+🧭 If your folder has a different structure, that is okay as long as you can explain where your Rmd file is saved and how to address the file path to the data files. The important habit is knowing where your work lives before you try to load data. For novices, it is easiest to place the data files in the same folder as the Rmd file.
+
+---
+
+Now that you have your R Notebook set up and the data files in place, you are ready to load the data.
+
+## Load Data {#load-data}
+
+The `field_sightings.csv` dataset contains **simulated** (randomly generated) values. The dataset theme is based on the pretend situation where field biologists observed and recorded a population of species of birds. Bird banding is a scientific method used to track and study individual birds, providing valuable data on their movements, behavior, and population dynamics. In our scenario, most birds observed were "Untagged," but a small number have been previously captured and marked with colored leg bands, "Tagged". The color of the bands might provide information about the bird's history, such as where it was banded or its age.
 
 The simulated dataframe `field_sightings` has two columns:
 
@@ -161,15 +175,17 @@ The simulated dataframe `field_sightings` has two columns:
 
 - `Band_Color` If a bird is untagged, the value is “None.” If it is tagged, the value is one of several possible band colors.
 
-🎯 **Goal:** Download the `field_sightings.csv` file from Canvas and save it in the *same* folder as your R Notebook. Then, load the data into R.
-
 ```{r, eval=FALSE}
 # ⚡ Type this in your R Notebook
 # 1) Confirm the CSV is in the same folder as your R Notebook
 list.files()
 ```
 
-🎯 **Goal:** Load `field_sightings.csv` into R using `read_csv()` and assign it to a variable called `feild_sightings`. Recall that you need to library `readr` before you can use `read_csv()`.
+✅ Look in the output from `list.files()`. Confirm that `field_sightings.csv` appears exactly as written, including the underscore and `.csv` ending.
+
+🧭 If `field_sightings.csv` is not listed, check whether the file is still in `Downloads/`, whether it was renamed, or whether it was saved in a different folder. Your next move is to make the file visible to R in your Rmd, then run `list.files()` again.
+
+🎯 **Goal:** Load `field_sightings.csv` into R using `read_csv()` and assign it to a variable called `field_sightings`. Recall that you need to library `readr` before you can use `read_csv()`.
 
 ```{r message=TRUE, warning=TRUE}
 # ⚡ Type this in your R Notebook
@@ -177,9 +193,22 @@ library(readr) # Load the readr package for reading CSV files
 field_sightings <- read_csv("field_sightings.csv")
 ```
 
-🗣 This code uses the `read.csv()` function to read the CSV file named "field_sightings.csv" and assigns the resulting data frame to a variable called `field_sightings`. It it normal to see messages with you load packages.
+🗣 This code uses the `read_csv()` function to read the CSV file named "field_sightings.csv" and assigns the resulting data frame to a variable called `field_sightings`. It it normal to see messages with you load packages.
 
-Feel free to click `field_sightings` in your Environment pane to view the data frame and get a sense of what it looks like.
+✅ Look in the Environment pane for `field_sightings`. Then run `head(field_sightings)` to confirm that the data has two columns, `Status` and `Band_Color`.
+
+```{r}
+# ✅ Check
+head(field_sightings)
+```
+
+🧭 Feel free to click `field_sightings` in your Environment pane to view the data frame and get a sense of what the data looks like.
+
+**💡 Test knit.** Before you move on, test knit your R Notebook to make sure everything is working. Check that the formatting is working as expected (e.g., headings appear as heading font, code appears in code chunks, and memos are paragraph text)
+
+---
+
+With your data loaded in to the environment, you are ready to start practicing subsetting, extraction, and replacement techniques in R. 
 
 # Subsetting
 
@@ -195,7 +224,7 @@ Positional indexing is the most basic form of indexing in R, where you use numer
 
 ### Vector
 
-In Chapter 3, you practiced using the **indexing operator** with positional indexing to extract elements from vectors. Let's review that briefly before we move on to data frames. 
+In Chapter 3, you practiced using the **indexing operator** with positional indexing to extract elements from vectors. Let's review that briefly before we move on to [data frames](#data-frame). 
 
 You learned that the basic pattern for **positional indexing** is `x[i]`, where `x` is the vector and `i` is the index (or indices) of the elements you want to extract. A position used to identify elements in an object. 
 
@@ -204,6 +233,9 @@ You learned that the basic pattern for **positional indexing** is `x[i]`, where 
 ```{r}
 # 📖 Review
 z <- c(10, 20, 30, 40, 50) # create a vector
+
+# ✅  Check
+print(z)
 ```
 
 ```{r}
@@ -227,7 +259,7 @@ z[2:4]
 
 🗣 The second, third and fourth elements by position is 20, 30, and 40.
 
-### Data Frame
+### Data Frame 
 
 The **indexing operator** (`[ ]`) is used to select or replace parts of many kinds of objects, not just vectors. For data frames, the common form is `df[rows, cols]` or `x[i, j]` where `i` is the **row index**, `j` is the **column index**. If you leave one side blank, the output includes all.
 
@@ -239,18 +271,22 @@ Rows and columns are coordinates:
 
 - `df[1, 2]` prints only one cell's value: first row, second column
 
-
-
 Let's see this in practice with our `field_sightings` data frame.
 
 🎯 **Goal:** Print the first six rows of the `field_sightings` data frame using the indexing operator.
+
+🧭 Before running a bracket-indexing line below, pause and ask: “How do I know that this is choosing rows?” 
 
 ```{r}
 # ⚡ Type this in your R Notebook
 field_sightings[1:6, ]  
 ```
 
-🗣 Shows first six rows, all columns. 
+💡 **Tip**: I remember bracket indexing by watching the comma. In `df[rows, columns]`, the comma divides the row instruction from the column instruction. The left side answers “which rows?” The right side answers “which columns?” **In `df[rows, cols]`, the comma is the divider.** 
+
+✅ Check that the output has 6 rows and both columns. The blank space after the comma means “keep all columns."
+
+🗣 This shows the first six rows of `field_sightings` while keeping all columns.
 
 ### `head()` Function *Comparison*
 
@@ -269,19 +305,27 @@ If you don't specify `n`, it defaults to 6, which means it will show the first 6
 head(field_sightings, n = 3)
 ```
 
+✅ Confirm that the output shows exactly 3 rows and the same column names as the full data frame.
+
 🗣 `head()` is commonly used to get a quick orientation of the dataset after loading. 
 
 `head()` does not do arbitrary extraction or subsetting. `head()` is a function that provides a convenient way to view the first few rows of a data frame. 
 
-Bracket indexing allows for flexible and specific subsetting of the data frame based on row *and* column indices.  `[` works on almost everything and supports rich indexing and is commonly used as part of an algorithm. You will use `[` when you need subsetting by columns, conditions, and arbitrary rows when you are writing analysis code.
+🧭 Use `head()` when you want a quick look at the beginning of a dataset. Use bracket indexing when you need to select specific rows, columns, or conditions.
+
+**💡 Test knit.** 
+
+---
+
+Bracket indexing allows for flexible and specific subsetting of the data frame based on row *and* column indices.  `[` works on almost everything and supports rich indexing and is commonly used as part of an algorithm. You will use `[` when you need subsetting by columns, conditions, and arbitrary rows when you are writing analysis code. 
 
 ## 🏷 Names Indexing
 
-You can also use **names indexing** (also referred to as character indexing) to select columns by their names instead of their positions. This often makes more readable code and is less error-prone, especially when the order of columns might change or when you have many columns.
+You can also use **names indexing** (also referred to as **character indexing**) to select columns by their names instead of their positions. This often makes more readable code and is less error-prone, especially when the order of columns might change or when you have many columns.
 
 ### Vector
 
-In Chapter 3, you created the `nerdy_palette` vector and then used names indexing to return the hexadecimal color code. 
+In Chapter 3, you created the `nerdy_palette` vector and then used **names indexing** to return the hexadecimal color code. 
 
 ```{r}
 # 📖 Review
@@ -299,7 +343,7 @@ nerdy_palette <- c(
   "Impossible Green" = "#4D9E68"
   )
 
-# Use names indexing to return the hex code for Octarine
+# ✅ Use names indexing to return the hex code for Octarine
 nerdy_palette["Octarine"]
 ```
 
@@ -307,7 +351,7 @@ nerdy_palette["Octarine"]
 
 ### Data Frame
 
-A common use of names indexing is to select a column from a data frame by its name. 
+A common use of names indexing is to **select a column by its name**.  
 
 🎯 **Goal:** Use names indexing to return the band colors in the `field_sightings` data frame. 
 
@@ -319,8 +363,10 @@ A common use of names indexing is to select a column from a data frame by its na
 
 ```{r, eval = FALSE}
 # ⚡ Type this in your R Notebook
-field_sightings["Band_Color"]         # 1-column data frame
+field_sightings["Band_Color"]         # 1-column DATA FRAME
 ```
+
+✅ Check the output structure.
 
 🗣 A 1-column data frame is printed showing all row values in the column `Band_Color` the `field_sightings` data frame. It is a subset of one column, keeping that data-frame structure.
 
@@ -334,6 +380,8 @@ field_sightings["Band_Color"]         # 1-column data frame
 field_sightings[, "Band_Color"]   # usually the column VECTOR 
 ```
 
+✅ Check the output structure.
+
 🗣 A vector is printed showing all values from the column `Band_Color` the `field_sightings` data frame. The result is a subset from one column and returns a vector, values only.
 
 **Method C** 
@@ -343,14 +391,24 @@ field_sightings[, "Band_Color"]   # usually the column VECTOR
 ```{r, eval = FALSE}
 # ⚡ Type this in your R Notebook
 # Example C
-field_sightings[, "Band_Color", drop = FALSE]    # 1-column data frame
+field_sightings[, "Band_Color", drop = FALSE]    # 1-column DATA FRAME
 ```
+
+✅ Check the output structure.
 
 🗣 A 1-column data frame is printed showing all row values in the column `Band_Color` the `field_sightings` data frame. It is a subset of one column, keeping that data-frame structure.
 
-💡 **Tip:** Students often forget to put the column name in quotes when using names indexing. If you forget the quotes, R will look for an object named `Band_Color` in your environment and return an error if it doesn't find one. Always remember to put column names in quotes when using **names indexing** with `[ ]`.
+⚠️ Common Pain Point: Students often forget to put the column name in quotes when using names indexing. If you forget the quotes, R will look for an object named `Band_Color` in your environment and return an error if it doesn't find one. Always remember to put column names in quotes when using **names indexing** with `[ ]`.
 
-## 🔍 Logical Mask Indexing
+🧭 The autonomous move here is not memorizing three methods as separate tricks. It is deciding what kind of output you need next. If you need a smaller data frame, keep the data-frame structure. If you need values to pass into a function, extract the column as a vector.
+
+**💡 Test knit.** 
+
+---
+
+So far, you've learned about positional indexing and names indexing. Both of these methods rely on you knowing the positions or names of the elements you want to subset. But what if you want to subset based on a condition, like keeping only rows where `Status` is "Tagged"? This is where **logical mask indexing** comes in.
+
+## 🔍 Logical Mask Indexing {#logical-mask}
 
 A **logical mask** is the logical vector you use to index.
 
@@ -381,6 +439,8 @@ mask <- number_list <= 20
 print(mask)
 ```
 
+✅ Check that `mask` has the same number of values as `number_list`. Each value should be `TRUE` or `FALSE`, depending on whether the matching number is less than or equal to 20.
+
 🗣 This prints the `mask`. The mask itself is not a subset of the original vector. The logical vector indicates which values in `number_list` are less than or equal to 20.
 
 ```{r}
@@ -392,6 +452,8 @@ smaller <- number_list[mask]
 # ✅  Check
 print(smaller)
 ```
+
+✅ Check that smaller contains only the values from `number_list` where the mask was `TRUE`: 10, 5, and 15.
 
 🗣 This keeps only the values where the condition is `TRUE` (10, 5, 15).
 
@@ -409,9 +471,7 @@ smaller <- number_list[number_list <= 20]
 
 R keeps the values where the mask is `TRUE` and drops the values where the mask is `FALSE`. 
 
-Whether you create an object to store the logical mask (example 1) or pass the logical condition directly into the indexing operator (example 2), the result is the same: you get a subset of the original vector that meets the specified condition.
-
-Let's see this in action in a dataframe.
+**💡 Test knit.** 
 
 ---
 
@@ -429,11 +489,15 @@ Let's see this in action in a dataframe.
 
 ---
 
+🧭 Storing the mask first (example 1) is useful when you want to inspect or reuse the logic. Putting the condition directly inside `[ ]` (example 2) is useful when the condition is short and easy to read. Both are valid. 
+
+Let's see this in action in a dataframe.
+
 ### Data Frame
 
 Logical mask indexing works the same way for data frames, except that the logical mask *usually* goes in the **rows** position of `df[rows, cols]`.
 
-The mask can be `TRUE`/`FALSE`/`NA` for each row. When you use the mask in `df[mask, ]`, R keeps only the rows where the mask is `TRUE`and `NA` if there are missing values.
+The mask can be `TRUE`/`FALSE`/`NA` for each row. When you use the mask in `df[mask, ]`, R keeps rows where the mask is TRUE. If the mask contains `NA`, those unknown positions can also appear in the result, which can make the subset larger than the number of definite `TRUE` values.
 
 🎯 **Goal:**: Keep only rows where the bird is tagged using `[ ]`.
 
@@ -444,6 +508,8 @@ mask_tagged <- field_sightings[, "Status"] == "Tagged"
 ```
 
 🗣 The `==` is a comparison operator that checks if the value in the `Status` column is equal to "Tagged". A single `=` is used for assigning values inside some function calls (like `na.rm = TRUE`) and naming arguments. It is not used to test equality. 
+
+✅ Check the first few values with `head(mask_tagged)`. You should see a logical vector containing `TRUE`, `FALSE`, and possibly `NA`.
 
 ```{r}
 # ✅  Check
@@ -458,13 +524,19 @@ head(mask_tagged)
 tagged_only <- field_sightings[mask_tagged, ]
 
 # Alternative: pass the logical mask directly into [ ]
-# tagged_only <- field_sightings[field_sightings[, "Status"] == "Tagged", ]  
+# tagged_only <- field_sightings[field_sightings[, "Status"] == "Tagged", ]
+```
 
+✅ Look at the Status column in the first few rows of `tagged_only`. You should mostly see "Tagged", but if the mask contained `NA`, you may also see rows with missing values.
+
+```{r}
 # ✅  Check
 head(tagged_only)
 ```
 
 🗣 This subsets the data frame by keeping only rows where the mask is `TRUE`. 
+
+✅ Compare the three counts. `nrow(field_sightings)` tells you the size of the original data frame.` nrow(tagged_only)` tells you how many rows were returned by the subset. `sum(mask_tagged, na.rm = TRUE)` tells you how many rows were definitely `TRUE`.
 
 ```{r}
 # ✅  Check
@@ -474,6 +546,10 @@ sum(mask_tagged, na.rm= TRUE)    # how many TRUE values in the mask?
 ```
 
 🗣 The result is a smaller data frame containing only the tagged birds. There are `NA` values, so we needed to use `na.rm = TRUE` to get an accurate count only the `TRUE` values. We can tell the mask contains `NA` values because `nrow(tagged_only)` (325) is larger than `sum(mask_tagged, na.rm=TRUE)` (300). 
+
+**💡 Test knit.** 
+
+---
 
 Logical mask indexing is a powerful way to subset data frames based on conditions, but missing values can make the results harder to interpret. When we compute `mask_tagged <- field_sightings[, "Status"] == "Tagged"`, any row where `Status` is `NA` produces `NA` (because `NA == "Tagged"` is unknown). That’s **missing value propagation**! This is where missing values carry through comparisons as `NA`.
 
@@ -496,16 +572,33 @@ row_idx_tagged <- which(field_sightings[, "Status"] == "Tagged")
 ## Alternative: Create mask_tagged then pass it to which() to get row indices
 # mask_tagged <- field_sightings[, "Status"] == "Tagged"   
 # row_idx_tagged <- which(mask_tagged)
+```
 
+✅ Check `head(row_idx_tagged)` to confirm that `which()` returned row numbers, not `TRUE`/`FALSE` values.
+
+```{r}
+# ✅  Check
+head(row_idx_tagged)
+```
+
+```{r}
 # Use the row indices to subset the data frame by rows that are tagged
 tagged_only <- field_sightings[row_idx_tagged, ]
+```
 
+✅ Compare `nrow(tagged_only)` to `length(row_idx_tagged)`. These should match because `row_idx_tagged` contains the exact row positions used to create `tagged_only`.
+
+```{r}
 # ✅  Check
 nrow(tagged_only) 
-head(tagged_only, 10)
+length(row_idx_tagged)
 ```
 
 🗣 `which()` returns the indices of the `TRUE` elements and omits positions where the test result is `FALSE` or `NA` values for the logical vector passed in. If the logical test can produce NA, `which()` drops unknowns.
+
+🧭 Use a plain logical mask when the condition is simple and you have already checked how missing values behave. Use `which()` when you want row positions and want to avoid carrying NA values into the subset.
+
+**💡 Test knit.** 
 
 ---
 
@@ -518,7 +611,6 @@ In conclusion, subsetting (`[ ]`) returns a piece of the original object, often 
 ## `[[` Operator
 
 There is another operator called the **double square bracket operator** (`[[`). `[` is the general subsetting operator. `[[` extracts exactly one component. `[` returns a subset of the same type as the original object. `[[` returns a single element inside the object (the “thing itself”), not a same-type subset. `[[ ]]` is extraction because it *pulls out* one component as the vector. 
-
 
 | Operator | Meaning |
 |---|---|
@@ -538,6 +630,10 @@ Extract a column as a vector
 field_sightings[["Band_Color"]]   # the column VECTOR
 ```
 
+> 🧐 **Notice:** This output is long. You can use `#` to "comment out" the code for code chunks that might make an HTML report difficult to read.
+
+✅ Check that the output is a vector of values, not a 1-column data frame. You should see the band color values printed directly.
+
 🗣 The result is an extraction from one column and returns a vector, values only.
 
 **Step 2**
@@ -549,7 +645,15 @@ Use the extracted vector inside the function `unique()`
 unique(field_sightings[["Band_Color"]])
 ```
 
+✅ Check that `unique()` returns each band color only once. This confirms that [`[ ]]` gave `unique()` the column values it needed.
+
 🗣 This shows the unique band colors in the `field_sightings` data frame. The `[[` operator allows you to extract the column as a vector, which is what `unique()` needs to work properly.
+
+🧭 If a function needs the values inside one column, extraction is usually the better move. Ask yourself: “Does the next function need a data frame, or does it need the column values themselves?”
+
+**💡 Test knit.** 
+
+---
 
 ## `$` Operator
 
@@ -565,6 +669,8 @@ There is another operator called the **dollar sign operator** (`$`) that is used
 # ⚡ Type this in your R Notebook
 field_sightings$Band_Color
 ```
+
+✅ Check that `$` returns the same kind of vector output as `field_sightings[["Band_Color"]]`.
 
 🗣 A vector is printed showing all element values from the column `Band_Color` from the `field_sightings` data frame. It is an extraction from one column and returns a vector, values only.
 
@@ -590,7 +696,15 @@ col_name <- "Band_Color"
 field_sightings$col_name      # ❌ looks for a column literally named "col_name"
 ```
 
+✅ Check the output. It should return `NULL` because there is no column named `col_name` in `field_sightings`.
+
 🗣 The `$` operator looks for a column literally named "col_name" and finds none, resulting in `NULL`.
+
+🧭 This is a method-choice decision. Use `$` when you are typing the column name directly. Use `[[ ]]` when the column name is stored in an object. If your code uses a stored column name and returns `NULL`, check whether you used `$` when you needed `[[ ]]`.
+
+**💡 Test knit.** 
+
+---
 
 So far, you’ve learned two different moves:
 
@@ -632,12 +746,14 @@ What if all the tagged birds in the `field_sightings` data frame were raised as 
 
 Make a copy of the data frame. 
 
-💡 **Tip:** Always make a copy of your data frame before you overwrite values. This way, if something goes wrong, you still have the original data intact.
-
 ```{r}
 # ⚡ Type this in your R Notebook
 reintroduction <- field_sightings          # copy
 ```
+
+✅ Check the Environment pane. You should now see both `field_sightings` and `reintroduction`.
+
+🧭 Making a copy is a protective habit. It gives you the freedom to experiment because the original data frame is still available for comparison if your replacement code does something unexpected.
 
 🗣 We will overwrite values using the copy dataframe, `reintroduction`.
 
@@ -650,6 +766,13 @@ Get row indices with `which()` to identify the rows where `Status` is "Untagged"
 indices_untagged <- which(reintroduction[ , "Status"] == "Untagged")
 ```
 
+✅ Run `head(indices_untagged)` to confirm that `which()` returned row numbers. These are the row positions where Status was "Untagged".
+
+```{r}
+# ✅  Check
+head(indices_untagged)
+```
+
 **Step 3**
 
 Overwrite using `df[rows, "col"] <- value`
@@ -659,18 +782,23 @@ Overwrite using `df[rows, "col"] <- value`
 reintroduction[indices_untagged, "Status"] <- "Wild Hatch"
 ```
 
-
 **Step 4**
 
-Verify that the values have been changed.
+✅ Verify that the values have been changed.
+
+Compare the two outputs. `reintroduction` should include "Wild Hatch". The original `field_sightings` should still include "Untagged".
 
 ```{r}
 # ✅  Check
 unique(reintroduction[, "Status"])       # modified data frame
-unique(field_sightings [, "Status"])     # original data frame 
+unique(field_sightings[, "Status"])     # original data frame 
 ```
 
 🗣 The `Status` column in the `reintroduction` data frame has been modified to replace "Untagged" with "Wild Hatch". 
+
+**💡 Test knit.** 
+
+---
 
 ## Insertion
 
@@ -693,6 +821,8 @@ Make a copy of the data frame.
 reintroduction2 <- field_sightings
 ```
 
+✅ Check that `reintroduction2` appears in the Environment pane. This is the copy you will modify.
+
 **Step 2**
 
 Store the new name of your column a variable 
@@ -701,6 +831,8 @@ Store the new name of your column a variable
 # ⚡ Type this in your R Notebook
 new_col <- "Tag_Flag"
 ```
+
+✅ Check that `new_col` contains the text "Tag_Flag". This object stores the new column name.
 
 **Step 3**
 
@@ -718,16 +850,23 @@ reintroduction2[idx_tagged, new_col] <- 1
 
 **Step 4**
 
-Verify that the new column has been added and values are correct.
+✅ Verify that the new column has been added and values are correct.
+
+Run `names(reintroduction2)` and confirm that `Tag_Flag` appears as a new column name.
 
 ```{r}
 # ✅  Check
-head(reintroduction2)
+names(reintroduction2)
 ```
+
+🧭 Feel free to click `reintroduction` and `reintroduction2` in your Environment pane to view the data frame and compare
+
 
 ### `$` Method
 
 If you are typing the column name directly (not stored in a variable), you can use $ to add the column.
+
+🎯**Goal**: Add a new column (a flag) using a column name typed literally with `$`.
 
 **Step 1**
 
@@ -737,6 +876,8 @@ Make a copy of the data frame.
 # ⚡ Type this in your R Notebook
 reintroduction3 <- field_sightings
 ```
+
+✅ Check that `reintroduction3` appears in the Environment pane. This is the copy you will modify.
 
 **Step 2**
 
@@ -754,14 +895,22 @@ reintroduction3[idx_tagged, "Tag_Flag"] <- 1
 
 **Step 3**
 
-Verify that the new column has been added and values are correct.
+✅ Verify that the new column has been added.
+
+Run `names(reintroduction3)` to confirm that `Tag_Flag` was added.
 
 ```{r}
 # ✅  Check
-head(reintroduction3)
+names(reintroduction3)
 ```
 
+---
+
 🗣 Use `[[ ]]` when the column name is stored in a variable (like new_col). Use `$` when you are typing the column name literally.
+
+🧭 Choose `$` when the new column name is typed directly into the code. Choose `[[ ]]` when the column name is stored in an object. Both methods can work, but they are not interchangeable in every situation.
+
+---
 
 # Code Chunk Options
 
@@ -794,19 +943,25 @@ cat(paste0(
 
 🎯 Experiment with these options in your R Notebook to find the best way to manage long outputs above to make your notes and practice reports more readable. Knit your notebook to HTML to see how it looks, then adjust the options and other formatting and re-knit to make sure your report is professional and ready to share with your research collaborators.  
 
+✅ Knit your notebook and look at the HTML output. Confirm whether the code, output, messages, and warnings appear or are hidden the way you intended.
+
+🧭 Code chunk options are report-design decisions. Use them to make your notebook easier to read, not to hide evidence that your code failed. If a warning or message helps explain what happened, keep it visible or memo it.
+
+---
+
 # Summary
 
-In Chapter 8, you learned three core indexing patterns in base R for working efficiently with data frames. 
+In Chapter 8, you learned how to use base R indexing to select, extract, and modify parts of a data frame. These skills are useful because most analysis does not use every row and every column at the same time. You need to be able to point R at the exact part of the data you want and check that R returned what you intended.
 
-First, you practiced subsetting with `[ ]` to pull out a smaller piece using the `df[rows, cols]` pattern (for example, selecting a range of rows, selecting a single column as a vector with `df[, "Band_Color"]`, or keeping it as a 1-column data frame with `df["Band_Color"]`). 
+You practiced subsetting with `[ ]` using the `df[rows, cols]` pattern. You selected rows and columns by position, selected columns by name, and used logical masks to keep rows that met a condition. You also learned that the output can change depending on how you index. Some code returns a data frame, while other code returns a vector, and that difference matters for what you can do next.
 
-Second, you practiced extraction with `[[ ]]` and `$` to get the column itself as a vector so it can be fed directly into functions, and you learned the key practical difference: df[[col_name]] works when the column name is stored in a variable, while `df$ColName` only works when you type the column name literally (so `df$col_name` does not mean “use the column named in `col_name`”). 
+You also practiced extraction with `[[ ]]` and `$`. Extraction pulls out one column as a vector, which is useful when you want to pass the column values into functions such as `unique()` or `table()`. You learned that `[[ ]]` is safer when the column name is stored in an object, while `$` is convenient when you type the column name directly.
 
-Third, you practiced subassignment/replacement by putting indexing on the left side of `<-` to overwrite specific cells (e.g., `df[rows, "col"] <- value)` and to add or replace entire columns (e.g., `df[[new_col]] <- value`, which creates the column if it doesn’t exist). 
+Logical masks introduced an important warning about missing values. When a comparison involves `NA`, the result can also be `NA`. That means a logical mask can contain `TRUE`, `FALSE`, and `NA`, which can make subsetting results harder to interpret. You practiced using `which()` to convert `TRUE` values into row positions and avoid carrying unknown values into the subset.
 
-You also learned why logical filtering can break in subtle ways due to `NA` propagation: comparisons like `df[, "Status"] == "Tagged"` produce `NA` where `Status` is `NA`, and subsetting with `df[mask, ]` can behave unexpectedly; a reliable fix is `which(df[, "Status"] == "Tagged")`, because `which()` keeps only `TRUE` positions and drops `FALSE` and `NA`. 
+Finally, you practiced subassignment by making a copy of a data frame, finding row positions with `which()`, and overwriting selected values. You also practiced adding a new column. These are important data-cleaning skills because real datasets often need corrections or new variables before they are ready for analysis.
 
-In the next chapter, you’ll extend filtering by combining conditions with `&`, `|`, and `%in%`.
+The main habit to carry forward is this: after indexing, extracting, or modifying data, verify what changed. Check the dimensions, names, object type, values, or summary output before moving on. In the next chapter, you will extend this work by filtering with more complex conditions using `&`, `|`, and `%in%`.
 
 # Chapter Terms
 
@@ -846,34 +1001,77 @@ In the next chapter, you’ll extend filtering by combining conditions with `&`,
 
 # 📝 Practice Space
 
-This Practice Space uses a new dataset to help you generalize your learning. While the column names differ, the indexing patterns are the same. You will use `Values_Transport_dplace.csv` using the columns `id`, `name`, `sub_case`, and `year`.
+This Practice Space uses a new dataset to help you generalize your learning. While the column names differ, the indexing patterns are the same. You will work with `Values_Transport_dplace.csv` focusing on the columns `id`, `name`, `sub_case`, and `year`.
 
-Open a new R Notebook and save it in your course folder as: chapter8_practice.Rmd. Edit the YAML so that it includes the title "Chapter 8 Practice", your name as the author, and the date. Remove the default content in the R Notebook. Create heading for each task. 
+Open a new R Notebook and save it in your course folder as: chapter8_practice.Rmd. 
 
-Work through each task, creating learning memos as you go. Outside of the code chunks, write a few sentences reflecting on what you learned from each task and how it connects to the concepts in this chapter.
+Fill in the blanks and answer the short prompts in your R Notebook. This Practice Space helps you check whether you can organize a notebook, read an R help page, use a function argument, and knit your work into an HTML report.
 
-If you use an LLM to help you understand the code, document your use transparently. Do not use LLMs to complete the tasks for you. The goal is to practice writing the code yourself and to reflect on your learning process.
+Before you begin:
+
+1. Create a new R Notebook in RStudio.
+2. Save it in your course folder as `chapter8_practice.Rmd`.
+3. Edit the YAML so that it includes:
+
+  - the title "Chapter 8 Practice", 
+  - your name as the author, and 
+  - the date. 
+  
+4. Remove the default content in the R Notebook. 
+
+5. Create heading for each task (1:9) using the `##` heading level.
+
+Complete each task in order.
+
+Add short memo notes throughout your notebook. Your memo notes should explain what your code does, what output you expected, what surprised or confused you, and what you would check next if something did not work.
+
+In this Practice Space, you will see two kinds of memo prompts:
+
+- 🗣 **Add Comments** asks you to explain what the code or output shows.
+- 🪞 **Reflect** asks you to explain your thinking process, what confused you, what changed in your understanding, or what strategy you would use next.
+
+These are there to help you practice the habit of writing memos as you work. **In each task, you can choose whether to answer one, two, or all memo prompts.**
+
+**Autonomy** is the habit of taking ownership of your thinking, choices, code, and learning process while using help responsibly. Show autonomy by checking your output, deciding what evidence shows your code worked, and explaining what you would check next if something did not work. If you encounter an error, document your **tenacity** by briefly noting what happened, what you tried, and how you fixed it or what still confuses you. Document how you troubleshot the error and what resource(s) you used to help you resolve the issue (**transparency**). Show **courage** by sharing your thinking process, even if it includes mistakes or confusion.
+
+You may quote AI output only when you clearly mark it as quoted text, either with quotation marks or a block quote using `>`. Then hand-type your own explanation of why you are including the quote.
+
+Before you finish, clear your Environment and run the notebook from top to bottom. Then knit to HTML to check that the notebook works and is formatted correctly.
 
 ## Task 1
 
-Load the CSV with `readr::read_csv()`
+**Load the CSV** with `readr::read_csv()`
 
 🎯 **Goal:** Load `Values_Transport_dplace.csv` into R using `read_csv()` and assign it to a variable called `values_transport`. 
+
+✅ Check the output from `list.files()` and confirm that `Values_Transport_dplace.csv` appears exactly as written.
 
 ```{r eval = FALSE}
 # ⚡ Type this in your R Notebook, Fill in the blanks
 # 1) Confirm the CSV is in the same folder as your R Notebook
 list.files()
+```
 
+
+```{r eval = FALSE}
+# ⚡ Type this in your R Notebook, Fill in the blanks
 # 2) Load required package, then read the CSV
 library(____)
 
 _____________ <- read_csv(__Values_Transport_dplace.csv__)
 ```
 
+✅ Check that `values_transport` appears in your Environment pane and that it is a data frame. 
+
+🗣 Add Comments: Explain what evidence showed you that the CSV file loaded successfully. 
+
+🪞 Reflect: If `values_transport` failed to be added to your environment, what would you check first?
+
+**💡 Test knit.** 
+
 ## Task 2
 
-📍 Positional subsetting (rows/cols by index number)
+📍 **Positional subsetting** (rows/cols by index number)
 
 🎯 **Goal:** Create `first_10_basic` containing the first 10 rows and columns 2 through 5 of `values_transport`. Use `df[rows, cols]`
 
@@ -882,11 +1080,23 @@ _____________ <- read_csv(__Values_Transport_dplace.csv__)
 first_10_basic <- _______[___, ___]
 ```
 
-🗣 How many rows and how many columns does `first_10_basic` have?
+```{r eval = FALSE}
+# ✅  Check
+dim(first_10_basic)
+head(first_10_basic)
+```
+
+✅ Check that first_10_basic has 10 rows and columns 2 through 5.
+
+🗣 Add Comments: Explain what the row index selected and what the column index selected in your code.
+
+🪞 Reflect: Why is checking the dimensions useful after subsetting? What could go wrong if you selected the wrong rows or columns and did not check?
+
+**💡 Test knit.** 
 
 ## Task 3
 
-🏷 Names/character subsetting (choose specific columns by name)
+🏷 **Names/character subsetting** (choose specific columns by name)
 
 🎯 **Goal:** Create `id_name_year` containing only the columns: `id`, `name`, and `year`.
 
@@ -901,11 +1111,15 @@ names(id_name_year)
 head(id_name_year)
 ```
 
-🗣 The `id_name_year` data frame contains only the columns `id`, `name`, and `year` from the original `values_transport` data frame.
+🗣 Add Comments: Explain how the output from `names(id_name_year)` confirms that your names indexing worked.
+
+🪞 Reflect: Why might names indexing be safer than positional indexing when selecting columns from a data frame?
+
+**💡 Test knit.** 
 
 ## Task 4
 
-🔍 Logical mask subsetting
+🔍 **Logical mask subsetting**
 
 🎯 **Goal:** Subset rows where `year` greater than or equal to 1900 using `which()` to ensure not `NA` problems.
 
@@ -916,19 +1130,24 @@ idx_1900 <- ____(values_transport[, ____] __ 1900)
 values_1900 <- values_transport[_____, ]
 ```
 
+✅ Check that idx_1900 contains row positions and that length(idx_1900) matches nrow(values_1900).
+
 ```{r eval = FALSE}
 # ✅  Check
-nrow(values_transport)  # original number of rows
-nrow(values_1900)      # number of rows where year >= 1900
+head(idx_1900)
+length(idx_1900)
+nrow(values_1900)
 ```
 
-🗣 The `values_1900` data frame contains only the rows from `values_transport` where the `year` column is greater than or equal to 1900. The number of rows in `values_1900` should be less than or equal to the number of rows in the original `values_transport` data frame. 
+🗣 Add Comments: Report how many entries have a year of 1900 or later. Explain which output gave you that number.
 
-🗣 How many entries have a year of 1900 or later?
+🪞 Reflect: Why does this task use `which()` instead of putting the logical condition directly inside the row position? What problem is `which()` helping you avoid?
+
+**💡 Test knit.** 
 
 ## Task 5
 
-⚠️ Explain Missing Value Propagation
+⚠️ **Explain Missing Value Propagation**
 
 🎯 **Goal:** In 3–5 sentences, explain what **Missing Value Propagation** means when you create a logical mask like:
 
@@ -936,24 +1155,45 @@ nrow(values_1900)      # number of rows where year >= 1900
 mask <- values_transport[, "year"] >= 1900
 ```
 
-If there were `NA` values in the `year` column. What will R return when a comparison involves NA (example: `NA >= 1900`)? Why can `NA` values in a logical mask cause confusing subsetting results with `[mask, ]`? How does `which()` help to avoid this issue?
+✅ Check that mask is a logical vector. It should contain `TRUE`, `FALSE`, and possibly `NA`.
+
+```{r eval = FALSE}
+# ✅  Check
+unique(mask)
+```
+
+🪞 Reflect: In 3–5 sentences, explain what missing value propagation means when you create a logical mask like `mask <- values_transport[, "year"] >= 1900`. What will R return when a comparison involves `NA`, such as `NA >= 1900`? Why can `NA` values in a logical mask cause confusing subsetting results with `[mask, ]`? How does `which()` help avoid this issue?
+
+**💡 Test knit.** 
 
 ## Task 6
 
-🧪  Extraction
+🧪  **Extraction**
 
-🎯 **Goal:** Extract the `year` column as a vector using `[[ ]]`, then run `table()`.
+🎯 **Goal:** Extract the `year` column as a vector using `[[ ]]`, storing it as `year__vector`.
 
 ```{r eval = FALSE}
 # ⚡ Type this in your R Notebook, Fill in the blanks
-_____(values_transport__"year"__)
+_____ <- values_transport__"year"__
 ```
 
-🗣 Comment on the output of `unique(year_vector)`. What do you notice about possible values in the `year` column in the `values_transport` data frame?
+✅ Check that `year_vector` is a vector, not a one-column data frame.
+
+```{r eval = FALSE}
+# ✅ Check
+table(_____)
+unique(_____)
+```
+
+🗣 Add Comments: Comment on the output of `table(year_vector)` or `unique(year_vector)`. What do you notice about possible values in the year column?
+
+🪞 Reflect: Why does extraction with `[[ ]]` make sense here? What kind of object does `table()` need: a data frame or the values inside one column?
+
+**💡 Test knit.** 
 
 ## Task 7
 
-🛠 Overwrite
+🛠 **Overwrite**
 
 **Scenario**: You found four data-entry errors in the year column. After reviewing field notes, you confirm these corrections:
 
@@ -971,13 +1211,24 @@ _____(values_transport__"year"__)
 # ⚡ Type this in your R Notebook, Fill in the blanks
 # Step 1: Make a copy of the data frame
 ____________ <- ___________
+```
 
+```{r eval = FALSE}
 # Step 2: Identify row indices for each incorrect value
 idx_621 <- _____(transport_year_clean[, "year"] == -621)
 idx_1750 <- _____(transport_year_clean[, "year"] == -1750)
 idx_110 <- _____(transport_year_clean[, "year"] == 110)
 idx_1292 <- _____(transport_year_clean[, "year"] == 1292)
 
+# ✅ Check
+idx_621
+idx_1750
+idx_110
+idx_1292
+```
+
+
+```{r eval = FALSE}
 # Step 3: Overwrite the incorrect values with the correct ones
 transport_year_clean[______, "year"] <- 1821
 transport_year_clean[______, "year"] <- 1750
@@ -985,29 +1236,52 @@ transport_year_clean[______, "year"] <- 1910
 transport_year_clean[______, "year"] <- 1892
 ```
 
+✅  Compare the unique year values in `transport_year_clean` to the original `values_transport` to confirm that the incorrect values have been replaced and that the original data frame still contains the incorrect values.
+
 ```{r eval = FALSE}
 # ✅  Check
 unique(transport_year_clean[["year"]])
+unique(values_transport[["year"]])
 ```
 
-🗣 Explain why we (1) made a copy first and (2) used which() to find row indices before overwriting.
+🗣 Add Comments: Explain why you made a copy before overwriting values and why `which()` was useful for finding the row positions.
+
+🪞 Reflect: What would you check if one of the incorrect year values still appeared after your replacement code? What would you check if the original `values_transport` changed too?
+
+**💡 Test knit.** 
 
 ## Task 8
 
-🎯 Save your workspace (`chapter8_practice.RData`) for submission. 
-This file should contain: 
+🎯 Save your workspace (`chapter8_practice.RData`). 
+
+✅  Your environment should contain: 
 
 - `values_transport` (original data frame loaded from CSV)
 
 - `first_10_basic` (subset with first 10 rows and columns 2-5)
 
-- `id_name_year` (subset with only id, name, year columns)
+- `id_name_year` (subset with only `id`, `name`, `year` columns)
 
-- `values_1900` (subset with rows where year >= 1900)
+- `values_1900` (subset with rows where `year >= 1900`)
 
 - `transport_year_clean` (data frame with corrected year values)
 
-- `mask` (logical vector for year >= 1900)
+- `mask` (logical vector for `year >= 1900`)
+
+🧭 If you have extra objects in your environment, you can click the 🧹 **broom icon** to clear them. Then re-run all chunks and verify environment, and then save your workspace. 
+
+Option 1. Use `save.image()` to save your workspace as `chapter8_practice.RData` in your course folder.
+
+```{r eval = FALSE}
+# ⚡ Type this in your R Notebook
+save.image("chapter8_practice.RData")
+```
+
+Option 2. Press the 💾 **disk icon** in the Environment pane to save your workspace.
+
+✅  Check that `chapter8_practice.RData` appears in your module folder.
+
+🪞 Reflect: Why is it useful to save both the `.Rmd` notebook and the `.RData` workspace? What does each file show about your work?
 
 ## Task 9
 
@@ -1019,8 +1293,12 @@ Click the 🧹 **broom icon** in the Environment pane to clear objects.
 **Step 2: Run everything top-to-bottom.**  
 Use **Run → Run All** to execute every chunk in order.
 
-**Step 3: Save and submit.**  
-After your notebook runs without errors, save your notebook (`.Rmd`) and knit to HTML (`.HTML`) for submission to Canvas, as directed. 
+✅ Check that the notebook runs from top to bottom without errors after you clear the Environment. This confirms that your notebook contains the code needed to rebuild your work.
 
-💡 **Tip:** After you knit, look in your course folder for two files with the same name. One file ends in .Rmd and one ends in .html. The HTML usually has a internet browser icon. You can check which is which by double clicking to open them. One opens in R and the other usually opens in a web browser. Upload the .html file. Before submission, check that the uploaded file ends in .html.
+**Step 3: Save**  
+After your notebook runs without errors, save your notebook (`.Rmd`) and knit to HTML (`.HTML`). 
+
+✅ After you knit, look in your course folder for two files with the same name. One file ends in `.Rmd` and one ends in `.html`. 
+
+🧭  The HTML usually has a internet browser icon. You can check which is which by double clicking to open them. One opens in R and the other usually opens in a web browser. Upload the .html file. Before submission, check that the uploaded file ends in .html.
 

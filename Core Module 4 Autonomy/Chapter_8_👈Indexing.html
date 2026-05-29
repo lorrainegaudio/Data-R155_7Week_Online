@@ -1632,97 +1632,120 @@ display: none;
 <h1 class="title toc-ignore">Chapter 8</h1>
 <h3 class="subtitle">👈 Indexing</h3>
 <h4 class="author">by Lorraine Gaudio</h4>
-<h4 class="date">Version May 05, 2026</h4>
+<h4 class="date">Version May 28, 2026</h4>
 
 </div>
 
 
 <div id="overview" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> Overview</h1>
-<p>Bracket indexing is one of the main ways you “point R” at the exact
-rows and columns you need. Real analysis rarely uses an entire dataset
-at once. Instead, analysts will select columns, filter rows, recode
-values or create new columns using subsetting, extraction, and
-insertion.</p>
-<p>In this chapter’s guided activity you’ll practice those skills using
-the <code>field_sightings</code> dataset, a simulated bird-banding
-dataset where birds are recorded as <strong>Tagged</strong> or
-<strong>Untagged</strong> and tagged birds can have a band color. The
-data frame has two columns: <code>Status</code> and
-<code>Band_Color</code>. Then, you’ll use
-<code>Values_Transport_dplace.csv</code> in Practice Space to generalize
-your understanding, applying your new skills on a different dataset.</p>
+<p>Bracket indexing is one of the main ways you tell R exactly which
+rows, columns, or values you want to use. Real data analysis rarely uses
+an entire dataset all at once. Analysts often need to select a few
+columns, filter rows, extract one column for a summary, correct
+data-entry problems, or create a new column for later analysis.</p>
+<p>In this chapter, you will practice those skills using the
+<code>field_sightings</code> dataset, a simulated bird-banding dataset
+where birds are recorded as Tagged or Untagged, and tagged birds can
+have a band color. The data frame has two columns: <code>Status</code>
+and <code>Band_Color</code>. In the Practice Space, you will apply the
+same indexing patterns to <code>Values_Transport_dplace.csv</code> using
+columns such as <code>id</code>, <code>name</code>,
+<code>sub_case</code>, and <code>year</code>.</p>
+<p>These skills matter because indexing is how you point R at the part
+of the data you actually mean. If you select the wrong rows, extract the
+wrong kind of object, or overwrite values without checking first, later
+analysis can become unreliable. This chapter helps you build the habit
+of checking what your code returned before moving on.</p>
 <p>By the end of Chapter 8, you will be able to:</p>
 <ul>
-<li><p>📥 Use a loaded CSV into R as a data frame.</p></li>
-<li><p>🧩 Apply the subsetting template to select data by 📍 positions,
-🏷️ names, and 🔍 logical mask.</p></li>
-<li><p>⚠️ Explain missing value propagation in logical masks.</p></li>
-<li><p>🧪 Extract one column as “the thing itself” using [[ ]] or $ so
-you can pass it into functions like unique() or table().</p></li>
-<li><p>🛠️ Experiment with subassignment methods to overwrite and insert
-values.</p></li>
-<li><p>🎯 Use code chunk options to manage long outputs in your R
-Notebook.</p></li>
+<li>📥 Use a loaded CSV file as a data frame in R. 🧩 Apply the
+subsetting template <code>df[rows, cols]</code> to select data by 📍
+position, 🏷️ name, and 🔍 logical mask.</li>
+<li>🔎 Check whether your indexing code returned the rows, columns,
+object type, and values you expected.</li>
+<li>⚠️ Explain how missing values can propagate through logical masks
+and create confusing filtering results.</li>
+<li>🧭 Use <code>which()</code> to turn logical conditions into row
+positions when you want to avoid carrying <code>NA</code> values into a
+subset.</li>
+<li>🧪 Extract one column as “the thing itself” using <code>[[ ]]</code>
+or <code>$</code> so you can pass the values into functions like
+<code>unique()</code> or <code>table()</code>.</li>
+<li>🛠️ Use subassignment to overwrite selected values in a copied data
+frame and insert a new column.</li>
+<li>🎯 Use code chunk options to manage long outputs and make your R
+Notebook easier to read.</li>
 </ul>
 </div>
-<div id="set-up" class="section level1" number="2">
-<h1><span class="header-section-number">2</span> Set Up</h1>
-<p>To begin this guided activity, you’ll want to</p>
-<ol style="list-style-type: decimal">
-<li><p>Download <code>field_sightings.csv</code> and
-<code>Values_Transport_dplace.csv</code> from Canvas and save them in
-the same folder as your course R Notebooks.</p></li>
-<li><p>Open, format, and save an R Notebook in your course
-folder.</p></li>
-</ol>
-<div id="download-and-save" class="section level2" number="2.1">
-<h2><span class="header-section-number">2.1</span> Download and
-Save</h2>
-<p>The final folder structure for this chapter will look like this:</p>
-<pre><code>  -`Intro_to_R/`
-  -- `chapter8_notes.Rmd`
-  -- `chapter8_practice.Rmd` 
-  -- `Values_Transport_dplace.csv`
-  -- `field_sightings.csv`</code></pre>
-</div>
-<div id="open-an-r-notebook" class="section level2" number="2.2">
-<h2><span class="header-section-number">2.2</span> Open an R
+<div id="activity-setup" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Activity Setup</h1>
+<p>🧭 Chapter 7 introduced you folder organization and how to import
+data into R. This section will lightly review what you learned,
+providing you with additional practice. If you need a more detailed
+refresher on how to import data, start by reviewing Chapter 7 📤
+Importing Data.</p>
+<div id="create-notebook" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Create/Save Chapter 8
 Notebook</h2>
-<p>To follow along Chapter 8, 🎯 please open a new R Notebook in your
-course folder named <code>chapter8_notes.Rmd</code> and add a date to
-the YAML header. While your here, <strong>include your name as the
-author</strong>! See the example of a YAML below. Use this document to
-take notes and practice the chapter content.</p>
+<p>🎯 Create an R Notebook, edit the YAML, and save in
+<code>Module_4/</code></p>
 <ol style="list-style-type: decimal">
-<li><p>Open RStudio → File → New File → R Notebook.</p></li>
-<li><p>Save it in your course folder as:
-<code>chapter8_notes.Rmd</code>.</p></li>
-<li><p>In your YAML header at the top:</p></li>
+<li><p>Open an R Notebook: Go to
+<code>File &gt; New File &gt; R Notebook</code></p></li>
+<li><p>Edit the YAML Header and delete the default text. The YAML header
+should look like this:</p></li>
 </ol>
 <pre class="yaml"><code>---
-title: &quot;Chapter 8 Practice: Bracket Indexing&quot;
-author: &quot;Your Name Here&quot;
+title: &quot;Chapter 8 Notes&quot;
+author: &quot;[Your Name]&quot;
 date: &quot;`r Sys.Date()`&quot;
 output: html_notebook
 ---</code></pre>
-<ol start="4" style="list-style-type: decimal">
-<li><p>Remove the default content in the R Notebook and replace it with
-your notes and code as you work through the chapter.</p></li>
-<li><p>Use headings as you work. At minimum, create section headings
-that match the chapter structure (e.g., <code>## Load Data</code>,
-<code>## Bracket Indexing</code>, <code>## Subsetting</code>,
-<code>## Extraction</code>, <code>## Insertion</code>. This creates a
-readable outline.</p></li>
-<li><p>Memo as you go.</p></li>
+<ol start="3" style="list-style-type: decimal">
+<li><p>Change <code>[Your Name]</code> to your actual name and clear the
+default text in the body of the notebook.</p></li>
+<li><p>Save your R Notebook <code>File</code> &gt;
+<code>Save As...</code>, choose your course folder, name the file
+<code>chapter8_notes</code>.</p></li>
 </ol>
+<p>Suggested file structure:</p>
+<pre class="text"><code>Intro_to_R/
+└── Module_4/
+    ├── chapter8_notes.Rmd   # Add the guided activity file to your `Module_4/` folder
+    ├── chapter7_practice.Rmd
+    ├── Values_Transport_dplace.csv
+    └── car_prices.xlsx</code></pre>
+</div>
+<div id="downloading-data" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Downloading Data</h2>
+<p>You will need two data files for this chapter:</p>
 <ul>
-<li><p>Outside chunks: write normal text.</p></li>
-<li><p>Inside chunks: use <code>#</code> for any code comments
-(otherwise R tries to run the text).</p></li>
-<li><p>If you hit an error: keep the broken line commented out and write
-a one-sentence note about what you changed to fix it.</p></li>
+<li><code>Values_Transport_dplace.csv</code></li>
+<li><code>field_sightings.csv</code></li>
 </ul>
+<p>You should already have <code>Values_Transport_dplace.csv</code> in
+your folder. Find the <code>field_sightings.csv</code> data file in the
+<strong>👈 Indexing Guided Activity</strong> instructions page.</p>
+<p>🎯 Click the download link. <strong>Do not open the downloaded
+csv.</strong></p>
+<p>🎯 Move the CSV into your <code>Module_4/</code> folder with your Rmd
+file.</p>
+<pre class="text"><code>Intro_to_R/
+└── Module_4/
+    ├── chapter8_notes.Rmd   
+    ├── chapter7_practice.Rmd
+    ├── Values_Transport_dplace.csv
+    ├── car_prices.xlsx
+    └── field_sightings.csv   # Add the CSV file to your `Module_4/` folder</code></pre>
+<p>🧭 If your folder has a different structure, that is okay as long as
+you can explain where your Rmd file is saved and how to address the file
+path to the data files. The important habit is knowing where your work
+lives before you try to load data. For novices, it is easiest to place
+the data files in the same folder as the Rmd file.</p>
+<hr />
+<p>Now that you have your R Notebook set up and the data files in place,
+you are ready to load the data.</p>
 </div>
 <div id="load-data" class="section level2" number="2.3">
 <h2><span class="header-section-number">2.3</span> Load Data</h2>
@@ -1732,7 +1755,7 @@ theme is based on the pretend situation where field biologists observed
 and recorded a population of species of birds. Bird banding is a
 scientific method used to track and study individual birds, providing
 valuable data on their movements, behavior, and population dynamics. In
-our senerio, most birds observed were “Untagged,” but a small number
+our scenario, most birds observed were “Untagged,” but a small number
 have been previously captured and marked with colored leg bands,
 “Tagged”. The color of the bands might provide information about the
 bird’s history, such as where it was banded or its age.</p>
@@ -1745,19 +1768,24 @@ columns:</p>
 “None.” If it is tagged, the value is one of several possible band
 colors.</p></li>
 </ul>
-<p>🎯 <strong>Goal:</strong> Download the
-<code>field_sightings.csv</code> file from Canvas and save it in the
-<em>same</em> folder as your R Notebook. Then, load the data into R.</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook
 # 1) Confirm the CSV is in the same folder as your R Notebook
 list.files()</code></pre>
+<p>✅ Look in the output from <code>list.files()</code>. Confirm that
+<code>field_sightings.csv</code> appears exactly as written, including
+the underscore and <code>.csv</code> ending.</p>
+<p>🧭 If <code>field_sightings.csv</code> is not listed, check whether
+the file is still in <code>Downloads/</code>, whether it was renamed, or
+whether it was saved in a different folder. Your next move is to make
+the file visible to R in your Rmd, then run <code>list.files()</code>
+again.</p>
 <p>🎯 <strong>Goal:</strong> Load <code>field_sightings.csv</code> into
 R using <code>read_csv()</code> and assign it to a variable called
-<code>feild_sightings</code>. Recall that you need to library
+<code>field_sightings</code>. Recall that you need to library
 <code>readr</code> before you can use <code>read_csv()</code>.</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook
 library(readr) # Load the readr package for reading CSV files</code></pre>
-<pre><code>## Warning: package &#39;readr&#39; was built under R version 4.5.2</code></pre>
+<pre><code>## Warning: package &#39;readr&#39; was built under R version 4.5.3</code></pre>
 <pre class="r"><code>field_sightings &lt;- read_csv(&quot;field_sightings.csv&quot;)</code></pre>
 <pre><code>## Rows: 4470 Columns: 2
 ## ── Column specification ────────────────────────────────────────────────────────
@@ -1766,12 +1794,30 @@ library(readr) # Load the readr package for reading CSV files</code></pre>
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<p>🗣 This code uses the <code>read.csv()</code> function to read the CSV
+<p>🗣 This code uses the <code>read_csv()</code> function to read the CSV
 file named “field_sightings.csv” and assigns the resulting data frame to
 a variable called <code>field_sightings</code>. It it normal to see
 messages with you load packages.</p>
-<p>Feel free to click <code>field_sightings</code> in your Environment
-pane to view the data frame and get a sense of what it looks like.</p>
+<p>✅ Look in the Environment pane for <code>field_sightings</code>.
+Then run <code>head(field_sightings)</code> to confirm that the data has
+two columns, <code>Status</code> and <code>Band_Color</code>.</p>
+<pre class="r"><code># ✅ Check
+head(field_sightings)</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["Status"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Band_Color"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"Untagged","2":"None"},{"1":"Untagged","2":"None"},{"1":"Untagged","2":"None"},{"1":"Untagged","2":"None"},{"1":"Untagged","2":"None"},{"1":"Untagged","2":"None"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>🧭 Feel free to click <code>field_sightings</code> in your
+Environment pane to view the data frame and get a sense of what the data
+looks like.</p>
+<p><strong>💡 Test knit.</strong> Before you move on, test knit your R
+Notebook to make sure everything is working. Check that the formatting
+is working as expected (e.g., headings appear as heading font, code
+appears in code chunks, and memos are paragraph text)</p>
+<hr />
+<p>With your data loaded in to the environment, you are ready to start
+practicing subsetting, extraction, and replacement techniques in R.</p>
 </div>
 </div>
 <div id="subsetting" class="section level1" number="3">
@@ -1800,7 +1846,7 @@ indexing values at <code>0</code>.</p>
 <h3><span class="header-section-number">3.1.1</span> Vector</h3>
 <p>In Chapter 3, you practiced using the <strong>indexing
 operator</strong> with positional indexing to extract elements from
-vectors. Let’s review that briefly before we move on to data frames.</p>
+vectors. Let’s review that briefly before we move on to <a href="#data-frame">data frames</a>.</p>
 <p>You learned that the basic pattern for <strong>positional
 indexing</strong> is <code>x[i]</code>, where <code>x</code> is the
 vector and <code>i</code> is the index (or indices) of the elements you
@@ -1808,7 +1854,11 @@ want to extract. A position used to identify elements in an object.</p>
 <p>🎯 <strong>Goal:</strong> Practice using <code>[ ]</code> with
 positional indexing on vectors.</p>
 <pre class="r"><code># 📖 Review
-z &lt;- c(10, 20, 30, 40, 50) # create a vector</code></pre>
+z &lt;- c(10, 20, 30, 40, 50) # create a vector
+
+# ✅  Check
+print(z)</code></pre>
+<pre><code>## [1] 10 20 30 40 50</code></pre>
 <pre class="r"><code># 📖 Review
 z[1]       </code></pre>
 <pre><code>## [1] 10</code></pre>
@@ -1844,6 +1894,8 @@ second column</p></li>
 frame.</p>
 <p>🎯 <strong>Goal:</strong> Print the first six rows of the
 <code>field_sightings</code> data frame using the indexing operator.</p>
+<p>🧭 Before running a bracket-indexing line below, pause and ask: “How
+do I know that this is choosing rows?”</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook
 field_sightings[1:6, ]  </code></pre>
 <div data-pagedtable="false">
@@ -1851,7 +1903,15 @@ field_sightings[1:6, ]  </code></pre>
 {"columns":[{"label":["Status"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Band_Color"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"Untagged","2":"None"},{"1":"Untagged","2":"None"},{"1":"Untagged","2":"None"},{"1":"Untagged","2":"None"},{"1":"Untagged","2":"None"},{"1":"Untagged","2":"None"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<p>🗣 Shows first six rows, all columns.</p>
+<p>💡 <strong>Tip</strong>: I remember bracket indexing by watching the
+comma. In <code>df[rows, columns]</code>, the comma divides the row
+instruction from the column instruction. The left side answers “which
+rows?” The right side answers “which columns?” <strong>In
+<code>df[rows, cols]</code>, the comma is the divider.</strong></p>
+<p>✅ Check that the output has 6 rows and both columns. The blank space
+after the comma means “keep all columns.”</p>
+<p>🗣 This shows the first six rows of <code>field_sightings</code> while
+keeping all columns.</p>
 </div>
 <div id="head-function-comparison" class="section level3" number="3.1.3">
 <h3><span class="header-section-number">3.1.3</span> <code>head()</code>
@@ -1875,11 +1935,18 @@ head(field_sightings, n = 3)</code></pre>
 {"columns":[{"label":["Status"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Band_Color"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"Untagged","2":"None"},{"1":"Untagged","2":"None"},{"1":"Untagged","2":"None"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
+<p>✅ Confirm that the output shows exactly 3 rows and the same column
+names as the full data frame.</p>
 <p>🗣 <code>head()</code> is commonly used to get a quick orientation of
 the dataset after loading.</p>
 <p><code>head()</code> does not do arbitrary extraction or subsetting.
 <code>head()</code> is a function that provides a convenient way to view
 the first few rows of a data frame.</p>
+<p>🧭 Use <code>head()</code> when you want a quick look at the
+beginning of a dataset. Use bracket indexing when you need to select
+specific rows, columns, or conditions.</p>
+<p><strong>💡 Test knit.</strong></p>
+<hr />
 <p>Bracket indexing allows for flexible and specific subsetting of the
 data frame based on row <em>and</em> column indices. <code>[</code>
 works on almost everything and supports rich indexing and is commonly
@@ -1891,14 +1958,15 @@ writing analysis code.</p>
 <div id="names-indexing" class="section level2" number="3.2">
 <h2><span class="header-section-number">3.2</span> 🏷 Names Indexing</h2>
 <p>You can also use <strong>names indexing</strong> (also referred to as
-character indexing) to select columns by their names instead of their
-positions. This often makes more readable code and is less error-prone,
-especially when the order of columns might change or when you have many
-columns.</p>
+<strong>character indexing</strong>) to select columns by their names
+instead of their positions. This often makes more readable code and is
+less error-prone, especially when the order of columns might change or
+when you have many columns.</p>
 <div id="vector-1" class="section level3" number="3.2.1">
 <h3><span class="header-section-number">3.2.1</span> Vector</h3>
 <p>In Chapter 3, you created the <code>nerdy_palette</code> vector and
-then used names indexing to return the hexadecimal color code.</p>
+then used <strong>names indexing</strong> to return the hexadecimal
+color code.</p>
 <pre class="r"><code># 📖 Review
 # Create nerdy_palette
 nerdy_palette &lt;- c(
@@ -1914,7 +1982,7 @@ nerdy_palette &lt;- c(
   &quot;Impossible Green&quot; = &quot;#4D9E68&quot;
   )
 
-# Use names indexing to return the hex code for Octarine
+# ✅ Use names indexing to return the hex code for Octarine
 nerdy_palette[&quot;Octarine&quot;]</code></pre>
 <pre><code>##  Octarine 
 ## &quot;#7F00FF&quot;</code></pre>
@@ -1923,8 +1991,8 @@ retrieved from the <code>nerdy_palette</code> vector using its name.</p>
 </div>
 <div id="data-frame-1" class="section level3" number="3.2.2">
 <h3><span class="header-section-number">3.2.2</span> Data Frame</h3>
-<p>A common use of names indexing is to select a column from a data
-frame by its name.</p>
+<p>A common use of names indexing is to <strong>select a column by its
+name</strong>.</p>
 <p>🎯 <strong>Goal:</strong> Use names indexing to return the band
 colors in the <code>field_sightings</code> data frame.</p>
 <p><strong>Methods A:C</strong> show different ways to subset a column
@@ -1932,7 +2000,8 @@ with <code>[ ]</code>.</p>
 <p><strong>Method A</strong></p>
 <p>📜 The SYNTAX: <code>x[i]</code></p>
 <pre class="r"><code># ⚡ Type this in your R Notebook
-field_sightings[&quot;Band_Color&quot;]         # 1-column data frame</code></pre>
+field_sightings[&quot;Band_Color&quot;]         # 1-column DATA FRAME</code></pre>
+<p>✅ Check the output structure.</p>
 <p>🗣 A 1-column data frame is printed showing all row values in the
 column <code>Band_Color</code> the <code>field_sightings</code> data
 frame. It is a subset of one column, keeping that data-frame
@@ -1942,6 +2011,7 @@ structure.</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook
 # Example B
 field_sightings[, &quot;Band_Color&quot;]   # usually the column VECTOR </code></pre>
+<p>✅ Check the output structure.</p>
 <p>🗣 A vector is printed showing all values from the column
 <code>Band_Color</code> the <code>field_sightings</code> data frame. The
 result is a subset from one column and returns a vector, values
@@ -1950,20 +2020,32 @@ only.</p>
 <p>📜 The SYNTAX: <code>x[i, j, drop = FALSE]</code></p>
 <pre class="r"><code># ⚡ Type this in your R Notebook
 # Example C
-field_sightings[, &quot;Band_Color&quot;, drop = FALSE]    # 1-column data frame</code></pre>
+field_sightings[, &quot;Band_Color&quot;, drop = FALSE]    # 1-column DATA FRAME</code></pre>
+<p>✅ Check the output structure.</p>
 <p>🗣 A 1-column data frame is printed showing all row values in the
 column <code>Band_Color</code> the <code>field_sightings</code> data
 frame. It is a subset of one column, keeping that data-frame
 structure.</p>
-<p>💡 <strong>Tip:</strong> Students often forget to put the column name
-in quotes when using names indexing. If you forget the quotes, R will
-look for an object named <code>Band_Color</code> in your environment and
+<p>⚠️ Common Pain Point: Students often forget to put the column name in
+quotes when using names indexing. If you forget the quotes, R will look
+for an object named <code>Band_Color</code> in your environment and
 return an error if it doesn’t find one. Always remember to put column
 names in quotes when using <strong>names indexing</strong> with
 <code>[ ]</code>.</p>
+<p>🧭 The autonomous move here is not memorizing three methods as
+separate tricks. It is deciding what kind of output you need next. If
+you need a smaller data frame, keep the data-frame structure. If you
+need values to pass into a function, extract the column as a vector.</p>
+<p><strong>💡 Test knit.</strong></p>
+<hr />
+<p>So far, you’ve learned about positional indexing and names indexing.
+Both of these methods rely on you knowing the positions or names of the
+elements you want to subset. But what if you want to subset based on a
+condition, like keeping only rows where <code>Status</code> is “Tagged”?
+This is where <strong>logical mask indexing</strong> comes in.</p>
 </div>
 </div>
-<div id="logical-mask-indexing" class="section level2" number="3.3">
+<div id="logical-mask" class="section level2" number="3.3">
 <h2><span class="header-section-number">3.3</span> 🔍 Logical Mask
 Indexing</h2>
 <p>A <strong>logical mask</strong> is the logical vector you use to
@@ -1991,6 +2073,10 @@ mask &lt;- number_list &lt;= 20
 # ✅  Check
 print(mask)</code></pre>
 <pre><code>## [1]  TRUE FALSE  TRUE FALSE  TRUE FALSE</code></pre>
+<p>✅ Check that <code>mask</code> has the same number of values as
+<code>number_list</code>. Each value should be <code>TRUE</code> or
+<code>FALSE</code>, depending on whether the matching number is less
+than or equal to 20.</p>
 <p>🗣 This prints the <code>mask</code>. The mask itself is not a subset
 of the original vector. The logical vector indicates which values in
 <code>number_list</code> are less than or equal to 20.</p>
@@ -2002,6 +2088,9 @@ smaller &lt;- number_list[mask]
 # ✅  Check
 print(smaller)</code></pre>
 <pre><code>## [1] 10  5 15</code></pre>
+<p>✅ Check that smaller contains only the values from
+<code>number_list</code> where the mask was <code>TRUE</code>: 10, 5,
+and 15.</p>
 <p>🗣 This keeps only the values where the condition is <code>TRUE</code>
 (10, 5, 15).</p>
 <p>You can also pass the mask directly into the indexing operator
@@ -2020,11 +2109,7 @@ vector (a “mask” of <code>TRUE</code>/<code>FALSE</code> values) to
 select elements from a vector or rows from a data frame.</p>
 <p>R keeps the values where the mask is <code>TRUE</code> and drops the
 values where the mask is <code>FALSE</code>.</p>
-<p>Whether you create an object to store the logical mask (example 1) or
-pass the logical condition directly into the indexing operator (example
-2), the result is the same: you get a subset of the original vector that
-meets the specified condition.</p>
-<p>Let’s see this in action in a dataframe.</p>
+<p><strong>💡 Test knit.</strong></p>
 <hr />
 <p>📖 <strong>Review:</strong> Chapter 3 introduced comparison
 operators.</p>
@@ -2075,6 +2160,11 @@ operators.</p>
 </tbody>
 </table>
 <hr />
+<p>🧭 Storing the mask first (example 1) is useful when you want to
+inspect or reuse the logic. Putting the condition directly inside
+<code>[ ]</code> (example 2) is useful when the condition is short and
+easy to read. Both are valid.</p>
+<p>Let’s see this in action in a dataframe.</p>
 </div>
 <div id="data-frame-2" class="section level3" number="3.3.2">
 <h3><span class="header-section-number">3.3.2</span> Data Frame</h3>
@@ -2083,8 +2173,9 @@ the logical mask <em>usually</em> goes in the <strong>rows</strong>
 position of <code>df[rows, cols]</code>.</p>
 <p>The mask can be <code>TRUE</code>/<code>FALSE</code>/<code>NA</code>
 for each row. When you use the mask in <code>df[mask, ]</code>, R keeps
-only the rows where the mask is <code>TRUE</code>and <code>NA</code> if
-there are missing values.</p>
+rows where the mask is TRUE. If the mask contains <code>NA</code>, those
+unknown positions can also appear in the result, which can make the
+subset larger than the number of definite <code>TRUE</code> values.</p>
 <p>🎯 <strong>Goal:</strong>: Keep only rows where the bird is tagged
 using <code>[ ]</code>.</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook
@@ -2095,6 +2186,9 @@ value in the <code>Status</code> column is equal to “Tagged”. A single
 <code>=</code> is used for assigning values inside some function calls
 (like <code>na.rm = TRUE</code>) and naming arguments. It is not used to
 test equality.</p>
+<p>✅ Check the first few values with <code>head(mask_tagged)</code>.
+You should see a logical vector containing <code>TRUE</code>,
+<code>FALSE</code>, and possibly <code>NA</code>.</p>
 <pre class="r"><code># ✅  Check
 head(mask_tagged)</code></pre>
 <pre><code>##      Status
@@ -2112,9 +2206,12 @@ head(mask_tagged)</code></pre>
 tagged_only &lt;- field_sightings[mask_tagged, ]
 
 # Alternative: pass the logical mask directly into [ ]
-# tagged_only &lt;- field_sightings[field_sightings[, &quot;Status&quot;] == &quot;Tagged&quot;, ]  
-
-# ✅  Check
+# tagged_only &lt;- field_sightings[field_sightings[, &quot;Status&quot;] == &quot;Tagged&quot;, ]</code></pre>
+<p>✅ Look at the Status column in the first few rows of
+<code>tagged_only</code>. You should mostly see “Tagged”, but if the
+mask contained <code>NA</code>, you may also see rows with missing
+values.</p>
+<pre class="r"><code># ✅  Check
 head(tagged_only)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
@@ -2123,6 +2220,11 @@ head(tagged_only)</code></pre>
 </div>
 <p>🗣 This subsets the data frame by keeping only rows where the mask is
 <code>TRUE</code>.</p>
+<p>✅ Compare the three counts. <code>nrow(field_sightings)</code> tells
+you the size of the original data frame.<code>nrow(tagged_only)</code>
+tells you how many rows were returned by the subset.
+<code>sum(mask_tagged, na.rm = TRUE)</code> tells you how many rows were
+definitely <code>TRUE</code>.</p>
 <pre class="r"><code># ✅  Check
 nrow(field_sightings)            # how many rows in the original data frame?</code></pre>
 <pre><code>## [1] 4470</code></pre>
@@ -2136,6 +2238,8 @@ birds. There are <code>NA</code> values, so we needed to use
 <code>TRUE</code> values. We can tell the mask contains <code>NA</code>
 values because <code>nrow(tagged_only)</code> (325) is larger than
 <code>sum(mask_tagged, na.rm=TRUE)</code> (300).</p>
+<p><strong>💡 Test knit.</strong></p>
+<hr />
 <p>Logical mask indexing is a powerful way to subset data frames based
 on conditions, but missing values can make the results harder to
 interpret. When we compute
@@ -2173,24 +2277,33 @@ row_idx_tagged &lt;- which(field_sightings[, &quot;Status&quot;] == &quot;Tagged
 
 ## Alternative: Create mask_tagged then pass it to which() to get row indices
 # mask_tagged &lt;- field_sightings[, &quot;Status&quot;] == &quot;Tagged&quot;   
-# row_idx_tagged &lt;- which(mask_tagged)
-
-# Use the row indices to subset the data frame by rows that are tagged
-tagged_only &lt;- field_sightings[row_idx_tagged, ]
-
-# ✅  Check
+# row_idx_tagged &lt;- which(mask_tagged)</code></pre>
+<p>✅ Check <code>head(row_idx_tagged)</code> to confirm that
+<code>which()</code> returned row numbers, not
+<code>TRUE</code>/<code>FALSE</code> values.</p>
+<pre class="r"><code># ✅  Check
+head(row_idx_tagged)</code></pre>
+<pre><code>## [1] 18 22 31 41 50 66</code></pre>
+<pre class="r"><code># Use the row indices to subset the data frame by rows that are tagged
+tagged_only &lt;- field_sightings[row_idx_tagged, ]</code></pre>
+<p>✅ Compare <code>nrow(tagged_only)</code> to
+<code>length(row_idx_tagged)</code>. These should match because
+<code>row_idx_tagged</code> contains the exact row positions used to
+create <code>tagged_only</code>.</p>
+<pre class="r"><code># ✅  Check
 nrow(tagged_only) </code></pre>
 <pre><code>## [1] 300</code></pre>
-<pre class="r"><code>head(tagged_only, 10)</code></pre>
-<div data-pagedtable="false">
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":["Status"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Band_Color"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"Tagged","2":"Orange"},{"1":"Tagged","2":"Silver"},{"1":"Tagged","2":"Green"},{"1":"Tagged","2":"Black"},{"1":"Tagged","2":"Silver"},{"1":"Tagged","2":"Blue"},{"1":"Tagged","2":"Green"},{"1":"Tagged","2":"Black"},{"1":"Tagged","2":"White"},{"1":"Tagged","2":"Red"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<pre class="r"><code>length(row_idx_tagged)</code></pre>
+<pre><code>## [1] 300</code></pre>
 <p>🗣 <code>which()</code> returns the indices of the <code>TRUE</code>
 elements and omits positions where the test result is <code>FALSE</code>
 or <code>NA</code> values for the logical vector passed in. If the
 logical test can produce NA, <code>which()</code> drops unknowns.</p>
+<p>🧭 Use a plain logical mask when the condition is simple and you have
+already checked how missing values behave. Use <code>which()</code> when
+you want row positions and want to avoid carrying NA values into the
+subset.</p>
+<p><strong>💡 Test knit.</strong></p>
 <hr />
 <p>In conclusion, subsetting (<code>[ ]</code>) returns a piece of the
 original object, often preserving structure. When you need a smaller
@@ -2251,6 +2364,13 @@ and then use it inside the function <code>unique()</code></p>
 <p>Extract a column as a vector</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook
 field_sightings[[&quot;Band_Color&quot;]]   # the column VECTOR</code></pre>
+<blockquote>
+<p>🧐 <strong>Notice:</strong> This output is long. You can use
+<code>#</code> to “comment out” the code for code chunks that might make
+an HTML report difficult to read.</p>
+</blockquote>
+<p>✅ Check that the output is a vector of values, not a 1-column data
+frame. You should see the band color values printed directly.</p>
 <p>🗣 The result is an extraction from one column and returns a vector,
 values only.</p>
 <p><strong>Step 2</strong></p>
@@ -2260,10 +2380,18 @@ values only.</p>
 unique(field_sightings[[&quot;Band_Color&quot;]])</code></pre>
 <pre><code>##  [1] &quot;None&quot;   &quot;Orange&quot; &quot;Silver&quot; &quot;Green&quot;  &quot;Black&quot;  NA       &quot;Blue&quot;   &quot;White&quot; 
 ##  [9] &quot;Red&quot;    &quot;Yellow&quot;</code></pre>
+<p>✅ Check that <code>unique()</code> returns each band color only
+once. This confirms that [<code>[ ]]</code> gave <code>unique()</code>
+the column values it needed.</p>
 <p>🗣 This shows the unique band colors in the
 <code>field_sightings</code> data frame. The <code>[[</code> operator
 allows you to extract the column as a vector, which is what
 <code>unique()</code> needs to work properly.</p>
+<p>🧭 If a function needs the values inside one column, extraction is
+usually the better move. Ask yourself: “Does the next function need a
+data frame, or does it need the column values themselves?”</p>
+<p><strong>💡 Test knit.</strong></p>
+<hr />
 </div>
 <div id="operator-1" class="section level2" number="4.2">
 <h2><span class="header-section-number">4.2</span> <code>$</code>
@@ -2278,6 +2406,8 @@ single column by name when you type the name literally.</p>
 using <code>$</code>.</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook
 field_sightings$Band_Color</code></pre>
+<p>✅ Check that <code>$</code> returns the same kind of vector output
+as <code>field_sightings[[&quot;Band_Color&quot;]]</code>.</p>
 <p>🗣 A vector is printed showing all element values from the column
 <code>Band_Color</code> from the <code>field_sightings</code> data
 frame. It is an extraction from one column and returns a vector, values
@@ -2307,8 +2437,18 @@ col_name &lt;- &quot;Band_Color&quot;
 field_sightings$col_name      # ❌ looks for a column literally named &quot;col_name&quot;</code></pre>
 <pre><code>## Warning: Unknown or uninitialised column: `col_name`.</code></pre>
 <pre><code>## NULL</code></pre>
+<p>✅ Check the output. It should return <code>NULL</code> because there
+is no column named <code>col_name</code> in
+<code>field_sightings</code>.</p>
 <p>🗣 The <code>$</code> operator looks for a column literally named
 “col_name” and finds none, resulting in <code>NULL</code>.</p>
+<p>🧭 This is a method-choice decision. Use <code>$</code> when you are
+typing the column name directly. Use <code>[[ ]]</code> when the column
+name is stored in an object. If your code uses a stored column name and
+returns <code>NULL</code>, check whether you used <code>$</code> when
+you needed <code>[[ ]]</code>.</p>
+<p><strong>💡 Test knit.</strong></p>
+<hr />
 <p>So far, you’ve learned two different moves:</p>
 <ul>
 <li><p>Subset: <code>field_sightings[&quot;Band_Color&quot;]</code> (data
@@ -2360,11 +2500,13 @@ clearly.</p>
 <code>&quot;Wild Hatch&quot;</code> in <code>Status</code>.</p>
 <p><strong>Step 1</strong></p>
 <p>Make a copy of the data frame.</p>
-<p>💡 <strong>Tip:</strong> Always make a copy of your data frame before
-you overwrite values. This way, if something goes wrong, you still have
-the original data intact.</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook
 reintroduction &lt;- field_sightings          # copy</code></pre>
+<p>✅ Check the Environment pane. You should now see both
+<code>field_sightings</code> and <code>reintroduction</code>.</p>
+<p>🧭 Making a copy is a protective habit. It gives you the freedom to
+experiment because the original data frame is still available for
+comparison if your replacement code does something unexpected.</p>
 <p>🗣 We will overwrite values using the copy dataframe,
 <code>reintroduction</code>.</p>
 <p><strong>Step 2</strong></p>
@@ -2376,12 +2518,21 @@ dataframe that you want to overwrite values in, not the original data
 frame.</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook
 indices_untagged &lt;- which(reintroduction[ , &quot;Status&quot;] == &quot;Untagged&quot;)</code></pre>
+<p>✅ Run <code>head(indices_untagged)</code> to confirm that
+<code>which()</code> returned row numbers. These are the row positions
+where Status was “Untagged”.</p>
+<pre class="r"><code># ✅  Check
+head(indices_untagged)</code></pre>
+<pre><code>## [1] 1 2 3 4 5 6</code></pre>
 <p><strong>Step 3</strong></p>
 <p>Overwrite using <code>df[rows, &quot;col&quot;] &lt;- value</code></p>
 <pre class="r"><code># ⚡ Type this in your R Notebook
 reintroduction[indices_untagged, &quot;Status&quot;] &lt;- &quot;Wild Hatch&quot;</code></pre>
 <p><strong>Step 4</strong></p>
-<p>Verify that the values have been changed.</p>
+<p>✅ Verify that the values have been changed.</p>
+<p>Compare the two outputs. <code>reintroduction</code> should include
+“Wild Hatch”. The original <code>field_sightings</code> should still
+include “Untagged”.</p>
 <pre class="r"><code># ✅  Check
 unique(reintroduction[, &quot;Status&quot;])       # modified data frame</code></pre>
 <div data-pagedtable="false">
@@ -2389,7 +2540,7 @@ unique(reintroduction[, &quot;Status&quot;])       # modified data frame</code><
 {"columns":[{"label":["Status"],"name":[1],"type":["chr"],"align":["left"]}],"data":[{"1":"Wild Hatch"},{"1":"Tagged"},{"1":"NA"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<pre class="r"><code>unique(field_sightings [, &quot;Status&quot;])     # original data frame </code></pre>
+<pre class="r"><code>unique(field_sightings[, &quot;Status&quot;])     # original data frame </code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["Status"],"name":[1],"type":["chr"],"align":["left"]}],"data":[{"1":"Untagged"},{"1":"Tagged"},{"1":"NA"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -2398,6 +2549,8 @@ unique(reintroduction[, &quot;Status&quot;])       # modified data frame</code><
 <p>🗣 The <code>Status</code> column in the <code>reintroduction</code>
 data frame has been modified to replace “Untagged” with “Wild
 Hatch”.</p>
+<p><strong>💡 Test knit.</strong></p>
+<hr />
 </div>
 <div id="insertion" class="section level2" number="5.2">
 <h2><span class="header-section-number">5.2</span> Insertion</h2>
@@ -2421,10 +2574,14 @@ name stored in a variable.</p>
 <p>Make a copy of the data frame.</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook
 reintroduction2 &lt;- field_sightings</code></pre>
+<p>✅ Check that <code>reintroduction2</code> appears in the Environment
+pane. This is the copy you will modify.</p>
 <p><strong>Step 2</strong></p>
 <p>Store the new name of your column a variable</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook
 new_col &lt;- &quot;Tag_Flag&quot;</code></pre>
+<p>✅ Check that <code>new_col</code> contains the text “Tag_Flag”. This
+object stores the new column name.</p>
 <p><strong>Step 3</strong></p>
 <p>Add the new column using <code>[[ ]] &lt;-</code></p>
 <pre class="r"><code># ⚡ Type this in your R Notebook
@@ -2435,24 +2592,30 @@ reintroduction2[[new_col]] &lt;- 0              # &lt;- Uses [[]]
 idx_tagged &lt;- which(reintroduction2[, &quot;Status&quot;] == &quot;Tagged&quot;)
 reintroduction2[idx_tagged, new_col] &lt;- 1</code></pre>
 <p><strong>Step 4</strong></p>
-<p>Verify that the new column has been added and values are correct.</p>
+<p>✅ Verify that the new column has been added and values are
+correct.</p>
+<p>Run <code>names(reintroduction2)</code> and confirm that
+<code>Tag_Flag</code> appears as a new column name.</p>
 <pre class="r"><code># ✅  Check
-head(reintroduction2)</code></pre>
-<div data-pagedtable="false">
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":["Status"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Band_Color"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Tag_Flag"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"Untagged","2":"None","3":"0"},{"1":"Untagged","2":"None","3":"0"},{"1":"Untagged","2":"None","3":"0"},{"1":"Untagged","2":"None","3":"0"},{"1":"Untagged","2":"None","3":"0"},{"1":"Untagged","2":"None","3":"0"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+names(reintroduction2)</code></pre>
+<pre><code>## [1] &quot;Status&quot;     &quot;Band_Color&quot; &quot;Tag_Flag&quot;</code></pre>
+<p>🧭 Feel free to click <code>reintroduction</code> and
+<code>reintroduction2</code> in your Environment pane to view the data
+frame and compare</p>
 </div>
 <div id="method-1" class="section level3" number="5.2.2">
 <h3><span class="header-section-number">5.2.2</span> <code>$</code>
 Method</h3>
 <p>If you are typing the column name directly (not stored in a
 variable), you can use $ to add the column.</p>
+<p>🎯<strong>Goal</strong>: Add a new column (a flag) using a column
+name typed literally with <code>$</code>.</p>
 <p><strong>Step 1</strong></p>
 <p>Make a copy of the data frame.</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook
 reintroduction3 &lt;- field_sightings</code></pre>
+<p>✅ Check that <code>reintroduction3</code> appears in the Environment
+pane. This is the copy you will modify.</p>
 <p><strong>Step 2</strong></p>
 <p>Add the new column using <code>$ &lt;-</code></p>
 <pre class="r"><code># ⚡ Type this in your R Notebook
@@ -2463,17 +2626,21 @@ reintroduction3$Tag_Flag &lt;- 0                # &lt;- Uses $
 idx_tagged &lt;- which(reintroduction3[, &quot;Status&quot;] == &quot;Tagged&quot;)
 reintroduction3[idx_tagged, &quot;Tag_Flag&quot;] &lt;- 1</code></pre>
 <p><strong>Step 3</strong></p>
-<p>Verify that the new column has been added and values are correct.</p>
+<p>✅ Verify that the new column has been added.</p>
+<p>Run <code>names(reintroduction3)</code> to confirm that
+<code>Tag_Flag</code> was added.</p>
 <pre class="r"><code># ✅  Check
-head(reintroduction3)</code></pre>
-<div data-pagedtable="false">
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":["Status"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Band_Color"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Tag_Flag"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"Untagged","2":"None","3":"0"},{"1":"Untagged","2":"None","3":"0"},{"1":"Untagged","2":"None","3":"0"},{"1":"Untagged","2":"None","3":"0"},{"1":"Untagged","2":"None","3":"0"},{"1":"Untagged","2":"None","3":"0"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+names(reintroduction3)</code></pre>
+<pre><code>## [1] &quot;Status&quot;     &quot;Band_Color&quot; &quot;Tag_Flag&quot;</code></pre>
+<hr />
 <p>🗣 Use <code>[[ ]]</code> when the column name is stored in a variable
 (like new_col). Use <code>$</code> when you are typing the column name
 literally.</p>
+<p>🧭 Choose <code>$</code> when the new column name is typed directly
+into the code. Choose <code>[[ ]]</code> when the column name is stored
+in an object. Both methods can work, but they are not interchangeable in
+every situation.</p>
+<hr />
 </div>
 </div>
 </div>
@@ -2515,38 +2682,54 @@ more readable. Knit your notebook to HTML to see how it looks, then
 adjust the options and other formatting and re-knit to make sure your
 report is professional and ready to share with your research
 collaborators.</p>
+<p>✅ Knit your notebook and look at the HTML output. Confirm whether
+the code, output, messages, and warnings appear or are hidden the way
+you intended.</p>
+<p>🧭 Code chunk options are report-design decisions. Use them to make
+your notebook easier to read, not to hide evidence that your code
+failed. If a warning or message helps explain what happened, keep it
+visible or memo it.</p>
+<hr />
 </div>
 <div id="summary" class="section level1" number="7">
 <h1><span class="header-section-number">7</span> Summary</h1>
-<p>In Chapter 8, you learned three core indexing patterns in base R for
-working efficiently with data frames.</p>
-<p>First, you practiced subsetting with <code>[ ]</code> to pull out a
-smaller piece using the <code>df[rows, cols]</code> pattern (for
-example, selecting a range of rows, selecting a single column as a
-vector with <code>df[, &quot;Band_Color&quot;]</code>, or keeping it as a 1-column
-data frame with <code>df[&quot;Band_Color&quot;]</code>).</p>
-<p>Second, you practiced extraction with <code>[[ ]]</code> and
-<code>$</code> to get the column itself as a vector so it can be fed
-directly into functions, and you learned the key practical difference:
-df[[col_name]] works when the column name is stored in a variable, while
-<code>df$ColName</code> only works when you type the column name
-literally (so <code>df$col_name</code> does not mean “use the column
-named in <code>col_name</code>”).</p>
-<p>Third, you practiced subassignment/replacement by putting indexing on
-the left side of <code>&lt;-</code> to overwrite specific cells (e.g.,
-<code>df[rows, &quot;col&quot;] &lt;- value)</code> and to add or replace entire
-columns (e.g., <code>df[[new_col]] &lt;- value</code>, which creates the
-column if it doesn’t exist).</p>
-<p>You also learned why logical filtering can break in subtle ways due
-to <code>NA</code> propagation: comparisons like
-<code>df[, &quot;Status&quot;] == &quot;Tagged&quot;</code> produce <code>NA</code> where
-<code>Status</code> is <code>NA</code>, and subsetting with
-<code>df[mask, ]</code> can behave unexpectedly; a reliable fix is
-<code>which(df[, &quot;Status&quot;] == &quot;Tagged&quot;)</code>, because
-<code>which()</code> keeps only <code>TRUE</code> positions and drops
-<code>FALSE</code> and <code>NA</code>.</p>
-<p>In the next chapter, you’ll extend filtering by combining conditions
-with <code>&amp;</code>, <code>|</code>, and <code>%in%</code>.</p>
+<p>In Chapter 8, you learned how to use base R indexing to select,
+extract, and modify parts of a data frame. These skills are useful
+because most analysis does not use every row and every column at the
+same time. You need to be able to point R at the exact part of the data
+you want and check that R returned what you intended.</p>
+<p>You practiced subsetting with <code>[ ]</code> using the
+<code>df[rows, cols]</code> pattern. You selected rows and columns by
+position, selected columns by name, and used logical masks to keep rows
+that met a condition. You also learned that the output can change
+depending on how you index. Some code returns a data frame, while other
+code returns a vector, and that difference matters for what you can do
+next.</p>
+<p>You also practiced extraction with <code>[[ ]]</code> and
+<code>$</code>. Extraction pulls out one column as a vector, which is
+useful when you want to pass the column values into functions such as
+<code>unique()</code> or <code>table()</code>. You learned that
+<code>[[ ]]</code> is safer when the column name is stored in an object,
+while <code>$</code> is convenient when you type the column name
+directly.</p>
+<p>Logical masks introduced an important warning about missing values.
+When a comparison involves <code>NA</code>, the result can also be
+<code>NA</code>. That means a logical mask can contain
+<code>TRUE</code>, <code>FALSE</code>, and <code>NA</code>, which can
+make subsetting results harder to interpret. You practiced using
+<code>which()</code> to convert <code>TRUE</code> values into row
+positions and avoid carrying unknown values into the subset.</p>
+<p>Finally, you practiced subassignment by making a copy of a data
+frame, finding row positions with <code>which()</code>, and overwriting
+selected values. You also practiced adding a new column. These are
+important data-cleaning skills because real datasets often need
+corrections or new variables before they are ready for analysis.</p>
+<p>The main habit to carry forward is this: after indexing, extracting,
+or modifying data, verify what changed. Check the dimensions, names,
+object type, values, or summary output before moving on. In the next
+chapter, you will extend this work by filtering with more complex
+conditions using <code>&amp;</code>, <code>|</code>, and
+<code>%in%</code>.</p>
 </div>
 <div id="chapter-terms" class="section level1" number="8">
 <h1><span class="header-section-number">8</span> Chapter Terms</h1>
@@ -2642,50 +2825,115 @@ columns).</p>
 <h1><span class="header-section-number">9</span> 📝 Practice Space</h1>
 <p>This Practice Space uses a new dataset to help you generalize your
 learning. While the column names differ, the indexing patterns are the
-same. You will use <code>Values_Transport_dplace.csv</code> using the
-columns <code>id</code>, <code>name</code>, <code>sub_case</code>, and
-<code>year</code>.</p>
+same. You will work with <code>Values_Transport_dplace.csv</code>
+focusing on the columns <code>id</code>, <code>name</code>,
+<code>sub_case</code>, and <code>year</code>.</p>
 <p>Open a new R Notebook and save it in your course folder as:
-chapter8_practice.Rmd. Edit the YAML so that it includes the title
-“Chapter 8 Practice”, your name as the author, and the date. Remove the
-default content in the R Notebook. Create heading for each task.</p>
-<p>Work through each task, creating learning memos as you go. Outside of
-the code chunks, write a few sentences reflecting on what you learned
-from each task and how it connects to the concepts in this chapter.</p>
-<p>If you use an LLM to help you understand the code, document your use
-transparently. Do not use LLMs to complete the tasks for you. The goal
-is to practice writing the code yourself and to reflect on your learning
-process.</p>
+chapter8_practice.Rmd.</p>
+<p>Fill in the blanks and answer the short prompts in your R Notebook.
+This Practice Space helps you check whether you can organize a notebook,
+read an R help page, use a function argument, and knit your work into an
+HTML report.</p>
+<p>Before you begin:</p>
+<ol style="list-style-type: decimal">
+<li>Create a new R Notebook in RStudio.</li>
+<li>Save it in your course folder as
+<code>chapter8_practice.Rmd</code>.</li>
+<li>Edit the YAML so that it includes:</li>
+</ol>
+<ul>
+<li>the title “Chapter 8 Practice”,</li>
+<li>your name as the author, and</li>
+<li>the date.</li>
+</ul>
+<ol start="4" style="list-style-type: decimal">
+<li><p>Remove the default content in the R Notebook.</p></li>
+<li><p>Create heading for each task (1:9) using the <code>##</code>
+heading level.</p></li>
+</ol>
+<p>Complete each task in order.</p>
+<p>Add short memo notes throughout your notebook. Your memo notes should
+explain what your code does, what output you expected, what surprised or
+confused you, and what you would check next if something did not
+work.</p>
+<p>In this Practice Space, you will see two kinds of memo prompts:</p>
+<ul>
+<li>🗣 <strong>Add Comments</strong> asks you to explain what the code or
+output shows.</li>
+<li>🪞 <strong>Reflect</strong> asks you to explain your thinking
+process, what confused you, what changed in your understanding, or what
+strategy you would use next.</li>
+</ul>
+<p>These are there to help you practice the habit of writing memos as
+you work. <strong>In each task, you can choose whether to answer one,
+two, or all memo prompts.</strong></p>
+<p><strong>Autonomy</strong> is the habit of taking ownership of your
+thinking, choices, code, and learning process while using help
+responsibly. Show autonomy by checking your output, deciding what
+evidence shows your code worked, and explaining what you would check
+next if something did not work. If you encounter an error, document your
+<strong>tenacity</strong> by briefly noting what happened, what you
+tried, and how you fixed it or what still confuses you. Document how you
+troubleshot the error and what resource(s) you used to help you resolve
+the issue (<strong>transparency</strong>). Show <strong>courage</strong>
+by sharing your thinking process, even if it includes mistakes or
+confusion.</p>
+<p>You may quote AI output only when you clearly mark it as quoted text,
+either with quotation marks or a block quote using <code>&gt;</code>.
+Then hand-type your own explanation of why you are including the
+quote.</p>
+<p>Before you finish, clear your Environment and run the notebook from
+top to bottom. Then knit to HTML to check that the notebook works and is
+formatted correctly.</p>
 <div id="task-1" class="section level2" number="9.1">
 <h2><span class="header-section-number">9.1</span> Task 1</h2>
-<p>Load the CSV with <code>readr::read_csv()</code></p>
+<p><strong>Load the CSV</strong> with <code>readr::read_csv()</code></p>
 <p>🎯 <strong>Goal:</strong> Load
 <code>Values_Transport_dplace.csv</code> into R using
 <code>read_csv()</code> and assign it to a variable called
 <code>values_transport</code>.</p>
+<p>✅ Check the output from <code>list.files()</code> and confirm that
+<code>Values_Transport_dplace.csv</code> appears exactly as written.</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
 # 1) Confirm the CSV is in the same folder as your R Notebook
-list.files()
-
+list.files()</code></pre>
+<pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
 # 2) Load required package, then read the CSV
 library(____)
 
 _____________ &lt;- read_csv(__Values_Transport_dplace.csv__)</code></pre>
+<p>✅ Check that <code>values_transport</code> appears in your
+Environment pane and that it is a data frame.</p>
+<p>🗣 Add Comments: Explain what evidence showed you that the CSV file
+loaded successfully.</p>
+<p>🪞 Reflect: If <code>values_transport</code> failed to be added to
+your environment, what would you check first?</p>
+<p><strong>💡 Test knit.</strong></p>
 </div>
 <div id="task-2" class="section level2" number="9.2">
 <h2><span class="header-section-number">9.2</span> Task 2</h2>
-<p>📍 Positional subsetting (rows/cols by index number)</p>
+<p>📍 <strong>Positional subsetting</strong> (rows/cols by index
+number)</p>
 <p>🎯 <strong>Goal:</strong> Create <code>first_10_basic</code>
 containing the first 10 rows and columns 2 through 5 of
 <code>values_transport</code>. Use <code>df[rows, cols]</code></p>
 <pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
 first_10_basic &lt;- _______[___, ___]</code></pre>
-<p>🗣 How many rows and how many columns does <code>first_10_basic</code>
-have?</p>
+<pre class="r"><code># ✅  Check
+dim(first_10_basic)
+head(first_10_basic)</code></pre>
+<p>✅ Check that first_10_basic has 10 rows and columns 2 through 5.</p>
+<p>🗣 Add Comments: Explain what the row index selected and what the
+column index selected in your code.</p>
+<p>🪞 Reflect: Why is checking the dimensions useful after subsetting?
+What could go wrong if you selected the wrong rows or columns and did
+not check?</p>
+<p><strong>💡 Test knit.</strong></p>
 </div>
 <div id="task-3" class="section level2" number="9.3">
 <h2><span class="header-section-number">9.3</span> Task 3</h2>
-<p>🏷 Names/character subsetting (choose specific columns by name)</p>
+<p>🏷 <strong>Names/character subsetting</strong> (choose specific
+columns by name)</p>
 <p>🎯 <strong>Goal:</strong> Create <code>id_name_year</code> containing
 only the columns: <code>id</code>, <code>name</code>, and
 <code>year</code>.</p>
@@ -2694,13 +2942,16 @@ ___________ &lt;- values_transport[, c(___, ___, ___)]</code></pre>
 <pre class="r"><code># ✅  Check
 names(id_name_year)
 head(id_name_year)</code></pre>
-<p>🗣 The <code>id_name_year</code> data frame contains only the columns
-<code>id</code>, <code>name</code>, and <code>year</code> from the
-original <code>values_transport</code> data frame.</p>
+<p>🗣 Add Comments: Explain how the output from
+<code>names(id_name_year)</code> confirms that your names indexing
+worked.</p>
+<p>🪞 Reflect: Why might names indexing be safer than positional
+indexing when selecting columns from a data frame?</p>
+<p><strong>💡 Test knit.</strong></p>
 </div>
 <div id="task-4" class="section level2" number="9.4">
 <h2><span class="header-section-number">9.4</span> Task 4</h2>
-<p>🔍 Logical mask subsetting</p>
+<p>🔍 <strong>Logical mask subsetting</strong></p>
 <p>🎯 <strong>Goal:</strong> Subset rows where <code>year</code> greater
 than or equal to 1900 using <code>which()</code> to ensure not
 <code>NA</code> problems.</p>
@@ -2708,43 +2959,63 @@ than or equal to 1900 using <code>which()</code> to ensure not
 idx_1900 &lt;- ____(values_transport[, ____] __ 1900)
 
 values_1900 &lt;- values_transport[_____, ]</code></pre>
+<p>✅ Check that idx_1900 contains row positions and that
+length(idx_1900) matches nrow(values_1900).</p>
 <pre class="r"><code># ✅  Check
-nrow(values_transport)  # original number of rows
-nrow(values_1900)      # number of rows where year &gt;= 1900</code></pre>
-<p>🗣 The <code>values_1900</code> data frame contains only the rows from
-<code>values_transport</code> where the <code>year</code> column is
-greater than or equal to 1900. The number of rows in
-<code>values_1900</code> should be less than or equal to the number of
-rows in the original <code>values_transport</code> data frame.</p>
-<p>🗣 How many entries have a year of 1900 or later?</p>
+head(idx_1900)
+length(idx_1900)
+nrow(values_1900)</code></pre>
+<p>🗣 Add Comments: Report how many entries have a year of 1900 or later.
+Explain which output gave you that number.</p>
+<p>🪞 Reflect: Why does this task use <code>which()</code> instead of
+putting the logical condition directly inside the row position? What
+problem is <code>which()</code> helping you avoid?</p>
+<p><strong>💡 Test knit.</strong></p>
 </div>
 <div id="task-5" class="section level2" number="9.5">
 <h2><span class="header-section-number">9.5</span> Task 5</h2>
-<p>⚠️ Explain Missing Value Propagation</p>
+<p>⚠️ <strong>Explain Missing Value Propagation</strong></p>
 <p>🎯 <strong>Goal:</strong> In 3–5 sentences, explain what
 <strong>Missing Value Propagation</strong> means when you create a
 logical mask like:</p>
 <pre class="r"><code>mask &lt;- values_transport[, &quot;year&quot;] &gt;= 1900</code></pre>
-<p>If there were <code>NA</code> values in the <code>year</code> column.
-What will R return when a comparison involves NA (example:
-<code>NA &gt;= 1900</code>)? Why can <code>NA</code> values in a logical
+<p>✅ Check that mask is a logical vector. It should contain
+<code>TRUE</code>, <code>FALSE</code>, and possibly <code>NA</code>.</p>
+<pre class="r"><code># ✅  Check
+unique(mask)</code></pre>
+<p>🪞 Reflect: In 3–5 sentences, explain what missing value propagation
+means when you create a logical mask like
+<code>mask &lt;- values_transport[, &quot;year&quot;] &gt;= 1900</code>. What will
+R return when a comparison involves <code>NA</code>, such as
+<code>NA &gt;= 1900</code>? Why can <code>NA</code> values in a logical
 mask cause confusing subsetting results with <code>[mask, ]</code>? How
-does <code>which()</code> help to avoid this issue?</p>
+does <code>which()</code> help avoid this issue?</p>
+<p><strong>💡 Test knit.</strong></p>
 </div>
 <div id="task-6" class="section level2" number="9.6">
 <h2><span class="header-section-number">9.6</span> Task 6</h2>
-<p>🧪 Extraction</p>
+<p>🧪 <strong>Extraction</strong></p>
 <p>🎯 <strong>Goal:</strong> Extract the <code>year</code> column as a
-vector using <code>[[ ]]</code>, then run <code>table()</code>.</p>
+vector using <code>[[ ]]</code>, storing it as
+<code>year__vector</code>.</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
-_____(values_transport__&quot;year&quot;__)</code></pre>
-<p>🗣 Comment on the output of <code>unique(year_vector)</code>. What do
-you notice about possible values in the <code>year</code> column in the
-<code>values_transport</code> data frame?</p>
+_____ &lt;- values_transport__&quot;year&quot;__</code></pre>
+<p>✅ Check that <code>year_vector</code> is a vector, not a one-column
+data frame.</p>
+<pre class="r"><code># ✅ Check
+table(_____)
+unique(_____)</code></pre>
+<p>🗣 Add Comments: Comment on the output of
+<code>table(year_vector)</code> or <code>unique(year_vector)</code>.
+What do you notice about possible values in the year column?</p>
+<p>🪞 Reflect: Why does extraction with <code>[[ ]]</code> make sense
+here? What kind of object does <code>table()</code> need: a data frame
+or the values inside one column?</p>
+<p><strong>💡 Test knit.</strong></p>
 </div>
 <div id="task-7" class="section level2" number="9.7">
 <h2><span class="header-section-number">9.7</span> Task 7</h2>
-<p>🛠 Overwrite</p>
+<p>🛠 <strong>Overwrite</strong></p>
 <p><strong>Scenario</strong>: You found four data-entry errors in the
 year column. After reviewing field notes, you confirm these
 corrections:</p>
@@ -2760,41 +3031,71 @@ values in the copy of <code>values_transport</code> data frame called
 <code>transport_year_clean</code>.</p>
 <pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
 # Step 1: Make a copy of the data frame
-____________ &lt;- ___________
-
-# Step 2: Identify row indices for each incorrect value
+____________ &lt;- ___________</code></pre>
+<pre class="r"><code># Step 2: Identify row indices for each incorrect value
 idx_621 &lt;- _____(transport_year_clean[, &quot;year&quot;] == -621)
 idx_1750 &lt;- _____(transport_year_clean[, &quot;year&quot;] == -1750)
 idx_110 &lt;- _____(transport_year_clean[, &quot;year&quot;] == 110)
 idx_1292 &lt;- _____(transport_year_clean[, &quot;year&quot;] == 1292)
 
-# Step 3: Overwrite the incorrect values with the correct ones
+# ✅ Check
+idx_621
+idx_1750
+idx_110
+idx_1292</code></pre>
+<pre class="r"><code># Step 3: Overwrite the incorrect values with the correct ones
 transport_year_clean[______, &quot;year&quot;] &lt;- 1821
 transport_year_clean[______, &quot;year&quot;] &lt;- 1750
 transport_year_clean[______, &quot;year&quot;] &lt;- 1910
 transport_year_clean[______, &quot;year&quot;] &lt;- 1892</code></pre>
+<p>✅ Compare the unique year values in
+<code>transport_year_clean</code> to the original
+<code>values_transport</code> to confirm that the incorrect values have
+been replaced and that the original data frame still contains the
+incorrect values.</p>
 <pre class="r"><code># ✅  Check
-unique(transport_year_clean[[&quot;year&quot;]])</code></pre>
-<p>🗣 Explain why we (1) made a copy first and (2) used which() to find
-row indices before overwriting.</p>
+unique(transport_year_clean[[&quot;year&quot;]])
+unique(values_transport[[&quot;year&quot;]])</code></pre>
+<p>🗣 Add Comments: Explain why you made a copy before overwriting values
+and why <code>which()</code> was useful for finding the row
+positions.</p>
+<p>🪞 Reflect: What would you check if one of the incorrect year values
+still appeared after your replacement code? What would you check if the
+original <code>values_transport</code> changed too?</p>
+<p><strong>💡 Test knit.</strong></p>
 </div>
 <div id="task-8" class="section level2" number="9.8">
 <h2><span class="header-section-number">9.8</span> Task 8</h2>
-<p>🎯 Save your workspace (<code>chapter8_practice.RData</code>) for
-submission. This file should contain:</p>
+<p>🎯 Save your workspace (<code>chapter8_practice.RData</code>).</p>
+<p>✅ Your environment should contain:</p>
 <ul>
 <li><p><code>values_transport</code> (original data frame loaded from
 CSV)</p></li>
 <li><p><code>first_10_basic</code> (subset with first 10 rows and
 columns 2-5)</p></li>
-<li><p><code>id_name_year</code> (subset with only id, name, year
-columns)</p></li>
-<li><p><code>values_1900</code> (subset with rows where year &gt;=
-1900)</p></li>
+<li><p><code>id_name_year</code> (subset with only <code>id</code>,
+<code>name</code>, <code>year</code> columns)</p></li>
+<li><p><code>values_1900</code> (subset with rows where
+<code>year &gt;= 1900</code>)</p></li>
 <li><p><code>transport_year_clean</code> (data frame with corrected year
 values)</p></li>
-<li><p><code>mask</code> (logical vector for year &gt;= 1900)</p></li>
+<li><p><code>mask</code> (logical vector for
+<code>year &gt;= 1900</code>)</p></li>
 </ul>
+<p>🧭 If you have extra objects in your environment, you can click the
+🧹 <strong>broom icon</strong> to clear them. Then re-run all chunks and
+verify environment, and then save your workspace.</p>
+<p>Option 1. Use <code>save.image()</code> to save your workspace as
+<code>chapter8_practice.RData</code> in your course folder.</p>
+<pre class="r"><code># ⚡ Type this in your R Notebook
+save.image(&quot;chapter8_practice.RData&quot;)</code></pre>
+<p>Option 2. Press the 💾 <strong>disk icon</strong> in the Environment
+pane to save your workspace.</p>
+<p>✅ Check that <code>chapter8_practice.RData</code> appears in your
+module folder.</p>
+<p>🪞 Reflect: Why is it useful to save both the <code>.Rmd</code>
+notebook and the <code>.RData</code> workspace? What does each file show
+about your work?</p>
 </div>
 <div id="task-9" class="section level2" number="9.9">
 <h2><span class="header-section-number">9.9</span> Task 9</h2>
@@ -2805,13 +3106,16 @@ Click the 🧹 <strong>broom icon</strong> in the Environment pane to
 clear objects.</p>
 <p><strong>Step 2: Run everything top-to-bottom.</strong><br />
 Use <strong>Run → Run All</strong> to execute every chunk in order.</p>
-<p><strong>Step 3: Save and submit.</strong><br />
+<p>✅ Check that the notebook runs from top to bottom without errors
+after you clear the Environment. This confirms that your notebook
+contains the code needed to rebuild your work.</p>
+<p><strong>Step 3: Save</strong><br />
 After your notebook runs without errors, save your notebook
-(<code>.Rmd</code>) and knit to HTML (<code>.HTML</code>) for submission
-to Canvas, as directed.</p>
-<p>💡 <strong>Tip:</strong> After you knit, look in your course folder
-for two files with the same name. One file ends in .Rmd and one ends in
-.html. The HTML usually has a internet browser icon. You can check which
+(<code>.Rmd</code>) and knit to HTML (<code>.HTML</code>).</p>
+<p>✅ After you knit, look in your course folder for two files with the
+same name. One file ends in <code>.Rmd</code> and one ends in
+<code>.html</code>.</p>
+<p>🧭 The HTML usually has a internet browser icon. You can check which
 is which by double clicking to open them. One opens in R and the other
 usually opens in a web browser. Upload the .html file. Before
 submission, check that the uploaded file ends in .html.</p>

@@ -226,7 +226,7 @@ You will need two data files for this chapter:
 - `Values_Transport_dplace.csv`
 - `car_prices.xlsx`
 
-Find these data files in the `📤Importing Data Guided Activity` instructions page. Click the download links. Do not open the downloaded files.
+Find these data files in the **📤Importing Data Guided Activity** instructions page. Click the download links. Do not open the downloaded files.
 
 > ⚠️ Common Pain Point: After you download `Values_Transport_dplace.csv`, do **not** open it. This is especially important on some **Mac** computers. When you double-click a `.csv` file, your Mac may open it in **Numbers**. A `.numbers` file is a completely different file format used by Apple Numbers.
 
@@ -234,7 +234,7 @@ After you download the files, move them out of your `Downloads/` folder and into
 
 Moving the files is part of the data workflow. R can only import a file if the file is in the place where R is looking or if you give R the correct file path. In this chapter, we are keeping the workflow simple by putting the notebook and data files in the same folder.
 
-🎯 Download the data files for this chapter and place them in your `Module_4` folder with your Rmd file. **This is Task 1 of the Practice Space at the end of this chapter.**
+🎯 Download the data files for this chapter and place them in your `Module_4/` folder with your Rmd file. **This is Task 1 of the Practice Space at the end of this chapter.**
 
 By the time you are done, your folder structure should look like this:
 
@@ -412,7 +412,7 @@ list.files()
 knitr::include_graphics("getwd_in_console.png")
 ```
 
-✅ In the knitted notebook output, look directly under the `getwd()` and `list.files()` ub the console output. Confirm that the folder path matches where you saved `chapter7_practice.Rmd`. Then check whether the file list includes the notebook file itself.
+✅ In the knitted notebook output, look directly under the `getwd()` and `list.files()`  in the console output. Confirm that the folder path matches where you saved `chapter7_practice.Rmd`. Then check whether the file list includes the notebook file itself.
 
 🗣 When you run `getwd()`, you are checking where R is currently "looking." When you run `list.files()`, you are checking what R can actually see from that location. 
 
