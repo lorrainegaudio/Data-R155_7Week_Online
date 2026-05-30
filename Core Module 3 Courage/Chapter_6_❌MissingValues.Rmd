@@ -532,16 +532,15 @@ Before you finish, clear your Environment and run the notebook from top to botto
 
 🛠 **Build a random data set**
 
+🎯 Create scores as 28 values. That means you will create 25 random integers from 60 through 100, then add 3 missing values (`NA`) at the end.
 
-🎯 Create `scores` as **28 values**. That is **25** random integers from **60–100** + 3 `NA`s. 
+1. First, use `seq()` to create the possible score values from 60 through 100. Store that sequence as `pool`.
 
-1. Use `seq()` to create 60 through 100. Store as `pool`.
+💡 **Tip:** For this task, practice using `seq()` with separate inputs for the starting value and ending value. Do not use the : shortcut inside `seq()` here. If you are unsure what arguments `seq()` expects, look at `?seq` and focus on the Usage line.
 
-2. Use sample() to draw 25 values (*with replacement*)
+2. Then use `sample()` to draw 25 values from pool, with replacement. Store those sampled values as scores_numbers.
 
-3. Add three `NA` to the end of `scores_numbers` using `c()`. Store as `scores`.
-
-4. Verify that there are 28 elements in `scores`. 
+3. Finally, use `c()` to add three `NA` values to the end of `scores_numbers`. Store the full vector as scores.
 
 ```{r , eval=FALSE}
 # ⚡ Type this in your R Notebook, Fill in the blanks

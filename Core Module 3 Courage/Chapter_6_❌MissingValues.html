@@ -1632,7 +1632,7 @@ display: none;
 <h1 class="title toc-ignore">Chapter 6</h1>
 <h3 class="subtitle">❌ Missing Values</h3>
 <h4 class="author">by Lorraine Gaudio</h4>
-<h4 class="date">Version May 21, 2026</h4>
+<h4 class="date">Version May 29, 2026</h4>
 
 </div>
 
@@ -2271,8 +2271,8 @@ process, what confused you, what changed in your understanding, or what
 strategy you would use next.</li>
 </ul>
 <p>These are there to help you practice the habit of writing memos as
-you work. <strong>You can choose whether to answer one, two, or all memo
-prompts.</strong></p>
+you work. <strong>In each task, you can choose whether to answer one,
+two, or all memo prompts.</strong></p>
 <p>If you encounter an error, document your <strong>tenacity</strong> by
 briefly noting what happened, what you tried, and how you fixed it or
 what still confuses you. Document how you troubleshot the error and what
@@ -2319,19 +2319,24 @@ part was still confusing or too technical?</p>
 <div id="task-2" class="section level2" number="7.2">
 <h2><span class="header-section-number">7.2</span> Task 2</h2>
 <p>🛠 <strong>Build a random data set</strong></p>
-<p>🎯 Create <code>scores</code> as <strong>28 values</strong>. That is
-<strong>25</strong> random integers from <strong>60–100</strong> + 3
-<code>NA</code>s.</p>
+<p>🎯 Create scores as 28 values. That means you will create 25 random
+integers from 60 through 100, then add 3 missing values
+(<code>NA</code>) at the end.</p>
 <ol style="list-style-type: decimal">
-<li><p>Use <code>seq()</code> to create 60 through 100. Store as
-<code>pool</code>.</p></li>
-<li><p>Use sample() to draw 25 values (<em>with
-replacement</em>)</p></li>
-<li><p>Add three <code>NA</code> to the end of
-<code>scores_numbers</code> using <code>c()</code>. Store as
-<code>scores</code>.</p></li>
-<li><p>Verify that there are 28 elements in
-<code>scores</code>.</p></li>
+<li>First, use <code>seq()</code> to create the possible score values
+from 60 through 100. Store that sequence as <code>pool</code>.</li>
+</ol>
+<p>💡 <strong>Tip:</strong> For this task, practice using
+<code>seq()</code> with separate inputs for the starting value and
+ending value. Do not use the : shortcut inside <code>seq()</code> here.
+If you are unsure what arguments <code>seq()</code> expects, look at
+<code>?seq</code> and focus on the Usage line.</p>
+<ol start="2" style="list-style-type: decimal">
+<li><p>Then use <code>sample()</code> to draw 25 values from pool, with
+replacement. Store those sampled values as scores_numbers.</p></li>
+<li><p>Finally, use <code>c()</code> to add three <code>NA</code> values
+to the end of <code>scores_numbers</code>. Store the full vector as
+scores.</p></li>
 </ol>
 <pre class="r"><code># ⚡ Type this in your R Notebook, Fill in the blanks
 set.seed(1) 
