@@ -1,6 +1,6 @@
 ---
 title: "Chapter 5"
-subtitle: "Help!"
+subtitle: "🛟Help!"
 author: "by Lorraine Gaudio"
 date: "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
 output:
@@ -11,7 +11,7 @@ output:
     fig_caption: true
     latex_engine: xelatex
     pandoc_args:
-      - "--lua-filter=strip-emoji.lua"
+      - "--lua-filter=../assets/strip-emoji.lua"
 ---
 
 ```{r setup, include=FALSE}
@@ -23,29 +23,15 @@ title: "Chapter 5"
 subtitle: "Help!"
 author: "by Lorraine Gaudio"
 date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
-output: 
+output:
   pdf_document:
     toc: true
     toc_depth: 2
     number_sections: true
-    citation_package: natbib
     fig_caption: true
-    df_print: kable # Data frame printing
-    includes:
-      in_header: ../assets/header.tex
-    latex_engine: xelatex  # Use xelatex to support fontspec
-fontsize: 12pt
-geometry: margin=1in
-mainfont: "Garamond" # Sets the font of the entire document
-sansfont: "Gotham-Book.otf" # Set sans-serif font to Gotham Book
-monofont: "Courier New" # Set monospace font to Courier New
-documentclass: scrreprt
-linkcolor: boisestateblue # Customizes the color of hyperlinks
-urlcolor: magenta # Customizes the color of URLs
-citecolor: black # Customizes the color of citations
-bibliography: references.bib # Bibliography file
-biblio-style: apalike                 # ⟵ natbib needs a .bst style
-natbiboptions: "round,authoryear"     # round brackets, Author (Year)
+    latex_engine: xelatex
+    pandoc_args:
+      - "--lua-filter=../assets/strip-emoji.lua"
 # ---
 title: "Chapter 5"
 subtitle: "Help!"

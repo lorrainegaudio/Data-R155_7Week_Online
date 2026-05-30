@@ -4,6 +4,26 @@ subtitle: "Git and GitHub"
 author: "Lorraine Gaudio"
 date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
 team: "Summer 2026"
+output:
+  pdf_document:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+    fig_caption: true
+    latex_engine: xelatex
+    pandoc_args:
+      - "--lua-filter=../assets/strip-emoji.lua"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r eval=FALSE, include=FALSE}
+title: "Chapter 9" 
+subtitle: "Git and GitHub"
+author: "Lorraine Gaudio"
+date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
+team: "Summer 2026"
 output: 
   html_document: # To create an HTML document from R Markdown
     toc: true # Table of contents (TOC)
@@ -18,10 +38,21 @@ output:
     includes:
       in_header: ../assets/header.html
       after_body: ../assets/footer.html
----
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+####
+title: "Chapter 9" 
+subtitle: "Git and GitHub"
+author: "Lorraine Gaudio"
+date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
+team: "Summer 2026"
+output:
+  pdf_document:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+    fig_caption: true
+    latex_engine: xelatex
+    pandoc_args:
+      - "--lua-filter=../assets/strip-emoji.lua"
 ```
 
 
