@@ -322,6 +322,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **R** is a programming language and engine that runs your R code.
 
+**RData*** An R-specific file format, usually saved with the extension `.RData` or `.rda`, that stores one or more R objects so they can be loaded back into an R session later. RData files are created with functions like `save()` or `save.image()` and restored with `load()`; they are useful for saving R objects such as data frames, vectors, models, or an entire workspace. Be careful when loading an RData file because objects are restored using their saved names and can overwrite objects with the same names in your current environment.
+
 **R Markdown**: A document format (`.Rmd`) that mixes plain-text writing (Markdown) with embedded R code chunks, so you can generate reports that combine narrative, code, and computed output. You can render an R Markdown file into finished formats like HTML, PDF, or Word.
 
 **R Notebook**: An `.Rmd` (R Markdown) document that lets you run code in chunks and see the results (output, tables, plots) immediately below each chunk. It’s designed for reproducible work because it keeps your code, results, and explanatory notes together in the same file.
