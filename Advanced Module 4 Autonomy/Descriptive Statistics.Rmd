@@ -63,7 +63,7 @@ output:
 
 # Overview
 
-This Signature Assignment asks you to build a **Data Understanding Notebook** in Quarto using the `penguins` dataset. The notebook is a working analytical document where you load data, identify variable types, choose appropriate descriptive statistics, and explain what those statistics show. This activity asks you to 🎯 plan your approach, ✅ monitor whether your code and interpretations make sense, and 🗣 revise your thinking when something is unclear or incorrect. That process is part of self-regulated learning: using metacognitive strategies to guide your own understanding.
+This Advanced activity asks you to build a **Data Understanding Notebook** in Quarto using the `penguins` dataset. The notebook is a working analytical document where you load data, identify variable types, choose appropriate descriptive statistics, and explain what those statistics show. This activity asks you to 🎯 plan your approach, ✅ monitor whether your code and interpretations make sense, and 🗣 revise your thinking when something is unclear or incorrect. That process is part of self-regulated learning: using metacognitive strategies to guide your own understanding.
 
 This activity is also designed to help you practice writing words around code. In this course, explaining your code and output in plain English is a learning strategy that helps you rehearse key ideas, strengthen your memory, and check whether you truly understand what the code is doing. Each part builds on previous sections, so you return to earlier ideas and use them again in a new context. This repetition helps you develop fluency.
 
@@ -2187,8 +2187,6 @@ After rendering, check that:
 ------------------------------------------------------------------------
 
 You have finished all sections of the Data Understanding Notebook! Congratulations on building a report that shows your code, your reasoning, and your interpretations.
-
-# Summary
 
 # Summary
 

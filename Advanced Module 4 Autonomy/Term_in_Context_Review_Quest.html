@@ -1,0 +1,1649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Term-in-Context Review Quest</title>
+  <style>
+    :root {
+      --bsu-blue: #0033a0;
+      --bsu-orange: #d64309;
+      --light-blue: #eef3ff;
+      --light-orange: #fff3ec;
+      --pale-blue: #dce7ff;
+      --pale-orange: #ffe1d3;
+      --dark: #1f2937;
+      --mid: #535455;
+      --border: #d5d8df;
+      --bg: #f7f8fb;
+      --white: #ffffff;
+      --good: #17633a;
+      --warn: #8a4b00;
+      --bad: #8f1d1d;
+      --focus: #111827;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(135deg, var(--light-blue), var(--light-orange));
+      color: var(--dark);
+      min-height: 100vh;
+      padding: 18px;
+    }
+    .app {
+      max-width: 1080px;
+      margin: 0 auto;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 18px 44px rgba(0,0,0,.16);
+    }
+    header {
+      background: var(--bsu-blue);
+      color: white;
+      padding: 20px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    header h1 { margin: 0; font-size: 1.55rem; line-height: 1.2; }
+    main { padding: 24px; }
+    h2 { color: var(--bsu-blue); margin-top: 0; }
+    h3 { margin: 0 0 8px; }
+    p, li { line-height: 1.5; }
+    button, textarea { font: inherit; }
+    button:focus-visible, textarea:focus-visible, summary:focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 3px;
+    }
+    button[disabled] { opacity: .62; cursor: not-allowed; }
+
+    .screen { display: none; }
+    .screen.active { display: block; }
+    .grid { display: grid; gap: 16px; }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    .badge {
+      display: inline-block;
+      border: 1px solid rgba(255,255,255,.5);
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-weight: 700;
+      background: rgba(255,255,255,.14);
+      font-size: .92rem;
+      color: white;
+      text-decoration: none;
+    }
+    .home-link {
+      cursor: pointer;
+      min-height: 44px;
+    }
+    .home-link:hover,
+    .home-link:focus-visible {
+      background: rgba(255,255,255,.24);
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      border-left: 6px solid var(--bsu-blue);
+      background: var(--bg);
+      border-radius: 14px;
+      padding: 16px;
+    }
+    .card.blue { background: var(--light-blue); border-left-color: var(--bsu-blue); }
+    .card.orange { background: var(--light-orange); border-left-color: var(--bsu-orange); }
+    .card.good { border-left-color: var(--good); background: #f0fff6; }
+    .card.warn { border-left-color: var(--warn); background: #fff8ed; }
+    .card.bad { border-left-color: var(--bad); background: #fff1f1; }
+    .small { color: var(--mid); font-size: .93rem; }
+    .note {
+      border: 1px solid var(--pale-blue);
+      background: var(--light-blue);
+      border-radius: 12px;
+      padding: 14px;
+      margin: 16px 0;
+    }
+    .warning-note {
+      border: 1px solid var(--pale-orange);
+      background: var(--light-orange);
+      border-left: 6px solid var(--bsu-orange);
+      border-radius: 12px;
+      padding: 14px;
+      margin: 16px 0;
+    }
+    .btn {
+      border: 0;
+      border-radius: 10px;
+      padding: 12px 16px;
+      background: var(--bsu-blue);
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+      min-height: 44px;
+    }
+    .btn:hover:not([disabled]) { filter: brightness(1.06); }
+    .btn.secondary { background: var(--mid); }
+    .btn.orange { background: var(--bsu-orange); }
+    .btn.light {
+      background: white;
+      color: var(--bsu-blue);
+      border: 1px solid var(--bsu-blue);
+    }
+    .btn.choice {
+      color: var(--dark);
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-left: 6px solid var(--bsu-blue);
+      box-shadow: 0 4px 12px rgba(0,0,0,.06);
+      text-align: left;
+      font-weight: 500;
+      min-height: 72px;
+    }
+    .btn.choice:hover:not([disabled]) { border-color: var(--bsu-blue); transform: translateY(-1px); }
+    .btn.choice.selected { border-color: var(--bsu-orange); border-left-color: var(--bsu-orange); background: var(--light-orange); }
+    .btn.choice.correct { border-color: var(--good); border-left-color: var(--good); background: #f0fff6; }
+    .btn.choice.incorrect { border-color: var(--bad); border-left-color: var(--bad); background: #fff1f1; }
+    .choice-letter { font-weight: 800; color: var(--bsu-blue); margin-right: 4px; }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 18px; }
+    .actions.between { justify-content: space-between; align-items: center; }
+
+    .meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      color: var(--mid);
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+    .progress-wrap { margin: 12px 0 18px; }
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      font-weight: 800;
+      color: var(--mid);
+    }
+    .progress-outer {
+      height: 16px;
+      border-radius: 999px;
+      background: #e7e9ef;
+      overflow: hidden;
+      margin-top: 8px;
+      border: 1px solid #d8dbe3;
+    }
+    .progress-inner {
+      height: 100%;
+      width: 0%;
+      background: var(--bsu-orange);
+      transition: width .25s ease;
+    }
+
+    .scenario {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: white;
+      padding: 18px;
+      margin-top: 16px;
+    }
+    .label {
+      color: var(--bsu-orange);
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+    .tag {
+      display: inline-block;
+      border-radius: 999px;
+      padding: 5px 9px;
+      background: var(--light-blue);
+      color: var(--bsu-blue);
+      font-size: .83rem;
+      font-weight: 700;
+      border: 1px solid var(--pale-blue);
+    }
+    .tag.orange { background: var(--light-orange); color: var(--bsu-orange); border-color: var(--pale-orange); }
+    .tag.good { background: #f0fff6; color: var(--good); border-color: #b8e8ca; }
+    .tag.warn { background: #fff8ed; color: var(--warn); border-color: #f2d2a6; }
+    .tag.muted { background: #f2f3f5; color: var(--mid); border-color: var(--border); }
+
+    code {
+      background: #edf2f7;
+      padding: 2px 5px;
+      border-radius: 5px;
+      font-family: Consolas, Monaco, monospace;
+      font-size: .95em;
+    }
+    pre {
+      background: #111827;
+      color: #f9fafb;
+      padding: 14px;
+      border-radius: 12px;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      margin: 12px 0 0;
+    }
+    pre code {
+      background: transparent;
+      color: inherit;
+      padding: 0;
+      border-radius: 0;
+      display: block;
+      font-family: Consolas, Monaco, monospace;
+      line-height: 1.45;
+    }
+
+    .feedback { display: none; margin-top: 18px; }
+    .feedback.show { display: block; }
+    .feedback h3 { color: var(--dark); }
+    .review-panel {
+      border: 1px dashed var(--bsu-blue);
+      background: var(--light-blue);
+      border-radius: 12px;
+      padding: 12px;
+      margin-top: 12px;
+    }
+
+
+    .question-map-panel {
+      border: 1px solid var(--pale-blue);
+      background: var(--light-blue);
+      border-radius: 14px;
+      padding: 14px;
+      margin: 14px 0 18px;
+    }
+    .map-heading-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+    .map-heading-row h2 { margin: 0; }
+
+    .question-map {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .map-btn {
+      min-height: 38px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: white;
+      color: var(--dark);
+      cursor: pointer;
+      font-weight: 800;
+    }
+    .map-btn.current { outline: 3px solid var(--focus); outline-offset: 1px; }
+    .map-btn.strong { background: #f0fff6; border-color: var(--good); color: var(--good); }
+    .map-btn.needs { background: #fff8ed; border-color: var(--warn); color: var(--warn); }
+    .map-btn.unanswered { background: #f8fafc; color: var(--mid); }
+
+
+    .summary-map {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+      margin: 14px 0 4px;
+    }
+    .summary-tile {
+      min-height: 92px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: white;
+      color: var(--dark);
+      cursor: pointer;
+      text-align: left;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 8px;
+      box-shadow: 0 3px 10px rgba(0,0,0,.04);
+    }
+    .summary-tile:hover { transform: translateY(-1px); }
+    .summary-tile.strong { border-left: 6px solid var(--good); background: #f0fff6; }
+    .summary-tile.needs { border-left: 6px solid var(--warn); background: #fff8ed; }
+    .summary-question {
+      font-weight: 800;
+      color: var(--mid);
+      font-size: .82rem;
+      text-transform: uppercase;
+      letter-spacing: .02em;
+    }
+    .summary-term {
+      font-weight: 800;
+      color: var(--bsu-blue);
+      line-height: 1.2;
+    }
+    .summary-status {
+      font-size: .82rem;
+      font-weight: 800;
+      border-radius: 999px;
+      padding: 4px 7px;
+      align-self: flex-start;
+      border: 1px solid var(--border);
+      background: white;
+    }
+    .summary-status.strong { color: var(--good); border-color: #b8e8ca; background: #ffffff; }
+    .summary-status.needs { color: var(--warn); border-color: #f2d2a6; background: #ffffff; }
+
+    table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+    th, td {
+      text-align: left;
+      vertical-align: top;
+      border: 1px solid var(--border);
+      padding: 10px;
+      line-height: 1.4;
+    }
+    th { background: var(--bsu-blue); color: white; }
+    tr:nth-child(even) td { background: #fbfcff; }
+    textarea {
+      width: 100%;
+      min-height: 110px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      resize: vertical;
+      line-height: 1.45;
+    }
+    .divider { border-top: 2px solid var(--bsu-blue); margin: 26px 0; }
+    .copy-note { min-height: 1.2rem; color: var(--mid); }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (max-width: 900px) {
+      body { padding: 10px; }
+      main { padding: 18px; }
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      .question-map { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+      header h1 { font-size: 1.3rem; }
+      table, thead, tbody, th, td, tr { display: block; }
+      th { display: none; }
+      td { border-top: 0; }
+      td:first-child {
+        border-top: 1px solid var(--border);
+        font-weight: 800;
+        color: var(--bsu-blue);
+        background: var(--light-blue);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .progress-inner { transition: none; }
+      .btn.choice:hover:not([disabled]) { transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <h1>Term-in-Context Review Quest</h1>
+      <button id="home-link" class="badge home-link" type="button" aria-label="Return to the start screen">Home: Intro to R Programming</button>
+    </header>
+
+    <main>
+      <section id="start-screen" class="screen active" aria-labelledby="start-title">
+        <h2 id="start-title">Build Quiz Readiness</h2>
+        <p>This review game helps you practice matching R course terms to realistic situations. Read the scenario first, then choose the term that best fits the situation.</p>
+
+        <div class="note">
+          <strong>The Quiz Readiness bar is not a grade.</strong> It is a practice signal. It starts at 0 and fills by 1 point each time you answer a question correctly. The goal is to notice what you know now and what you need to review before the Review Quiz.
+        </div>
+
+        <div class="warning-note">
+          <h3>Recommended first pass</h3>
+          <p>Answer the questions in order without using the Back button, even if you miss one. That first pass gives you the clearest picture of where you currently stand.</p>
+          <p>After that, start the activity over or move forward and backward to learn the correct answers. You control how you use this guided review activity. It is a tool for learning and review, not a graded assessment.</p>
+        </div>
+
+        <div class="grid grid-3" aria-label="How this review works">
+          <div class="card blue"><h3>1. Answer</h3><p>Choose the best term for each scenario.</p></div>
+          <div class="card orange"><h3>2. Read feedback</h3><p>Use the feedback to see why the answer is right or why a distractor is close but wrong.</p></div>
+          <div class="card blue"><h3>3. Review</h3><p>Use the end screen to decide which topics need more study before the Review Quiz.</p></div>
+        </div>
+
+        <div class="actions">
+          <button class="btn orange" type="button" id="start-btn">Start Review Quest</button>
+        </div>
+      </section>
+
+      <section id="game-screen" class="screen" aria-labelledby="question-title">
+        <div class="meta">
+          <span id="round-label">Question 1 of 24</span>
+          <span id="score-label">Quiz Readiness: 0 / 24</span>
+        </div>
+
+        <div class="progress-wrap">
+          <div class="progress-label">
+            <span>Quiz Readiness</span>
+            <span id="progress-number">0 / 24</span>
+          </div>
+          <div class="progress-outer" role="progressbar" aria-label="Quiz Readiness" aria-valuemin="0" aria-valuemax="24" aria-valuenow="0" id="readiness-progress">
+            <div id="progress-inner" class="progress-inner"></div>
+          </div>
+        </div>
+
+        <section class="question-map-panel" aria-labelledby="map-title">
+          <div class="map-heading-row">
+            <h2 id="map-title">Question map</h2>
+            <p class="small">Use this map after your first pass to revisit specific questions.</p>
+          </div>
+          <div id="question-map" class="question-map" aria-label="Question navigation"></div>
+        </section>
+
+        <section class="card blue" aria-labelledby="badges-title">
+          <h3 id="badges-title">Topic badges earned</h3>
+          <p class="small">Badges appear here after you answer a topic correctly.</p>
+          <div id="earned-badges" class="tags" aria-live="polite"></div>
+        </section>
+
+        <article class="scenario">
+          <h2 id="question-title"></h2>
+          <p id="scenario-text"></p>
+          <div id="scenario-code"></div>
+          <p><strong>Question:</strong> <span id="question-stem"></span></p>
+        </article>
+
+        <div id="choice-grid" class="grid grid-2" aria-label="Answer choices"></div>
+
+        <section id="feedback" class="feedback" aria-live="polite" role="status">
+          <div id="feedback-card" class="card">
+            <h3 id="feedback-title"></h3>
+            <p id="feedback-text"></p>
+          </div>
+          <div class="actions" id="feedback-actions"></div>
+        </section>
+
+        <div class="actions between">
+          <div class="actions" style="margin-top:0;">
+            <button class="btn light" type="button" id="prev-btn">Back</button>
+            <button class="btn light" type="button" id="next-btn">Next</button>
+          </div>
+          <button class="btn secondary" type="button" id="end-btn">Go to Readiness Summary</button>
+        </div>
+      </section>
+
+      <section id="final-screen" class="screen" aria-labelledby="final-title">
+        <h2 id="final-title">Your Quiz Readiness Scores</h2>
+        <p id="final-message"></p>
+
+        <div class="grid grid-2">
+          <div class="card blue"><h3>Overall status</h3><p id="overall-status"></p></div>
+          <div class="card orange"><h3>How to use this result</h3><p>This is a study guide, not a grade. A topic marked <strong>↔️ Needs review</strong> is a signal to revisit the chapter terms, summary, or examples before taking the Review Quiz.</p></div>
+        </div>
+
+        <div class="divider"></div>
+
+        <h2>Topic status map</h2>
+        <p class="small">Use this map as your targeted study list. Each tile shows the question number, topic term, and current status. Select a tile to return to that question.</p>
+        <div id="score-table-wrap"></div>
+
+
+        <h2>Final reflection prompts</h2>
+        <div class="warning-note">
+          <h3>Save this reflection before you leave this page</h3>
+          <p>These boxes are here to help you prepare, but this HTML page does not submit your reflection to Canvas and may not save your writing after you close or refresh the page. Write your reflection below, then use the copy button or copy the text into your notes.</p>
+          <p>When you are ready to take the Review Quiz, keep your saved reflection available. You will paste it into a question box in Canvas.</p>
+        </div>
+        <div class="grid grid-2">
+          <label class="card" for="review-plan"><strong>Before the Review Quiz, I need to review:</strong><textarea id="review-plan"></textarea></label>
+          <label class="card" for="helpful-question"><strong>The question that helped me most was:</strong><textarea id="helpful-question"></textarea></label>
+        </div>
+
+        <div class="actions">
+          <button class="btn orange" type="button" id="copy-reflection-btn">Copy Reflection Prompts</button>
+          <button class="btn secondary" type="button" id="restart-btn">Start Over</button>
+          <button class="btn light" type="button" id="return-btn">Return to Questions</button>
+        </div>
+        <p id="copy-note" class="copy-note" aria-live="polite"></p>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const questions = [
+  {
+    "num": 1,
+    "title": "Argument",
+    "target": "Argument",
+    "scenario": "A student changes `replace = TRUE` inside `sample()` so R is allowed to draw values from the same pool more than once.",
+    "scenarioCode": "",
+    "stem": "Which term best describes `replace = TRUE`?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "Package"
+      },
+      {
+        "label": "B",
+        "text": "RData"
+      },
+      {
+        "label": "C",
+        "text": "Argument"
+      },
+      {
+        "label": "D",
+        "text": "Code chunk"
+      }
+    ],
+    "correct": "C",
+    "feedback": {
+      "C": "Correct. An argument is an input inside a function call that changes how the function behaves. Here, `replace = TRUE` changes how `sample()` draws values.",
+      "A": "Try Again. A package is an installable collection of R functions, documentation, and sometimes datasets. In this scenario, the best match is Argument, not Package.",
+      "B": "Try Again. RData is an R-specific file type that stores R objects so they can be loaded again later. In this scenario, the best match is Argument, not RData.",
+      "D": "Try Again. A code chunk is a fenced block in an R Notebook or R Markdown document where R code runs. In this scenario, the best match is Argument, not Code chunk."
+    },
+    "distractorLogic": "The closest distractor is Package because packages contain functions, but `replace = TRUE` is an input inside a function call."
+  },
+  {
+    "num": 2,
+    "title": "CSV",
+    "target": "CSV",
+    "scenario": "A student downloads a data file where each row is one record, each column is separated by commas, and the file can be opened by many different programs because it is plain text.",
+    "scenarioCode": "",
+    "stem": "Which term best describes this file type?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "CSV"
+      },
+      {
+        "label": "B",
+        "text": "RData"
+      },
+      {
+        "label": "C",
+        "text": "Excel"
+      },
+      {
+        "label": "D",
+        "text": "HTML"
+      }
+    ],
+    "correct": "A",
+    "feedback": {
+      "A": "Correct. A CSV is a plain-text file for rectangular data where values are separated by commas. An Excel file can also store rows and columns, but it can include worksheets, formulas, and formatting that CSV does not preserve.",
+      "B": "Try Again. RData is an R-specific file type that stores R objects so they can be loaded again later. In this scenario, the best match is CSV, not RData.",
+      "C": "Try Again. An Excel file is a spreadsheet workbook, often `.xlsx`, that can include sheets, formulas, and formatting. In this scenario, the best match is CSV, not Excel.",
+      "D": "Try Again. HTML is the rendered web page file that opens in a browser and displays a formatted report. In this scenario, the best match is CSV, not HTML."
+    },
+    "distractorLogic": "The closest distractor is Excel because both can store tabular data, but CSV is plain text and usually contains one rectangular table."
+  },
+  {
+    "num": 3,
+    "title": "Extraction",
+    "target": "Extraction",
+    "scenario": "A student uses `transport[[\"year\"]]` to pull one column out of a data frame as the column itself, so it can be passed into `mean()`.",
+    "scenarioCode": "",
+    "stem": "Which term best describes this operation?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "Knit / Preview"
+      },
+      {
+        "label": "B",
+        "text": "R script"
+      },
+      {
+        "label": "C",
+        "text": "Extraction"
+      },
+      {
+        "label": "D",
+        "text": "Subassignment"
+      }
+    ],
+    "correct": "C",
+    "feedback": {
+      "C": "Correct. Extraction retrieves a single component from an object, often returning the thing itself. Subassignment would replace part of the object instead of just retrieving it.",
+      "A": "Try Again. Knit or Preview renders an R Notebook or R Markdown document into an output file such as HTML. In this scenario, the best match is Extraction, not Knit / Preview.",
+      "B": "Try Again. An R script is a plain-text `.R` file that stores R commands and comments. In this scenario, the best match is Extraction, not R script.",
+      "D": "Try Again. Subassignment replaces part of an object by putting an index on the left side of `<-`. In this scenario, the best match is Extraction, not Subassignment."
+    },
+    "distractorLogic": "The closest distractor is Subassignment because both use indexing, but extraction retrieves values while subassignment changes values."
+  },
+  {
+    "num": 4,
+    "title": "Logical Class",
+    "target": "Logical Class",
+    "scenario": "A student runs `scores >= 70` and R returns `TRUE`, `FALSE`, and possibly `NA` values showing which scores meet the condition.",
+    "scenarioCode": "",
+    "stem": "Which term best describes the class of values returned by this comparison?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "Character Class"
+      },
+      {
+        "label": "B",
+        "text": "Numeric Class"
+      },
+      {
+        "label": "C",
+        "text": "Factor Class"
+      },
+      {
+        "label": "D",
+        "text": "Logical Class"
+      }
+    ],
+    "correct": "D",
+    "feedback": {
+      "D": "Correct. Logical values are `TRUE`, `FALSE`, and sometimes `NA`. Comparisons such as `scores >= 70` usually create logical vectors, which are often used for filtering or logical indexing.",
+      "A": "Try Again. Character Class stores text strings written in quotation marks. In this scenario, the best match is Logical Class, not Character Class.",
+      "B": "Try Again. Numeric Class stores numbers that can be used for arithmetic and summaries. In this scenario, the best match is Logical Class, not Numeric Class.",
+      "C": "Try Again. Factor Class stores categorical data using levels, even when the values print like text. In this scenario, the best match is Logical Class, not Factor Class."
+    },
+    "distractorLogic": "The closest distractor is Numeric Class because the comparison begins with numeric scores, but the result of the comparison is logical, not numeric."
+  },
+  {
+    "num": 5,
+    "title": "Function call",
+    "target": "Function call",
+    "scenario": "A student writes `mean(scores, na.rm = TRUE)` so R runs the `mean()` function using the object `scores` and a setting that ignores missing values.",
+    "scenarioCode": "",
+    "stem": "Which term best describes the whole expression `mean(scores, na.rm = TRUE)`?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "Argument"
+      },
+      {
+        "label": "B",
+        "text": "Default argument"
+      },
+      {
+        "label": "C",
+        "text": "Package"
+      },
+      {
+        "label": "D",
+        "text": "Function call"
+      }
+    ],
+    "correct": "D",
+    "feedback": {
+      "D": "Correct. A function call is the act of running a function by writing its name followed by parentheses. The values inside the parentheses, such as `scores` and `na.rm = TRUE`, are arguments.",
+      "A": "Try Again. An argument is an input inside a function call that tells the function what data or settings to use. In this scenario, the best match is Function call, not Argument.",
+      "B": "Try Again. A default argument already has a preset value that R uses unless the user changes it. In this scenario, the best match is Function call, not Default argument.",
+      "C": "Try Again. A package is an installable collection of R functions, documentation, and sometimes datasets. In this scenario, the best match is Function call, not Package."
+    },
+    "distractorLogic": "The closest distractor is Argument because arguments are inside the function call, but they are not the whole expression."
+  },
+  {
+    "num": 6,
+    "title": "Knit / Preview",
+    "target": "Knit / Preview",
+    "scenario": "A student clicks a button in RStudio that runs the notebook from top to bottom, combines the code, output, and written text, and creates a finished report file.",
+    "scenarioCode": "",
+    "stem": "Which term best describes this action?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "Save RData"
+      },
+      {
+        "label": "B",
+        "text": "Load package"
+      },
+      {
+        "label": "C",
+        "text": "Knit / Preview"
+      },
+      {
+        "label": "D",
+        "text": "Logical indexing"
+      }
+    ],
+    "correct": "C",
+    "feedback": {
+      "C": "Correct. Knit or Preview renders the document into an output file such as HTML by running code chunks and combining results with the written text. Saving RData stores objects, not a formatted report.",
+      "A": "Try Again. Saving RData stores R objects from the environment; it does not render a readable report. In this scenario, the best match is Knit / Preview, not Save RData.",
+      "B": "Try Again. Loading a package makes installed package tools available in the current R session. In this scenario, the best match is Knit / Preview, not Load package.",
+      "D": "Try Again. Logical indexing uses TRUE/FALSE values inside brackets to keep or drop parts of an object. In this scenario, the best match is Knit / Preview, not Logical indexing."
+    },
+    "distractorLogic": "The closest distractor is Save RData because both create files, but rendering creates a report while RData saves R objects."
+  },
+  {
+    "num": 7,
+    "title": "Logical indexing",
+    "target": "Logical indexing",
+    "scenario": "A student writes `scores[scores >= 70]` so R keeps only the values where the condition evaluates to `TRUE`.",
+    "scenarioCode": "",
+    "stem": "Which term best describes this selection method?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "Package"
+      },
+      {
+        "label": "B",
+        "text": "YAML"
+      },
+      {
+        "label": "C",
+        "text": "File path"
+      },
+      {
+        "label": "D",
+        "text": "Logical indexing"
+      }
+    ],
+    "correct": "D",
+    "feedback": {
+      "D": "Correct. Logical indexing uses `TRUE` and `FALSE` values to keep or drop elements. This is different from positional indexing, which selects by number position.",
+      "A": "Try Again. A package is an installable collection of R functions, documentation, and sometimes datasets. In this scenario, the best match is Logical indexing, not Package.",
+      "B": "Try Again. YAML is the metadata block at the top of an R Markdown or Quarto document between `---` lines. In this scenario, the best match is Logical indexing, not YAML.",
+      "C": "Try Again. A file path is the text address that tells R where a file or folder is located. In this scenario, the best match is Logical indexing, not File path."
+    },
+    "distractorLogic": "The closest distractor is File path because both can involve symbols and selection-like thinking, but a file path points to a file location, not values inside an object."
+  },
+  {
+    "num": 8,
+    "title": "Working directory",
+    "target": "Working directory",
+    "scenario": "A student runs `read_csv(\"field_sightings.csv\")`, and R looks in one specific folder by default because no full file address was provided.",
+    "scenarioCode": "",
+    "stem": "Which term best describes that default folder?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "Working directory"
+      },
+      {
+        "label": "B",
+        "text": "Environment pane"
+      },
+      {
+        "label": "C",
+        "text": "File path"
+      },
+      {
+        "label": "D",
+        "text": "Package"
+      }
+    ],
+    "correct": "A",
+    "feedback": {
+      "A": "Correct. The working directory is the folder R treats as the default location for reading and saving files when relative paths are used. A file path is the address to a specific file or folder.",
+      "B": "Try Again. The Environment pane lists objects currently stored in memory for the active R session. In this scenario, the best match is Working directory, not Environment pane.",
+      "C": "Try Again. A file path is the text address that tells R where a file or folder is located. In this scenario, the best match is Working directory, not File path.",
+      "D": "Try Again. A package is an installable collection of R functions, documentation, and sometimes datasets. In this scenario, the best match is Working directory, not Package."
+    },
+    "distractorLogic": "The closest distractor is File path because the working directory affects how relative file paths are interpreted."
+  },
+  {
+    "num": 9,
+    "title": "Subassignment",
+    "target": "Subassignment",
+    "scenario": "A researcher writes `transport[transport$year == 9999, \"year\"] <- NA` to replace only the suspicious year values while leaving the rest of the data frame unchanged.",
+    "scenarioCode": "",
+    "stem": "Which term best describes this use of indexing on the left side of `<-`?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "Function call"
+      },
+      {
+        "label": "B",
+        "text": "Subassignment"
+      },
+      {
+        "label": "C",
+        "text": "Logical indexing"
+      },
+      {
+        "label": "D",
+        "text": "Extraction"
+      }
+    ],
+    "correct": "B",
+    "feedback": {
+      "B": "Correct. Subassignment replaces part of an object by putting an index on the left side of `<-`. Logical indexing helps identify which rows to change, but the full action is replacement, not just selection.",
+      "A": "Try Again. A function call runs a function by writing its name followed by parentheses. In this scenario, the best match is Subassignment, not Function call.",
+      "C": "Try Again. Logical indexing uses TRUE/FALSE values inside brackets to keep or drop parts of an object. In this scenario, the best match is Subassignment, not Logical indexing.",
+      "D": "Try Again. Extraction retrieves a component from an object, often with `[[ ]]` or `$`, without changing the object. In this scenario, the best match is Subassignment, not Extraction."
+    },
+    "distractorLogic": "The closest distractor is Logical indexing because the row condition uses a logical test, but the indexed part is being replaced with `NA`."
+  },
+  {
+    "num": 10,
+    "title": "Default argument",
+    "target": "Default argument",
+    "scenario": "A student reads `mean(x, trim = 0, na.rm = FALSE, ...)` in the help file and notices that `na.rm` already has a value `FALSE`.",
+    "scenarioCode": "",
+    "stem": "Which term best describes `na.rm = FALSE` in the Usage line?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "Required argument"
+      },
+      {
+        "label": "B",
+        "text": "Markdown"
+      },
+      {
+        "label": "C",
+        "text": "File path"
+      },
+      {
+        "label": "D",
+        "text": "Default argument"
+      }
+    ],
+    "correct": "D",
+    "feedback": {
+      "D": "Correct. A default argument has a preset value that R uses unless the student supplies a different value. A required argument does not already have a value in the Usage line.",
+      "A": "Try Again. A required argument has no preset value and must be supplied for the function to work. In this scenario, the best match is Default argument, not Required argument.",
+      "B": "Try Again. Markdown is plain-text formatting used for headings, lists, links, emphasis, and regular report text. In this scenario, the best match is Default argument, not Markdown.",
+      "C": "Try Again. A file path is the text address that tells R where a file or folder is located. In this scenario, the best match is Default argument, not File path."
+    },
+    "distractorLogic": "The closest distractor is Required argument because both are arguments, but a required argument has no preset value."
+  },
+  {
+    "num": 11,
+    "title": "Source pane",
+    "target": "Source pane",
+    "scenario": "A student opens `chapter6_practice.Rmd` and edits the exact YAML header, Markdown headings, code chunk fences, and R code in the document.",
+    "scenarioCode": "",
+    "stem": "Which term best describes this editing view?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "Console"
+      },
+      {
+        "label": "B",
+        "text": "HTML file"
+      },
+      {
+        "label": "C",
+        "text": "Source pane"
+      },
+      {
+        "label": "D",
+        "text": "Environment pane"
+      }
+    ],
+    "correct": "C",
+    "feedback": {
+      "C": "Correct. The Source pane is where students edit saved scripts and computational documents such as `.R`, `.Rmd`, and `.qmd` files. The Console runs commands immediately, but it is not the saved document editor.",
+      "A": "Try Again. The Console is where R runs commands immediately and prints results, messages, warnings, and errors. In this scenario, the best match is Source pane, not Console.",
+      "B": "Try Again. An HTML file is the rendered report file that opens in a browser; it is not the editing view. In this scenario, the best match is Source pane, not HTML file.",
+      "D": "Try Again. The Environment pane lists objects currently stored in memory for the active R session. In this scenario, the best match is Source pane, not Environment pane."
+    },
+    "distractorLogic": "The closest distractor is Console because both can involve code, but only the Source pane is the saved editing space."
+  },
+  {
+    "num": 12,
+    "title": "Package",
+    "target": "Package",
+    "scenario": "A student installs `readxl`, loads it with `library(readxl)`, and can then use `read_excel()` to import an `.xlsx` file.",
+    "scenarioCode": "",
+    "stem": "Which term best describes `readxl` in this situation?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "RData"
+      },
+      {
+        "label": "B",
+        "text": "Argument"
+      },
+      {
+        "label": "C",
+        "text": "Function call"
+      },
+      {
+        "label": "D",
+        "text": "Package"
+      }
+    ],
+    "correct": "D",
+    "feedback": {
+      "D": "Correct. A package is an installable collection of R tools, often including functions, documentation, and sometimes datasets. `read_excel()` is a function call from the package, not the package itself.",
+      "A": "Try Again. RData is an R-specific file type that stores R objects so they can be loaded again later. In this scenario, the best match is Package, not RData.",
+      "B": "Try Again. An argument is an input inside a function call that tells the function what data or settings to use. In this scenario, the best match is Package, not Argument.",
+      "C": "Try Again. A function call runs a function by writing its name followed by parentheses. In this scenario, the best match is Package, not Function call."
+    },
+    "distractorLogic": "The closest distractor is Function call because students often confuse the package name with a function supplied by that package."
+  },
+  {
+    "num": 13,
+    "title": "Numeric Class",
+    "target": "Numeric Class",
+    "scenario": "A student creates `prices <- c(12.50, 9.99, 15.75)` and uses `mean(prices)` because the values are numbers that can be used in arithmetic.",
+    "scenarioCode": "",
+    "stem": "Which term best describes the class of values in `prices`?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "Numeric Class"
+      },
+      {
+        "label": "B",
+        "text": "Character Class"
+      },
+      {
+        "label": "C",
+        "text": "Logical Class"
+      },
+      {
+        "label": "D",
+        "text": "Factor Class"
+      }
+    ],
+    "correct": "A",
+    "feedback": {
+      "A": "Correct. Numeric values are numbers that R can use for arithmetic, summaries, and calculations. Character values may look like numbers if they are inside quotation marks, but R treats quoted values as text.",
+      "B": "Try Again. Character Class stores text strings written in quotation marks. In this scenario, the best match is Numeric Class, not Character Class.",
+      "C": "Try Again. Logical Class stores `TRUE`, `FALSE`, and sometimes `NA` values. In this scenario, the best match is Numeric Class, not Logical Class.",
+      "D": "Try Again. Factor Class stores categorical data using levels, even when the values print like text. In this scenario, the best match is Numeric Class, not Factor Class."
+    },
+    "distractorLogic": "The closest distractor is Character Class because beginners often accidentally write numbers in quotes, such as `\"12.50\"`, which changes how R treats the values."
+  },
+  {
+    "num": 14,
+    "title": "YAML",
+    "target": "YAML",
+    "scenario": "At the top of an R Notebook, a student edits the section between two `---` lines to change the title, author, date, and output format before rendering.",
+    "scenarioCode": "---\ntitle: \"Chapter 6 Notes\"\nauthor: \"Student Name\"\ndate: \"`r Sys.Date()`\"\noutput: html_notebook\n---",
+    "stem": "Which term best describes this section?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "YAML"
+      },
+      {
+        "label": "B",
+        "text": "Code chunk"
+      },
+      {
+        "label": "C",
+        "text": "Console"
+      },
+      {
+        "label": "D",
+        "text": "Markdown"
+      }
+    ],
+    "correct": "A",
+    "feedback": {
+      "A": "Correct. YAML is the metadata section at the top of an R Markdown or Quarto document. Markdown controls document text formatting, while YAML controls document settings such as title and output format.",
+      "B": "Try Again. A code chunk is a fenced block in an R Notebook or R Markdown document where R code runs. In this scenario, the best match is YAML, not Code chunk.",
+      "C": "Try Again. The Console is where R runs commands immediately and prints results, messages, warnings, and errors. In this scenario, the best match is YAML, not Console.",
+      "D": "Try Again. Markdown is plain-text formatting used for headings, lists, links, emphasis, and regular report text. In this scenario, the best match is YAML, not Markdown."
+    },
+    "distractorLogic": "The closest distractor is Markdown because both are plain-text syntax in the same file, but YAML is the setup block at the top."
+  },
+  {
+    "num": 15,
+    "title": "Markdown",
+    "target": "Markdown",
+    "scenario": "A student types `## Missing Values Check` outside a code chunk so the rendered report shows that text as a section heading instead of running it as R code.",
+    "scenarioCode": "",
+    "stem": "Which term best describes the formatting system being used?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "Markdown"
+      },
+      {
+        "label": "B",
+        "text": "RData"
+      },
+      {
+        "label": "C",
+        "text": "Function call"
+      },
+      {
+        "label": "D",
+        "text": "YAML"
+      }
+    ],
+    "correct": "A",
+    "feedback": {
+      "A": "Correct. Markdown is a plain-text formatting system used for headings, lists, links, emphasis, and code formatting. YAML controls document metadata at the top of the file, not regular section headings in the body.",
+      "B": "Try Again. RData is an R-specific file type that stores R objects so they can be loaded again later. In this scenario, the best match is Markdown, not RData.",
+      "C": "Try Again. A function call runs a function by writing its name followed by parentheses. In this scenario, the best match is Markdown, not Function call.",
+      "D": "Try Again. YAML is the metadata block at the top of an R Markdown or Quarto document between `---` lines. In this scenario, the best match is Markdown, not YAML."
+    },
+    "distractorLogic": "The closest distractor is YAML because both use plain-text symbols, but Markdown structures the body of the document."
+  },
+  {
+    "num": 16,
+    "title": "Environment pane",
+    "target": "Environment pane",
+    "scenario": "After running `scores <- c(80, 90, 85)`, a student checks the upper-right pane to confirm that the object `scores` now exists and is stored in the current R session.",
+    "scenarioCode": "",
+    "stem": "Which term best describes the pane the student is using?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "Console"
+      },
+      {
+        "label": "B",
+        "text": "YAML"
+      },
+      {
+        "label": "C",
+        "text": "File pane"
+      },
+      {
+        "label": "D",
+        "text": "Environment pane"
+      }
+    ],
+    "correct": "D",
+    "feedback": {
+      "D": "Correct. The Environment pane lists objects currently stored in memory during the R session. It helps students check object names, object types, and whether an object exists before using it.",
+      "A": "Try Again. The Console is where R runs commands immediately and prints results, messages, warnings, and errors. In this scenario, the best match is Environment pane, not Console.",
+      "B": "Try Again. YAML is the metadata block at the top of an R Markdown or Quarto document between `---` lines. In this scenario, the best match is Environment pane, not YAML.",
+      "C": "Try Again. The File pane is used to browse and manage files and folders on your computer. In this scenario, the best match is Environment pane, not File pane."
+    },
+    "distractorLogic": "The closest distractor is Console because the Console may show that code ran, but the Environment pane shows what objects currently exist."
+  },
+  {
+    "num": 17,
+    "title": "Character Class",
+    "target": "Character Class",
+    "scenario": "A student creates `student_ids <- c(\"ID_001\", \"ID_002\", \"ID_003\")` because these values are labels, not quantities that should be averaged or added.",
+    "scenarioCode": "",
+    "stem": "Which term best describes the class of values in `student_ids`?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "Logical Class"
+      },
+      {
+        "label": "B",
+        "text": "Factor Class"
+      },
+      {
+        "label": "C",
+        "text": "Character Class"
+      },
+      {
+        "label": "D",
+        "text": "Numeric Class"
+      }
+    ],
+    "correct": "C",
+    "feedback": {
+      "C": "Correct. Character values are text strings written in quotation marks. Even when a character value contains digits, R treats it as text if it is stored in quotes, so it should not be treated as a quantity.",
+      "A": "Try Again. Logical Class stores `TRUE`, `FALSE`, and sometimes `NA` values. In this scenario, the best match is Character Class, not Logical Class.",
+      "B": "Try Again. Factor Class stores categorical data using levels, even when the values print like text. In this scenario, the best match is Character Class, not Factor Class.",
+      "D": "Try Again. Numeric Class stores numbers that can be used for arithmetic and summaries. In this scenario, the best match is Character Class, not Numeric Class."
+    },
+    "distractorLogic": "The closest distractor is Numeric Class because student ID labels often contain numbers, but the purpose of those numbers is identification, not calculation."
+  },
+  {
+    "num": 18,
+    "title": "RData",
+    "target": "RData",
+    "scenario": "A student finishes a Practice Space, saves the environment objects, and later loads the file so the same vectors and data frames reappear in the Environment pane.",
+    "scenarioCode": "",
+    "stem": "Which term best describes this saved file type?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "HTML"
+      },
+      {
+        "label": "B",
+        "text": "RData"
+      },
+      {
+        "label": "C",
+        "text": "R script"
+      },
+      {
+        "label": "D",
+        "text": "Markdown"
+      }
+    ],
+    "correct": "B",
+    "feedback": {
+      "B": "Correct. An RData file stores R objects so they can be loaded back into an R session later. An R script stores commands, not the current objects themselves.",
+      "A": "Try Again. HTML is the rendered web page file that opens in a browser and displays a formatted report. In this scenario, the best match is RData, not HTML.",
+      "C": "Try Again. An R script is a plain-text `.R` file that stores R commands and comments. In this scenario, the best match is RData, not R script.",
+      "D": "Try Again. Markdown is plain-text formatting used for headings, lists, links, emphasis, and regular report text. In this scenario, the best match is RData, not Markdown."
+    },
+    "distractorLogic": "The closest distractor is R script because both support reproducible work, but one stores code instructions and the other stores R objects."
+  },
+  {
+    "num": 19,
+    "title": "Indexing Operator",
+    "target": "Indexing Operator",
+    "scenario": "A student has a vector named `scores` and writes `scores[3]` to ask R for the third value instead of printing the whole vector.",
+    "scenarioCode": "",
+    "stem": "Which term best describes the square brackets used in `scores[3]`?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "Function call"
+      },
+      {
+        "label": "B",
+        "text": "YAML"
+      },
+      {
+        "label": "C",
+        "text": "Indexing Operator"
+      },
+      {
+        "label": "D",
+        "text": "Argument"
+      }
+    ],
+    "correct": "C",
+    "feedback": {
+      "C": "Correct. The indexing operator uses square brackets to select part of an object, such as one value from a vector or specific rows and columns from a data frame. A function call uses a function name followed by parentheses, such as `mean(scores)`.",
+      "A": "Try Again. A function call runs a function by writing its name followed by parentheses. In this scenario, the best match is Indexing Operator, not Function call.",
+      "B": "Try Again. YAML is the metadata block at the top of an R Markdown or Quarto document between `---` lines. In this scenario, the best match is Indexing Operator, not YAML.",
+      "D": "Try Again. An argument is an input inside a function call that tells the function what data or settings to use. In this scenario, the best match is Indexing Operator, not Argument."
+    },
+    "distractorLogic": "The closest distractor is Function call because indexing behaves like an operation R performs, but the visible syntax here is square-bracket indexing, not a named function followed by parentheses."
+  },
+  {
+    "num": 20,
+    "title": "Code chunk",
+    "target": "Code chunk",
+    "scenario": "A student inserts a fenced block that starts with triple backticks and `{r}`, types R code inside it, and runs that block so the output appears below it.",
+    "scenarioCode": "```{r}\nmean(scores, na.rm = TRUE)\n```",
+    "stem": "Which term best describes this part of an R Notebook?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "File path"
+      },
+      {
+        "label": "B",
+        "text": "Markdown"
+      },
+      {
+        "label": "C",
+        "text": "YAML"
+      },
+      {
+        "label": "D",
+        "text": "Code chunk"
+      }
+    ],
+    "correct": "D",
+    "feedback": {
+      "D": "Correct. A code chunk is the fenced area in an R Markdown or R Notebook document where R code is written and executed. Markdown text outside a chunk is for writing, not running R code.",
+      "A": "Try Again. A file path is the text address that tells R where a file or folder is located. In this scenario, the best match is Code chunk, not File path.",
+      "B": "Try Again. Markdown is plain-text formatting used for headings, lists, links, emphasis, and regular report text. In this scenario, the best match is Code chunk, not Markdown.",
+      "C": "Try Again. YAML is the metadata block at the top of an R Markdown or Quarto document between `---` lines. In this scenario, the best match is Code chunk, not YAML."
+    },
+    "distractorLogic": "The closest distractor is Markdown because chunks live inside an R Markdown document, but only code chunks run R code."
+  },
+  {
+    "num": 21,
+    "title": "Backtick",
+    "target": "Backtick",
+    "scenario": "A student tries to write inline R for the date field and learns that the small mark above the Tab key must surround the expression in `r Sys.Date()`.",
+    "scenarioCode": "",
+    "stem": "Which term best describes this character?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "Quotation mark"
+      },
+      {
+        "label": "B",
+        "text": "Comma"
+      },
+      {
+        "label": "C",
+        "text": "Backtick"
+      },
+      {
+        "label": "D",
+        "text": "Parenthesis"
+      }
+    ],
+    "correct": "C",
+    "feedback": {
+      "C": "Correct. A backtick is the code-related character used in Markdown and R Markdown for inline code, fenced code blocks, and inline R expressions. Quotation marks are different characters and do not trigger inline R evaluation.",
+      "A": "Try Again. A quotation mark creates or surrounds text strings; it does not run inline R code. In this scenario, the best match is Backtick, not Quotation mark.",
+      "B": "Try Again. A comma separates items or arguments; it is not the character used to mark inline R. In this scenario, the best match is Backtick, not Comma.",
+      "D": "Try Again. Parentheses group information in function calls or expressions; they are not the small mark used for inline R. In this scenario, the best match is Backtick, not Parenthesis."
+    },
+    "distractorLogic": "The closest distractor is quotation mark because students often visually confuse different punctuation marks in YAML and inline R."
+  },
+  {
+    "num": 22,
+    "title": "Console",
+    "target": "Console",
+    "scenario": "An instructor wants to ✅ verify the subset vector `scores` only contains “✅ Complete”, “🟡 Not Ready”, and “❌ Missing” character values. She does not want to include it in the R report, so she types `unique(scores)` in the pane where R immediately runs the command and prints the result.",
+    "scenarioCode": "",
+    "stem": "Which term best describes this part of RStudio?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "File pane"
+      },
+      {
+        "label": "B",
+        "text": "Source pane"
+      },
+      {
+        "label": "C",
+        "text": "Console"
+      },
+      {
+        "label": "D",
+        "text": "Environment pane"
+      }
+    ],
+    "correct": "C",
+    "feedback": {
+      "C": "Correct. The Console is where R executes commands immediately and prints results, messages, warnings, and errors. The Source pane is where students write and save reusable code before running it.",
+      "A": "Try Again. The File pane is used to browse and manage files and folders on your computer. In this scenario, the best match is Console, not File pane.",
+      "B": "Try Again. The Source pane is the saved editing area for scripts and documents such as `.R`, `.Rmd`, and `.qmd` files. In this scenario, the best match is Console, not Source pane.",
+      "D": "Try Again. The Environment pane lists objects currently stored in memory for the active R session. In this scenario, the best match is Console, not Environment pane."
+    },
+    "distractorLogic": "The closest distractor is the Source pane because students often confuse “where code is written” with “where code immediately runs.”"
+  },
+  {
+    "num": 23,
+    "title": "HTML",
+    "target": "HTML",
+    "scenario": "A student clicks Preview/Knit after working in an R Notebook, and a browser window opens showing a formatted report with headings, code, output, and plots.",
+    "scenarioCode": "",
+    "stem": "Which term best describes the file type being displayed in the browser?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "HTML"
+      },
+      {
+        "label": "B",
+        "text": "RData"
+      },
+      {
+        "label": "C",
+        "text": "YAML"
+      },
+      {
+        "label": "D",
+        "text": "CSV"
+      }
+    ],
+    "correct": "A",
+    "feedback": {
+      "A": "Correct. HTML is the web page file type that browsers open and display as formatted documents. In this course, students submit the actual `.html` or `.nb.html` file, not the browser address.",
+      "B": "Try Again. RData is an R-specific file type that stores R objects so they can be loaded again later. In this scenario, the best match is HTML, not RData.",
+      "C": "Try Again. YAML is the metadata block at the top of an R Markdown or Quarto document between `---` lines. In this scenario, the best match is HTML, not YAML.",
+      "D": "Try Again. A CSV is a plain-text data file where rows are lines and values are usually separated by commas. In this scenario, the best match is HTML, not CSV."
+    },
+    "distractorLogic": "The closest distractor is RData because both may be submitted as files, but RData stores R objects rather than a readable report."
+  },
+  {
+    "num": 24,
+    "title": "Factor Class",
+    "target": "Factor Class",
+    "scenario": "A researcher stores survey responses as `factor(c(\"Agree\", \"Neutral\", \"Disagree\"))` so R treats the responses as categories instead of ordinary text.",
+    "scenarioCode": "",
+    "stem": "Which term best describes this kind of R object?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "Numeric Class"
+      },
+      {
+        "label": "B",
+        "text": "Factor Class"
+      },
+      {
+        "label": "C",
+        "text": "Logical Class"
+      },
+      {
+        "label": "D",
+        "text": "Character Class"
+      }
+    ],
+    "correct": "B",
+    "feedback": {
+      "B": "Correct. A factor is used for categorical data. It may print like text, but R stores the values using category labels called levels. A character vector stores text strings but does not treat the values as a defined set of categories.",
+      "A": "Try Again. Numeric Class stores numbers that can be used for arithmetic and summaries. In this scenario, the best match is Factor Class, not Numeric Class.",
+      "C": "Try Again. Logical Class stores `TRUE`, `FALSE`, and sometimes `NA` values. In this scenario, the best match is Factor Class, not Logical Class.",
+      "D": "Try Again. Character Class stores text strings written in quotation marks. In this scenario, the best match is Factor Class, not Character Class."
+    },
+    "distractorLogic": "The closest distractor is Character Class because factors often look like text when printed, but factors carry category levels that plain character vectors do not."
+  }
+];
+
+    const state = {
+      currentIndex: 0,
+      answers: questions.map(() => ({ selected: null, attempted: false, earned: false, lastCorrect: false }))
+    };
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, ch => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+      }[ch]));
+    }
+
+    function inlineFormat(value) {
+      const escaped = escapeHtml(value);
+      return escaped.replace(/`([^`]+)`/g, '<code>$1</code>');
+    }
+
+    function score() {
+      return state.answers.filter(answer => answer.earned).length;
+    }
+
+    function overallStatusText() {
+      return score() >= Math.ceil(questions.length * 0.8) ? '🌟 Strong' : '↔️ Needs review';
+    }
+
+    function showScreen(id) {
+      document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function updateReadiness() {
+      const total = questions.length;
+      const currentScore = score();
+      const percent = (currentScore / total) * 100;
+      document.getElementById('progress-inner').style.width = percent + '%';
+      document.getElementById('progress-number').textContent = currentScore + ' / ' + total;
+      document.getElementById('score-label').textContent = 'Quiz Readiness: ' + currentScore + ' / ' + total;
+      const progress = document.getElementById('readiness-progress');
+      progress.setAttribute('aria-valuenow', String(currentScore));
+      progress.setAttribute('aria-valuetext', currentScore + ' out of ' + total + ' topics marked strong');
+      renderBadges();
+    }
+
+    function renderBadges() {
+      const earned = questions.filter((q, index) => state.answers[index].earned);
+      const badgeBox = document.getElementById('earned-badges');
+      if (!earned.length) {
+        badgeBox.innerHTML = '<span class="tag muted">No badges earned yet</span>';
+        return;
+      }
+      badgeBox.innerHTML = earned.map(q => '<span class="tag good">' + escapeHtml(q.target) + '</span>').join('');
+    }
+
+    function renderQuestionMap() {
+      const map = document.getElementById('question-map');
+      map.innerHTML = '';
+      questions.forEach((q, index) => {
+        const answer = state.answers[index];
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'map-btn ';
+        if (answer.earned) {
+          btn.className += 'strong';
+          btn.setAttribute('aria-label', 'Question ' + q.num + ', Strong');
+        } else if (answer.attempted) {
+          btn.className += 'needs';
+          btn.setAttribute('aria-label', 'Question ' + q.num + ', Needs review');
+        } else {
+          btn.className += 'unanswered';
+          btn.setAttribute('aria-label', 'Question ' + q.num + ', not answered');
+        }
+        if (index === state.currentIndex) btn.className += ' current';
+        btn.textContent = q.num;
+        btn.addEventListener('click', () => {
+          state.currentIndex = index;
+          renderQuestion();
+        });
+        map.appendChild(btn);
+      });
+    }
+
+    function renderQuestion() {
+      const q = questions[state.currentIndex];
+      const answer = state.answers[state.currentIndex];
+
+      document.getElementById('round-label').textContent = 'Question ' + (state.currentIndex + 1) + ' of ' + questions.length;
+      document.getElementById('question-title').textContent = 'Question ' + q.num;
+      document.getElementById('scenario-text').innerHTML = inlineFormat(q.scenario);
+      document.getElementById('question-stem').innerHTML = inlineFormat(q.stem);
+
+      const codeBox = document.getElementById('scenario-code');
+      if (q.scenarioCode) {
+        codeBox.innerHTML = '<pre><code>' + escapeHtml(q.scenarioCode) + '</code></pre>';
+      } else {
+        codeBox.innerHTML = '';
+      }
+
+      const choiceGrid = document.getElementById('choice-grid');
+      choiceGrid.innerHTML = '';
+      q.choices.forEach(choice => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'btn choice';
+        btn.innerHTML = '<span class="choice-letter">' + choice.label + '.</span> ' + inlineFormat(choice.text);
+
+        if (answer.attempted) {
+          btn.disabled = true;
+          if (choice.label === answer.selected) {
+            btn.classList.add(choice.label === q.correct ? 'correct' : 'incorrect');
+          }
+          if (choice.label === q.correct && answer.selected !== q.correct) {
+            btn.classList.add('correct');
+          }
+        }
+
+        btn.addEventListener('click', () => selectAnswer(choice.label));
+        choiceGrid.appendChild(btn);
+      });
+
+      document.getElementById('prev-btn').disabled = state.currentIndex === 0;
+      document.getElementById('next-btn').disabled = state.currentIndex === questions.length - 1;
+
+      if (answer.attempted) {
+        showFeedback(answer.selected);
+      } else {
+        hideFeedback();
+      }
+
+      updateReadiness();
+      renderQuestionMap();
+    }
+
+    function selectAnswer(label) {
+      const q = questions[state.currentIndex];
+      const answer = state.answers[state.currentIndex];
+      answer.selected = label;
+      answer.attempted = true;
+      answer.lastCorrect = label === q.correct;
+      if (answer.lastCorrect) {
+        answer.earned = true;
+      }
+      renderQuestion();
+    }
+
+    function showFeedback(label) {
+      const q = questions[state.currentIndex];
+      const isCorrect = label === q.correct;
+      const feedback = document.getElementById('feedback');
+      const card = document.getElementById('feedback-card');
+      const title = document.getElementById('feedback-title');
+      const text = document.getElementById('feedback-text');
+      const actions = document.getElementById('feedback-actions');
+
+      card.className = 'card ' + (isCorrect ? 'good' : 'warn');
+      title.textContent = isCorrect ? '🌟 Correct — Strong' : '↔️ Try Again — Needs review';
+      text.innerHTML = inlineFormat(q.feedback[label] || 'Review the scenario and compare this answer with the target term.');
+      actions.innerHTML = '';
+
+      const tryBtn = document.createElement('button');
+      tryBtn.type = 'button';
+      tryBtn.className = 'btn light';
+      tryBtn.textContent = 'Try Again';
+      tryBtn.addEventListener('click', tryAgain);
+
+      const continueBtn = document.createElement('button');
+      continueBtn.type = 'button';
+      continueBtn.className = 'btn orange';
+      continueBtn.textContent = state.currentIndex === questions.length - 1 ? 'Continue to Summary' : 'Continue';
+      continueBtn.addEventListener('click', continueForward);
+
+      actions.appendChild(tryBtn);
+      actions.appendChild(continueBtn);
+      feedback.classList.add('show');
+    }
+
+    function hideFeedback() {
+      document.getElementById('feedback').classList.remove('show');
+      document.getElementById('feedback-actions').innerHTML = '';
+    }
+
+    function tryAgain() {
+      const answer = state.answers[state.currentIndex];
+      answer.selected = null;
+      answer.attempted = false;
+      answer.lastCorrect = false;
+      renderQuestion();
+      const firstChoice = document.querySelector('#choice-grid button');
+      if (firstChoice) firstChoice.focus();
+    }
+
+    function continueForward() {
+      if (state.currentIndex < questions.length - 1) {
+        state.currentIndex += 1;
+        renderQuestion();
+      } else {
+        showFinalScreen();
+      }
+    }
+
+    function goBack() {
+      if (state.currentIndex > 0) {
+        state.currentIndex -= 1;
+        renderQuestion();
+      }
+    }
+
+    function goNext() {
+      if (state.currentIndex < questions.length - 1) {
+        state.currentIndex += 1;
+        renderQuestion();
+      }
+    }
+
+    function showFinalScreen() {
+      const total = questions.length;
+      const currentScore = score();
+      const needReview = total - currentScore;
+      document.getElementById('final-message').innerHTML =
+        'You currently have <strong>' + currentScore + ' / ' + total + '</strong> topics marked <strong>🌟 Strong</strong>. ' +
+        'You have <strong>' + needReview + '</strong> topic' + (needReview === 1 ? '' : 's') + ' marked <strong>↔️ Needs review</strong>.';
+
+      document.getElementById('overall-status').innerHTML =
+        '<strong>' + overallStatusText() + '</strong><br>' +
+        'A strong score means you are recognizing most terms in context. A needs-review score means you should use the topic status map below as a targeted study list.';
+
+      renderScoreTable();
+      showScreen('final-screen');
+    }
+
+    function renderScoreTable() {
+      const wrap = document.getElementById('score-table-wrap');
+      wrap.innerHTML = '';
+
+      const map = document.createElement('div');
+      map.className = 'summary-map';
+      map.setAttribute('aria-label', 'Quiz readiness topic status map');
+
+      questions.forEach((q, index) => {
+        const answer = state.answers[index];
+        const status = answer.earned ? '🌟 Strong' : '↔️ Needs review';
+        const statusClass = answer.earned ? 'strong' : 'needs';
+
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'summary-tile ' + statusClass;
+        btn.setAttribute('aria-label', 'Question ' + q.num + ', ' + q.target + ', ' + status.replace('🌟 ', '').replace('↔️ ', ''));
+        btn.innerHTML =
+          '<span class="summary-question">Q' + q.num + '</span>' +
+          '<span class="summary-term">' + escapeHtml(q.target) + '</span>' +
+          '<span class="summary-status ' + statusClass + '">' + status + '</span>';
+        btn.addEventListener('click', () => {
+          state.currentIndex = index;
+          renderQuestion();
+          showScreen('game-screen');
+        });
+        map.appendChild(btn);
+      });
+
+      wrap.appendChild(map);
+    }
+
+    function restartGame() {
+      state.currentIndex = 0;
+      state.answers = questions.map(() => ({ selected: null, attempted: false, earned: false, lastCorrect: false }));
+      renderQuestion();
+      showScreen('game-screen');
+    }
+
+    function copyReflection() {
+      const plan = document.getElementById('review-plan').value.trim();
+      const helpful = document.getElementById('helpful-question').value.trim();
+      const text = 'Before the Review Quiz, I need to review:\n' +
+        (plan || '[write your review plan here]') +
+        '\n\nThe question that helped me most was:\n' +
+        (helpful || '[write the helpful question here]');
+      navigator.clipboard.writeText(text).then(() => {
+        document.getElementById('copy-note').textContent = 'Reflection copied. Paste it into your notes now, and keep it ready for the Canvas Review Quiz question box.';
+      }).catch(() => {
+        document.getElementById('copy-note').textContent = 'Copy was blocked by the browser. You can still select and copy your text manually.';
+      });
+    }
+
+    function startGame() {
+      state.currentIndex = 0;
+      renderQuestion();
+      showScreen('game-screen');
+    }
+
+    document.getElementById('home-link').addEventListener('click', () => showScreen('start-screen'));
+    document.getElementById('start-btn').addEventListener('click', startGame);
+    document.getElementById('prev-btn').addEventListener('click', goBack);
+    document.getElementById('next-btn').addEventListener('click', goNext);
+    document.getElementById('end-btn').addEventListener('click', showFinalScreen);
+    document.getElementById('restart-btn').addEventListener('click', restartGame);
+    document.getElementById('return-btn').addEventListener('click', () => { renderQuestion(); showScreen('game-screen'); });
+    document.getElementById('copy-reflection-btn').addEventListener('click', copyReflection);
+  </script>
+</body>
+</html>

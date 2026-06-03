@@ -242,7 +242,7 @@ z[2:4]
 
 ### Data Frame 
 
-The **indexing operator** (`[ ]`) is used to select or replace parts of many kinds of objects, not just vectors. For data frames, the common form is `df[rows, cols]` or `x[i, j]` where `i` is the **row index**, `j` is the **column index**. If you leave one side blank, the output includes all.
+The **indexing operator** (`[ ]`) is used to select or replace parts of many kinds of objects, not just vectors. For data frames, the common form is **`df[rows, cols]`** or `x[i, j]` where `i` is the **row index**, `j` is the **column index**. If you leave one side blank, the output includes all.
 
 Rows and columns are coordinates:
 
