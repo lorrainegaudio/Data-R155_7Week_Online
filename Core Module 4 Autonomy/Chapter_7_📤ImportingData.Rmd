@@ -4,15 +4,20 @@ subtitle: "📤 Importing Data"
 author: "by Lorraine Gaudio"  
 date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
 team: "Summer 2026"
-output:
-  pdf_document:
-    toc: true
-    toc_depth: 2
-    number_sections: true
-    fig_caption: true
-    latex_engine: xelatex
-    pandoc_args:
-      - "--lua-filter=../assets/strip-emoji.lua"
+output: 
+  html_document: # To create an HTML document from R Markdown
+    toc: false # Table of contents (TOC)
+    toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactivne scrolling
+    includes:
+      in_header: ../assets/header.html
+      after_body: ../assets/footer.html
 ---
 
 ```{r setup, include=FALSE}
@@ -439,7 +444,7 @@ You should see the files for this chapter listed in the output:
 
 🗣 The working directory of an R Notebook is the folder where the notebook is saved. 
 
-🗣  **Write a memo** in your Notebook explaining the difference in file paths when you run the code in the Console vs. the Knit R Notebook. **This is Task 2 of the Practice Space at the end of this chapter.**
+🗣  **Write a memo** Did R look in the same folder both times, or did the Console and Knit use different folders? Either result is okay. Explain what your result tells you about where R is looking. Why does this matter when importing files? **This is Task 2 of the Practice Space at the end of this chapter.**
 
 🧭 What this means for loading data is that R must be able to find your data file from the working directory it is using. If you are working in the Console or an R script, check or set the working directory yourself. When you are working in an Rmd (or qmd) file, you will keep the data files in the same folder as the Rmd file unless you provide a specific file path to use.
 
@@ -694,7 +699,7 @@ car_prices_df <- read_excel("car_prices.xlsx")
 
 ✅ Look in the Environment pane for `car_prices_df`. Click the object or run `head(car_prices_df)` to confirm that the rows and columns look like car price data.
 
-View the data frame by clicking on `car_prices_df` in your Environment pane or by running `View(car_prices_df)`.
+View the data frame by clicking on `car_prices_df` in your Environment pane or by running `View(car_prices_df)` in your console.
 
 🧭 If the Excel import does not look right, check three things before asking for help: whether the file is listed in `list.files()`, whether the file name is spelled exactly as `car_prices.xlsx`, and whether the workbook has more than one sheet.
 
@@ -715,6 +720,29 @@ car_prices_sheet1 <- read_excel("car_prices.xlsx", sheet = 1)
 🧭  `sheet = 1` reads the first sheet but you can also specify the sheet by name. For example, `sheet = "car_prices"`.
 
 **💡 Test knit.**
+
+## Create RData file
+
+This task creates an RData file. 
+
+🎯 Save the environment objects `car_prices_df`, `dplace_df`, `movielens`, and `mtcars` into a file called `chapter7_practice.RData`. 
+
+Run this code after `car_prices_df`, `dplace_df`, `movielens`, and `mtcars` exist in your Environment
+
+```{r}
+# ⚡ Type this in your R Notebook to save the environment objects into an RData file
+save(
+  car_prices_df,
+  dplace_df,
+  movielens,
+  mtcars,
+  file = "chapter7_practice.RData"
+)
+```
+
+🗣 `chapter7_practice.RData` will automatically save in the same folder that your Rmd file is located.
+
+🧭 This file type is useful because it can be loaded into R to restore these objects without needing to re-import the data from the original CSV and Excel files. 
 
 ---
 
@@ -836,7 +864,7 @@ list.files()
 
 ✅ Check the resulting HTML and compare with Console output. 
 
-🪞 Reflect: Did R look in the same folder both times, or different folders? What does this tell you about how R handles file paths when you run code in the Console vs. when you Knit an R Notebook? Why would this matter when you are importing data? 
+🪞 Reflect: Did R look in the same folder both times, or did the Console and Knit use different folders? Either result is okay. Explain what your result tells you about where R is looking. Why does this matter when importing files? 
 
 ## Task 3
 

@@ -1632,7 +1632,7 @@ display: none;
 <h1 class="title toc-ignore">Chapter 7</h1>
 <h3 class="subtitle">📤 Importing Data</h3>
 <h4 class="author">by Lorraine Gaudio</h4>
-<h4 class="date">Version May 26, 2026</h4>
+<h4 class="date">Version June 03, 2026</h4>
 
 </div>
 
@@ -1824,9 +1824,9 @@ file submission.</p>
 <li><code>Values_Transport_dplace.csv</code></li>
 <li><code>car_prices.xlsx</code></li>
 </ul>
-<p>Find these data files in the
-<code>📤Importing Data Guided Activity</code> instructions page. Click
-the download links. Do not open the downloaded files.</p>
+<p>Find these data files in the <strong>📤Importing Data Guided
+Activity</strong> instructions page. Click the download links. Do not
+open the downloaded files.</p>
 <blockquote>
 <p>⚠️ Common Pain Point: After you download
 <code>Values_Transport_dplace.csv</code>, do <strong>not</strong> open
@@ -1843,7 +1843,7 @@ file if the file is in the place where R is looking or if you give R the
 correct file path. In this chapter, we are keeping the workflow simple
 by putting the notebook and data files in the same folder.</p>
 <p>🎯 Download the data files for this chapter and place them in your
-<code>Module_4</code> folder with your Rmd file. <strong>This is Task 1
+<code>Module_4/</code> folder with your Rmd file. <strong>This is Task 1
 of the Practice Space at the end of this chapter.</strong></p>
 <p>By the time you are done, your folder structure should look like
 this:</p>
@@ -2068,7 +2068,7 @@ as an example of an output.
 </p>
 </div>
 <p>✅ In the knitted notebook output, look directly under the
-<code>getwd()</code> and <code>list.files()</code> ub the console
+<code>getwd()</code> and <code>list.files()</code> in the console
 output. Confirm that the folder path matches where you saved
 <code>chapter7_practice.Rmd</code>. Then check whether the file list
 includes the notebook file itself.</p>
@@ -2115,10 +2115,11 @@ includes the notebook file itself.</p>
 <pre class="text"><code>[1] &quot;car_prices.xlsx&quot;              &quot;chapter7_practice.Rmd&quot;        &quot;Values_Transport_dplace.csv&quot;</code></pre>
 <p>🗣 The working directory of an R Notebook is the folder where the
 notebook is saved.</p>
-<p>🗣 <strong>Write a memo</strong> in your Notebook explaining the
-difference in file paths when you run the code in the Console vs. the
-Knit R Notebook. <strong>This is Task 2 of the Practice Space at the end
-of this chapter.</strong></p>
+<p>🗣 <strong>Write a memo</strong> Did R look in the same folder both
+times, or did the Console and Knit use different folders? Either result
+is okay. Explain what your result tells you about where R is looking.
+Why does this matter when importing files? <strong>This is Task 2 of the
+Practice Space at the end of this chapter.</strong></p>
 <p>🧭 What this means for loading data is that R must be able to find
 your data file from the working directory it is using. If you are
 working in the Console or an R script, check or set the working
@@ -2484,7 +2485,8 @@ trying to import it into R.</p>
 the object or run <code>head(car_prices_df)</code> to confirm that the
 rows and columns look like car price data.</p>
 <p>View the data frame by clicking on <code>car_prices_df</code> in your
-Environment pane or by running <code>View(car_prices_df)</code>.</p>
+Environment pane or by running <code>View(car_prices_df)</code> in your
+console.</p>
 <p>🧭 If the Excel import does not look right, check three things before
 asking for help: whether the file is listed in
 <code>list.files()</code>, whether the file name is spelled exactly as
@@ -2511,9 +2513,33 @@ file.</p>
 specify the sheet by name. For example,
 <code>sheet = &quot;car_prices&quot;</code>.</p>
 <p><strong>💡 Test knit.</strong></p>
+</div>
+</div>
+</div>
+<div id="create-rdata-file" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> Create RData
+file</h2>
+<p>This task creates an RData file.</p>
+<p>🎯 Save the environment objects <code>car_prices_df</code>,
+<code>dplace_df</code>, <code>movielens</code>, and <code>mtcars</code>
+into a file called <code>chapter7_practice.RData</code>.</p>
+<p>Run this code after <code>car_prices_df</code>,
+<code>dplace_df</code>, <code>movielens</code>, and <code>mtcars</code>
+exist in your Environment</p>
+<pre class="r"><code># ⚡ Type this in your R Notebook to save the environment objects into an RData file
+save(
+  car_prices_df,
+  dplace_df,
+  movielens,
+  mtcars,
+  file = &quot;chapter7_practice.RData&quot;
+)</code></pre>
+<p>🗣 <code>chapter7_practice.RData</code> will automatically save in the
+same folder that your Rmd file is located.</p>
+<p>🧭 This file type is useful because it can be loaded into R to
+restore these objects without needing to re-import the data from the
+original CSV and Excel files.</p>
 <hr />
-</div>
-</div>
 </div>
 </div>
 <div id="summary" class="section level1" number="5">
@@ -2707,10 +2733,10 @@ list.files()</code></pre>
 <div id="step-3-1" class="section level3" number="7.2.3">
 <h3><span class="header-section-number">7.2.3</span> Step 3</h3>
 <p>✅ Check the resulting HTML and compare with Console output.</p>
-<p>🪞 Reflect: Did R look in the same folder both times, or different
-folders? What does this tell you about how R handles file paths when you
-run code in the Console vs. when you Knit an R Notebook? Why would this
-matter when you are importing data?</p>
+<p>🪞 Reflect: Did R look in the same folder both times, or did the
+Console and Knit use different folders? Either result is okay. Explain
+what your result tells you about where R is looking. Why does this
+matter when importing files?</p>
 </div>
 </div>
 <div id="task-3" class="section level2" number="7.3">
