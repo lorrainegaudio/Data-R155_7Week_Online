@@ -809,7 +809,7 @@ In this Practice Space, you will see two kinds of memo prompts:
 - 🗣 Add Comments asks you to explain what the code or output shows.
 - 🪞 Reflect asks you to explain your thinking process, what confused you, what changed in your understanding, or what strategy you would use next.
 
-These are there to help you practice writing memos as you work. In each task, you can choose whether to answer one, two, or all memo prompts.
+These are there to help you practice writing memos as you work. In each task, you can choose whether to answer one, two, or all memo prompts. Each task should contain at least one memo response. The goal is to practice writing your thinking as you work, not to write a perfect answer for every prompt.
 
 **Autonomy** is the habit of taking ownership of your thinking, choices, code, and learning process while using help responsibly. Show autonomy by checking your own file locations, reading your output carefully, using error messages as evidence, and explaining what you would check next if something did not work.
 

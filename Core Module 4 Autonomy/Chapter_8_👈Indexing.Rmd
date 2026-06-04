@@ -166,7 +166,7 @@ list.files()
 
 🧭 If `field_sightings.csv` is not listed, check whether the file is still in `Downloads/`, whether it was renamed, or whether it was saved in a different folder. Your next move is to make the file visible to R in your Rmd, then run `list.files()` again.
 
-🎯 **Goal:** Load `field_sightings.csv` into R using `read_csv()` and assign it to a variable called `field_sightings`. Recall that you need to library `readr` before you can use `read_csv()`.
+🎯  Load `field_sightings.csv` into R using `read_csv()` and assign it to a variable called `field_sightings`. Recall that you need to library `readr` before you can use `read_csv()`.
 
 ```{r message=TRUE, warning=TRUE}
 # ⚡ Type this in your R Notebook
@@ -209,7 +209,7 @@ In Chapter 3, you practiced using the **indexing operator** with positional inde
 
 You learned that the basic pattern for **positional indexing** is `x[i]`, where `x` is the vector and `i` is the index (or indices) of the elements you want to extract. A position used to identify elements in an object. 
 
-🎯 **Goal:**  Practice using `[ ]` with positional indexing on vectors. 
+🎯   Practice using `[ ]` with positional indexing on vectors. 
 
 ```{r}
 # 📖 Review
@@ -254,7 +254,7 @@ Rows and columns are coordinates:
 
 Let's see this in practice with our `field_sightings` data frame.
 
-🎯 **Goal:** Print the first six rows of the `field_sightings` data frame using the indexing operator.
+🎯  Print the first six rows of the `field_sightings` data frame using the indexing operator.
 
 🧭 Before running a bracket-indexing line below, pause and ask: “How do I know that this is choosing rows?” 
 
@@ -279,7 +279,7 @@ There is a function called `head()` that *basically* does the same thing as `fie
 
 If you don't specify `n`, it defaults to 6, which means it will show the first 6 rows of the data frame. You can change this number to show more or fewer rows.
 
-🎯 **Goal:** Print the first three rows of the `field_sightings` data frame using the `head()` function to check that the dataset loaded correctly.
+🎯  Print the first three rows of the `field_sightings` data frame using the `head()` function to check that the dataset loaded correctly.
 
 ```{r}
 # ⚡ Type this in your R Notebook
@@ -334,7 +334,7 @@ nerdy_palette["Octarine"]
 
 A common use of names indexing is to **select a column by its name**.  
 
-🎯 **Goal:** Use names indexing to return the band colors in the `field_sightings` data frame. 
+🎯  Use names indexing to return the band colors in the `field_sightings` data frame. 
 
 **Methods A:C** show different ways to subset a column with `[ ]`.
 
@@ -480,7 +480,7 @@ Logical mask indexing works the same way for data frames, except that the logica
 
 The mask can be `TRUE`/`FALSE`/`NA` for each row. When you use the mask in `df[mask, ]`, R keeps rows where the mask is TRUE. If the mask contains `NA`, those unknown positions can also appear in the result, which can make the subset larger than the number of definite `TRUE` values.
 
-🎯 **Goal:**: Keep only rows where the bird is tagged using `[ ]`.
+🎯 : Keep only rows where the bird is tagged using `[ ]`.
 
 ```{r}
 # ⚡ Type this in your R Notebook
@@ -540,7 +540,7 @@ When we then subset with `tagged_only <- field_sightings[mask_tagged, ]`, R keep
 
 The function `which()` is a subsetting helper that turns a logical masks into row indices. Using `which()` is a strategy to handle potential `NA` values in your data. When the test could include `NA`, wrap it in `which()` to drop unknowns.
 
-🎯 **Goal:** Use `which()` to subset the `field_sightings` data frame to keep only rows where the bird is tagged, while safely handling any potential NA values in the "Status" column.
+🎯  Use `which()` to subset the `field_sightings` data frame to keep only rows where the bird is tagged, while safely handling any potential NA values in the "Status" column.
 
 You saw the function `which()` in Chapter 6. This function converts `TRUE` positions into numeric indices. 
 
@@ -598,7 +598,7 @@ There is another operator called the **double square bracket operator** (`[[`). 
 | `[ ]` | Subsetting operator. Returns a subset of the same type as the original object. Can return multiple elements. |
 | `[[ ]]` | Extraction operator. Returns a *single element* inside the object and *passed* into functions. |  
 
-🎯 **Goal:** Use the `[[` operator to extract the "Band_Color" column from the `field_sightings` data frame and then use it inside the function `unique()`
+🎯  Use the `[[` operator to extract the "Band_Color" column from the `field_sightings` data frame and then use it inside the function `unique()`
 
 📜 The SYNTAX: `x[[i]]`
 
@@ -644,7 +644,7 @@ There is another operator called the **dollar sign operator** (`$`) that is used
 
 `dataframe$column_name`
 
-🎯 **Goal:** Extract the `Band_Color` column using `$`.
+🎯  Extract the `Band_Color` column using `$`.
 
 ```{r, eval = FALSE}
 # ⚡ Type this in your R Notebook
@@ -659,7 +659,7 @@ You will likely use the `$` operator often. The `$` operator is more concise and
 
 If we try to use a variable to specify the column name with the `$` operator, it will not work because `$` does not evaluate the variable name. `[[ ]]` can use a variable and is safer in programs.
 
-🎯 **Goal:** Use a stored *object* name to specify the column name and try to extract the column using both `[[` and `$` operators.
+🎯  Use a stored *object* name to specify the column name and try to extract the column using both `[[` and `$` operators.
 
 ```{r, eval = FALSE}
 # ⚡ Type this in your R Notebook
@@ -721,7 +721,7 @@ In this chapter, you’ll use three core replacement patterns for data frames:
 
 What if all the tagged birds in the `field_sightings` data frame were raised as part of a breeding program and then reintroduced into an area where the species no longer existed? This means all the untagged birds were hatched in the wild. Suppose we decide to rename the element value `"Untagged"` to `"Wild Hatch"` in the `Status` column to communicate this information more clearly.
 
-🎯**Goal**: Replace `"Untagged"` with `"Wild Hatch"` in `Status`.
+🎯  Replace `"Untagged"` with `"Wild Hatch"` in `Status`.
 
 **Step 1**
 
@@ -791,7 +791,7 @@ Suppose we decide to add a new column called `Tag_Flag` that indicates whether t
 
 ### `[[` Method
 
-🎯**Goal**: Add a new column (a flag) using a column name stored in a variable.
+🎯  Add a new column (a flag) using a column name stored in a variable.
 
 **Step 1**
 
@@ -847,7 +847,7 @@ names(reintroduction2)
 
 If you are typing the column name directly (not stored in a variable), you can use $ to add the column.
 
-🎯**Goal**: Add a new column (a flag) using a column name typed literally with `$`.
+🎯  Add a new column (a flag) using a column name typed literally with `$`.
 
 **Step 1**
 
@@ -1004,14 +1004,14 @@ Before you begin:
 
 Complete each task in order.
 
-Add short memo notes throughout your notebook. Your memo notes should explain what your code does, what output you expected, what surprised or confused you, and what you would check next if something did not work.
+Add short memo notes throughout your notebook. Your memo notes should explain what your code does, what output you expected, what surprised or confused you, and what you would check next if something did not work. 
 
 In this Practice Space, you will see two kinds of memo prompts:
 
 - 🗣 **Add Comments** asks you to explain what the code or output shows.
 - 🪞 **Reflect** asks you to explain your thinking process, what confused you, what changed in your understanding, or what strategy you would use next.
 
-These are there to help you practice the habit of writing memos as you work. **In each task, you can choose whether to answer one, two, or all memo prompts.**
+These are there to help you practice the habit of writing memos as you work. **In each task, you can choose whether to answer one, two, or all memo prompts.** Each task should contain at least one memo response. The goal is to practice writing your thinking as you work, not to write a perfect answer for every prompt.
 
 **Autonomy** is the habit of taking ownership of your thinking, choices, code, and learning process while using help responsibly. Show autonomy by checking your output, deciding what evidence shows your code worked, and explaining what you would check next if something did not work. If you encounter an error, document your **tenacity** by briefly noting what happened, what you tried, and how you fixed it or what still confuses you. Document how you troubleshot the error and what resource(s) you used to help you resolve the issue (**transparency**). Show **courage** by sharing your thinking process, even if it includes mistakes or confusion.
 
@@ -1023,7 +1023,7 @@ Before you finish, clear your Environment and run the notebook from top to botto
 
 **Load the CSV** with `readr::read_csv()`
 
-🎯 **Goal:** Load `Values_Transport_dplace.csv` into R using `read_csv()` and assign it to a variable called `values_transport`. 
+🎯  Load `Values_Transport_dplace.csv` into R using `read_csv()` and assign it to a variable called `values_transport`. 
 
 ✅ Check the output from `list.files()` and confirm that `Values_Transport_dplace.csv` appears exactly as written.
 
@@ -1054,7 +1054,7 @@ _____________ <- read_csv(__Values_Transport_dplace.csv__)
 
 📍 **Positional subsetting** (rows/cols by index number)
 
-🎯 **Goal:** Create `first_10_basic` containing the first 10 rows and columns 2 through 5 of `values_transport`. Use `df[rows, cols]`
+🎯  Create `first_10_basic` containing the first 10 rows and columns 2 through 5 of `values_transport`. Use `df[rows, cols]`
 
 ```{r eval = FALSE}
 # ⚡ Type this in your R Notebook, Fill in the blanks
@@ -1079,7 +1079,7 @@ head(first_10_basic)
 
 🏷 **Names/character subsetting** (choose specific columns by name)
 
-🎯 **Goal:** Create `id_name_year` containing only the columns: `id`, `name`, and `year`.
+🎯  Create `id_name_year` containing only the columns: `id`, `name`, and `year`.
 
 ```{r eval = FALSE}
 # ⚡ Type this in your R Notebook, Fill in the blanks
@@ -1102,7 +1102,7 @@ head(id_name_year)
 
 🔍 **Logical mask subsetting**
 
-🎯 **Goal:** Subset rows where `year` greater than or equal to 1900 using `which()` to ensure not `NA` problems.
+🎯  Subset rows where `year` greater than or equal to 1900 using `which()` to ensure not `NA` problems.
 
 ```{r eval = FALSE}
 # ⚡ Type this in your R Notebook, Fill in the blanks
@@ -1130,7 +1130,7 @@ nrow(values_1900)
 
 ⚠️ **Explain Missing Value Propagation**
 
-🎯 **Goal:** In 3–5 sentences, explain what **Missing Value Propagation** means when you create a logical mask like:
+🎯  In 3–5 sentences, explain what **Missing Value Propagation** means when you create a logical mask like:
 
 ```{r eval = FALSE}
 mask <- values_transport[, "year"] >= 1900
@@ -1151,7 +1151,7 @@ unique(mask)
 
 🧪  **Extraction**
 
-🎯 **Goal:** Extract the `year` column as a vector using `[[ ]]`, storing it as `year__vector`.
+🎯  Extract the `year` column as a vector using `[[ ]]`, storing it as `year__vector`.
 
 ```{r eval = FALSE}
 # ⚡ Type this in your R Notebook, Fill in the blanks
@@ -1186,7 +1186,7 @@ unique(_____)
 
 - 1292 should be 1892
 
-🎯 **Goal:** Use subassignment with `df[rows, "col"] <- value` to overwrite the incorrect year values in the copy of `values_transport` data frame called `transport_year_clean`.
+🎯  Use subassignment with `df[rows, "col"] <- value` to overwrite the incorrect year values in the copy of `values_transport` data frame called `transport_year_clean`.
 
 ```{r eval = FALSE}
 # ⚡ Type this in your R Notebook, Fill in the blanks
@@ -1266,7 +1266,7 @@ Option 2. Press the 💾 **disk icon** in the Environment pane to save your work
 
 ## Task 9
 
-🎯 **Goal:** Create a well-formated HTML report for submission.
+🎯  Create a well-formated HTML report for submission.
 
 **Step 1: Sweep your Environment (start clean).**  
 Click the 🧹 **broom icon** in the Environment pane to clear objects.

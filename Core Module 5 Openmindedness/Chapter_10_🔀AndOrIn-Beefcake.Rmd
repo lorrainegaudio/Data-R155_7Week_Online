@@ -4,20 +4,15 @@ subtitle: "🔀And, Or, and Membership"
 author: "by Lorraine Gaudio"
 date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
 team: "Summer 2026"
-output: 
-  html_document: # To create an HTML document from R Markdown
-    toc: false # Table of contents (TOC)
-    toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
-    toc_float: # Float the table of contents to the left of the main document
-      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
-      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
-    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
-    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
-    fig_caption: true #Whether figures are rendered with captions.
-    df_print: paged # Printing data frames with interactivne scrolling
-    includes:
-      in_header: ../assets/header.html
-      after_body: ../assets/footer.html
+output:
+  pdf_document:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+    fig_caption: true
+    latex_engine: xelatex
+    pandoc_args:
+      - "--lua-filter=../assets/strip-emoji.lua"
 ---
 
 
@@ -753,57 +748,31 @@ Most importantly, you learned to prevent a precedence bug by using grouping pare
 
 # 📝 Practice Space
 
-This Practice Space uses a new scenario to help you generalize your learning. While the dataset and question are different from the guided activity, the filtering patterns are the same. You will work with `dslabs::gapminder` and use the columns `country`, `year`, `region`, `population`, `life_expectancy`, `infant_mortality`, and `fertility` to build a shortlist for an **NGO health pilot**.
+In this Practice Space, you will practice writing logical filters for data frames using bracket subsetting (`df[rows, cols]`) and the operators you learned in this chapter:
 
-Open a new R Notebook and save it in your course folder as: `chapter10_practice.Rmd`.
+- relational operators (`<`, `<=`, `>=`, `==`, `!=`)
 
-Fill in the blanks and answer the short prompts in your R Notebook. This Practice Space helps you check whether you can use bracket subsetting, relational operators, `&`, `|`, `%in%`, `which()`, and verification checks to create a readable, defensible subset of data.
+- logical operators (`&`, `|`)
 
-Before you begin:
+- membership (`%in%`)
 
-1. Create a new R Notebook in RStudio.
+- indexing with `which()`
 
-2. Save it in your course folder as `chapter10_practice.Rmd`.
+You’ll apply these skills to an **NGO health pilot** scenario using the `gapminder` dataset to narrow thousands of rows down to a short, defensible shortlist.
 
-3. Edit the YAML so that it includes:
+**How to complete and submit**
 
-   * the title `"Chapter 10 Practice"`,
-   * your name as the author, and
-   * the date.
+1. Open a new R Notebook and save it in your course folder as: chapter10_practice.Rmd. Edit the YAML so that it includes the title "Chapter 10 Practice", your name as the author, and the date. Remove the default content in the R Notebook. Create heading for each task. 
 
-4. Remove the default content in the R Notebook.
+2. Work through each task in order. Replace every ___ with code or a short written answer.
 
-5. Create headings for each task using the `##` heading level.
+3. Run each completed chunk as you go. After each task, check that new objects (like `focus_pool`, `brief_sheet`, `needs_screen`) appear in the Environment.
 
-Complete each task in order.
-
-Add short memo notes throughout your notebook. Your memo notes should explain what your code does, what output you expected, what surprised or confused you, and what you would check next if something did not work.
-
-In this Practice Space, you will see two kinds of memo prompts:
-
-* 🗣 **Add Comments** asks you to explain what the code or output shows.
-* 🪞 **Reflect** asks you to explain your thinking process, what confused you, what changed in your understanding, or what strategy you would use next.
-
-These prompts are there to help you practice the habit of writing memos as you work. **In each task, you can choose whether to answer one, two, or all memo prompts.** Each task should contain at least one memo response. The goal is to practice writing your thinking as you work, not to write a perfect answer for every prompt.
-
-**Open-mindedness** is the habit of checking your first idea against evidence, considering more than one reasonable approach, and revising your thinking when the output gives you a reason to look again. Show open-mindedness by comparing filters such as `|` and `%in%`, checking whether your code matches the rule you meant to write, and explaining why one approach is easier to read, check, or explain. 
-
-If you encounter an error, document your **tenacity** by briefly noting what happened, what you tried, and how you fixed it or what still confuses you. Document how you troubleshot the error and what resource(s) you used to help you resolve the issue (**transparency**). Show **courage** by sharing your thinking process, even if it includes mistakes or confusion.
-
-You may quote AI output only when you clearly mark it as quoted text, either with quotation marks or a block quote using `>`. Then hand-type your own explanation of why you are including the quote.
-
-Before you finish, clear your Environment and run the notebook from top to bottom. Then knit to HTML to check that the notebook works and is formatted correctly. See Task 10 for more details on how to do this.
-
+4. Knit your R Notebook to HTML. Submit the HTML file (not the .Rmd).
 
 **NGO Health Pilot** 🌍💉
 
-Imagine your nonprofit received 100 vaccine coolers and one charter flight. You must assemble a shortlist of countries for a health-equity pilot within the next few weeks.
-
-Use `dslabs::gapminder` to:
-
-1. focus on specific regions,
-2. filter by health-need indicators, and
-3. apply a simple feasibility window based on population size.
+Imagine your nonprofit received 100 vaccine coolers and one charter flight. You must assemble a shortlist of countries for a health-equity pilot within the next few weeks. Use dslabs::gapminder to (a) focus on specific regions, (b) filter by need indicators, and (c) apply a simple feasibility window based on population size.
 
 ## Task 0
 
@@ -832,11 +801,9 @@ gapminder <- dslabs::gapminder  # load the dataset "gapminder"
 colnames(gapminder)   # use colnames() to list names of the columns in gapminder
 ```
 
-🗣 Add Comments: How many rows are in gapminder? What column names do you see?
+🗣  How many rows are in gapminder?
 
 🪞 Reflect: Before choosing filters, what did you learn from checking the help page, column names, or row count? What assumption would have been risky to make without inspecting the data first?
-
-💡 **Test knit**.
 
 ## Task 1 
 
@@ -861,11 +828,7 @@ unique(gapminder$___)   # see unique `year` in `gapminder`
 target_year <- ___   # must be a single year of gapminder
 ```
 
-🗣 Add Comments: Explain why checking the available years matters before filtering by year.
-
-🪞 Reflect: What could go wrong if you didn't check what years were available?
-
-💡 **Test knit**.
+🗣 *We use 2010 because it has the most complete data*
 
 ## Task 2 
 
@@ -881,7 +844,8 @@ target_year <- ___   # must be a single year of gapminder
 ___(___$___)    # Fill in: function, dataset, and column name  
 ```
 
-🪞 Reflect: Why is it important to check the available years before assigning `target_year`? What could go wrong if you assumed a year was available without checking?
+🪞 Reflect: Why is it important to check the available years before assigning target_year? What could go wrong if you assumed a year was available without checking?
+
 
 **Step 2** 
 
@@ -895,45 +859,13 @@ region_2 <- "___"
 region_3 <- "___"
 ```
 
----
+🗣 I selected ____, ____, and ____ as my target regions because _____.
 
-💡 **Tip:** If your prefer, you can pick a set of three regions from options below. Using these reduces your chance that Task 8 will return zero rows.
+## Task 3 🌱
 
-```{r , eval=FALSE}
-# Option A
+🔍 Focus the Pool
 
-region_1 <- "Caribbean"
-region_2 <- "Central America"
-region_3 <- "South America"
-
-# Option B
-
-region_1 <- "Eastern Africa"
-region_2 <- "Middle Africa"
-region_3 <- "Western Africa"
-
-# Option C
-
-region_1 <- "South-Eastern Asia"
-region_2 <- "Southern Asia"
-region_3 <- "Western Asia"
-```
-
----
-
-
-🗣 Add Comments: I selected ____, ____, and ____ as my target regions because _____. Or I selected Option ___ because _____.
-
-
-🪞 Reflect: How did checking `unique(gapminder$region)` help you avoid guessing, misspelling, or using a region label that R would not recognize?
-
-💡 **Test knit**.
-
-## Task 3
-
-🔍 **Focus the Pool**
-
-🎯 Create `focus_pool` that keeps rows from the `target_year` **AND** restricts to three regions you want to prioritize. 
+🎯 Create `focus_pool` that keeps rows from the `target_year` AND restricts to three regions you want to prioritize. 
 
 **Step 1** Build the logical tests for year and region separately.
 
@@ -963,26 +895,25 @@ keep <- _______ _ _______           # is_year and is_region with AND
 focus_pool <- gapminder[____, ____] # subset rows with keep, keep all columns
 ```
 
- ✅ Compare the number of rows in `gapminder` with the number of rows in `focus_pool`
+🗣 Describe what `%in%` and `&` are doing here, and why you used `$` with column names.
+
+EXPLANATION: "___"
+
+Compare the number of rows in `gapminder` with the number of rows in `focus_pool`
 
 ```{r , eval=FALSE}
-# ✅ Verify 
-nrow(gapminder) 
-nrow(focus_pool) 
-head(focus_pool)   
+# ⚡ Type this in your R Notebook, Fill in the blanks
+# TODO 2-D: Compare number of rows in focus_pool with the original dataset
+____(focus_pool) __ ____(gapminder)     
 ```
 
-🗣 Add Comments: Describe what `%in%` and `&` are doing here, and why you used `$` with column names.
+🗣 How do the number of rows in `focus_pool` compare to `gapminder`?
 
-🪞 Reflect: This filter uses both `%in%` and `&`. Explain why `%in%` is a good choice, and why `&` is needed to combine. If your `focus_pool` had more or fewer rows than expected, what would you check first: the year test, the region test, or the combined filter? Explain your choice.
+## Task 4 🌱
 
-💡 **Test knit**.
+🗂 Negative Indices
 
-## Task 4
-
-🗂 **Negative Indices**
-
-🎯 Create a simpler briefing table `brief_sheet` by dropping exactly columns by position (not by name). 
+Create a simpler briefing table `brief_sheet` by dropping exactly columns by position (not by name). 
 
 Use negative indexing to drop the columns 7, 8, and 9 from `focus_pool`. 
 
@@ -993,25 +924,19 @@ brief_sheet <- focus_pool[ , ___(7, 8, 9) ]    # use negative c()
 names(______)
 ```
 
-🗣 Add Comments: Explain how negative indices work for column selection.
+🗣 Explain how negative indices work for column selection.
 
-🪞 Reflect: Why might how negative indices work this be efficient in this task, and why might it be risky if the column order changed? What quick check helped you confirm that `brief_sheet` kept the columns you intended?
+EXPLANATION: “___”
 
-💡 **Test knit**.
+*The `brief_sheet` is a simpler table with only the columns that have data. This makes it easier to inspect the indicators we care about in the next task.*
 
-## Task 5 
+## Task 5 🌱
 
-🔢 **Inspect before choosing thresholds**
+🎯 In task 6, you will identify countries that need the health pilot the most. You will use three indicators as filters: `life_expectancy`, `infant_mortality`, and `fertility`. Before you set thresholds for these indicators, you should inspect the range of values to make informed decisions.
 
-🎯 In task 6, you will identify countries that need the health pilot the most. You will use three indicators as filters: 
+🔢 Inspect before choosing thresholds
 
-- `life_expectancy`, 
-- `infant_mortality`, and 
-- `fertility`. 
-
-Before you set thresholds for these indicators, inspect the range of values and count how many rows meet possible cutoff values.
-
-### Life Expectancy (`a`)
+### Life Expectancy (a)
 
 **Step 1** Use `range()` to inspect the range of values in `life_expectancy`
 
@@ -1021,11 +946,9 @@ Before you set thresholds for these indicators, inspect the range of values and 
 range(brief_sheet$life_expectancy, na.rm = ____)
 ```
 
-🗣 Add Comments: The range of life expectancy in `brief_sheet` is from ___ to ___ years.
+🗣 The range of life expectancy in `brief_sheet` is from ___ to ___ years.
 
-**Step 2** Use `sum()` to count how many countries have life expectancy above a certain threshold (e.g., 70 years). 
-
-💡 **Tip:** Choose a value within the mid-range of the value in Step 1.
+**Step 2** Use `sum()` to count how many countries have life expectancy above a certain threshold (e.g., 70 years). Select a value within the range you found in Step 1.
 
 ```{r , eval=FALSE}
 # ⚡ Type this in your R Notebook, Fill in the blanks
@@ -1033,10 +956,9 @@ range(brief_sheet$life_expectancy, na.rm = ____)
 sum(brief_sheet$life_expectancy <= ___, na.rm = TRUE)  
 ```
 
-🗣 Add Comments: There are ___ countries with life expectancy above ___ years.
+🗣 There are ___ countries with life expectancy above ___ years.
 
-
-### Infant Mortality (`b`)
+### Infant Mortality (b)
 
 **Step 3** Use `range()` to inspect the range of values in `infant_mortality`
 
@@ -1046,11 +968,9 @@ sum(brief_sheet$life_expectancy <= ___, na.rm = TRUE)
 range(brief_sheet$__________, na.rm = TRUE)
 ```
 
-🗣 Add Comments: The range of infant mortality in `brief_sheet` is from ___ to ___ deaths per 1000 live births.
+🗣 The range of infant mortality in `brief_sheet` is from ___ to ___ deaths per 1000 live births.
 
-**Step 4** Use `sum()` to count how many countries have infant mortality above a certain threshold (e.g., 35 deaths per 1000 live births). 
-
-💡 **Tip:** Select a value within the mid-range you found in Step 3.
+**Step 4** Use `sum()` to count how many countries have infant mortality above a certain threshold (e.g., 35 deaths per 1000 live births). Select a value within the range you found in Step 3.
 
 ```{r , eval=FALSE}
 # ⚡ Type this in your R Notebook, Fill in the blanks
@@ -1058,9 +978,9 @@ range(brief_sheet$__________, na.rm = TRUE)
 sum(brief_sheet$infant_mortality >= ___, na.rm = TRUE)
 ```
 
-🗣 Add Comments: There are ___ countries with infant mortality above ___ deaths per 1000 live births.
+🗣 There are ___ countries with infant mortality above ___ deaths per 1000 live births.
 
-### Fertility (`c`)
+### Fertility (c)
 
 **Step 5** Use `range()` to inspect the range of values in `fertility`
 
@@ -1070,7 +990,7 @@ sum(brief_sheet$infant_mortality >= ___, na.rm = TRUE)
 range(_________$fertility, na.rm = TRUE)
 ```
 
-🗣 Add Comments: The range of fertility in `brief_sheet` is from ___ to ___ children per woman.
+🗣 The range of fertility in `brief_sheet` is from ___ to ___
 
 **Step 6** Use `sum()` to count how many countries have fertility above a certain threshold (e.g., 2 children per woman). Select a value within the range you found in Step 5.
 
@@ -1080,23 +1000,15 @@ range(_________$fertility, na.rm = TRUE)
 sum(brief_sheet$fertility >= ___, na.rm = TRUE)
 ```
 
-🗣 Add Comments: There are ___ countries with fertility above ___ children per woman.
+🗣 There are ___ countries with fertility above ___ children per woman.
 
-🪞 Reflect: How did `range()` and `sum()` help you choose thresholds based on the data? Did any of the ranges or counts make you reconsider your first cutoff idea? Explain what changed or what stayed the same.
+## Task 6 🌱
 
-💡 **Test knit**.
+🎯 Now that you have inspected the ranges and counts for each indicator, you can set thresholds for each one to identify countries that need the health pilot the most. 
 
-## Task 6
+📏 Use what you learned from Task 5 to determine appropriate cutoff values for `life_expectancy` (a), `infant_mortality` (b), and `fertility` (c).
 
-📏 **Build the Need Screen**
-
-🎯 Now that you have inspected the ranges and counts for each indicator, set thresholds for each one: 
-
-- a = life expectancy cutoff
-- b = infant mortality cutoff
-- c = fertility cutoff
-
-Use values from Task 5 to make your choices.
+*Note: High fertility is typically used as a proxy for higher maternal/child health burden and a greater strain on the health systems. More developed countries tend to have lower fertility rates.*
 
 ```{r , eval=FALSE}
 # ⚡ Type this in your R Notebook, Fill in the blanks
@@ -1107,10 +1019,6 @@ c <- ___  # fertility cutoff (>= c)
 # Hint: The values should be within the range you found in Task 5.
 ```
 
-*Note: High fertility is typically used as a proxy for higher maternal/child health burden and a greater strain on the health systems. More developed countries tend to have lower fertility rates.*
-
-🪞 Reflect: How did `range()` and `sum()` help you choose thresholds for based on the data? Did any of the ranges or counts make you reconsider your first cutoff idea? Explain what changed or what stayed the same.
-
 🎯 Combine these conditions with `&` to create a filter that selects countries that meet all three criteria.
 
 ```{r , eval=FALSE}
@@ -1118,27 +1026,23 @@ c <- ___  # fertility cutoff (>= c)
 needs_screen <- brief_sheet[
   brief_sheet$life_expectancy __ a &  # keep low values with which relational operator
   brief_sheet$infant_mortality __ b & # keep high values with which relational operator
-  brief_sheet$fertility __ c,          # keep high values with which relational operator
+  brief_sheet$fertility __ c          # keep high values with which relational operator
 ]
 
 # ✅ Verify
 nrow(needs_screen)
-head(needs_screen)
 ```
 
-If `nrow(needs_screen) == 0`, adjust the values in `a`, `b`, and/or `c` using the evidence from Task 5. Do not change numbers randomly. Use your range and count checks to decide which cutoff is too strict.
+If `nrow(needs_screen) == 0`, adjust the values in a, b, and/or c. 
 
-🗣 Add Comments: Explain how the three conditions are combined to filter the data.
+🗣 Explain how `range()` and `sum()`  (Task 5) helped you pick cutoffs ( a, b, and c) that are reasonable for this dataset.
 
-🪞 Reflect: If `nrow(needs_screen)` returned `0`, how did you decide whether to adjust `a`, `b`, or `c`? Why is `&` the correct operator here? What would change if you used `|` instead?
+🗣 Explain how the three conditions are combined to filter the data.
 
-💡 **Test knit**.
 
-## Task 7
+## Task 7 🌳
 
-🔁 **`|` vs `%in%`** 
-
-Same Result, Different Syntax
+🔁 `|` vs `%in%` (Same Result, Different Syntax)
 
 🎯 Show that filtering the same three regions with `|` is equivalent to using `%in%`.
 
@@ -1169,28 +1073,20 @@ in_set <- gapminder[
 ```{r , eval=FALSE}
 # ⚡ Type this in your R Notebook, Fill in the blanks
 # TODO 6-B:
-nrow(____) 
-nrow(____)
+nrow(____) ___ nrow(____)
 ```
-
-🗣 Add Comments: Briefly compare `|` and `%in%`.
  
-🪞 Reflect: You wrote the same region filter two ways: once with `|` and once with `%in%`. When two approaches give the same result, which one is easier to read, check, and explain? When would `%in%` be a better choice than a chain of `|` statements?
+🗣 Briefly compare `|` and `%in%`. When is `%in%` preferable?
 
-💡 **Test knit**.
+## Task 8 🌳
 
-## Task 8
+Recall from Chapter 8 that `which()` converts `TRUE` positions to row indices (numbers). This avoids errors when `NA` is present and is handy for re‑use. 
 
-📍 **Feasibility with `which()`**
+📍 Feasibility with `which()` (Population Window)
 
-Recall from Chapter 8 that `which()` converts `TRUE` positions to row indices (numbers). This can be useful when you want to store and reuse the row positions that match a condition.
+🎯 From `needs_screen`, keep countries with population between 2 million and 50 million (inclusive) using `which()`.
 
-🎯 From `needs_screen`, keep countries with population between 2 million and 50 million, inclusive, using `which()`.
-
-In R, $2e6$ means 2 million, or $2 × 10^6$.
-In R, $5e7$ means 50 million, or $5 × 10^7$.
-
-If these values return no rows, you may choose to adjust the population window after checking the population range.
+We'll use `e` to represent "times 10 to the power of" in R, so `2e6` means 2 million (2 × 10^6) and `5e7` means 50 million (5 × 10^7). *If these values (2e6 and 5e7) return nothing, you can tweak them to find a solution.*
 
 **Step 1** Inspect population values first
 
@@ -1199,9 +1095,9 @@ If these values return no rows, you may choose to adjust the population window a
 range(needs_screen$population, na.rm = TRUE)
 ```
 
-**Step 2** Use `which()` to build an index of matching rows.
+💡 **Tip:** If your range is outside `2e6` to `5e7`, you will need to adjust the window.
 
-💡 **Tip:** If your range is outside `2e6` to `5e7`, adjust the population window based on what you see. For example, if the smallest populations are below 2 million, you may lower the minimum to 1 million. If the largest populations are above 50 million, you may raise the maximum.
+**Step 2** Use `which()` to build an index of matching rows, then subset with that index to create `shortlist`.
 
 ```{r , eval=FALSE}
 # ⚡ Type this in your R Notebook, Fill in the blanks
@@ -1212,7 +1108,7 @@ idx <- which(needs_screen$population >= 2e6 __ needs_screen$population <= 5e7) #
 length(idx)
 ```
 
-If `length(idx) == 0`, adjust the lower limit, upper limit, or both based on the range you inspected in Step 1.
+🗣 If `length(idx) == 0`, widen the window (change 2e6 and/or 5e7) and re-run Step 1.
 
 **Step 3** Use the index `idx` to subset `needs_screen` and create `shortlist`.
 
@@ -1231,30 +1127,13 @@ shortlist[ , c("country", "population", "life_expectancy", "infant_mortality", "
 
 ```
 
-🗣 Add Comments: Explain what `which()` returns, and and why it can be useful to store row positions.
+🗣 Explain what `which()` returns, and why might it be useful to store these positions?
 
-🪞 Reflect: How is using `which()` different from using a `TRUE`/`FALSE` vector directly inside `[ ]?` If your population window returned no rows, how did you decide whether to widen the lower limit, the upper limit, or both?
+## Task 9  🌳
 
-💡 **Test knit**.
-
-## Task 9
-
-🧠 **Compare `-`, `!`, and `!=`**
-
-🎯 Explain the difference between `-`, `!`, and `!=`.
-
-🗣 Add Comments: Compare the three symbols.
-
-- Which one removes rows or columns by position?
-- Which one flips a logical test?
-- Which one means “not equal to”?
-
-🪞 Reflect: Give one example of when each would be the clearest choice.
-
+🗣  Explain the difference between `-`, `!` and `!=`.
  
-## Task 10
-
-📄 **Final Report Check**
+## Task 10 🌱
 
 🎯 Create a well-formatted HTML report for submission.
 
@@ -1265,15 +1144,6 @@ Click the 🧹 **broom icon** in the Environment pane to clear objects.
 Use **Run → Run All** to execute every chunk in order.
 
 **Step 3: Save and submit.**  
-After your notebook runs without errors, save your R Notebook (`.Rmd`) and knit to HTML (`.html`) for submission to Canvas, as directed. 
+After your notebook runs without errors, save your notebook (`.Rmd`) and knit to HTML (`.HTML`) for submission to Canvas, as directed. 
 
-💡 **Tip:** After you knit, look in your course folder for two files with the same name. 
-
-- One file ends in `.Rmd` 
-- One ends in `.html`. 
-
-The `.html` usually has a internet browser icon. You can check which is which by double clicking to open them. One opens in R and the other usually opens in a web browser. Upload the `.html` file. Before submission, check that the uploaded file ends in `.html`.
-
----
-
-🪞 Reflect: After clearing the Environment and running the notebook from top to bottom, did anything fail or change? What did that tell you about whether your work is reproducible? Before submitting, what evidence showed you that your HTML report included your code, output, and explanations? How much time do you spend completing the practice space?
+💡 **Tip:** After you knit, look in your course folder for two files with the same name. One file ends in .Rmd and one ends in .html. The HTML usually has a internet browser icon. You can check which is which by double clicking to open them. One opens in R and the other usually opens in a web browser. Upload the .html file. Before submission, check that the uploaded file ends in .html.

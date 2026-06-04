@@ -1632,7 +1632,7 @@ display: none;
 <h1 class="title toc-ignore">Chapter 11</h1>
 <h3 class="subtitle">💈dplyr Subsetting</h3>
 <h4 class="author">by Lorraine Gaudio</h4>
-<h4 class="date">Version May 05, 2026</h4>
+<h4 class="date">Version June 03, 2026</h4>
 
 </div>
 
@@ -1640,15 +1640,16 @@ display: none;
 <div id="overview" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> Overview</h1>
 <p>In this chapter, you will learn how to subset data efficiently with
-dplyr by combining the pipe <code>%&gt;%</code> with two core verbs:
-<code>select()</code> for choosing columns and <code>filter()</code> for
-keeping rows that meet specific conditions. You will also continue
-working in Quarto, which is the course’s reproducible workflow for
-combining code, results, and written interpretation in one document.
-Together, these tools help you move from “writing R commands” to
-building a clear, repeatable analysis process. The chapter closes with
-applied practice using datasets such as 🚗 <code>mtcars</code>,
-🌐<code>gapminder</code>, and ☣️<code>us_contagious_diseases</code>.</p>
+<code>dplyr</code> by combining the pipe <code>%&gt;%</code> with two
+core verbs: <code>select()</code> for choosing columns and
+<code>filter()</code> for keeping rows that meet specific conditions.
+You will also continue working in Quarto, which is the course’s
+reproducible workflow for combining code, results, and written
+interpretation in one document. Together, these tools help you move from
+writing individual R commands to building a clear, repeatable analysis
+process. The chapter closes with applied practice using datasets such as
+🚗 <code>mtcars</code>, 🌐 <code>gapminder</code>, 🔫
+<code>murders</code>, and ☣️ <code>us_contagious_diseases</code>.</p>
 <p>This chapter matters because subsetting is one of the most common
 tasks in data analysis. Before you can graph, summarize, model, or
 answer a research question, you usually need to isolate the relevant
@@ -1660,6 +1661,11 @@ duplicates, and create smaller, targeted datasets for reporting and
 decision-making. Learning to do this with readable <code>dplyr</code>
 code will make your work faster, easier to check, and easier for other
 people to follow.</p>
+<p>🤔 This chapter also asks you to practice open-mindedness as a coding
+habit. Base R brackets and <code>dplyr</code> verbs can often solve the
+same subsetting problem. Your job is not to decide that one method is
+always better. Your job is to compare the options, check the result, and
+choose the version that makes the logic clearest for the task.</p>
 <p>By the end of Chapter 11 you will be able to:</p>
 <ul>
 <li><p>🔗 Use the pipe <code>%&gt;%</code> to connect multiple
@@ -1668,7 +1674,7 @@ data-wrangling steps into a readable workflow.</p></li>
 and <code>filter()</code> for keeping rows.</p></li>
 <li><p>🎯 Apply <code>select()</code> to keep, reorder, or exclude
 variables from a data frame.</p></li>
-<li><p>🕵️ Apply <code>filter(</code>) to keep rows that meet one or more
+<li><p>🕵️ Apply <code>filter()</code> to keep rows that meet one or more
 logical conditions.</p></li>
 <li><p>⚖️ Construct filtering conditions with relational operators such
 as <code>&gt;</code>, <code>&lt;</code>, <code>==</code>,
@@ -1692,18 +1698,27 @@ interpretation in a reproducible analysis document.</p></li>
 <p>In earlier chapters, you used an R Notebook as a reproducible
 thinking document: code, output, and memo-style writing in one place.
 <strong>Quarto</strong> keeps that same basic workflow, but the file is
-usually a <code>.qmd</code> file instead of an <code>.Rmd</code> file,
-and chunk controls are written in YAML-style lines that begin with
-<code>#|</code> inside the code chunk. Quarto is the next-generation
-version of R Markdown, and RStudio supports creating Quarto documents
-from <code>File &gt; New File &gt; Quarto Document…</code> and rendering
-them with the Render button.</p>
-<p><strong>What are the benefits of Quarto over the R
-Notebook?</strong></p>
+usually a <code>.qmd</code> file instead of an <code>.Rmd</code>
+file.</p>
+<p>The biggest changes are:</p>
 <ul>
-<li>Quarto supports multiple languages (R, Python, Julia, Observable
-JavaScript) in the same document. R Notebooks only support R.</li>
+<li>Quarto files use the <code>.qmd</code> file extension.</li>
+<li>The YAML header uses <code>format:</code> instead of the older R
+Markdown <code>output:</code> style.</li>
+<li>Code chunk options are written as YAML-style lines that begin with
+<code>#|</code> inside the code chunk.</li>
+<li>You render a Quarto document with the <strong>Render</strong> button
+instead of knitting an R Notebook.</li>
 </ul>
+<p>Quarto is useful because it gives you a clean way to combine code,
+output, and written explanation in one document. It also supports more
+flexible publishing formats and can work with multiple coding languages,
+including R, Python, Julia, and Observable JavaScript. In this course,
+we will use R with Quarto.</p>
+<p>🤔 This is an open-minded tool shift. A Quarto document does much of
+what your R Notebook did, but the file type and setup details are a
+little bit different. Ask yourself: “What stays the same about my
+workflow, and what changes?”</p>
 <p>To learn more about Quarto, check out the <a href="https://quarto.org/">Quarto website</a>. You can also find a
 helpful <a href="https://rstudio.github.io/cheatsheets/quarto.pdf">Quarto Cheat
 Sheet</a>.</p>
@@ -1713,21 +1728,20 @@ Quarto</h2>
 <p>Quarto will be <strong>similar</strong> to an R Notebook in several
 ways. You still write normal paragraphs outside code chunks. You still
 run R code inside chunks. You still use Markdown headings to create an
-outline. You still render the document to create a readable report.</p>
-<p>What changes is the file extension is <code>.qmd</code>, the YAML
-uses <code>format:</code> instead of the old <code>output:</code> style
-from R Markdown and the chunk controls are written with <code>#|</code>
-lines at the top of the chunk.</p>
-<p>🎯 Create a Quarto File</p>
+outline. You still render the document to create a readable HTML
+report.</p>
+<p>What changes is the file extension, the YAML header, and the way
+chunk options are written.</p>
+<p>🎯 Create a Quarto file.</p>
 <ol style="list-style-type: decimal">
 <li>For those of you who <strong>have GitHub</strong> and a course
 project, navigate to your course folder and open your course project.
-This will open RStudio. Click “Pull” in the Git pane to get the latest
-version of the course materials. After completing work, save, stage,
-commit, and push.</li>
+This will open RStudio. Click <strong>Pull</strong> in the Git pane to
+get the latest version of the course materials. After completing your
+work, save, stage, commit, and push.</li>
 </ol>
-<p>If you <strong>don’t have GitHub</strong> or a course project, just
-open RStudio and set your working directory to your course folder.</p>
+<p>If you <strong>do not have GitHub</strong> or a course project, open
+RStudio and set your working directory to your course folder.</p>
 <ol start="2" style="list-style-type: decimal">
 <li>Open a new Quarto document in your course folder and save it as:
 <code>chapter11_notes.qmd</code>
@@ -1736,20 +1750,28 @@ open RStudio and set your working directory to your course folder.</p>
 <p>Just like an R Notebook template, a new Quarto file will open with
 sample text. Start fresh:</p>
 <ul>
-<li><p>Keep the YAML header at the top.</p></li>
-<li><p>Delete the example body text below it.</p></li>
-<li><p>Replace that content with your own notes, code, and
-memos.</p></li>
+<li>Keep the YAML header at the top.</li>
+<li>Delete the example body text below it.</li>
+<li>Replace that content with your own notes, code, and memos.</li>
 </ul>
+<p>✅ Check that your file ends in <code>.qmd</code>, not
+<code>.Rmd</code>.</p>
+<p>🗣 The <code>.qmd</code> file is the editable Quarto document. The
+rendered <code>.html</code> file is the readable report created from
+it.</p>
+<p>🤔 An <code>.Rmd</code> notebook and a <code>.qmd</code> document
+both support reproducible work, but they organize some settings
+differently. As you build out the Quarto notes, ask yourself: “Which
+file type feels easier for me to set up, read, and render?”</p>
 </div>
 <div id="the-yaml-header" class="section level2" number="2.2">
 <h2><span class="header-section-number">2.2</span> The YAML Header</h2>
 <p>At the top of the document is the <strong>YAML header</strong>. This
-is document metadata, not R code. In Quarto, the header is still
-surrounded by three dashes (<code>---</code>) and uses
-<code>key: value</code> pairs. Quarto uses fields such as
-<code>title</code>, <code>author</code>, <code>date</code>, and
-<code>format</code>.</p>
+is document metadata. In Quarto, the header is still surrounded by three
+dashes (<code>---</code>) and uses <code>key: value</code> pairs. Quarto
+uses fields such as <code>title</code>, <code>subtitle</code>,
+<code>author</code>, <code>date</code>, <code>format</code>, and
+<code>execute</code>.</p>
 <pre class="yaml"><code>---
 title: &quot;Chapter 11 Notes&quot;
 subtitle: &quot;dplyr Subsetting&quot;
@@ -1757,7 +1779,7 @@ author: &quot;YOUR NAME&quot;
 date: today
 format:
   html:
-    code-fold: true
+    code-fold: false
 execute:
   warning: true
   message: true
@@ -1767,28 +1789,31 @@ execute:
 does:</h3>
 <ul>
 <li><p><code>title:</code> gives your document a title.</p></li>
-<li><p><code>subtitle:</code> gives your document a subtitle
-(optional).</p></li>
+<li><p><code>subtitle:</code> gives your document a subtitle.</p></li>
 <li><p><code>author:</code> puts your name on the document.</p></li>
-<li><p><code>date:</code> today inserts the current local date
+<li><p><code>date: today</code> inserts the current local date
 automatically. <a href="https://quarto.org/docs/reference/dates.html">Quarto Dates and
 Date Formatting</a> has more options for date formatting and dynamic
 date keywords.</p></li>
-<li><p><code>format:</code> html tells Quarto to render HTML
-output.</p></li>
-<li><p><code>code-fold:</code> true lets readers collapse code in the
-HTML. You can change this to <code>false</code> if you want code to
-always show. Notice that the <code>true</code> and <code>false</code>
-values are not capitalized. This is a YAML convention and different from
-R’s <code>TRUE</code> and <code>FALSE</code>.</p></li>
+<li><p><code>format:</code> tells Quarto what kind of output to
+create.</p></li>
+<li><p><code>html:</code> tells Quarto to render the document as an HTML
+file.</p></li>
+<li><p><code>code-fold: false</code> keeps code visible in the HTML
+report. If you change this to <code>true</code>, readers can collapse
+and expand the code.</p></li>
 <li><p><code>execute:</code> sets default chunk behavior for the whole
-document. In this case, <code>warning: true</code> and
-<code>message: true</code> means that if any code chunks produce
-warnings or messages, they will be included in the output. You can
-override these defaults in individual chunks with chunk options or you
-can set them to <code>false</code> if you want to hide warnings and
-messages in your final HTML.</p></li>
+document.</p></li>
+<li><p><code>warning: true</code> and <code>message: true</code> mean
+warnings and messages will appear in the rendered HTML if your code
+produces them. You can change these to <code>false</code> later when you
+want a cleaner final report, but for learning, seeing messages and
+warnings can help you understand what R is doing.</p></li>
 </ul>
+<p>🤔 Notice that YAML uses lowercase <code>true</code> and
+<code>false</code>. R uses uppercase <code>TRUE</code> and
+<code>FALSE</code>. Same idea, different file language. Ask yourself:
+“Am I writing YAML settings, or am I writing R code?”</p>
 </div>
 </div>
 <div id="markdown-headings" class="section level2" number="2.3">
@@ -1796,84 +1821,113 @@ messages in your final HTML.</p></li>
 Headings</h2>
 <p>Quarto uses Markdown for normal text, just like your notebook work.
 Headings are created with <code>#</code>, <code>##</code>,
-<code>###</code>, and so on. Those headings create the structure of your
+<code>###</code>, and so on. These headings create the structure of your
 document.</p>
 <p>Use this outline in your notes file:</p>
-<pre class="markdown"><code>
-# Overview
+<pre class="markdown"><code># Quarto
 
-# Quarto
-</code></pre>
+# Packages
+
+# The Pipe
+
+# Selecting Columns
+
+# Filtering Rows
+
+# filter() and select()
+
+# Application</code></pre>
 </div>
 <div id="memoing-in-quarto" class="section level2" number="2.4">
 <h2><span class="header-section-number">2.4</span> Memoing in
 Quarto</h2>
-<p>Quarto is not just for tracking your statistical code. It is also
-where you document your thinking, reasoning, and understanding. That
-means your memos should be written as normal text outside the chunk, not
-jammed into code chunk comments unless the note is specifically about
-the code line itself. This part should feel familiar.</p>
-<p>Outside a code chunk write normal sentences and paragraphs. This is
-where your memoing goes. Inside a code chunk, write R code. If you want
-to leave yourself <em>about the code</em> inside the code chunk, use #
-so R treats it as a comment.</p>
+<p>Quarto is not just for tracking your R code. It is also where you
+document your thinking, reasoning, and understanding. Your memos should
+usually be written as normal text outside code chunks, not jammed into
+code chunk comments.</p>
+<p>Outside a code chunk, write normal sentences and paragraphs. This is
+where most of your memoing goes.</p>
+<p>Inside a code chunk, write R code. If you want to leave yourself a
+short note about a specific line of code, use <code>#</code> so R treats
+it as a comment.</p>
 <p>A Quarto R code chunk still uses fenced backticks with
 <code>{r}</code>. The difference is that chunk options are written as
-YAML-style lines beginning with <code>#|</code> at the top of the chunk.
-Quarto supports chunk options such as <code>eval</code>,
-<code>echo</code>, <code>output</code>, <code>warning</code>,
-<code>error</code>, and <code>include</code>, and those can be set
-globally in the YAML header or locally in one chunk.</p>
-<p>The <code>#</code> means different things depending on where you type
-it. Outside a code chunk, <code>#</code> creates a heading. Inside a
-code chunk, the <code>#</code> creates an R comment. At the top of a
-Quarto chunk, <code>#|</code> sets a chunk option.</p>
+YAML-style lines beginning with <code>#|</code> at the top of the
+chunk.</p>
+<p>The <code>#</code> symbol means different things depending on where
+you type it:</p>
+<ul>
+<li>Outside a code chunk, <code>#</code> creates a Markdown
+heading.</li>
+<li>Inside a code chunk, <code>#</code> creates an R comment.</li>
+<li>At the top of a Quarto code chunk, <code>#|</code> sets a chunk
+option.</li>
+</ul>
 <p><code>```{r}</code></p>
 <p>#| eval=FALSE</p>
 <p># your R code</p>
 <p>x &lt;- 1:5</p>
 <p>mean(x)</p>
 <p><code>```</code></p>
-<p>🗣 The “eval=FALSE” chunk option means the code will not run when you
-render the document. This is useful for code that is just an example or
-when you want to keep code with an error. You can also use it on code
-chunks that <code>install.packages()</code>.</p>
+<p>🗣 The <code>eval=FALSE</code> chunk option means the code will not
+run when you render the document. This is useful for example code, code
+that you are discussing but not running, or code that installs
+packages.</p>
+<p>🤔 This is a readability choice. Quarto gives you easy to understand
+control over what code runs and what appears in the final report. Ask
+yourself: “Should this chunk run, or is it here only as an example?”</p>
+<p><strong>💡 Test render.</strong></p>
+<hr />
+<p>You can also use <code>#| eval=FALSE</code> in code chunks that
+contain <code>install.packages()</code> instead of commenting out each
+line with <code>#</code>. Let’s see that in action next.</p>
 </div>
 </div>
 <div id="packages" class="section level1" number="3">
 <h1><span class="header-section-number">3</span> 📦 Packages</h1>
-<p>Speaking of installing packages, you will need to have the
-<code>dplyr</code> and <code>dslabs</code> packages installed and loaded
-to follow along with the code examples in this chapter.</p>
-<p><code>dplyr</code> is part of the <strong>tidyverse</strong>, a
-collection of R packages designed for data science. It provides a set of
-functions (called “verbs”) that make it easy to manipulate and analyze
-data frames. The main verbs in <code>dplyr</code> are
-<code>select()</code>, <code>filter()</code>, <code>mutate()</code>,
-<code>summarize()</code>, and <code>arrange()</code>. In this chapter,
-we will focus on <code>select()</code> and <code>filter()</code> for
-subsetting data.</p>
-<p>🧠 Recall that we need to download packages <strong>once</strong>. If
-needed, install the required packages we will use in this lesson. After
-installation, comment <code>#</code> out the
-<code>install.packages</code> code.</p>
-<pre class="r"><code># ⚡ Type this in a Quarto code chunk
-# You should already have dslabs from previous chapters, but if not, install it now.
-install.packages(&quot;dslabs&quot;)
-
-install.packages(&quot;dplyr&quot;)
-## Or install the whole tidyverse, which *includes* dplyr and other useful packages:
-install.packages(&quot;tidyverse&quot;)</code></pre>
-<p>In Quarto, you can set <code>eval=FALSE</code> in the chunk option
-when you want to keep code (like <code>install.packages()</code>)
-without breaking your render.</p>
-<p>After installing the package, you need to load it into your R session
-using the <code>library()</code> function. Each time you open R, you
-will need to “library” the packages. This makes the functions in the
-package available for use.</p>
+<p>You will need the <code>dplyr</code> and <code>dslabs</code> packages
+installed and loaded to follow along with the code examples in this
+chapter.</p>
+<p>The <code>dplyr</code> package is part of the
+<strong>tidyverse</strong>, a collection of R packages designed for data
+science. The <code>dplyr</code> package gives you data-wrangling
+functions called <strong>verbs</strong>. These verbs help you work with
+data frames in readable steps. In this chapter, we will focus on
+<code>select()</code> for choosing columns and <code>filter()</code> for
+keeping rows.</p>
+<p>🧠 Recall that you only need to install a package
+<strong>once</strong> on your computer. After a package is installed,
+you should not try to re-install it every time you render a document. In
+Quarto, one clean option is to put <code>#| eval=FALSE</code> at the top
+of the install chunk. That keeps the code visible in your document, but
+prevents Quarto from running it during render.</p>
+<p>You should already have dslabs from previous chapters, but if not,
+install it now.</p>
+<p><code>```{r}</code></p>
+<p>#| eval=FALSE</p>
+<p># ⚡ Type this in a Quarto code chunk</p>
+<p>install.packages(“dslabs”)</p>
+<p>install.packages(“dplyr”)</p>
+<p><code>```</code></p>
+<p>✅ Check that the chunk option says <code>#| eval=FALSE</code>. This
+means the install code will be shown in your document but will not run
+when you render.</p>
+<p>🗣 The <code>install.packages()</code> function downloads a package to
+your computer. You usually only need to do that once. The
+<code>#| eval=FALSE</code> option is useful here because reinstalling
+packages every time you render your report is unnecessary and can slow
+down or interrupt the render.</p>
+<p>🤔 This is a Quarto file-choice moment. In an R Notebook, you may
+have commented out install code with <code>#</code>. In Quarto, you can
+use a chunk option instead. Ask yourself: “Do I want this code to appear
+in my report, run during render, or both?”</p>
+<p>After installing the packages, you need to load them into your R
+session using the <code>library()</code> function. Each time you open R,
+you need to load the packages you plan to use. Loading a package makes
+its functions available for your current R session.</p>
 <pre class="r"><code># ⚡ Type this in a Quarto code chunk
 library(dslabs)</code></pre>
-<pre><code>## Warning: package &#39;dslabs&#39; was built under R version 4.5.2</code></pre>
+<pre><code>## Warning: package &#39;dslabs&#39; was built under R version 4.5.3</code></pre>
 <pre class="r"><code>library(dplyr)</code></pre>
 <pre><code>## Warning: package &#39;dplyr&#39; was built under R version 4.5.2</code></pre>
 <pre><code>## 
@@ -1884,29 +1938,47 @@ library(dslabs)</code></pre>
 <pre><code>## The following objects are masked from &#39;package:base&#39;:
 ## 
 ##     intersect, setdiff, setequal, union</code></pre>
-<p>🗣 You can turn off the warning messages by using the Quarto chunk
-option <code>warning=FALSE</code> in the YAML header or in individual
-chunks (<code>#| warning=FALSE</code>). This is useful for suppressing
-messages from loading packages.</p>
+<p>✅ Check that both packages load without an error.</p>
+<p>🗣 The <code>library()</code> function loads an installed package into
+the current R session. Unlike <code>install.packages()</code>,
+<code>library()</code> needs to run each time you start a new R session
+and want to use that package.</p>
+<p>You may see messages when packages load. Messages are not always
+errors. Read them first before assuming something is broken.</p>
+<p><strong>💡 Test render.</strong></p>
+<p>🤔 If you want to hide package messages or warnings in a final
+report, you can use Quarto chunk options such as
+<code>#| message=FALSE</code> or <code>#| warning=FALSE</code>. For now,
+it is fine to leave messages visible while you are learning because they
+give you information about what R is doing.</p>
+<hr />
+<p>Now that we have <code>dplyr</code> and <code>dslabs</code> installed
+and loaded, we can use their functions to manipulate data frames. Let’s
+start with the pipe operator.</p>
 </div>
 <div id="the-pipe" class="section level1" number="4">
-<h1><span class="header-section-number">4</span> The Pipe (%&gt;%)</h1>
-<p>The <code>dplyr</code> package for data manipulation. It will help
-you with filtering rows, selecting columns, creating variables,
-summarizing data. It uses a special operator called the
-<strong>pipe</strong> (<code>%&gt;%</code> or <code>|&gt;</code>) to
-chain together multiple operations in a clear and readable way. The pipe
-chains steps into a readable workflow from left to right. The pipe can
-be read as “and then” or “goes into”. It takes the output of the
-left-hand side and feeds it as the first argument to the function on the
-right-hand side.</p>
-<p>In tidyverse code, the pipe is <code>%&gt;%</code>, so
-<code>x %&gt;% f()</code> means “take <code>x</code>, then apply
-<code>f()</code>. You can also choose to use the alternative built-in
-pipe <code>|&gt;</code> from base R.</p>
-<p>🎯 <strong>Goal</strong>: Let’s see how the pipe works with a simple
-<code>head()</code> example. We will use the 🚗 <code>mtcars</code>
-dataset.</p>
+<h1><span class="header-section-number">4</span> The Pipe
+(<code>%&gt;%</code>)</h1>
+<p>The <code>dplyr</code> package helps you manipulate data frames. You
+can use it to filter rows, select columns, create variables, summarize
+data, and arrange rows.</p>
+<p>One reason people like <code>dplyr</code> is that it makes code
+easier to read using the <strong>pipe</strong>: <code>%&gt;%</code>. The
+pipe lets you chain steps together in a readable order from left to
+right. You can read the pipe as <strong>“and then”</strong> or
+<strong>“goes into.”</strong></p>
+<p>The pipe takes the object on the left and sends it into the function
+on the right.</p>
+<p>In tidyverse code, the pipe in action looks like this:</p>
+<p><code>x %&gt;% f()</code></p>
+<p>This means:</p>
+<p>Start with <code>x</code>, and then apply <code>f()</code>.</p>
+<p>You may also see the base R pipe, <code>|&gt;</code>, in newer R
+code. In this chapter, we will use the tidyverse pipe,
+<code>%&gt;%</code>, because it is common in <code>dplyr</code>
+examples.</p>
+<p>🎯 See how the pipe works with a simple <code>head()</code> example
+using the 🚗 <code>mtcars</code> dataset.</p>
 <pre class="r"><code># ⚡ Type this in a Quarto code chunk
 mtcars %&gt;% head()</code></pre>
 <div data-pagedtable="false">
@@ -1914,52 +1986,65 @@ mtcars %&gt;% head()</code></pre>
 {"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["mpg"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["cyl"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["disp"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["hp"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["drat"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["wt"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["qsec"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["vs"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["am"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["gear"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["carb"],"name":[11],"type":["dbl"],"align":["right"]}],"data":[{"1":"21.0","2":"6","3":"160","4":"110","5":"3.90","6":"2.620","7":"16.46","8":"0","9":"1","10":"4","11":"4","_rn_":"Mazda RX4"},{"1":"21.0","2":"6","3":"160","4":"110","5":"3.90","6":"2.875","7":"17.02","8":"0","9":"1","10":"4","11":"4","_rn_":"Mazda RX4 Wag"},{"1":"22.8","2":"4","3":"108","4":"93","5":"3.85","6":"2.320","7":"18.61","8":"1","9":"1","10":"4","11":"1","_rn_":"Datsun 710"},{"1":"21.4","2":"6","3":"258","4":"110","5":"3.08","6":"3.215","7":"19.44","8":"1","9":"0","10":"3","11":"1","_rn_":"Hornet 4 Drive"},{"1":"18.7","2":"8","3":"360","4":"175","5":"3.15","6":"3.440","7":"17.02","8":"0","9":"0","10":"3","11":"2","_rn_":"Hornet Sportabout"},{"1":"18.1","2":"6","3":"225","4":"105","5":"2.76","6":"3.460","7":"20.22","8":"1","9":"0","10":"3","11":"1","_rn_":"Valiant"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
+<p>✅ Check that the output shows the first six rows of
+<code>mtcars</code>.</p>
 <p>🗣 This is equivalent to <code>head(mtcars)</code>, but the pipe
-version reads more like a sequence of actions: “Start with mtcars, and
-then show the head.” The pipe helps avoid nested functions and keeps
-code in a logical order.</p>
+version reads more like a sequence of actions: start with
+<code>mtcars</code>, and then show the first few rows.</p>
+<p>🤔 <code>head(mtcars)</code> and <code>mtcars %&gt;% head()</code>
+give the same result. The question is not “Which one is always better?”
+The question is: “Which version makes the workflow easier to read for
+this task?”</p>
 <p>It is common to break lines after the pipe for readability,
-especially when chaining multiple operations. Each step is on its own
-line, making it easier to read and understand the flow of data
-manipulation.</p>
-<p>🎯 <strong>Goal</strong>: Use the pipe and break the lines. Show the
-first six rows of the <code>mtcars</code> dataset.</p>
+especially when chaining multiple operations. Each step gets its own
+line, which makes the flow easier to follow.</p>
+<p>🎯 Use the pipe across multiple lines to show the first six rows of
+the <code>mtcars</code> dataset.</p>
 <pre class="r"><code># ⚡ Type this in a Quarto code chunk
 mtcars %&gt;%        # start with data
-  head()          # ▶ shows first six rows</code></pre>
+  head()          # show first six rows</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["mpg"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["cyl"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["disp"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["hp"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["drat"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["wt"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["qsec"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["vs"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["am"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["gear"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["carb"],"name":[11],"type":["dbl"],"align":["right"]}],"data":[{"1":"21.0","2":"6","3":"160","4":"110","5":"3.90","6":"2.620","7":"16.46","8":"0","9":"1","10":"4","11":"4","_rn_":"Mazda RX4"},{"1":"21.0","2":"6","3":"160","4":"110","5":"3.90","6":"2.875","7":"17.02","8":"0","9":"1","10":"4","11":"4","_rn_":"Mazda RX4 Wag"},{"1":"22.8","2":"4","3":"108","4":"93","5":"3.85","6":"2.320","7":"18.61","8":"1","9":"1","10":"4","11":"1","_rn_":"Datsun 710"},{"1":"21.4","2":"6","3":"258","4":"110","5":"3.08","6":"3.215","7":"19.44","8":"1","9":"0","10":"3","11":"1","_rn_":"Hornet 4 Drive"},{"1":"18.7","2":"8","3":"360","4":"175","5":"3.15","6":"3.440","7":"17.02","8":"0","9":"0","10":"3","11":"2","_rn_":"Hornet Sportabout"},{"1":"18.1","2":"6","3":"225","4":"105","5":"2.76","6":"3.460","7":"20.22","8":"1","9":"0","10":"3","11":"1","_rn_":"Valiant"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
+<p>✅ Check that this returns the same output as the previous
+example.</p>
+<p>🗣 The line break does not change what the code does. It makes the
+code easier for a human to read. In longer workflows, each line can show
+one step in the data process.</p>
+<p>🤔 Readability is part of good coding judgment. A short one-line
+command may be fine for a simple task. A multi-line pipe can be better
+when the workflow has several steps. Ask yourself: “Would future-me
+understand this faster if each step had its own line?”</p>
 <hr />
-<p>To gain a deeper understanding of how to apply the pipe, we need to
-learn the basics of at least one <code>dplyr</code> verb. Let’s start
-with <code>select()</code> for column selection.</p>
+<p>To understand how to use the pipe in real data work, you need to
+learn at least one <code>dplyr</code> verb. Let’s start with
+<code>select()</code> for choosing columns.</p>
 </div>
 <div id="selecting-columns" class="section level1" number="5">
 <h1><span class="header-section-number">5</span> Selecting Columns</h1>
-<p>In chapter 8, you learned that you can select columns with base R
+<p>In Chapter 8, you learned that you can select columns with base R
 brackets by name, like <code>data[c(&quot;col1&quot;, &quot;col2&quot;)]</code>. With
-<code>dplyr::select()</code>, you can do the same thing but with a more
+<code>dplyr::select()</code>, you can do the same thing with a more
 concise syntax.</p>
 <p>The <code>dplyr</code> verb <code>select()</code> returns the same
-type of data object, keeps the rows, and changes which columns are
+type of data object, keeps all rows, and changes which columns are
 shown. It can select columns by name, by ranges such as
 <code>x:y</code>, and by helper patterns.</p>
-<p>You can use R operators <code>:</code>, <code>!</code>,
-<code>&amp;</code> and <code>|</code>, <code>c()</code>, and
+<p>You can use R operators such as <code>:</code>, <code>!</code>,
+<code>&amp;</code>, <code>|</code>, <code>c()</code>, and
 <code>%in%</code> to select columns. You can also use helper functions
 like <code>starts_with()</code>, <code>ends_with()</code>,
 <code>contains()</code>, and <code>matches()</code> to select columns
-based on patterns in their names. For this chapter, we will focus on
-selecting columns by name and by negative selection with
-<code>-</code>.</p>
+based on patterns in their names. <strong>To keep it simple, we will
+focus on selecting columns by name and by negative selection with
+<code>-</code>.</strong></p>
 <p>📜 The SYNTAX: <code>select(data, col1, col2, …)</code></p>
 <div id="positive-selection" class="section level2" number="5.1">
 <h2><span class="header-section-number">5.1</span> Positive
 Selection</h2>
-<p>🎯 Goal: keep specific columns by name.</p>
+<p>🎯 Keep specific columns by name.</p>
 <pre class="r"><code># ⚡ Type this in a Quarto code chunk
 select(mtcars, mpg, cyl, hp)    # keep three columns</code></pre>
 <div data-pagedtable="false">
@@ -1967,24 +2052,38 @@ select(mtcars, mpg, cyl, hp)    # keep three columns</code></pre>
 {"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["mpg"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["cyl"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["hp"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"21.0","2":"6","3":"110","_rn_":"Mazda RX4"},{"1":"21.0","2":"6","3":"110","_rn_":"Mazda RX4 Wag"},{"1":"22.8","2":"4","3":"93","_rn_":"Datsun 710"},{"1":"21.4","2":"6","3":"110","_rn_":"Hornet 4 Drive"},{"1":"18.7","2":"8","3":"175","_rn_":"Hornet Sportabout"},{"1":"18.1","2":"6","3":"105","_rn_":"Valiant"},{"1":"14.3","2":"8","3":"245","_rn_":"Duster 360"},{"1":"24.4","2":"4","3":"62","_rn_":"Merc 240D"},{"1":"22.8","2":"4","3":"95","_rn_":"Merc 230"},{"1":"19.2","2":"6","3":"123","_rn_":"Merc 280"},{"1":"17.8","2":"6","3":"123","_rn_":"Merc 280C"},{"1":"16.4","2":"8","3":"180","_rn_":"Merc 450SE"},{"1":"17.3","2":"8","3":"180","_rn_":"Merc 450SL"},{"1":"15.2","2":"8","3":"180","_rn_":"Merc 450SLC"},{"1":"10.4","2":"8","3":"205","_rn_":"Cadillac Fleetwood"},{"1":"10.4","2":"8","3":"215","_rn_":"Lincoln Continental"},{"1":"14.7","2":"8","3":"230","_rn_":"Chrysler Imperial"},{"1":"32.4","2":"4","3":"66","_rn_":"Fiat 128"},{"1":"30.4","2":"4","3":"52","_rn_":"Honda Civic"},{"1":"33.9","2":"4","3":"65","_rn_":"Toyota Corolla"},{"1":"21.5","2":"4","3":"97","_rn_":"Toyota Corona"},{"1":"15.5","2":"8","3":"150","_rn_":"Dodge Challenger"},{"1":"15.2","2":"8","3":"150","_rn_":"AMC Javelin"},{"1":"13.3","2":"8","3":"245","_rn_":"Camaro Z28"},{"1":"19.2","2":"8","3":"175","_rn_":"Pontiac Firebird"},{"1":"27.3","2":"4","3":"66","_rn_":"Fiat X1-9"},{"1":"26.0","2":"4","3":"91","_rn_":"Porsche 914-2"},{"1":"30.4","2":"4","3":"113","_rn_":"Lotus Europa"},{"1":"15.8","2":"8","3":"264","_rn_":"Ford Pantera L"},{"1":"19.7","2":"6","3":"175","_rn_":"Ferrari Dino"},{"1":"15.0","2":"8","3":"335","_rn_":"Maserati Bora"},{"1":"21.4","2":"4","3":"109","_rn_":"Volvo 142E"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<p>🗣 The <code>select()</code> function is used to keep only the
-<code>mpg</code>, <code>cyl</code>, and <code>hp</code> columns from the
-<code>mtcars</code> dataset. The resulting data frame will contain all
-rows but only those three columns.</p>
+<p>✅ Check that the output keeps all rows but only shows the
+<code>mpg</code>, <code>cyl</code>, and <code>hp</code> columns.</p>
+<p>🗣 The <code>select()</code> function keeps only the <code>mpg</code>,
+<code>cyl</code>, and <code>hp</code> columns from the
+<code>mtcars</code> dataset. The resulting data frame contains all rows
+but only those three columns.</p>
+<p>🤔 This is a method-choice moment. Base R brackets (Chapter 10) and
+<code>select()</code> can both choose columns. Ask yourself: “Which
+version makes the column choices easier to read?”</p>
 </div>
 <div id="negative-selection" class="section level2" number="5.2">
 <h2><span class="header-section-number">5.2</span> Negative
 Selection</h2>
-<p>In chapter 10 you learned <code>x[-i, -j]</code> drops the i-th row
-and j-th column. In <code>dplyr::select()</code>, you can use a leading
-<code>-</code> to drop columns by name.</p>
-<p>🎯 Goal: remove columns with a leading <code>-</code>.</p>
+<p>In Chapter 10, you learned that <code>x[-i, -j]</code> can drop the
+i-th row and j-th column. In <code>dplyr::select()</code>, you can use a
+leading <code>-</code> to drop columns by name.</p>
+<p>🎯 Remove columns with a leading <code>-</code>.</p>
 <pre class="r"><code># ⚡ Type this in a Quarto code chunk
 select(mtcars, -gear)   # drop one column</code></pre>
-<p>🗣 The <code>select()</code> function is used to drop the
-<code>gear</code> column from the <code>mtcars</code> dataset. The
-resulting data frame will contain all rows and all columns except for
-<code>gear</code>.</p>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["mpg"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["cyl"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["disp"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["hp"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["drat"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["wt"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["qsec"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["vs"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["am"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["carb"],"name":[10],"type":["dbl"],"align":["right"]}],"data":[{"1":"21.0","2":"6","3":"160.0","4":"110","5":"3.90","6":"2.620","7":"16.46","8":"0","9":"1","10":"4","_rn_":"Mazda RX4"},{"1":"21.0","2":"6","3":"160.0","4":"110","5":"3.90","6":"2.875","7":"17.02","8":"0","9":"1","10":"4","_rn_":"Mazda RX4 Wag"},{"1":"22.8","2":"4","3":"108.0","4":"93","5":"3.85","6":"2.320","7":"18.61","8":"1","9":"1","10":"1","_rn_":"Datsun 710"},{"1":"21.4","2":"6","3":"258.0","4":"110","5":"3.08","6":"3.215","7":"19.44","8":"1","9":"0","10":"1","_rn_":"Hornet 4 Drive"},{"1":"18.7","2":"8","3":"360.0","4":"175","5":"3.15","6":"3.440","7":"17.02","8":"0","9":"0","10":"2","_rn_":"Hornet Sportabout"},{"1":"18.1","2":"6","3":"225.0","4":"105","5":"2.76","6":"3.460","7":"20.22","8":"1","9":"0","10":"1","_rn_":"Valiant"},{"1":"14.3","2":"8","3":"360.0","4":"245","5":"3.21","6":"3.570","7":"15.84","8":"0","9":"0","10":"4","_rn_":"Duster 360"},{"1":"24.4","2":"4","3":"146.7","4":"62","5":"3.69","6":"3.190","7":"20.00","8":"1","9":"0","10":"2","_rn_":"Merc 240D"},{"1":"22.8","2":"4","3":"140.8","4":"95","5":"3.92","6":"3.150","7":"22.90","8":"1","9":"0","10":"2","_rn_":"Merc 230"},{"1":"19.2","2":"6","3":"167.6","4":"123","5":"3.92","6":"3.440","7":"18.30","8":"1","9":"0","10":"4","_rn_":"Merc 280"},{"1":"17.8","2":"6","3":"167.6","4":"123","5":"3.92","6":"3.440","7":"18.90","8":"1","9":"0","10":"4","_rn_":"Merc 280C"},{"1":"16.4","2":"8","3":"275.8","4":"180","5":"3.07","6":"4.070","7":"17.40","8":"0","9":"0","10":"3","_rn_":"Merc 450SE"},{"1":"17.3","2":"8","3":"275.8","4":"180","5":"3.07","6":"3.730","7":"17.60","8":"0","9":"0","10":"3","_rn_":"Merc 450SL"},{"1":"15.2","2":"8","3":"275.8","4":"180","5":"3.07","6":"3.780","7":"18.00","8":"0","9":"0","10":"3","_rn_":"Merc 450SLC"},{"1":"10.4","2":"8","3":"472.0","4":"205","5":"2.93","6":"5.250","7":"17.98","8":"0","9":"0","10":"4","_rn_":"Cadillac Fleetwood"},{"1":"10.4","2":"8","3":"460.0","4":"215","5":"3.00","6":"5.424","7":"17.82","8":"0","9":"0","10":"4","_rn_":"Lincoln Continental"},{"1":"14.7","2":"8","3":"440.0","4":"230","5":"3.23","6":"5.345","7":"17.42","8":"0","9":"0","10":"4","_rn_":"Chrysler Imperial"},{"1":"32.4","2":"4","3":"78.7","4":"66","5":"4.08","6":"2.200","7":"19.47","8":"1","9":"1","10":"1","_rn_":"Fiat 128"},{"1":"30.4","2":"4","3":"75.7","4":"52","5":"4.93","6":"1.615","7":"18.52","8":"1","9":"1","10":"2","_rn_":"Honda Civic"},{"1":"33.9","2":"4","3":"71.1","4":"65","5":"4.22","6":"1.835","7":"19.90","8":"1","9":"1","10":"1","_rn_":"Toyota Corolla"},{"1":"21.5","2":"4","3":"120.1","4":"97","5":"3.70","6":"2.465","7":"20.01","8":"1","9":"0","10":"1","_rn_":"Toyota Corona"},{"1":"15.5","2":"8","3":"318.0","4":"150","5":"2.76","6":"3.520","7":"16.87","8":"0","9":"0","10":"2","_rn_":"Dodge Challenger"},{"1":"15.2","2":"8","3":"304.0","4":"150","5":"3.15","6":"3.435","7":"17.30","8":"0","9":"0","10":"2","_rn_":"AMC Javelin"},{"1":"13.3","2":"8","3":"350.0","4":"245","5":"3.73","6":"3.840","7":"15.41","8":"0","9":"0","10":"4","_rn_":"Camaro Z28"},{"1":"19.2","2":"8","3":"400.0","4":"175","5":"3.08","6":"3.845","7":"17.05","8":"0","9":"0","10":"2","_rn_":"Pontiac Firebird"},{"1":"27.3","2":"4","3":"79.0","4":"66","5":"4.08","6":"1.935","7":"18.90","8":"1","9":"1","10":"1","_rn_":"Fiat X1-9"},{"1":"26.0","2":"4","3":"120.3","4":"91","5":"4.43","6":"2.140","7":"16.70","8":"0","9":"1","10":"2","_rn_":"Porsche 914-2"},{"1":"30.4","2":"4","3":"95.1","4":"113","5":"3.77","6":"1.513","7":"16.90","8":"1","9":"1","10":"2","_rn_":"Lotus Europa"},{"1":"15.8","2":"8","3":"351.0","4":"264","5":"4.22","6":"3.170","7":"14.50","8":"0","9":"1","10":"4","_rn_":"Ford Pantera L"},{"1":"19.7","2":"6","3":"145.0","4":"175","5":"3.62","6":"2.770","7":"15.50","8":"0","9":"1","10":"6","_rn_":"Ferrari Dino"},{"1":"15.0","2":"8","3":"301.0","4":"335","5":"3.54","6":"3.570","7":"14.60","8":"0","9":"1","10":"8","_rn_":"Maserati Bora"},{"1":"21.4","2":"4","3":"121.0","4":"109","5":"4.11","6":"2.780","7":"18.60","8":"1","9":"1","10":"2","_rn_":"Volvo 142E"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>✅ Check that the output keeps all rows and removes only the
+<code>gear</code> column.</p>
+<p>🗣 The <code>select()</code> function drops the <code>gear</code>
+column from the <code>mtcars</code> dataset. The resulting data frame
+contains all rows and all columns except for <code>gear</code>.</p>
+<p>🤔 Sometimes it is clearer to say what you do not want instead of
+listing everything you want to keep. Ask yourself: “Is excluding this
+column clearer than naming all the columns I want?”</p>
 <hr />
 <p>Now that you know how to select columns, let’s see how to use the
 pipe to chain operations together.</p>
@@ -1992,51 +2091,68 @@ pipe to chain operations together.</p>
 <div id="piping-with-select" class="section level2" number="5.3">
 <h2><span class="header-section-number">5.3</span> Piping with
 Select</h2>
-<p>🎯 Goal: Let’s add a pipe!</p>
+<p>🎯 Add a pipe.</p>
 <pre class="r"><code># ⚡ Type this in a Quarto code chunk
 mtcars %&gt;% 
   select(mpg, cyl, hp)   # easier to read?</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["mpg"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["cyl"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["hp"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"21.0","2":"6","3":"110","_rn_":"Mazda RX4"},{"1":"21.0","2":"6","3":"110","_rn_":"Mazda RX4 Wag"},{"1":"22.8","2":"4","3":"93","_rn_":"Datsun 710"},{"1":"21.4","2":"6","3":"110","_rn_":"Hornet 4 Drive"},{"1":"18.7","2":"8","3":"175","_rn_":"Hornet Sportabout"},{"1":"18.1","2":"6","3":"105","_rn_":"Valiant"},{"1":"14.3","2":"8","3":"245","_rn_":"Duster 360"},{"1":"24.4","2":"4","3":"62","_rn_":"Merc 240D"},{"1":"22.8","2":"4","3":"95","_rn_":"Merc 230"},{"1":"19.2","2":"6","3":"123","_rn_":"Merc 280"},{"1":"17.8","2":"6","3":"123","_rn_":"Merc 280C"},{"1":"16.4","2":"8","3":"180","_rn_":"Merc 450SE"},{"1":"17.3","2":"8","3":"180","_rn_":"Merc 450SL"},{"1":"15.2","2":"8","3":"180","_rn_":"Merc 450SLC"},{"1":"10.4","2":"8","3":"205","_rn_":"Cadillac Fleetwood"},{"1":"10.4","2":"8","3":"215","_rn_":"Lincoln Continental"},{"1":"14.7","2":"8","3":"230","_rn_":"Chrysler Imperial"},{"1":"32.4","2":"4","3":"66","_rn_":"Fiat 128"},{"1":"30.4","2":"4","3":"52","_rn_":"Honda Civic"},{"1":"33.9","2":"4","3":"65","_rn_":"Toyota Corolla"},{"1":"21.5","2":"4","3":"97","_rn_":"Toyota Corona"},{"1":"15.5","2":"8","3":"150","_rn_":"Dodge Challenger"},{"1":"15.2","2":"8","3":"150","_rn_":"AMC Javelin"},{"1":"13.3","2":"8","3":"245","_rn_":"Camaro Z28"},{"1":"19.2","2":"8","3":"175","_rn_":"Pontiac Firebird"},{"1":"27.3","2":"4","3":"66","_rn_":"Fiat X1-9"},{"1":"26.0","2":"4","3":"91","_rn_":"Porsche 914-2"},{"1":"30.4","2":"4","3":"113","_rn_":"Lotus Europa"},{"1":"15.8","2":"8","3":"264","_rn_":"Ford Pantera L"},{"1":"19.7","2":"6","3":"175","_rn_":"Ferrari Dino"},{"1":"15.0","2":"8","3":"335","_rn_":"Maserati Bora"},{"1":"21.4","2":"4","3":"109","_rn_":"Volvo 142E"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>✅ Check that this returns the same columns as the earlier
+<code>select(mtcars, mpg, cyl, hp)</code> example.</p>
 <p>🗣 The pipe <code>%&gt;%</code> takes the <code>mtcars</code> dataset
 and feeds it into the <code>select()</code> function, which keeps only
 the <code>mpg</code>, <code>cyl</code>, and <code>hp</code> columns.
-This version reads more like a sequence of actions: “Start with mtcars,
-and then select these columns.”</p>
+This version reads more like a sequence of actions: start with
+<code>mtcars</code>, and then select these columns.</p>
+<p>🤔 The result is the same, but the reading direction is different.
+Ask yourself: “Do I prefer seeing the dataset inside the function, or
+starting with the dataset and moving step by step?”</p>
 <hr />
-<p>Now that you see how to select columns and use the pipe, let’s
-practice storing a subset of a dataset in the environment.</p>
+<p>Now that you can select columns and use the pipe, let’s practice
+storing a subset of a dataset in the environment.</p>
 </div>
 <div id="subset-with-select" class="section level2" number="5.4">
 <h2><span class="header-section-number">5.4</span> Subset with
 Select</h2>
-<p>We’ll mix it up by using a different data set, 🌐
-<code>gapminder</code> from <code>dslabs</code>. This data set contains
+<p>We’ll mix it up by using a different dataset, 🌐
+<code>gapminder</code> from <code>dslabs</code>. This dataset contains
 information about countries over time.</p>
 <pre class="r"><code>?gapminder</code></pre>
-<p>🎯 <strong>Goal</strong>: Create a copy of the <code>gapminder</code>
-dataset that contains only specific columns: country, year,
-infant_mortality, and continent. Name the subset
-<code>I_Demo</code>.</p>
-<pre class="r"><code># ⚡ Type this in a Quarto code chunk:
+<pre><code>## starting httpd help server ... done</code></pre>
+<p>🎯 Create a copy of the <code>gapminder</code> dataset that contains
+only specific columns: <code>country</code>, <code>year</code>,
+<code>infant_mortality</code>, and <code>continent</code>. Name the
+subset <code>I_Demo</code>.</p>
+<pre class="r"><code># ⚡ Type this in a Quarto code chunk
 I_Demo &lt;- gapminder %&gt;% 
   select(country, year, infant_mortality, continent)</code></pre>
-<pre class="r"><code># ✅  Verify
+<pre class="r"><code># ✅ Verify
 head(I_Demo)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["country"],"name":[1],"type":["fct"],"align":["left"]},{"label":["year"],"name":[2],"type":["int"],"align":["right"]},{"label":["infant_mortality"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["continent"],"name":[4],"type":["fct"],"align":["left"]}],"data":[{"1":"Albania","2":"1960","3":"115.40","4":"Europe","_rn_":"1"},{"1":"Algeria","2":"1960","3":"148.20","4":"Africa","_rn_":"2"},{"1":"Angola","2":"1960","3":"208.00","4":"Africa","_rn_":"3"},{"1":"Antigua and Barbuda","2":"1960","3":"NA","4":"Americas","_rn_":"4"},{"1":"Argentina","2":"1960","3":"59.87","4":"Americas","_rn_":"5"},{"1":"Armenia","2":"1960","3":"NA","4":"Asia","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<p>🗣 A new dataset called <code>I_Demo</code> was created from the
-<code>gapminder</code> dataset that only contains the columns
+<p>✅ Check that <code>I_Demo</code> contains the columns
 <code>country</code>, <code>year</code>, <code>infant_mortality</code>,
 and <code>continent</code>.</p>
+<p>🗣 A new dataset called <code>I_Demo</code> was created from the
+<code>gapminder</code> dataset. It contains all rows from
+<code>gapminder</code>, but only the columns <code>country</code>,
+<code>year</code>, <code>infant_mortality</code>, and
+<code>continent</code>.</p>
+<p>🤔 Creating a smaller dataset is a choice about focus. Ask yourself:
+“Which columns do I need for the question I am trying to answer, and
+which columns would only distract me?”</p>
 <hr />
 <p>✍️ Practice: fill in the blank prompt</p>
 <p>You try to design your own subsetting operation.</p>
-<p>🎯 <strong>Goal</strong>: Write an example that selects only the
-columns you choose.</p>
+<p>🎯 Write an example that selects only the columns you choose.</p>
 <p><strong>Step 1</strong> Identify the column options.</p>
-<pre class="r"><code># ✅  Pre-check
+<pre class="r"><code># ✅ Pre-check
 colnames(gapminder)</code></pre>
 <pre><code>## [1] &quot;country&quot;          &quot;year&quot;             &quot;infant_mortality&quot; &quot;life_expectancy&quot; 
 ## [5] &quot;fertility&quot;        &quot;population&quot;       &quot;gdp&quot;              &quot;continent&quot;       
@@ -2044,12 +2160,14 @@ colnames(gapminder)</code></pre>
 <p><strong>Step 2</strong> Choose which columns to keep and write the
 code to create a new dataset with only those columns. Use the exact
 names of the columns.</p>
-<pre class="r"><code># ⚡ Type this in a Quarto code chunk: 
+<pre class="r"><code># ⚡ Type this in a Quarto code chunk
 Your_Choice &lt;- gapminder %&gt;%
   select(____, ____, ____)   # choose columns
 
-# ✅  Verify
+# ✅ Verify
 head(Your_Choice)</code></pre>
+<p>🗣 Your new dataset should keep all rows from <code>gapminder</code>
+but only show the columns you selected.</p>
 <hr />
 <p>Now that you know how to store a subset when selecting columns and
 use the pipe, let’s see how to filter rows with
@@ -2144,6 +2262,14 @@ filter(mtcars, mpg &gt;= 25)               # high‑mileage cars</code></pre>
 {"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["mpg"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["cyl"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["disp"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["hp"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["drat"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["wt"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["qsec"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["vs"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["am"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["gear"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["carb"],"name":[11],"type":["dbl"],"align":["right"]}],"data":[{"1":"32.4","2":"4","3":"78.7","4":"66","5":"4.08","6":"2.200","7":"19.47","8":"1","9":"1","10":"4","11":"1","_rn_":"Fiat 128"},{"1":"30.4","2":"4","3":"75.7","4":"52","5":"4.93","6":"1.615","7":"18.52","8":"1","9":"1","10":"4","11":"2","_rn_":"Honda Civic"},{"1":"33.9","2":"4","3":"71.1","4":"65","5":"4.22","6":"1.835","7":"19.90","8":"1","9":"1","10":"4","11":"1","_rn_":"Toyota Corolla"},{"1":"27.3","2":"4","3":"79.0","4":"66","5":"4.08","6":"1.935","7":"18.90","8":"1","9":"1","10":"4","11":"1","_rn_":"Fiat X1-9"},{"1":"26.0","2":"4","3":"120.3","4":"91","5":"4.43","6":"2.140","7":"16.70","8":"0","9":"1","10":"5","11":"2","_rn_":"Porsche 914-2"},{"1":"30.4","2":"4","3":"95.1","4":"113","5":"3.77","6":"1.513","7":"16.90","8":"1","9":"1","10":"5","11":"2","_rn_":"Lotus Europa"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
+<p>✅ Check that every row shown has <code>mpg</code> greater than or
+equal to 25.</p>
+<p>🗣 The <code>filter()</code> function keeps rows where the condition
+is <code>TRUE</code>. This code keeps cars with
+<code>mpg &gt;= 25</code> and drops cars that do not meet that
+condition.</p>
+<p>🤔 This is the same row-filtering idea you used with base R brackets,
+but using a custom function.</p>
 </div>
 <div id="piping-with-filter" class="section level2" number="6.2">
 <h2><span class="header-section-number">6.2</span> Piping with
@@ -2152,12 +2278,14 @@ Filter</h2>
 from <code>dslabs</code>. This data set contains information about gun
 murders in the US.</p>
 <pre class="r"><code>?murders</code></pre>
-<p>💬 Prediction: There are 50 states in the US, so there should be 50
+<p>💬 Prediction: There are 50 states in the US, so I expect about 50
 rows.</p>
 <pre class="r"><code># ✅  Pre-check
 nrow(murders)  </code></pre>
 <pre><code>## [1] 51</code></pre>
-<p>🗣 … Wait, what? … ❓ Question: What are these 51 states?</p>
+<p>🗣 The row count is 51, not 50. That means this dataset includes one
+place that is not one of the 50 states. ❓ Question: What is the extra
+place?</p>
 <pre class="r"><code>#⚡ Test:
 unique(murders$state)  # 51 states</code></pre>
 <pre><code>##  [1] &quot;Alabama&quot;              &quot;Alaska&quot;               &quot;Arizona&quot;             
@@ -2177,14 +2305,31 @@ unique(murders$state)  # 51 states</code></pre>
 ## [43] &quot;Tennessee&quot;            &quot;Texas&quot;                &quot;Utah&quot;                
 ## [46] &quot;Vermont&quot;              &quot;Virginia&quot;             &quot;Washington&quot;          
 ## [49] &quot;West Virginia&quot;        &quot;Wisconsin&quot;            &quot;Wyoming&quot;</code></pre>
-<p>🗣 Ohhhhh! “District of Columbia” is included in the dataset.</p>
-<p>🎯 <strong>Goal</strong>: Create a copy of the <code>murders</code>
-dataset that excludes the District of Columbia.</p>
+<p>🗣 The <code>murders</code> dataset includes the District of Columbia,
+so the dataset has 51 rows before we remove it.</p>
+<p>🎯 Create a copy of the <code>murders</code> dataset that excludes
+the District of Columbia.</p>
 <pre class="r"><code># ⚡ Type this in a Quarto code chunk:
 No_Washington &lt;- murders %&gt;% 
   filter(state != &quot;District of Columbia&quot;)</code></pre>
+<p>✅ Check that <code>No_Washington</code> has 50 rows.</p>
 <pre class="r"><code># ✅  Verify
 nrow(No_Washington)  # 50 states</code></pre>
+<pre><code>## [1] 50</code></pre>
+<pre class="r"><code>unique(No_Washington$state)</code></pre>
+<pre><code>##  [1] &quot;Alabama&quot;        &quot;Alaska&quot;         &quot;Arizona&quot;        &quot;Arkansas&quot;      
+##  [5] &quot;California&quot;     &quot;Colorado&quot;       &quot;Connecticut&quot;    &quot;Delaware&quot;      
+##  [9] &quot;Florida&quot;        &quot;Georgia&quot;        &quot;Hawaii&quot;         &quot;Idaho&quot;         
+## [13] &quot;Illinois&quot;       &quot;Indiana&quot;        &quot;Iowa&quot;           &quot;Kansas&quot;        
+## [17] &quot;Kentucky&quot;       &quot;Louisiana&quot;      &quot;Maine&quot;          &quot;Maryland&quot;      
+## [21] &quot;Massachusetts&quot;  &quot;Michigan&quot;       &quot;Minnesota&quot;      &quot;Mississippi&quot;   
+## [25] &quot;Missouri&quot;       &quot;Montana&quot;        &quot;Nebraska&quot;       &quot;Nevada&quot;        
+## [29] &quot;New Hampshire&quot;  &quot;New Jersey&quot;     &quot;New Mexico&quot;     &quot;New York&quot;      
+## [33] &quot;North Carolina&quot; &quot;North Dakota&quot;   &quot;Ohio&quot;           &quot;Oklahoma&quot;      
+## [37] &quot;Oregon&quot;         &quot;Pennsylvania&quot;   &quot;Rhode Island&quot;   &quot;South Carolina&quot;
+## [41] &quot;South Dakota&quot;   &quot;Tennessee&quot;      &quot;Texas&quot;          &quot;Utah&quot;          
+## [45] &quot;Vermont&quot;        &quot;Virginia&quot;       &quot;Washington&quot;     &quot;West Virginia&quot; 
+## [49] &quot;Wisconsin&quot;      &quot;Wyoming&quot;</code></pre>
 <p>🗣 A new dataset called <code>No_Washington</code> was created from
 the <code>murders</code> dataset that excludes Washington DC.</p>
 </div>
@@ -2229,13 +2374,14 @@ when you need more complex grouping with <code>|</code>.</p>
 </div>
 <div id="with-the-pipe" class="section level3" number="6.3.2">
 <h3><span class="header-section-number">6.3.2</span> With the pipe</h3>
-<p>🎯 <strong>Goal</strong>: Let’s filter with two conditions with a
-pipe and store it as <code>efficient</code></p>
+<p>🎯 Let’s filter with two conditions with a pipe and store it as
+<code>efficient</code></p>
 <p>❓ Question: How many cars have <em>both</em> mpg ≥ 25 <em>and</em> 4
 cylinders?</p>
 <pre class="r"><code># ⚡ Type this in a Quarto code chunk:
 efficient &lt;- mtcars %&gt;%
   filter(mpg &gt;= 25, cyl == 4)           # two conditions</code></pre>
+<p>✅ Check that <code>efficient</code> has 6 rows.</p>
 <pre class="r"><code># ✅  Verify
 nrow(efficient)  # how many cars are efficient?</code></pre>
 <pre><code>## [1] 6</code></pre>
@@ -2245,6 +2391,9 @@ nrow(efficient)  # how many cars are efficient?</code></pre>
 <code>cyl</code> is equal to 4. The number of rows in the
 <code>efficient</code> dataset indicates how many cars in the dataset
 meet <strong>both</strong> conditions (n = 6).</p>
+<p>🤔 AND logic is strict. A row must satisfy both conditions to stay.
+Ask yourself: “Did I mean both conditions at the same time, or did I
+mean either condition?”</p>
 </div>
 </div>
 <div id="multiple-conditions-with-or" class="section level2" number="6.4">
@@ -2258,8 +2407,8 @@ returns <code>TRUE</code> when a value appears in a set of values.</p>
 <div id="or-and-in" class="section level3" number="6.4.1">
 <h3><span class="header-section-number">6.4.1</span> Or <code>|</code>
 and <code>%in%</code></h3>
-<p>🎯 <strong>Goal</strong>: Let’s filter with OR! When you want rows
-that match either one condition or another, use <code>|</code>.</p>
+<p>🎯 Let’s filter with OR! When you want rows that match either one
+condition or another, use <code>|</code>.</p>
 <pre class="r"><code># ⚡ Type this in a Quarto code chunk:
 filter(mtcars, cyl == 4 | cyl == 6)</code></pre>
 <div data-pagedtable="false">
@@ -2288,8 +2437,12 @@ replacement for <code>|</code>. For example, if you want cars with 4
 cylinders or cars with <code>mpg &gt;= 30</code>, you must use
 <code>|</code> because those are two different conditions on different
 variables.</p>
-<p>🎯 <strong>Goal</strong>: Let’s filter with OR on different
-variables.</p>
+<p>🤔 This is another method-choice decision. <code>|</code> works well
+when comparing different conditions. <code>%in%</code> is often cleaner
+when checking whether one variable matches several possible values. Ask
+yourself: “Am I comparing one variable to a set, or combining different
+conditions?”</p>
+<p>🎯 Let’s filter with OR on different variables.</p>
 <pre class="r"><code># ⚡ Type this in a Quarto code chunk:
 filter(mtcars, cyl == 4 | mpg &gt;= 30)  # different variables</code></pre>
 <div data-pagedtable="false">
@@ -2297,6 +2450,8 @@ filter(mtcars, cyl == 4 | mpg &gt;= 30)  # different variables</code></pre>
 {"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["mpg"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["cyl"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["disp"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["hp"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["drat"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["wt"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["qsec"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["vs"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["am"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["gear"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["carb"],"name":[11],"type":["dbl"],"align":["right"]}],"data":[{"1":"22.8","2":"4","3":"108.0","4":"93","5":"3.85","6":"2.320","7":"18.61","8":"1","9":"1","10":"4","11":"1","_rn_":"Datsun 710"},{"1":"24.4","2":"4","3":"146.7","4":"62","5":"3.69","6":"3.190","7":"20.00","8":"1","9":"0","10":"4","11":"2","_rn_":"Merc 240D"},{"1":"22.8","2":"4","3":"140.8","4":"95","5":"3.92","6":"3.150","7":"22.90","8":"1","9":"0","10":"4","11":"2","_rn_":"Merc 230"},{"1":"32.4","2":"4","3":"78.7","4":"66","5":"4.08","6":"2.200","7":"19.47","8":"1","9":"1","10":"4","11":"1","_rn_":"Fiat 128"},{"1":"30.4","2":"4","3":"75.7","4":"52","5":"4.93","6":"1.615","7":"18.52","8":"1","9":"1","10":"4","11":"2","_rn_":"Honda Civic"},{"1":"33.9","2":"4","3":"71.1","4":"65","5":"4.22","6":"1.835","7":"19.90","8":"1","9":"1","10":"4","11":"1","_rn_":"Toyota Corolla"},{"1":"21.5","2":"4","3":"120.1","4":"97","5":"3.70","6":"2.465","7":"20.01","8":"1","9":"0","10":"3","11":"1","_rn_":"Toyota Corona"},{"1":"27.3","2":"4","3":"79.0","4":"66","5":"4.08","6":"1.935","7":"18.90","8":"1","9":"1","10":"4","11":"1","_rn_":"Fiat X1-9"},{"1":"26.0","2":"4","3":"120.3","4":"91","5":"4.43","6":"2.140","7":"16.70","8":"0","9":"1","10":"5","11":"2","_rn_":"Porsche 914-2"},{"1":"30.4","2":"4","3":"95.1","4":"113","5":"3.77","6":"1.513","7":"16.90","8":"1","9":"1","10":"5","11":"2","_rn_":"Lotus Europa"},{"1":"21.4","2":"4","3":"121.0","4":"109","5":"4.11","6":"2.780","7":"18.60","8":"1","9":"1","10":"4","11":"2","_rn_":"Volvo 142E"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
+<p>✅ Check that this keeps cars that meet at least one condition: 4
+cylinders, high mileage, or both.</p>
 <p>🗣 This code chunk returns a subset of the <code>mtcars</code> dataset
 that includes rows where either <code>cyl</code> is equal to 4 or
 <code>mpg</code> is greater than or equal to 30. Since these conditions
@@ -2305,13 +2460,14 @@ use the <code>|</code> operator to combine them.</p>
 </div>
 <div id="with-the-pipe-1" class="section level3" number="6.4.2">
 <h3><span class="header-section-number">6.4.2</span> With the pipe</h3>
-<p>🎯 Goal: Let’s filter with two conditions using OR (<code>|</code>),
+<p>🎯 Let’s filter with two conditions using OR (<code>|</code>),
 piping, and storing the subset to the environment.</p>
 <p>❓ Question: How many cars have <em>either</em> mpg ≥ 25 <em>or</em>
 4 cylinders?</p>
 <pre class="r"><code># ⚡ Type this in a Quarto code chunk:
 efficient_ish &lt;- mtcars %&gt;%
   filter(mpg &gt;= 25 | cyl == 4)    # two conditions</code></pre>
+<p>✅ Check that <code>efficient_ish</code> has 11 rows.</p>
 <pre class="r"><code># ✅  Verify
 nrow(efficient_ish)  # how many cars are efficient_ish?</code></pre>
 <pre><code>## [1] 11</code></pre>
@@ -2321,21 +2477,24 @@ the <code>mtcars</code> dataset that includes rows where either
 equal to 4. The number of rows in the <code>efficient_ish</code> dataset
 indicates how many cars meet <em>at least one</em> of those conditions.
 (n = 11)</p>
+<p>🤔 OR logic is broader than AND logic. A row only needs to satisfy
+one condition to stay. Ask yourself: “Did my row count get larger
+because I widened the rule?”</p>
 </div>
 </div>
 </div>
 <div id="filter-and-select" class="section level1" number="7">
 <h1><span class="header-section-number">7</span> filter() AND
 select()</h1>
-<p>So far, we’ve used <code>select()</code> to changes which columns we
-keep and <code>filter()</code> to change which rows we keep. Now let’s
-combine them together.</p>
-<p>📖 <strong>Review</strong></p>
+<p>So far, you have used <code>select()</code> to change which columns
+you keep and <code>filter()</code> to change which rows you keep. Now
+let’s combine them.</p>
+<p>📖 Review</p>
 <ul>
-<li><p><code>filter()</code> looks at the values in a data frame and
-keeps only rows where the condition is <code>TRUE</code>.</p></li>
-<li><p><code>select()</code> looks at column names and keeps only the
-variables you ask for.</p></li>
+<li><code>filter()</code> looks at the values in a data frame and keeps
+only rows where the condition is <code>TRUE</code>.</li>
+<li><code>select()</code> looks at column names and keeps only the
+variables you ask for.</li>
 </ul>
 <p>Combining them lets you subset a data frame by both rows and
 columns.</p>
@@ -2346,54 +2505,67 @@ columns.</p>
 when you write your filtering conditions. If you <code>select()</code>
 first and accidentally remove a column needed by <code>filter()</code>,
 your code will fail.</p>
-<p>We’ll mix it up by using a different data set,
-☣️<code>us_contagious_diseases</code> from <code>dslabs</code>. This
-data set contains information about contagious diseases in the US.</p>
+<p>🤔 This is a workflow-order choice. Both <code>filter()</code> and
+<code>select()</code> are useful, but the order matters when one step
+depends on a column that might disappear. Ask yourself: “Which columns
+do I still need for the next step?”</p>
+<p>We’ll mix it up by using a different dataset, ☣️
+<code>us_contagious_diseases</code> from <code>dslabs</code>. This
+dataset contains information about contagious diseases in the US.</p>
 <pre class="r"><code>?us_contagious_diseases</code></pre>
-<p>🎯 Goal: Using <code>us_contagious_diseases</code> from
+<p>🎯 Using <code>us_contagious_diseases</code> from
 <code>dslabs</code>, keep only rows for <code>Alaska</code> from
-<code>1980</code> and later, then keep only the columns
+<code>1980</code> and later. Then keep only the columns
 <code>year</code>, <code>disease</code>, and <code>count</code>. Store
-as <code>alaska_disease</code>.</p>
-<pre class="r"><code># ⚡ Type this in a Quarto code chunk:
+the result as <code>alaska_disease</code>.</p>
+<pre class="r"><code># ⚡ Type this in a Quarto code chunk
 alaska_disease &lt;- us_contagious_diseases %&gt;% 
   filter(state == &quot;Alaska&quot;, year &gt;= 1980) %&gt;%   # rows
   select(year, disease, count)                  # columns</code></pre>
 <p>🗣 This pipeline says: start with <code>us_contagious_diseases</code>,
 keep only the rows for Alaska in 1980 or later, and then trim the result
-down to just three columns. <code>filter()</code> changes the number of
-rows. <code>select()</code> changes the number of columns. That is the
-key difference between the two verbs.</p>
-<pre class="r"><code># ✅  Verify
+down to three columns. <code>filter()</code> changes the number of rows.
+<code>select()</code> changes the number of columns.</p>
+<pre class="r"><code># ✅ Verify
 head(alaska_disease)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["year"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["disease"],"name":[2],"type":["fct"],"align":["left"]},{"label":["count"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"1980","2":"Hepatitis A","3":"18","_rn_":"1"},{"1":"1981","2":"Hepatitis A","3":"45","_rn_":"2"},{"1":"1982","2":"Hepatitis A","3":"17","_rn_":"3"},{"1":"1983","2":"Hepatitis A","3":"43","_rn_":"4"},{"1":"1984","2":"Hepatitis A","3":"14","_rn_":"5"},{"1":"1985","2":"Hepatitis A","3":"18","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
+<pre class="r"><code>colnames(alaska_disease)</code></pre>
+<pre><code>## [1] &quot;year&quot;    &quot;disease&quot; &quot;count&quot;</code></pre>
+<p>✅ Check that <code>alaska_disease</code> only shows the columns
+<code>year</code>, <code>disease</code>, and <code>count</code>.</p>
 <p>🗣 A new dataset called <code>alaska_disease</code> was created from
 <code>us_contagious_diseases</code>. First, <code>filter()</code> kept
-only rows where <code>state</code> is <code>&quot;Alaska&quot;</code> and year is
-greater than or equal to <code>1980</code>. Then, <code>select()</code>
-kept only the columns <code>year</code>, <code>disease</code>, and
-<code>count</code>. Notice that state was used in the filtering step,
-but it does not appear in the final result because <code>select()</code>
-removed it afterward.</p>
+only rows where <code>state</code> is <code>&quot;Alaska&quot;</code> and
+<code>year</code> is greater than or equal to <code>1980</code>. Then,
+<code>select()</code> kept only the columns <code>year</code>,
+<code>disease</code>, and <code>count</code>. Notice that
+<code>state</code> was used in the filtering step, but it does not
+appear in the final result because <code>select()</code> removed it
+afterward.</p>
+<p>🤔 This is why order matters. If you had selected only
+<code>year</code>, <code>disease</code>, and <code>count</code> first,
+the <code>state</code> column would not be available for filtering. Ask
+yourself: “Did I remove a column before I was done using it?”</p>
 </div>
 <div id="one-application" class="section level1" number="8">
 <h1><span class="header-section-number">8</span> One Application</h1>
-<p>❓“Which automatic cars (<code>am == 0)</code> in <code>mtcars</code>
-have horsepower &gt; 150?</p>
-<p>🎯 <strong>Goal</strong>: Answer the question. Show only
-<code>hp</code> and <code>mpg</code>.</p>
+<p>❓ Which automatic cars (<code>am == 0</code>) in <code>mtcars</code>
+have horsepower greater than 150?</p>
 <p>In <code>mtcars</code>, <code>am</code> is coded as
-<code>0 = automatic</code> and <code>1 = manual</code> horsepower is
-<code>hp</code> and miles per gallon is <code>mpg</code>.</p>
-<pre class="r"><code>#⚡ Test
+<code>0 = automatic</code> and <code>1 = manual</code>. Horsepower is
+stored in <code>hp</code>, and miles per gallon is stored in
+<code>mpg</code>.</p>
+<p>🎯 Answer the question. Show only <code>hp</code> and
+<code>mpg</code>.</p>
+<pre class="r"><code># ⚡ Test
 powerful_auto &lt;- mtcars %&gt;%
   filter(am == 0, hp &gt; 150) %&gt;%
   select(hp, mpg)</code></pre>
-<pre class="r"><code># ✅  Verify
+<pre class="r"><code># ✅ Verify
 head(powerful_auto)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
@@ -2402,12 +2574,19 @@ head(powerful_auto)</code></pre>
 </div>
 <pre class="r"><code>nrow(powerful_auto)</code></pre>
 <pre><code>## [1] 10</code></pre>
+<p>✅ Check that <code>powerful_auto</code> contains 10 rows.</p>
 <p>🗣 A new dataset called <code>powerful_auto</code> was created from
 <code>mtcars</code>. The <code>filter()</code> step kept only cars that
 are automatic (<code>am == 0</code>) and have more than 150 horsepower.
 The <code>select()</code> step then kept only the <code>hp</code> and
-<code>mpg</code> columns, because those are the variables needed for the
+<code>mpg</code> columns because those are the variables needed for the
 report. The result contains 10 cars.</p>
+<p>🤔 Open-minded coding means checking whether your workflow matches
+the question. This pipeline filters with columns that explain the rule,
+then selects the columns needed for the final answer. Ask yourself:
+“Does my final dataset show enough information to answer the question
+clearly?”</p>
+<hr />
 </div>
 <div id="summary" class="section level1" number="9">
 <h1><span class="header-section-number">9</span> Summary</h1>
@@ -2422,9 +2601,13 @@ stay together in one document.</p>
 precise questions of data, including single-condition filters,
 multiple-condition filters with AND/OR logic, and workflows that combine
 <code>filter()</code> and <code>select()</code> in the same pipeline.
-The chapter also extended subsetting into practical tasks such as,
-previewing results, and creating focused subsets from real datasets for
-exploration and reporting.</p>
+You also practiced previewing results, checking row counts, and creating
+focused subsets from real datasets for exploration and reporting.</p>
+<p>The larger learning goal is method judgment. Base R brackets and
+<code>dplyr</code> verbs can often answer the same question, but they
+make different parts of the work easier to see. Open-minded coding means
+comparing reasonable approaches, verifying the result, and choosing the
+method that makes your logic easiest to read and explain.</p>
 </div>
 <div id="chapter-terms" class="section level1" number="10">
 <h1><span class="header-section-number">10</span> Chapter Terms</h1>
@@ -2462,70 +2645,100 @@ format (HTML/PDF/Word), and options for rendering.</p>
 </div>
 <div id="practice-space" class="section level1" number="11">
 <h1><span class="header-section-number">11</span> 📝 Practice Space</h1>
-<p>In this Practice Space, you will practice using a Quarto document as
-a reproducible workspace while learning two core <code>dplyr</code>
-verbs:</p>
-<ul>
-<li><p><code>select()</code> to keep specific columns</p></li>
-<li><p><code>filter()</code> to keep specific rows</p></li>
-</ul>
-<p>You will also practice basic Quarto habits from this chapter:</p>
-<ul>
-<li><p>saving your work as a <code>.qmd</code> file</p></li>
-<li><p>writing memo responses as normal text outside code
-chunks</p></li>
-<li><p>using Quarto chunk controls with <code>#|</code> as you choose to
-show or hide code, messages, and warnings</p></li>
-</ul>
-<p>For this Practice Space, create a new Quarto document and save it in
-your course folder as:</p>
+<p>In this Practice Space, you will use <code>dplyr::select()</code>,
+<code>dplyr::filter()</code>, and the pipe <code>%&gt;%</code> to create
+smaller, focused datasets. You will also keep practicing Quarto as a
+reproducible workspace for code, output, and memo notes.</p>
+<p>Create a new Quarto document and save it in your course folder
+as:</p>
 <p><code>chapter11_practice.qmd</code></p>
-<p>Use headings as you work so your file is organized and readable.</p>
-<p><em>You won’t “render” this file.</em> For the file submission
-assignment, you will submit the <code>.qmd</code> file.</p>
-<p>Suggested Headings</p>
-<pre class="markdown"><code># Chapter 11 Practice
-
-## Task 0
-
-## Task 1
-
-## Task 2
-
-## Task 3
-
-## Task 4
-
-## Task 5
-
-## Task 6
-
-## Task 7</code></pre>
+<p>Before you begin:</p>
+<ol style="list-style-type: decimal">
+<li>Create a new Quarto document in RStudio.</li>
+<li>Save it as <code>chapter11_practice.qmd</code>.</li>
+<li>Edit the YAML so it includes the title
+<code>&quot;Chapter 11 Practice&quot;</code>, your name, the date, and HTML
+output.</li>
+<li>Delete the default body text below the YAML.</li>
+<li>Create headings for each task using <code>## Task 0</code>,
+<code>## Task 1</code>, and so on.</li>
+</ol>
+<p>Complete each task in order. Fill in the blanks, run your code, and
+add short memo notes as you work.</p>
+<p>In this Practice Space, you will see three memo prompts:</p>
+<ul>
+<li>🎯 <strong>Write the goal</strong> state the coding directions in
+your own words.</li>
+<li>🗣 <strong>Add Comments:</strong> explain what the code or output
+shows.</li>
+<li>🪞 <strong>Reflect:</strong> explain your thinking, what you
+checked, what changed, or what you would try next.</li>
+</ul>
+<p>Each task should include at least one memo response. You do not need
+to answer every prompt perfectly. The goal is to practice documenting
+your thinking while you work.</p>
+<p><strong>Open-mindedness</strong> memos means documenting comparing
+reasonable methods, and choosing the approach that makes the code
+easiest to read, check, and explain. If you encounter an error, document
+your <strong>tenacity</strong> by briefly noting what happened, what you
+tried, and how you fixed it or what still confuses you. Document how you
+troubleshot the error and what resource(s) you used to help you resolve
+the issue (<strong>transparency</strong>). Show <strong>courage</strong>
+by sharing your thinking process, even if it includes mistakes or
+confusion.</p>
+<p>If you get stuck, briefly document what happened, what you tried, and
+what still confuses you.</p>
+<p>You may quote AI output only when you clearly mark it as quoted text,
+either with quotation marks or a block quote using <code>&gt;</code>.
+Then hand-type your own explanation of why you are including the
+quote.</p>
+<p>Before you submit, clear your Environment and run the
+<code>.qmd</code> from top to bottom. Your file should run without
+errors and create the required objects listed in Task 7.</p>
+<p>For this assignment, submit the saved <code>.qmd</code> file. You do
+not need to submit a rendered HTML file.</p>
 <div id="task-0" class="section level2" number="11.1">
 <h2><span class="header-section-number">11.1</span> Task 0</h2>
 <p>📦 Load the packages needed for this Practice Space:
-<code>dplyr</code> and <code>dslabs</code>. This setup chunk is also as
-great place to practice Quarto chunk controls like
-<code>#| message: false</code> and <code>#| warning: false</code></p>
+<code>dplyr</code> and <code>dslabs</code>. This setup chunk is also a
+good place to practice Quarto chunk controls like
+<code>#| message: false</code> and <code>#| warning: false</code>.</p>
 <p>🎯 Write the goal of this task in your own words.</p>
-<pre class="r"><code># ⚡ Type this in Quarto code chunk, fill in the blanks
+<pre class="r"><code># ⚡ Type this in a Quarto code chunk, fill in the blanks
+#| message: false
+#| warning: false
+
 _______(dslabs)
 _______(dplyr)</code></pre>
+<p>🗣 Add Comments: Explain why <code>library()</code> needs to run when
+you start a new R session, even if the package was already installed
+earlier.</p>
+<p>🪞 Reflect: Quarto lets you choose whether messages and warnings
+appear in the rendered report. When might it be useful to show messages
+while learning? When might it be useful to hide them in a cleaner final
+report?</p>
+<p>💡 <strong>Tip:</strong> Open-mindedness in this chapter means
+comparing reasonable options and choosing the one that makes your
+workflow easier to read, check, and explain.</p>
 </div>
 <div id="task-1" class="section level2" number="11.2">
 <h2><span class="header-section-number">11.2</span> Task 1</h2>
 <p><strong>Column Selection</strong></p>
 <p>📝 Create <strong><code>C_Overload</code></strong> that keeps only
-<code>year</code> and <code>carbon_emissions</code> from the
-🌡️<code>temp_carbon</code> data frame. Use <code>select()</code> without
+<code>year</code> and <code>carbon_emissions</code> from the 🌡️
+<code>temp_carbon</code> data frame. Use <code>select()</code> without
 <code>%&gt;%</code>.</p>
 <p>🎯 Write the goal of this task in your own words.</p>
-<pre class="r"><code># ⚡ Type this in Quarto code chunk, fill in the blanks
-C_Overload &lt;- _____</code></pre>
-<pre class="r"><code># ✅  Verify
+<pre class="r"><code># ⚡ Type this in a Quarto code chunk, fill in the blanks
+C_Overload &lt;- _______(_______, year, _______)</code></pre>
+<pre class="r"><code># ✅ Verify
 head(C_Overload)</code></pre>
-<p>🗣 Explain what <code>select()</code> did in this task. How does head
-help you check that it worked?</p>
+<p>🗣 Add Comments: Explain what <code>select()</code> did in this task.
+How does <code>head()</code> help you check that it worked?</p>
+<p>🪞 Reflect: In Chapter 10, you used base R brackets to choose
+columns. In this task, you used <code>select()</code> without a pipe.
+Which version feels easier to read for this task, and what output helps
+you verify that only the intended columns were kept?</p>
 </div>
 <div id="task-2" class="section level2" number="11.3">
 <h2><span class="header-section-number">11.3</span> Task 2</h2>
@@ -2534,109 +2747,139 @@ help you check that it worked?</p>
 <code>select()</code> to keep only the <code>star</code> column. Name
 the result <strong><code>star_names</code></strong>.</p>
 <p>🎯 Write the goal of this task in your own words.</p>
-<pre class="r"><code># ⚡ Type this in Quarto code chunk, fill in the blanks
-star_names &lt;- _____</code></pre>
-<pre class="r"><code># ✅  Verify
+<pre class="r"><code># ⚡ Type this in a Quarto code chunk, fill in the blanks
+star_names &lt;- _______ _______ _______(star)</code></pre>
+<pre class="r"><code># ✅ Verify
 head(star_names)</code></pre>
-<p>🗣 Does this return a vector or keep a one-column data frame?</p>
+<p>🗣 Add Comments: Does this return a vector or keep a one-column data
+frame? Explain how you can tell from the output.</p>
+<p>🪞 Reflect: A one-column data frame and a vector can look similar at
+first. Why does it matter to stay open to that difference instead of
+assuming they are the same kind of object?</p>
 </div>
 <div id="task-3" class="section level2" number="11.4">
 <h2><span class="header-section-number">11.4</span> Task 3</h2>
 <p><strong>Row Filtering</strong></p>
-<p>From 🔫<code>murders</code>, remove every row where state equals
-<code>&quot;Florida&quot;</code> using <code>!=</code>. Name the object
-<strong><code>No_Florida</code></strong>.</p>
+<p>From 🔫 <code>murders</code>, remove every row where
+<code>state</code> equals <code>&quot;Florida&quot;</code> using <code>!=</code>.
+Name the object <strong><code>No_Florida</code></strong>.</p>
 <p>🎯 Write the goal of this task in your own words.</p>
-<pre class="r"><code># ✅  Pre-test
+<pre class="r"><code># ✅ Pre-test
 unique(murders$state)</code></pre>
-<pre class="r"><code># ⚡ Type this in Quarto code chunk, fill in the blanks
-No_Florida &lt;- _____</code></pre>
-<pre class="r"><code># ✅  Verify
+<pre class="r"><code># ⚡ Type this in a Quarto code chunk, fill in the blanks
+No_Florida &lt;- _______ _______ filter(state _______ &quot;Florida&quot;)</code></pre>
+<pre class="r"><code># ✅ Verify
 unique(No_Florida$state)</code></pre>
-<p>🗣 Why might pre-checking the unique values of <code>state</code> in
-the data frame <code>murders</code> useful? What change are you
-expecting to see in the ✅ Verify step? Explain what rows are
-removed.</p>
+<p>🗣 Add Comments: Explain why pre-checking the unique values of
+<code>state</code> is useful. What change are you expecting to see in
+the ✅ Verify step? Explain what rows are removed.</p>
+<p>🪞 Reflect: You could have assumed <code>&quot;Florida&quot;</code> appeared
+exactly as expected, but you checked the available values first. How did
+that pre-check help you avoid guessing? If <code>&quot;Florida&quot;</code> still
+appeared in the verification output, what would you check next?</p>
 </div>
 <div id="task-4" class="section level2" number="11.5">
 <h2><span class="header-section-number">11.5</span> Task 4</h2>
 <p><strong>Multiple Conditions</strong></p>
-<p>🚗 From <code>mtcars</code>, using <code>filter()</code> and piping,
-pull cars in <code>mtcars</code> that are <strong>manual</strong>, have
-<code>8</code> <strong>cylinders</strong>, and have <strong>1/4 mile
-time</strong> <em>less than</em> <code>15</code>. Store as
+<p>🚗 From <code>mtcars</code>, use <code>filter()</code> and piping to
+pull cars that are <strong>manual</strong>, have <code>8</code>
+<strong>cylinders</strong>, and have <strong>1/4 mile time</strong> less
+than <code>15</code>. Store the result as
 <strong><code>Fast_n_Furious</code></strong>.</p>
 <p><em>Hint: use <code>?mtcars</code> to identify the relevant variables
 for each condition.</em></p>
 <p>🎯 Write the goal of this task in your own words.</p>
 <pre class="r"><code>summary(mtcars$qsec)  # check qsec range</code></pre>
-<pre class="r"><code># ⚡ Type this in Quarto code chunk, fill in the blanks
-Fast_n_Furious &lt;- _____</code></pre>
-<pre class="r"><code># ✅  Verify
+<pre class="r"><code># ⚡ Type this in a Quarto code chunk, fill in the blanks
+Fast_n_Furious &lt;- mtcars %&gt;% 
+  _______(am == _______, 
+          cyl == 8, _______ &lt; _______)</code></pre>
+<pre class="r"><code># ✅ Verify
 head(Fast_n_Furious)
 nrow(Fast_n_Furious)</code></pre>
-<p>🗣 Explain the conditions you used to filter the rows. What does each
-condition mean in terms of the characteristics of the cars? How many
-cars meet all three conditions?</p>
+<p>🗣 Add Comments: Explain the conditions you used to filter the rows.
+What does each condition mean in terms of the characteristics of the
+cars? How many cars meet all three conditions?</p>
+<p>🪞 Reflect: This task uses AND logic, so a car must meet all three
+conditions to stay in the dataset. If your result had more or fewer rows
+than expected, which condition would you check first, and why?</p>
 </div>
 <div id="task-5" class="section level2" number="11.6">
 <h2><span class="header-section-number">11.6</span> Task 5</h2>
 <p><strong>OR Logic + Column Slice</strong></p>
 <p>From 🚗 <code>mtcars</code>, keep only the cars whose displacement is
 either <strong>under 160</strong> or <strong>over 250</strong>, and then
-show only the first three columns of those rows.(Hint: <code>:</code>).
-Store as <code>filtered_cars</code></p>
+show only the first three columns of those rows. Store the result as
+<strong><code>filtered_cars</code></strong>.</p>
+<p><em>Hint: use <code>:</code> when selecting the first three
+columns.</em></p>
 <p>🎯 Write the goal of this task in your own words.</p>
-<pre class="r"><code># ✅  Pre-check
-range(mtcars$disp)  # check disp </code></pre>
-<p>🗣 This tells the spread of <code>disp</code> in <code>mtcars</code>
-so you can see whether the cutoffs <code>160</code> and <code>250</code>
-make sense.</p>
-<pre class="r"><code># ⚡ Type this in Quarto code chunk, fill in the blanks
-filtered_cars &lt;- _____</code></pre>
-<pre class="r"><code># ✅  Verify
-all(filtered_cars$disp &gt; 250 | filtered_cars$disp &lt; 160) # check disp </code></pre>
-<p>🗣 The function <code>all()</code> to test whether every kept row
-satisfies the condition</p>
+<pre class="r"><code># ✅ Pre-check
+range(mtcars$disp)  # check disp range</code></pre>
+<p>🗣 Add Comments: Explain how <code>range(mtcars$disp)</code> helps you
+decide whether the cutoffs <code>160</code> and <code>250</code> make
+sense.</p>
+<pre class="r"><code># ⚡ Type this in a Quarto code chunk, fill in the blanks
+filtered_cars &lt;- mtcars %&gt;% 
+  _______(disp &gt; 250 _______ disp &lt; 160) %&gt;% 
+  _______(_______)</code></pre>
+<pre class="r"><code># ✅ Verify
+all(filtered_cars$disp &gt; 250 | filtered_cars$disp &lt; 160) # check disp condition</code></pre>
+<p>🗣 Add Comments: Explain what <code>all()</code> is testing here. What
+does <code>TRUE</code> tell you about the rows kept in
+<code>filtered_cars</code>?</p>
+<p>🪞 Reflect: This task uses OR logic, so a car can stay if it meets
+either displacement condition. Why is <code>|</code> the right choice
+here instead of <code>&amp;</code>? How does <code>all()</code> help you
+test whether your first filtering idea worked?</p>
 </div>
 <div id="task-6" class="section level2" number="11.7">
 <h2><span class="header-section-number">11.7</span> Task 6</h2>
 <p><strong>Reflection</strong></p>
-<p>📝 Write a few sentences comparing the utility of <code>dplyr</code>
-verbs <code>select()</code> and <code>filter()</code> as it compares to
-base-R brackets <code>[ ]</code> for subsetting.</p>
+<p>📝 Write a few sentences comparing base R brackets <code>[ ]</code>,
+<code>select()</code>, and <code>filter()</code> for subsetting.</p>
+<p>🗣 Add Comments: Explain which method felt easiest to read and which
+method felt easiest to verify. Use at least one example from this
+Practice Space.</p>
+<p>🪞 Reflect: Open-minded coding does not mean every method is equally
+good. It means comparing reasonable options and choosing the one that
+makes the logic clearest for the task. After this chapter, when would
+you choose base R brackets? When would you choose <code>dplyr</code>
+verbs?</p>
 </div>
 <div id="task-7" class="section level2" number="11.8">
 <h2><span class="header-section-number">11.8</span> Task 7</h2>
 <p><strong>Self-check checklist</strong></p>
-<p>For the file submission, make sure your qmd creates runs from top to
-bottom without errors and that the following objects are created in your
-environment with the expected content:</p>
+<p>For the file submission, make sure your <code>.qmd</code> runs from
+top to bottom without errors and that the following objects are created
+in your environment with the expected content:</p>
 <ul>
 <li><p><code>C_Overload</code> exists and has only <code>year</code> and
 <code>carbon_emissions</code>.</p></li>
 <li><p><code>star_names</code> exists and has one column named
 <code>star</code>.</p></li>
 <li><p><code>No_Florida</code> has 0 rows with
-<code>state == &#39;Florida&#39;</code>.</p></li>
-<li><p><code>Fast_n_Furious</code> with rows that only contain manual, 8
-cylinders, and where <code>qsec &lt; 15</code>.</p></li>
-<li><p><code>filtered_cars</code> with rows where
+<code>state == &quot;Florida&quot;</code>.</p></li>
+<li><p><code>Fast_n_Furious</code> has rows that only contain manual
+cars with 8 cylinders where <code>qsec &lt; 15</code>.</p></li>
+<li><p><code>filtered_cars</code> has rows where
 <code>disp &gt; 250</code> OR <code>disp &lt; 160</code> and only the
 first three columns.</p></li>
 <li><p><strong>All code in your Quarto document runs top-to-bottom
 without errors.</strong></p></li>
 </ul>
-<p>🎯 <strong>Goal:</strong> Check <code>.qmd</code> for submission
-quality.</p>
-<p><strong>Step 1: Sweep your Environment (start clean).</strong><br />
-Click the 🧹 <strong>broom icon</strong> in the Environment pane to
-clear objects.</p>
-<p><strong>Step 2: Run everything top-to-bottom.</strong><br />
-Use <strong>Run → Run All</strong> to execute every chunk in order.</p>
-<p><strong>Step 3: Save and submit.</strong><br />
-After your notebook runs without errors, make sure the latest edits are
-save your file (<code>.qmd</code>)</p>
+<p>🎯 Check your <code>.qmd</code> for submission quality.</p>
+<p><strong>Step 1: Sweep your Environment (start clean).</strong> Click
+the 🧹 <strong>broom icon</strong> in the Environment pane to clear
+objects.</p>
+<p><strong>Step 2: Run everything top-to-bottom.</strong> Use
+<strong>Run → Run All</strong> to execute every chunk in order.</p>
+<p><strong>Step 3: Verify the required objects.</strong> Use the
+checklist above to confirm that each object exists and contains the
+expected rows and columns.</p>
+<p><strong>Step 4: Save and submit.</strong> After your Quarto document
+runs without errors, make sure your latest edits are saved. Submit the
+required <code>.qmd</code> file as directed in Canvas.</p>
 </div>
 </div>
 
