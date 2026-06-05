@@ -130,31 +130,39 @@ The YAML header controls information about the document and how the HTML report 
 
 Replace the YAML header at the top of your Quarto file with this:
 
-```{r echo=FALSE, results='asis'}
+````{r echo=FALSE, results='asis'}
 cat("```yaml
 ---
 title: \"Data Understanding Notebook\"
 subtitle: \"Descriptive Statistics\"
 author: \"YOUR NAME\"
 date: today
-toc: true
-toc-depth: 2
-number-sections: true
-format: html
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    number-sections: true
+    embed-resources: true
 ---
 ```")
-```
+````
+
+Change `YOUR NAME` to your actual name.
 
 Here is what these YAML settings do:
 
-- `title` gives the report its main title.
-- `subtitle` adds a smaller title underneath the main title.
-- `author` identifies who created the notebook.
-- `date: today` tells Quarto to use the current date when the document renders.
-- `toc: true` creates a table of contents.
-- `toc-depth: 2` includes level 1 and level 2 headings in the table of contents.
-- `number-sections: true` numbers the report sections.
-- `format: html` tells Quarto to create an HTML report.
+* `title` gives the report its main title.
+* `subtitle` adds a smaller title underneath the main title.
+* `author` identifies who created the notebook.
+* `date: today` tells Quarto to use the current date when the document renders.
+* `format:` tells Quarto what kind of report to create.
+* `html:` tells Quarto to create an HTML report.
+* `toc: true` creates a table of contents.
+* `toc-depth: 2` includes level 1 and level 2 headings in the table of contents.
+* `number-sections: true` numbers the report sections.
+* `embed-resources: true` makes the HTML report more self-contained by embedding the styling and support resources that help the report display correctly when it is uploaded, downloaded, or viewed on another computer.
+
+Pay close attention to the indentation under `format:`. The settings under `html:` must be indented so Quarto knows they belong to the HTML report format.
 
 Save the file as `data_understanding_notebook.qmd` in your course folder.
 
@@ -270,7 +278,7 @@ Use `#| eval: false` for install lines so they appear in the report but do not r
 
 ### **Step 4**
 
-🎯 Add this R code chunk to load the packages.
+🎯 Add a new R code chunk to load the packages.
 
 ```{r message=FALSE, warning=FALSE}
 # ⚡
