@@ -1632,7 +1632,7 @@ display: none;
 <h1 class="title toc-ignore">Data Understanding Notebook</h1>
 <h3 class="subtitle">Descriptive Statistics</h3>
 <h4 class="author">by Lorraine Gaudio</h4>
-<h4 class="date">Version May 31, 2026</h4>
+<h4 class="date">Version June 05, 2026</h4>
 
 </div>
 
@@ -1753,11 +1753,14 @@ title: &quot;Data Understanding Notebook&quot;
 subtitle: &quot;Descriptive Statistics&quot;
 author: &quot;YOUR NAME&quot;
 date: today
-toc: true
-toc-depth: 2
-number-sections: true
-format: html
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    number-sections: true
+    embed-resources: true
 ---</code></pre>
+<p>Change <code>YOUR NAME</code> to your actual name.</p>
 <p>Here is what these YAML settings do:</p>
 <ul>
 <li><code>title</code> gives the report its main title.</li>
@@ -1766,13 +1769,21 @@ title.</li>
 <li><code>author</code> identifies who created the notebook.</li>
 <li><code>date: today</code> tells Quarto to use the current date when
 the document renders.</li>
+<li><code>format:</code> tells Quarto what kind of report to
+create.</li>
+<li><code>html:</code> tells Quarto to create an HTML report.</li>
 <li><code>toc: true</code> creates a table of contents.</li>
 <li><code>toc-depth: 2</code> includes level 1 and level 2 headings in
 the table of contents.</li>
 <li><code>number-sections: true</code> numbers the report sections.</li>
-<li><code>format: html</code> tells Quarto to create an HTML
-report.</li>
+<li><code>embed-resources: true</code> makes the HTML report more
+self-contained by embedding the styling and support resources that help
+the report display correctly when it is uploaded, downloaded, or viewed
+on another computer.</li>
 </ul>
+<p>Pay close attention to the indentation under <code>format:</code>.
+The settings under <code>html:</code> must be indented so Quarto knows
+they belong to the HTML report format.</p>
 <p>Save the file as <code>data_understanding_notebook.qmd</code> in your
 course folder.</p>
 </div>
@@ -1888,7 +1899,7 @@ the report but do not run during rendering.</p>
 <div id="step-4" class="section level3" number="2.3.4">
 <h3><span class="header-section-number">2.3.4</span> <strong>Step
 4</strong></h3>
-<p>🎯 Add this R code chunk to load the packages.</p>
+<p>🎯 Add a new R code chunk to load the packages.</p>
 <pre class="r"><code># ⚡
 library(dplyr)
 library(palmerpenguins)</code></pre>

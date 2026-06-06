@@ -394,7 +394,7 @@ The next section introduces three new logical operators that help with more comp
 
 Up to this point, you have used single logical tests inside brackets to pick rows. For example:
 
-```{r} id="gqicw8"
+```{r}
 mtcars[mtcars$mpg <= 15, ]
 ```
 
@@ -441,7 +441,7 @@ Let's explore each of these three new operators in more detail. In this section,
 
 Suppose we have two events: A and B. The **And** operator `&` returns `TRUE` only if **both** event A and event B are **true**. It returns `FALSE` if either event A or event B, or both, are false. The "and" is used to combine two or more conditions where all conditions must be true.
 
-```{r, out.width='40%', fig.align='center', alt.cap='Venn diagram showing "and" operation', echo=FALSE} id="ol80td"
+```{r And, out.width='40%', fig.align='center', fig.cap='Figure 1. Venn diagram showing the AND condition. The shaded area is the overlap between A and B, which means only observations that satisfy both conditions are included.', fig.alt='Venn diagram showing the AND operation, with only the overlapping area between A and B shaded.', echo=FALSE}
 knitr::include_graphics("And.png")
 ```
 
@@ -449,7 +449,7 @@ knitr::include_graphics("And.png")
 
 **Step 1:** Create two separate logical vectors for each condition.
 
-```{r} id="uyqec4"
+```{r}
 # ⚡ Type this in your R Notebook in a code chunk
 is_auto <- mtcars$am == 0
 mpg_22_or_less <- mtcars$mpg <= 22
@@ -465,7 +465,7 @@ head(mpg_22_or_less)
 
 **Step 2:** Combine the two logical vectors with `&` to create a single condition that is `TRUE` only where both conditions are met.
 
-```{r} id="nf6m9f"
+```{r}
 # ⚡ Combine conditions row-by-row
 keep_rows <- is_auto & mpg_22_or_less
 
@@ -480,7 +480,7 @@ sum(keep_rows)   # how many rows will be kept?
 
 **Step 3:** Use the combined logical vector to subset the data frame.
 
-```{r} id="quzuqk"
+```{r}
 # ⚡ Subset the data
 auto_mpg_22_or_less <- mtcars[keep_rows, ]
 
@@ -492,19 +492,19 @@ head(auto_mpg_22_or_less)
 
 Alternatively, you can combine the conditions directly inside the subset without creating intermediate logical vectors.
 
-```{r, eval=FALSE} id="31qkwh"
+```{r, eval=FALSE}
 # ⚡ Type this in your R Notebook in a code chunk
 auto_mpg_22_or_less <- mtcars[mtcars$am == 0 & mtcars$mpg <= 22, ]
 ```
 
 🗣 Use `&` when you want rows that satisfy all requirements at the same time. Both `mtcars$am == 0` and `mtcars$mpg <= 22` must meet the condition to be `TRUE`.
 
-```{r, eval=FALSE} id="7z31qx"
+```{r, eval=FALSE}
 # ✅ Verify 
 head(auto_mpg_22_or_less)
 ```
 
-```{r, eval=FALSE} id="h7guvv"
+```{r, eval=FALSE}
 # ✅ Verify 
 nrow(auto_mpg_22_or_less)
 ```
@@ -515,7 +515,7 @@ nrow(auto_mpg_22_or_less)
 
 💡 **Tip:** Students often write one condition correctly and “half-write” the other, like this:
 
-```{r, eval=FALSE} id="4sczfe"
+```{r, eval=FALSE} 
 mtcars$am == 0 & mpg <= 22
 ```
 
@@ -530,7 +530,8 @@ The next section uses `|`, which answers a different kind of question. Use `&` w
 
 Suppose we have two events: A and B. The **Or** logical operator `|` returns `TRUE` if either **event A** is true, **event B** is true, **or both** events are **true**. It only returns `FALSE` if both events are false. "Or" is inclusive and is used to combine two or more conditions where at least one condition must be true.
 
-```{r, out.width='40%', fig.align='center', alt.cap='Venn diagram showing inclusive "or" operation', echo=FALSE}
+
+```{r Or, out.width='40%', fig.align='center', fig.cap='Figure 2. Venn diagram showing the OR condition. The shaded area includes anything in A or B, which means observations that satisfy either condition, or both conditions, are included.', fig.alt='Venn diagram showing the inclusive OR operation, with both circles A and B shaded, including their overlap.', echo=FALSE} 
 knitr::include_graphics("Or.png")
 ```
 
@@ -881,7 +882,7 @@ target_year <- ___   # must be a single year of gapminder
 ___(___$___)    # Fill in: function, dataset, and column name  
 ```
 
-🪞 Reflect: Why is it important to check the available years before assigning `target_year`? What could go wrong if you assumed a year was available without checking?
+🪞 Reflect: Why is it important to check the values in region before assigning `region_1`, `region_2`, and `region_3`?
 
 **Step 2** 
 
@@ -1013,7 +1014,7 @@ Before you set thresholds for these indicators, inspect the range of values and 
 
 ### Life Expectancy (`a`)
 
-**Step 1** Use `range()` to inspect the range of values in `life_expectancy`
+**Step 1** Use `range()` to inspect the range of values in `life_expectancy`.
 
 ```{r, eval=FALSE}
 # ⚡ Type this in your R Notebook, Fill in the blanks
@@ -1023,18 +1024,17 @@ range(brief_sheet$life_expectancy, na.rm = ____)
 
 🗣 Add Comments: The range of life expectancy in `brief_sheet` is from ___ to ___ years.
 
-**Step 2** Use `sum()` to count how many countries have life expectancy above a certain threshold (e.g., 70 years). 
+**Step 2** Use `sum()` to count how many countries have life expectancy at or below a certain threshold.
 
-💡 **Tip:** Choose a value within the mid-range of the value in Step 1.
+💡 **Tip:** Choose a value within the range you found in Step 1. Lower life expectancy represents greater need in this screening task.
 
-```{r , eval=FALSE}
+```{r, eval=FALSE}
 # ⚡ Type this in your R Notebook, Fill in the blanks
 # The value `a` in Task 6 will be based on this range and count.
-sum(brief_sheet$life_expectancy <= ___, na.rm = TRUE)  
+sum(brief_sheet$life_expectancy <= ___, na.rm = TRUE)
 ```
 
-🗣 Add Comments: There are ___ countries with life expectancy above ___ years.
-
+🗣 Add Comments: There are ___ countries with life expectancy at or below ___ years.
 
 ### Infant Mortality (`b`)
 
