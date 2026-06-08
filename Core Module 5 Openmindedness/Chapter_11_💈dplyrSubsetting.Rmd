@@ -219,18 +219,12 @@ The `#` symbol means different things depending on where you type it:
 * Inside a code chunk, `#` creates an R comment.
 * At the top of a Quarto code chunk, `#|` sets a chunk option.
 
-<code>&#96;&#96;&#96;{r}</code>
-
-\#| eval=FALSE
-
-
-\# your R code
-
+```{r, eval=FALSE}
+#| eval=FALSE
+# your R code
 x <- 1:5
-
 mean(x)
-
-<code>&#96;&#96;&#96;</code>
+```
 
 🗣 The `eval=FALSE` chunk option means the code will not run when you render the document. This is useful for example code, code that you are discussing but not running, or code that installs packages.
 
@@ -252,17 +246,12 @@ The `dplyr` package is part of the **tidyverse**, a collection of R packages des
 
 You should already have dslabs from previous chapters, but if not, install it now.
 
-<code>&#96;&#96;&#96;{r}</code>
-
-\#| eval=FALSE
-
-\# ⚡ Type this in a Quarto code chunk
-
+```{r, eval=FALSE}
+#| eval=FALSE
+# ⚡ Type this in a Quarto code chunk
 install.packages("dslabs")
-
 install.packages("dplyr")
-
-<code>&#96;&#96;&#96;</code>
+```
 
 ✅ Check that the chunk option says `#| eval=FALSE`. This means the install code will be shown in your document but will not run when you render.
 

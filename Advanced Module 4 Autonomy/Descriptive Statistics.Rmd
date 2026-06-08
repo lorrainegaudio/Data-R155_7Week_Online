@@ -346,6 +346,8 @@ _This is what it looks like after rendering:_
 
 🗣 The sample contains 5 height measurements. The order has no inherent meaning.
 
+🗣 The sample contains 5 height measurements. The order has no inherent meaning.
+
 2. **Ordered sample**: A sample where the order of the elements does matter. Time series data, growth measurements, finishing positions in a race, and data sorted from smallest to largest for calculating quantiles or medians are examples of ordered samples.
 
 🎯 If we take 5 samples of the height of *one* youth as they grow up, we have an ordered sample.

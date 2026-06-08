@@ -53,6 +53,8 @@ output:
       after_body: ../assets/footer.html
 ```
 
+
+
 # Overview
 
 In this chapter, you will practice R habits that help prevent your analysis from being quietly wrong. Code can run without producing a useful or trustworthy result. This chapter focuses on checking assumptions, understanding function defaults, and handling missing values deliberately.

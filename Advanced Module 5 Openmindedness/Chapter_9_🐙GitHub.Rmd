@@ -1,18 +1,22 @@
 ---
-title: "Chapter 9" 
+title: "Chapter 9"
 subtitle: "Git and GitHub"
-author: "Lorraine Gaudio"
-date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
-team: "Summer 2026"
-output:
-  pdf_document:
-    toc: true
-    toc_depth: 2
-    number_sections: true
-    fig_caption: true
-    latex_engine: xelatex
-    pandoc_args:
-      - "--lua-filter=../assets/strip-emoji.lua"
+author: "by Lorraine Gaudio"
+date: "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
+output: 
+  html_document: # To create an HTML document from R Markdown
+    toc: true # Table of contents (TOC)
+    toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactivne scrolling
+    includes:
+      in_header: ../assets/header.html
+      after_body: ../assets/footer.html
 ---
 
 ```{r setup, include=FALSE}
@@ -809,8 +813,6 @@ Then carefully highlight and copy the full output.
 
 ✅ Verify that you are on the SSH and GPG keys page.
 
-📸 Screenshot showing the GitHub Settings sidebar with SSH and GPG keys highlighted.
-
 ## Step 8
 
 **Add the SSH key to GitHub**
@@ -837,10 +839,6 @@ Purple Rhino  # This is the name of my computer
 GitHub may ask you to confirm your password.
 
 ✅ Verify that the new key appears in your SSH keys list.
-
-📸 Screenshot of the New SSH key form before clicking Add SSH key. Use a fake key or blur/crop the key box if needed.
-
-📸 Screenshot after the key appears in your GitHub SSH keys list.
 
 🗣 GitHub now recognizes your computer’s SSH public key.
 
@@ -873,8 +871,6 @@ Hi USERNAME! You've successfully authenticated, but GitHub does not provide shel
 ```
 
 🗣 This message means your SSH connection works. The phrase “does not provide shell access” is normal. 
-
-📸 Screenshot of the successful terminal message.
 
 💡 **Tip**: If you see Permission denied (publickey), GitHub did not accept your SSH key. Check that you copied the `.pub` public key and added it to the correct GitHub account.
 
@@ -928,8 +924,6 @@ If you do not see the green `New` button:
 3. Click New.
 
 ✅ Verify that you are on a page called something like "Create a new repository."
-
-📸 Screenshot showing the green New button.
 
 ## Step 3
 
@@ -1006,8 +1000,6 @@ We'll use this file to practice editing in RStudio.
 - a file called `README.md`,
 - a green Code button.
 
-📸 Screenshot showing the finished repository page with README.md.
-
 ---
 
 Your repository now exists online on GitHub. Let's get it onto your computer.
@@ -1049,8 +1041,6 @@ git@github.com:YOUR-USERNAME/data-r155-github-practice.git
 🎯 Click the copy button next to the SSH link.
 
 ✅ Verify that you copied the SSH link.
-
-📸 Screenshot of the Code menu with SSH selected.
 
 🗣 You are now ready to clone this GitHub repository into RStudio.
 

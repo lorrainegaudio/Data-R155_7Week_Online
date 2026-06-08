@@ -1632,7 +1632,7 @@ display: none;
 <h1 class="title toc-ignore">Chapter 11</h1>
 <h3 class="subtitle">💈dplyr Subsetting</h3>
 <h4 class="author">by Lorraine Gaudio</h4>
-<h4 class="date">Version June 03, 2026</h4>
+<h4 class="date">Version June 08, 2026</h4>
 
 </div>
 
@@ -1863,12 +1863,9 @@ heading.</li>
 <li>At the top of a Quarto code chunk, <code>#|</code> sets a chunk
 option.</li>
 </ul>
-<p><code>```{r}</code></p>
-<p>#| eval=FALSE</p>
-<p># your R code</p>
-<p>x &lt;- 1:5</p>
-<p>mean(x)</p>
-<p><code>```</code></p>
+<pre class="r"><code># your R code
+x &lt;- 1:5
+mean(x)</code></pre>
 <p>🗣 The <code>eval=FALSE</code> chunk option means the code will not
 run when you render the document. This is useful for example code, code
 that you are discussing but not running, or code that installs
@@ -1903,12 +1900,9 @@ of the install chunk. That keeps the code visible in your document, but
 prevents Quarto from running it during render.</p>
 <p>You should already have dslabs from previous chapters, but if not,
 install it now.</p>
-<p><code>```{r}</code></p>
-<p>#| eval=FALSE</p>
-<p># ⚡ Type this in a Quarto code chunk</p>
-<p>install.packages(“dslabs”)</p>
-<p>install.packages(“dplyr”)</p>
-<p><code>```</code></p>
+<pre class="r"><code># ⚡ Type this in a Quarto code chunk
+install.packages(&quot;dslabs&quot;)
+install.packages(&quot;dplyr&quot;)</code></pre>
 <p>✅ Check that the chunk option says <code>#| eval=FALSE</code>. This
 means the install code will be shown in your document but will not run
 when you render.</p>
@@ -1929,7 +1923,7 @@ its functions available for your current R session.</p>
 library(dslabs)</code></pre>
 <pre><code>## Warning: package &#39;dslabs&#39; was built under R version 4.5.3</code></pre>
 <pre class="r"><code>library(dplyr)</code></pre>
-<pre><code>## Warning: package &#39;dplyr&#39; was built under R version 4.5.2</code></pre>
+<pre><code>## Warning: package &#39;dplyr&#39; was built under R version 4.5.3</code></pre>
 <pre><code>## 
 ## Attaching package: &#39;dplyr&#39;</code></pre>
 <pre><code>## The following objects are masked from &#39;package:stats&#39;:
