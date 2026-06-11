@@ -51,7 +51,9 @@
 ⚠️ Common Pain Point:
 
 🚧
-❓
+
+💬 prediction
+
 ❓ Question
 
 🆘

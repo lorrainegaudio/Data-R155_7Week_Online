@@ -1532,7 +1532,194 @@ if (window.hljs) {
 
 
 
-<style type="text/css">body {font-family: 'Garamond', serif;line-height: 1.6;margin: 0 20px;color: #333333; text-align: justify; font-size: 18px; }pre.sourceCode code span.co,code.sourceCode span.co,pre code span.co, pre code .hljs-comment, pre code .c, pre code .c1, pre code .cm, pre code span.comment { color: #333 !important; font-style: italic;}h1, h2, h3, h4, h5, h6 {font-family: 'Gotham', sans-serif;color: #0033A0; }a {color: #D64309; text-decoration: none;}a:hover {text-decoration: underline;}code {background-color: #f4f4f4;padding: 2px 5px;border-radius: 3px;font-family: "Courier New", Courier, monospace;}pre {background-color: #f4f4f4;padding: 10px;border-radius: 5px;overflow-x: auto;}header {width: 75%; height: 200px; background-color: #0033A0; color: #ffffff; margin: 50px auto; overflow: hidden; position: relative;z-index: 1; transform: skew(-35deg); display: flex;align-items: center; justify-content: flex-start; }.header-wrapper {transform: skew(35deg); padding-left: 80px; text-align: left; width: 100%; height: auto; display: flex;flex-direction: column; justify-content: center; }header h1 {margin: 0;padding-top: 10px;padding-bottom: 10px;color: #ffffff; font-family: 'Gotham', sans-serif; text-transform: uppercase; font-weight: bold; font-size: 36px; height: 50px; visibility: visible; display: block; }header p {margin: 0;padding-top: 10px;padding-bottom: 10px;color: #ffffff; font-family: 'Gotham', sans-serif; visibility: visible;display: block;}header:before {content: "";position: absolute;top: 0;left: -1000px;width: 2000px; height: 200px; background-color: #0033A0; z-index: -1;transform: skew(35deg); }.orange-rectangle {position: absolute;bottom: 0px; right: 0px; background-color: #D64309; color: #ffffff; padding: 5px 40px; font-family: 'Gotham', sans-serif; text-transform: uppercase; border-radius: 0px; transform: skew(35deg); transform-origin: top right; z-index: 2; }footer {width: 100%; background-color: #0033A0; color: #ffffff; padding: 20px 0; text-align: center; position: relative;z-index: 1; }.footer-wrapper {width: 75%; margin: 0 auto; font-family: 'Gotham', sans-serif; font-size: 14px; }footer p {margin: 5px 0; }#TOC.tocify {background-color: #f9f9f9;border: 1px solid #ddd;padding: 15px;border-radius: 5px;font-family: 'Garamond', serif !important; }#TOC.tocify .tocify-item {display: block;padding: 5px 0;color: #D64309 !important; text-decoration: none;font-family: 'Garamond', serif !important; }#TOC.tocify .tocify-item:hover {background-color: #e9e9e9;}#TOC.tocify .tocify-item.active {background-color: #D64309 !important; color: #ffffff !important; }#TOC.tocify .tocify-item.next {background-color: #D64309 !important; color: #ffffff !important; }.tabset > .tabset-pills > .nav > li.active > a,.tabset > .nav > li.active > a {background-color: #D64309 !important; color: #ffffff !important; font-family: 'Garamond', serif !important; }.tabset > .tabset-pills > .nav > li > a,.tabset > .nav > li > a {color: #0033A0 !important; font-family: 'Garamond', serif !important; background-color: #e9e9e9 !important; border-color: #e9e9e9 !important; }.tabset > .tabset-pills > .nav > li > a:hover,.tabset > .nav > li > a:hover {background-color: #535455 !important; color: #ffffff !important; }</style>
+<style type="text/css">
+
+body {
+font-family: 'Garamond', serif;
+line-height: 1.6;
+margin: 0 20px;
+color: #333333; 
+text-align: justify; 
+font-size: 18px; 
+}
+
+pre.sourceCode code span.co,
+code.sourceCode span.co,
+pre code span.co, 
+pre code .hljs-comment, 
+pre code .c, 
+pre code .c1, 
+pre code .cm, 
+pre code span.comment { 
+color: #333 !important; 
+font-style: italic;
+}
+h1, h2, h3, h4, h5, h6 {
+font-family: 'Gotham', sans-serif;
+color: #0033A0; 
+}
+a {
+color: #D64309; 
+text-decoration: none;
+}
+a:hover {
+text-decoration: underline;
+}
+code {
+background-color: #f4f4f4;
+padding: 2px 5px;
+border-radius: 3px;
+font-family: "Courier New", Courier, monospace;
+}
+pre {
+background-color: #f4f4f4;
+padding: 10px;
+border-radius: 5px;
+overflow-x: auto;
+}
+
+header {
+width: 75%; 
+height: 200px; 
+background-color: #0033A0; 
+color: #ffffff; 
+margin: 50px auto; 
+overflow: hidden; 
+position: relative;
+z-index: 1; 
+transform: skew(-35deg); 
+display: flex;
+align-items: center; 
+justify-content: flex-start; 
+}
+
+.header-wrapper {
+transform: skew(35deg); 
+padding-left: 80px; 
+text-align: left; 
+width: 100%; 
+height: auto; 
+display: flex;
+flex-direction: column; 
+justify-content: center; 
+}
+header h1 {
+margin: 0;
+padding-top: 10px;
+padding-bottom: 10px;
+color: #ffffff; 
+font-family: 'Gotham', sans-serif; 
+text-transform: uppercase; 
+font-weight: bold; 
+font-size: 36px; 
+height: 50px; 
+visibility: visible; 
+display: block; 
+}
+header p {
+margin: 0;
+padding-top: 10px;
+padding-bottom: 10px;
+color: #ffffff; 
+font-family: 'Gotham', sans-serif; 
+visibility: visible;
+display: block;
+}
+
+header:before {
+content: "";
+position: absolute;
+top: 0;
+left: -1000px;
+width: 2000px; height: 200px; 
+background-color: #0033A0; 
+z-index: -1;
+transform: skew(35deg); 
+}
+
+.orange-rectangle {
+position: absolute;
+bottom: 0px; 
+right: 0px; 
+background-color: #D64309; 
+color: #ffffff; 
+padding: 5px 40px; 
+font-family: 'Gotham', sans-serif; 
+text-transform: uppercase; 
+border-radius: 0px; 
+transform: skew(35deg); 
+transform-origin: top right; 
+z-index: 2; 
+}
+
+footer {
+width: 100%; 
+background-color: #0033A0; 
+color: #ffffff; 
+padding: 20px 0; 
+text-align: center; 
+position: relative;
+z-index: 1; 
+}
+.footer-wrapper {
+width: 75%; 
+margin: 0 auto; 
+font-family: 'Gotham', sans-serif; 
+font-size: 14px; 
+}
+footer p {
+margin: 5px 0; 
+}
+
+#TOC.tocify {
+background-color: #f9f9f9;
+border: 1px solid #ddd;
+padding: 15px;
+border-radius: 5px;
+font-family: 'Garamond', serif !important; 
+}
+#TOC.tocify .tocify-item {
+display: block;
+padding: 5px 0;
+color: #D64309 !important; 
+text-decoration: none;
+font-family: 'Garamond', serif !important; 
+}
+#TOC.tocify .tocify-item:hover {
+background-color: #e9e9e9;
+}
+
+#TOC.tocify .tocify-item.active {
+background-color: #D64309 !important; 
+color: #ffffff !important; 
+}
+
+#TOC.tocify .tocify-item.next {
+background-color: #D64309 !important; 
+color: #ffffff !important; 
+}
+
+.tabset > .tabset-pills > .nav > li.active > a,
+.tabset > .nav > li.active > a {
+background-color: #D64309 !important; 
+color: #ffffff !important; 
+font-family: 'Garamond', serif !important; 
+}
+
+.tabset > .tabset-pills > .nav > li > a,
+.tabset > .nav > li > a {
+color: #0033A0 !important; 
+font-family: 'Garamond', serif !important; 
+background-color: #e9e9e9 !important; 
+border-color: #e9e9e9 !important; 
+}
+
+.tabset > .tabset-pills > .nav > li > a:hover,
+.tabset > .nav > li > a:hover {
+background-color: #535455 !important; 
+color: #ffffff !important; 
+}
+</style>
 
 
 
@@ -1632,7 +1819,7 @@ display: none;
 <h1 class="title toc-ignore">Chapter 12</h1>
 <h3 class="subtitle">🏷️ Recoding</h3>
 <h4 class="author">by Lorraine Gaudio</h4>
-<h4 class="date">Version May 05, 2026</h4>
+<h4 class="date">Version June 11, 2026</h4>
 
 </div>
 
@@ -1661,6 +1848,11 @@ that are easier to interpret, easier to check, and easier for other
 people to follow. <code>dplyr</code> describes these kinds of recoding
 and column-building tasks as common data manipulation work, especially
 when creating entirely new columns from existing ones</p>
+<p>🐱 As you work, watch for the curiosity notes. These notes model what
+curious learning looks like while you are coding: noticing something
+interesting, asking how it works, checking what changed, and deciding
+when to stay focused instead of chasing every possible side
+question.</p>
 <p>By the end of Chapter 12 you will be able to:</p>
 <ul>
 <li><p>🔀 Distinguish between logical subsetting, subassignment, and
@@ -1671,7 +1863,7 @@ across a vector.</p></li>
 rules in a clear order.</p></li>
 <li><p>⚠️ Explain why the order of rules matters in
 <code>case_when()</code>.</p></li>
-<li><p>🏷️ Recode numeric values into meaningful label”.</p></li>
+<li><p>🏷️ Recode numeric values into meaningful labels.</p></li>
 <li><p>➕ Use <code>mutate()</code>to create new columns from existing
 columns.</p></li>
 <li><p>♻️ Overwrite an existing column by reusing its name inside
@@ -1683,8 +1875,8 @@ interpretation in a reproducible analysis document.</p></li>
 </ul>
 <p>Keep these goals in mind as you move through each section.</p>
 </div>
-<div id="quarto-part-2" class="section level1" number="2">
-<h1><span class="header-section-number">2</span> Quarto: Part 2</h1>
+<div id="quarto-set-up" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Quarto Set Up</h1>
 <p>In Chapter 11, you learned how to create a Quarto file, keep the YAML
 header, use Markdown headings, write memos outside code chunks, and
 control chunks with #| options. In this chapter, you will build two more
@@ -1694,7 +1886,7 @@ reproducible:</p>
 <li><p>add a table of contents and section numbering</p></li>
 <li><p>use inline R code inside your sentences</p></li>
 </ol>
-<p>🎯 Create a Quarto File (🌱)</p>
+<p>🎯 Create a Quarto File</p>
 <ol style="list-style-type: decimal">
 <li>For those of you who <strong>have GitHub</strong> and a course
 project, navigate to your course folder and open your course project.
@@ -1710,7 +1902,7 @@ open RStudio and set your working directory to your course folder.</p>
 (<code>File &gt; New File &gt; Quarto Document</code>).</li>
 </ol>
 <div id="toc-true" class="section level2" number="2.1">
-<h2><span class="header-section-number">2.1</span> toc: true (🌳)</h2>
+<h2><span class="header-section-number">2.1</span> toc: true</h2>
 <p>As your notes get longer, it becomes harder to scroll and find what
 you need. Quarto can automatically build a table of contents from your
 headings, and it can also number your sections for you. The main YAML
@@ -1723,18 +1915,40 @@ title: &quot;Chapter 12 Notes&quot;
 subtitle: &quot;mutate() and case_when()&quot;
 author: &quot;YOUR NAME&quot;
 date: today
-toc: true
-toc-depth: 2
-number-sections: true
 format:
   html:
-    code-fold: true
-execute:
-  warning: true
-  message: true
+    toc: true
+    toc-depth: 2
+    number-sections: true
+    embed-resources: true
 ---</code></pre>
-<div id="what-each-part-does" class="section level3" number="2.1.1">
-<h3><span class="header-section-number">2.1.1</span> What each part
+</div>
+<div id="what-each-part-does" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> What each part
+does:</h2>
+<ul>
+<li><p><code>title:</code> gives your document a title.</p></li>
+<li><p><code>subtitle:</code> gives your document a subtitle.</p></li>
+<li><p><code>author:</code> puts your name on the document.</p></li>
+<li><p><code>date: today</code> inserts the current local date
+automatically. <a href="https://quarto.org/docs/reference/dates.html">Quarto Dates and
+Date Formatting</a> has more options for date formatting and dynamic
+date keywords.</p></li>
+<li><p><code>format:</code> tells Quarto what kind of output to
+create.</p></li>
+<li><p><code>html:</code> tells Quarto to render the document as an HTML
+file.</p></li>
+<li><p><code>toc</code>: true adds a table of contents
+automatically.</p></li>
+<li><p><code>toc-depth</code>: 2 tells Quarto to include level 1 and
+level 2 headings in the table of contents.</p></li>
+<li><p><code>number-sections</code>: true adds section numbers to your
+headings in the rendered document.</p></li>
+<li><p><code>embed-resources</code>: true keeps the HTML report
+self-contained so it is easier to submit and share.</p></li>
+</ul>
+<div id="what-each-part-does-1" class="section level3" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> What each part
 does:</h3>
 <ul>
 <li><p><code>toc:</code> true adds a table of contents
@@ -1748,9 +1962,9 @@ headings in the rendered document.</p></li>
 organized without making the table of contents too crowded.</p>
 </div>
 </div>
-<div id="headings" class="section level2" number="2.2">
-<h2><span class="header-section-number">2.2</span> Headings (🌱)</h2>
-<p>You will want to use headings to see how the table of contents work.
+<div id="headings" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Headings</h2>
+<p>You will want to use headings to see how the table of contents works.
 Create a simple outline for Chapter 12 using headings. Try using the
 following structure:</p>
 <pre class="markdown"><code>
@@ -1783,9 +1997,8 @@ following structure:</p>
 <p><strong>Render</strong> to HTML often to see the results. <em>Render
 is like knit or preview.</em></p>
 </div>
-<div id="dynamic-memoing" class="section level2" number="2.3">
-<h2><span class="header-section-number">2.3</span> Dynamic memoing
-(🌳)</h2>
+<div id="dynamic-memoing" class="section level2" number="2.4">
+<h2><span class="header-section-number">2.4</span> Dynamic memoing</h2>
 <p>So far, you have used code chunks to run R code. Quarto also lets you
 place small pieces of R code <strong>directly inside normal
 sentences</strong>. This is called inline code. Inline code is useful
@@ -1797,10 +2010,11 @@ inside the backticks. For R, the pattern is:</p>
 <pre class="markdown"><code>
 `{r} expression`
 </code></pre>
-<p>Using inline R code helps ensure that your report always shows the
-exact values used to in calculations.</p>
-<div id="inline-example" class="section level3" number="2.3.1">
-<h3><span class="header-section-number">2.3.1</span> Inline Example</h3>
+<p>🐱 This is a good place to be curious about how Quarto works. The
+code is written inside a sentence, but when the report renders, Quarto
+runs the code and shows the result. Very cool!</p>
+<div id="inline-example" class="section level3" number="2.4.1">
+<h3><span class="header-section-number">2.4.1</span> Inline Example</h3>
 <p>🎯 Imagine you want to write a sentence that says how many rows are
 in the filtered <code>mtcars</code> dataset. Instead of hardcoding the
 number, you can use inline code to compute it.</p>
@@ -1826,16 +2040,16 @@ numbering</p></li>
 <li><p>your memos use inline R code whenever you want to report a value
 from your analysis</p></li>
 </ol>
-<p>Now that you have created (<em>and saved</em>) your quarto file,
-follow along this guided practice and taking notes. Fill in each section
-under the headings.</p>
-<p>💡 <strong>Tip:</strong> Test Render your document often to see how
-your notes are coming together.</p>
+<p>Now that you have created and saved your Quarto file, follow along
+with this guided practice and take notes. Fill in each section under the
+headings.</p>
+<p><strong>💡 Test knit</strong> your document often to see how your
+notes are coming together. Do your inline code expressions show the
+expected values?</p>
 </div>
 </div>
-</div>
-<div id="packages" class="section level1" number="3">
-<h1><span class="header-section-number">3</span> 📦 Packages</h1>
+<div id="packages" class="section level2" number="2.5">
+<h2><span class="header-section-number">2.5</span> 📦 Packages</h2>
 <p>In this chapter, you will use <code>dplyr</code> verbs and
 <code>dslabs</code> datasets.</p>
 <p>Remember that you only need to install once
@@ -1844,9 +2058,13 @@ your notes are coming together.</p>
 <p>🎯 Load the required packages at the beginning of your QMD.</p>
 <pre class="r"><code>library(dslabs)  # Data science labs package
 library(dplyr)   # Data manipulation package</code></pre>
+<p>🐱 Messages and warnings are often clues. A curious analyst asks what
+R is trying to tell them before hiding the message. Check that your
+packages loaded correctly.</p>
 </div>
-<div id="vectorized-conditional-functions" class="section level1" number="4">
-<h1><span class="header-section-number">4</span> Vectorized Conditional
+</div>
+<div id="vectorized-conditional-functions" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Vectorized Conditional
 Functions</h1>
 <p>In previous chapters, you used logical conditions to keep some values
 and drop others, or to replace selected values in place. In this
@@ -1871,8 +2089,8 @@ conditionals, by contrast, keep all positions and assign each one a
 result. In other words, subsetting answers “What do I keep?” while
 vectorized conditionals answer “What value should I return for each
 element?”</p>
-<div id="review-subsetting-with-conditions" class="section level2" number="4.1">
-<h2><span class="header-section-number">4.1</span> Review Subsetting
+<div id="review-subsetting-with-conditions" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Review Subsetting
 with Conditions</h2>
 <p><strong>Subsetting</strong> answers the question, “Which values
 <em>or rows</em> do I keep?” With a vector, <strong>logical
@@ -1895,8 +2113,8 @@ in Chapter 11. The <code>filter()</code> function also applies a logical
 condition, but at the row level, keeping rows that satisfy the condition
 and dropping the rest.</p>
 </div>
-<div id="review-subassignment" class="section level2" number="4.2">
-<h2><span class="header-section-number">4.2</span> Review
+<div id="review-subassignment" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> Review
 Subassignment</h2>
 <p>Subsetting is used to <em>replace</em> values, called
 <strong>subassignment</strong>. When you assign a value to a subset of
@@ -1929,8 +2147,8 @@ and return a <em>new vector</em> with one result for every position.</p>
 shown at the end of this chapter, it becomes a new column rather than a
 subset of the old one.</p>
 </div>
-<div id="simple-ifelse" class="section level2" number="4.3">
-<h2><span class="header-section-number">4.3</span> Simple
+<div id="simple-ifelse" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> Simple
 <code>ifelse()</code></h2>
 <p>Base R describes <code>ifelse()</code> as returning a value with the
 same shape as the test, filled from <code>yes</code> or
@@ -1954,12 +2172,16 @@ x &lt;- c(3, 2, 3, 6, 5)</code></pre>
 length(x)</code></pre>
 <pre><code>## [1] 5</code></pre>
 <hr />
-<p>🌳 Use this inline code to dynamically report the length of
-<code>x</code> within your memo:</p>
-<pre class="markdown"><code>🗣 `x` is a vector with the length of `{r} length(x)` rows.</code></pre>
+<p>🐱 Inline R is worth practicing because it does something unusual: it
+lets code work inside paragrgaph sentences. I want to see whether Quarto
+can ask R for the length of <code>x</code> and place the answer directly
+in my memo.</p>
+<pre class="markdown"><code>🗣 `x` is a vector with `{r} length(x)` values.</code></pre>
 <p>When rendered to HTML, this should read:</p>
-<p>🗣 <code>x</code> is a vector with the length of 5</p>
-<hr />
+<p>🗣 <code>x</code> is a vector with 5 values.</p>
+<p><strong>💡 Test knit.</strong> Does the sentence show the expected
+number of values in <code>x</code>? If not, check your code and try
+again. ___</p>
 <pre class="r"><code># ⚡ Type this in a Quarto code chunk: 
 ifelse(test = x &gt; 3, yes = &quot;Large&quot;, no = &quot;Small&quot;)</code></pre>
 <pre><code>## [1] &quot;Small&quot; &quot;Small&quot; &quot;Small&quot; &quot;Large&quot; &quot;Large&quot;</code></pre>
@@ -1968,11 +2190,18 @@ numbers higher than <code>3</code> are “Large”.</p>
 <pre class="r"><code># ✅  Verify
 length(ifelse(x &gt; 3, &quot;Large&quot;, &quot;Small&quot;))</code></pre>
 <pre><code>## [1] 5</code></pre>
-<p>🗣 The result has the same length as x. Nothing was dropped. Each
-position got a label.</p>
-<p>🧐 <em>Note: Arguments, such as <code>test</code>, <code>yes</code>,
-and <code>no</code> in <code>ifelse()</code>, are often not required to
-be named inside of functions.</em></p>
+<p>🗣 The result has the same length as <code>x</code>. Nothing was
+dropped. Each position got a label.</p>
+<p>🐱 This is the curiosity move here: I am checking whether
+<code>ifelse()</code> gave one answer back for each value I started
+with. I might wonder about the pattern of <code>&quot;Large&quot;</code> and
+<code>&quot;Small&quot;</code> later, but first I need to understand what this
+function returns.</p>
+<blockquote>
+<p>🧐 <strong>Notice:</strong> Arguments, such as <code>test</code>,
+<code>yes</code>, and <code>no</code> in <code>ifelse()</code>, are
+often not required to be named inside of functions.</p>
+</blockquote>
 <p>💡 <strong>Tip:</strong> Read this <code>ifelse()</code> statement
 like ‘If the vector is greater than 3, then return “Large”, otherwise
 return “Small”.’</p>
@@ -1985,8 +2214,8 @@ matches</p></li>
 vector with a value for every position based on the condition.</p></li>
 </ul>
 </div>
-<div id="simple-case_when" class="section level2" number="4.4">
-<h2><span class="header-section-number">4.4</span> Simple
+<div id="simple-case_when" class="section level2" number="3.4">
+<h2><span class="header-section-number">3.4</span> Simple
 <code>case_when()</code></h2>
 <p><code>dplyr</code> describes <code>case_when()</code> as a general
 vectorized if-else that evaluates rules in order and uses the first
@@ -2019,8 +2248,8 @@ condition.</li>
 <code>case_when()</code>? <code>case_when()</code> is usually clearer
 once you have 3+ categories.</p>
 </div>
-<div id="more-than-two-categories" class="section level2" number="4.5">
-<h2><span class="header-section-number">4.5</span> More Than Two
+<div id="more-than-two-categories" class="section level2" number="3.5">
+<h2><span class="header-section-number">3.5</span> More Than Two
 Categories</h2>
 <p><code>ifelse()</code> is designed for two categories. If you have
 more than two, you can nest <code>ifelse()</code> statements inside each
@@ -2032,8 +2261,8 @@ have more than two conditions.</p>
 scores &lt;- c(55, 65, 75, 85, 95)</code></pre>
 <p>🎯 Re-code scores less than 60 as “Low”, scores less than 80 as
 “Medium”, and all others as “High”.</p>
-<div id="nested-ifelse" class="section level3" number="4.5.1">
-<h3><span class="header-section-number">4.5.1</span> Nested
+<div id="nested-ifelse" class="section level3" number="3.5.1">
+<h3><span class="header-section-number">3.5.1</span> Nested
 <code>ifelse()</code></h3>
 <p>🎯 Re-code scores less than 60 as “Low”, scores less than 80 as
 “Medium”, and all others as “High” using nested
@@ -2046,8 +2275,8 @@ ifelse(scores &lt; 60, &quot;Low&quot;,
 first <code>ifelse()</code>, which becomes harder to read as the number
 of categories grows.</p>
 </div>
-<div id="multiple-rule-case_when" class="section level3" number="4.5.2">
-<h3><span class="header-section-number">4.5.2</span> Multiple Rule
+<div id="multiple-rule-case_when" class="section level3" number="3.5.2">
+<h3><span class="header-section-number">3.5.2</span> Multiple Rule
 <code>case_when()</code></h3>
 <p><code>case_when()</code> avoids the ugly nesting that happens with
 repeated <code>ifelse()</code> calls. It is a general vectorized
@@ -2065,9 +2294,12 @@ case_when(scores &lt; 60 ~ &quot;Low&quot;,
 <p>🗣 This reads more like a set of classification rules: first check for
 <code>&quot;Low&quot;</code>, then check for <code>&quot;Medium&quot;</code>, and assign
 <code>&quot;High&quot;</code> to everything else.</p>
-<hr />
 <p>⚠️ The order of the rules matters because <code>case_when()</code>
 uses the first condition that matches.</p>
+<p>🐱 This is a good place to be curious and test what happens when the
+rules are in the wrong order. The goal is not to break the code
+randomly; the goal is to see how <code>case_when()</code> makes its
+decision.</p>
 <pre class="r"><code># ⚡ Type this in a Quarto code chunk:
 case_when(
   scores &lt; 80 ~ &quot;Medium&quot;,
@@ -2076,18 +2308,22 @@ case_when(
 )</code></pre>
 <pre><code>## [1] &quot;Medium&quot; &quot;Medium&quot; &quot;Medium&quot; &quot;High&quot;   &quot;High&quot;</code></pre>
 <p>🗣 This does <strong>not</strong> work as intended. Any score less
-than <code>60</code> also satisfies <code>score &lt; 80</code>, so those
-values are labeled <code>&quot;Medium&quot;</code> before R ever checks the
+than <code>60</code> also satisfies <code>scores &lt; 80</code>, so
+those values are labeled <code>&quot;Medium&quot;</code> before R ever checks the
 <code>&quot;Low&quot;</code> rule.</p>
 <p>💡 <strong>Tip:</strong> write rules from most specific to more
 general, and end with a default rule such as
 <code>TRUE ~ &quot;High&quot;</code>.</p>
 <hr />
+<p>So far, <code>ifelse()</code> and <code>case_when()</code> have
+returned new vectors. That is useful, but most data work happens inside
+data frames. Next, you will use <code>mutate()</code> to store those new
+values as columns.</p>
 </div>
 </div>
 </div>
-<div id="mutate" class="section level1" number="5">
-<h1><span class="header-section-number">5</span>
+<div id="mutate" class="section level1" number="4">
+<h1><span class="header-section-number">4</span>
 <code>mutate()</code></h1>
 <p>So far, <code>case_when()</code> has returned a new vector of labels.
 In real data analysis, you usually want to store that result in a data
@@ -2118,8 +2354,8 @@ that column.</p></li>
 <li><p>The right side of <code>=</code> tells R what values to put
 there.</p></li>
 </ul>
-<div id="column-copy" class="section level2" number="5.1">
-<h2><span class="header-section-number">5.1</span> Column Copy</h2>
+<div id="column-copy" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> Column Copy</h2>
 <p>🎯 Create a new column that is a copy of <code>am</code> in
 <code>mtcars</code>.</p>
 <pre class="r"><code># ✅  Pre-Check
@@ -2142,8 +2378,8 @@ column from an existing one. The right side of <code>mutate()</code> is
 for calculations or rule-based expressions on existing columns. We’ll
 start by using calculations inside <code>mutate()</code> to create a new
 column.</p>
-<div id="mutate-with-arithmetic" class="section level3" number="5.1.1">
-<h3><span class="header-section-number">5.1.1</span>
+<div id="mutate-with-arithmetic" class="section level3" number="4.1.1">
+<h3><span class="header-section-number">4.1.1</span>
 <code>mutate()</code> with Arithmetic</h3>
 <p>Doing unit conversions is a common data analyst task. Here it is in
 action.</p>
@@ -2156,10 +2392,12 @@ measurements</code></pre>
   </script>
 </div>
 <hr />
-<p>🌳 Use this inline code to dynamically report within your memo:</p>
-<pre class="markdown"><code>🗣 The `measurements` data frame has one column called `{r} colnames(measurements)`.</code></pre>
+<p>🐱 This is a small but useful thing to wonder about: can Quarto pull
+a column name directly from R into a sentence? Let’s try it before we
+add a new column.</p>
+<pre class="markdown"><code>🗣 The `measurements` data frame has one column: `{r} colnames(measurements)`.</code></pre>
 <p>When rendered to HTML, this should read:</p>
-<p>🗣 The <code>measurements</code> data frame has one column called
+<p>🗣 The <code>measurements</code> data frame has one column:
 height_in</p>
 <hr />
 <p>🎯 Create a new column called <code>height_cm</code> that converts
@@ -2177,8 +2415,8 @@ column called <code>height_cm</code>. Each value in
 <code>height_cm</code> is calculated from the matching value in
 <code>height_in</code>.</p>
 </div>
-<div id="case_when-inside-mutate" class="section level3" number="5.1.2">
-<h3><span class="header-section-number">5.1.2</span>
+<div id="case_when-inside-mutate" class="section level3" number="4.1.2">
+<h3><span class="header-section-number">4.1.2</span>
 <code>case_when()</code> inside <code>mutate()</code></h3>
 <p>The right side of <code>mutate()</code> can also be a rule-based
 expression. One common example is <code>case_when()</code> which lets
@@ -2216,34 +2454,46 @@ head(student_scores)</code></pre>
   </script>
 </div>
 <hr />
-<p>🌳 Use this inline code to dynamically report within your memo:</p>
-<pre class="markdown"><code>🗣 `student_scores` is a dataframe with columns names: `{r} names(student_scores)`.</code></pre>
-<p>When rendered to HTML, this should read:</p>
-<p>🗣 <code>student_scores</code> is a dataframe with columns names:
-scores, score_level</p>
-<p>🌳🌳 Or, you can get fancy with inline code and write and “and”
-between the column names:</p>
-<pre class="markdown"><code>🗣 `student_scores` has the columns `{r} paste(names(student_scores_labeled), collapse = &quot; and &quot;)`.</code></pre>
+<p>🐱 Now I want to practice using inline R to report the current column
+names in my memo.</p>
+<pre class="markdown"><code>🗣 `student_scores` has the columns `{r} paste(names(student_scores), collapse = &quot; and &quot;)`.</code></pre>
 <p>When rendered to HTML, this should read:</p>
 <p>🗣 <code>student_scores</code> has the columns scores and
 score_level.</p>
+<p><strong>💡 Test knit.</strong></p>
+<p>🐱 Looking at this code, I might wonder how <code>paste()</code>
+works. Rather than guessing, I could check <code>?paste</code> in
+RStudio’s Help pane. <code>names(student_scores)</code> gets the column
+names, and <code>paste(..., collapse = &quot; and &quot;)</code> combines them
+into a single piece of text separated by the word “and”. Notice the
+space before and after the <code>and</code> between the quotes `” and “.
+Those spaces are included in the output, so the column names appear with
+space around the word”add”.</p>
+<p>🛠 <strong>Break Things!</strong></p>
+<p>Test render without the spaces to see the difference:</p>
+<pre class="markdown"><code>🗣 `student_scores` has the columns `{r} paste(names(student_scores), collapse = &quot;and&quot;)`.</code></pre>
+<p><strong>💡 Test knit.</strong></p>
 <hr />
 <p>The <code>mutate()</code> + <code>case_when()</code> duo is a
 powerful way to create new variables based on complex rules. You can
-have as many conditions as you need, and you can use any existing
-columns in your data frame to build those rules</p>
+have as many conditions as you need, and you can use existing columns in
+your data frame to build those rules.</p>
 <p>In some situations, you may want to overwrite an existing column
 instead of creating a new one. That is also possible with
 <code>mutate()</code>, as the next section shows.</p>
 </div>
 </div>
-<div id="overwrite-column-values" class="section level2" number="5.2">
-<h2><span class="header-section-number">5.2</span> Overwrite Column
+<div id="overwrite-column-values" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> Overwrite Column
 Values</h2>
-<p><code>mutate()</code> will overwrite an existing column by reusing
-the same column name on the left as the right of <code>=</code>. We’ll
-use <code>case_when()</code> to recode the values in the <code>am</code>
+<p><code>mutate()</code> will overwrite an existing column when you
+reuse the same column name on the left side of <code>=</code>. We’ll use
+<code>case_when()</code> to recode the values in the <code>am</code>
 column of <code>mtcars</code> from numeric to categorical labels.</p>
+<p>🐱 Overwriting is a place to slow down and be curious before running
+the code. I want to know what the original values are first, because
+after overwriting, those original <code>0</code> and <code>1</code>
+values will no longer be in the new data frame.</p>
 <p>🎯 Recode the <code>am</code> column in <code>mtcars</code> from 0/1
 to “Automatic”/“Manual”.</p>
 <pre class="r"><code># ✅  Pre-check
@@ -2262,7 +2512,7 @@ cars_overwrite &lt;- mtcars %&gt;%
 unique(cars_overwrite$am)</code></pre>
 <pre><code>## [1] &quot;Manual&quot;    &quot;Automatic&quot;</code></pre>
 <hr />
-<p>🌳 Use this inline code to dynamically report within your memo:</p>
+<p>🐱 Practice inline R code to dynamically report within a memo:</p>
 <pre class="markdown"><code>🗣 The `am` column in `cars_overwrite` has the unique values: `{r} unique(cars_overwrite$am)`.</code></pre>
 <p>When rendered to HTML, this should read:</p>
 <p>🗣 The <code>am</code> column in <code>cars_overwrite</code> has the
@@ -2270,7 +2520,7 @@ unique values: Manual, Automatic.</p>
 <p>🗣 The <code>am</code> column has been <em>changed</em> from
 <code>0</code>/<code>1</code> to
 <code>&quot;Automatic&quot;</code>/<code>&quot;Manual&quot;</code>.</p>
-<hr />
+<p><strong>💡 Test knit.</strong> ___</p>
 <p>📖 <strong>Overwrite Key Takeaway</strong></p>
 <p>In every example above, <code>mutate()</code> followed the same
 pattern:</p>
@@ -2282,8 +2532,8 @@ pattern:</p>
 side reused an existing name, R overwrites that column.</p>
 </div>
 </div>
-<div id="summary" class="section level1" number="6">
-<h1><span class="header-section-number">6</span> Summary</h1>
+<div id="summary" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> Summary</h1>
 <p>In this chapter, you learned that logical conditions in R can do more
 than keep or replace values: they can also return a new result for every
 element. You practiced this with <code>ifelse()</code> for simple
@@ -2293,9 +2543,15 @@ as new or overwritten columns in a data frame. You also continued
 building your Quarto workflow by adding a table of contents, section
 numbering, and inline R code so your notes can report values dynamically
 and stay reproducible.</p>
+<p>You also practiced curiosity as a learning habit. The 🐱 notes
+modeled how to pause, wonder how a tool works, test what R returns, and
+check whether the result matches what you expected. Curiosity in this
+chapter is not random exploring. It means asking a useful question,
+checking the evidence, and knowing when to keep going with the main
+task.</p>
 </div>
-<div id="chapter-terms" class="section level1" number="7">
-<h1><span class="header-section-number">7</span> Chapter Terms</h1>
+<div id="chapter-terms" class="section level1" number="6">
+<h1><span class="header-section-number">6</span> Chapter Terms</h1>
 <p><strong>Arguments</strong>: Inputs that you provide to functions to
 customize their behavior. Arguments are specified within the parentheses
 of a function call and can modify how the function operates or what data
@@ -2331,133 +2587,145 @@ length. Unlike subsetting, which keeps some values and drops others,
 vectorized conditionals such as <code>ifelse()</code> and
 <code>case_when()</code> keep all positions and assign each one a result
 based on the condition.</p>
-</div>
-<div id="practice-space" class="section level1" number="8">
-<h1><span class="header-section-number">8</span> 📝 Practice Space</h1>
-<p>This Practice Space helps you turn Chapter 12 concepts into a
-reproducible analysis workflow. In this chapter, you practiced using
-vectorized conditionals to return a result for every position, using
-<code>case_when()</code> in the correct order, and using
+<p>#📝 Practice Space</p>
+<p>In this Practice Space, you will use vectorized conditional functions
+to create clearer variables. You will practice <code>ifelse()</code> for
+a simple two-way label, <code>case_when()</code> for multiple rules, and
 <code>mutate()</code> to create new columns or overwrite existing ones.
-You also continued building your Quarto workflow by using headings,
-memoing, inline R code, and frequent rendering to HTML.</p>
-<p>This work matters in this course because you are not only learning to
-write R code. You are learning to document your reasoning, check your
-results, and produce work that can be re-run and understood later. That
-connects directly to learning outcomes skills: reproducible workflow,
-problem-solving with code, and memo-based learning with brief AI
-disclosure when used.</p>
-<p>These tasks give you practice with the main skills from Chapter 12.
-These are common data-analysis tasks. Analysts often need to recode
-values into clearer labels, convert units, and build cleaner variables
-before they can summarize, graph, or model data.</p>
-<div id="setup" class="section level2" number="8.1">
-<h2><span class="header-section-number">8.1</span> Setup</h2>
+You will also keep practicing Quarto as a reproducible workspace for
+code, output, checks, and memo notes.</p>
+<p>Create a new Quarto document and save it in your course folder
+as:</p>
+<p><code>chapter12_practice.qmd</code></p>
+<p>Before you begin:</p>
 <ol style="list-style-type: decimal">
-<li>Create a new Quarto file in your course folder and save it as:</li>
+<li>Create a new Quarto document in RStudio.</li>
+<li>Save it as <code>chapter12_practice.qmd</code>.</li>
+<li>Edit the YAML so it includes the title
+<code>&quot;Chapter 12 Practice&quot;</code>, your name, the date, and HTML
+output.</li>
+<li>Include the Chapter 12 Quarto settings for a table of contents and
+section numbering.</li>
+<li>Delete the default body text below the YAML.</li>
+<li>Create headings for each task using <code>## Task 0</code>,
+<code>## Task 1</code>, and so on.</li>
+<li>Render your document often so you can catch formatting problems and
+code errors early.</li>
 </ol>
+<p>Complete each task in order. Fill in the blanks, run your code, check
+your output, and add short memo notes as you work.</p>
+<p>In this Practice Space, you will see three memo prompts:</p>
 <ul>
-<li><p><code>chapter12_practice.qmd</code></p></li>
-<li><p>Test Render your document often to see how your Practice Space
-report is coming together.</p></li>
-<li><p>Submit <code>chapter12_practice.html</code></p></li>
+<li>🎯 <strong>Write the goal:</strong> state the coding directions in
+your own words.</li>
+<li>🗣 <strong>Add Comments:</strong> explain what the code or output
+shows.</li>
+<li>🪞 <strong>Reflect:</strong> explain your thinking, what you
+checked, what changed, what confused you, or what you would try
+next.</li>
 </ul>
-<ol start="2" style="list-style-type: decimal">
-<li><p>Use the heading structure taught earlier in the chapter. Your
-Quarto setup for Chapter 12 should include headings, section numbering,
-and a table of contents, and you should render often to check both
-formatting and errors.</p></li>
-<li><p>📦 Library it up!</p></li>
-</ol>
-<ul>
-<li>Make sure there is script in your document that loads
-<code>dplyr</code> and <code>dslabs</code> packages so their functions /
-datasets load.</li>
-</ul>
-<ol start="4" style="list-style-type: decimal">
-<li>Memo your work with the 🎯/⚡/✅ /🗣</li>
-</ol>
-<ul>
-<li><p>a memo before the code chunk that states the goal of the code and
-what you are trying to learn or understand</p></li>
-<li><p>the code chunk itself</p></li>
-<li><p>any needed checks after the code</p></li>
-<li><p>a memo after the code chunk that explains what you learned,
-discovered, or confirmed</p></li>
-<li><p>answers to all comment questions included in the task</p></li>
-</ul>
-<p>If you used help while working, document it in a memo. For example,
-if you used an LLM or another outside resource to understand an error or
-concept, briefly disclose that use and explain what help you received.
-Type all code yourself. This is part of the course expectation for
-AI-supported learning and memo-based workflow.</p>
-<hr />
-<p>Follow this template for each coding task.</p>
-<p>🎯 What is the goal of the code? What am I trying to learn, check, or
-demonstrate?</p>
-<pre class="r"><code>#⚡Code 
-your_code &lt;- &quot;here&quot;</code></pre>
-<pre class="r"><code># ✅ Include Checks after and pre-checks as needed
-colnames(your_code)
-head(your_code)
-table(your_code)
-class(your_code)
-unique(your_code)</code></pre>
-<p>🗣/🪞 What I learned / Next step. 1–2 sentences.</p>
-<hr />
+<p>Each task should include at least one memo response. You do not need
+to answer every prompt perfectly. The goal is to practice documenting
+your thinking while you work.</p>
+<p><strong>Open-mindedness</strong> means comparing reasonable methods
+and choosing the approach that makes the code easiest to read, check,
+and explain. If you encounter an error, document your
+<strong>tenacity</strong> by briefly noting what happened, what you
+tried, and how you fixed it or what still confuses you. Document how you
+troubleshot the error and what resource(s) you used to help you resolve
+the issue (<strong>transparency</strong>). Show <strong>courage</strong>
+by sharing your thinking process, even if it includes mistakes,
+confusion, or a question you are still working through. Show
+<strong>Curiosity</strong> by noticing something worth understanding,
+asking a useful question, checking what R returns, and deciding whether
+to investigate further or stay focused on the current task.</p>
+<p>You may quote AI output only when you clearly mark it as quoted text,
+either with quotation marks or a block quote using <code>&gt;</code>.
+Then hand-type your own explanation of why you are including the
+quote.</p>
+<p>Before you submit, clear your Environment and render the
+<code>.qmd</code> from top to bottom. Your file should render without
+errors and show your code, output, checks, and memo notes.</p>
+<p>For this assignment, submit the rendered
+<code>chapter12_practice.html</code> file.</p>
+<div id="task-0" class="section level2" number="6.1">
+<h2><span class="header-section-number">6.1</span> Task 0</h2>
+<p>📦 Load the packages needed for this Practice Space:
+<code>dplyr</code> and <code>dslabs</code>. This setup chunk is also a
+good place to practice Quarto chunk controls like
+<code>#| message: false</code> and <code>#| warning: false</code>.</p>
+<p>🎯 You can skip writing the goal of this task.</p>
+<pre class="r"><code># ⚡ Type this in a Quarto code chunk, fill in the blanks
+#| message: false
+#| warning: false
+
+_______(dslabs)
+_______(dplyr)</code></pre>
+<p><strong>💡 Test knit.</strong></p>
 </div>
-<div id="task-1" class="section level2" number="8.2">
-<h2><span class="header-section-number">8.2</span> Task 1</h2>
+<div id="task-1" class="section level2" number="6.2">
+<h2><span class="header-section-number">6.2</span> Task 1</h2>
 <p>🧠 <strong>Concept Check</strong></p>
 <p>Which method returns a new vector with one result for every
 position?</p>
 <ol style="list-style-type: lower-alpha">
-<li><p>Vectorized conditional functions such as <code>ifelse()</code>
-and <code>case_when()</code></p></li>
-<li><p>Logical subsetting using <code>[ ]</code></p></li>
-<li><p>Subassignment using <code>[ ] &lt;-</code></p></li>
-<li><p><code>filter()</code></p></li>
+<li>Vectorized conditional functions such as <code>ifelse()</code> and
+<code>case_when()</code></li>
+<li>Logical subsetting using <code>[ ]</code></li>
+<li>Subassignment using <code>[ ] &lt;-</code></li>
+<li><code>filter()</code></li>
 </ol>
 </div>
-<div id="task-2" class="section level2" number="8.3">
-<h2><span class="header-section-number">8.3</span> Task 2</h2>
+<div id="task-2" class="section level2" number="6.3">
+<h2><span class="header-section-number">6.3</span> Task 2</h2>
 <p>🔀 <strong>Simple <code>ifelse()</code></strong></p>
 <p>Use <code>ifelse()</code> to label each <code>height</code> in the
 dataset <code>heights</code> as <code>&quot;Tall&quot;</code> if
-<code>height</code> greater than <code>68</code> and
+<code>height</code> is greater than <code>68</code> and
 <code>&quot;Not Tall&quot;</code> otherwise. Store the result as
 <code>height_label</code>.</p>
-<pre class="r"><code># ✅ pre-check
+<pre class="r"><code># ✅ Pre-check
 ?dslabs::heights
 heights &lt;- dslabs::heights
 names(heights)</code></pre>
-<p>🗣 Which column contains height values in the dataframe
-<code>heights</code>? Should “Tall” be assigned to the yes or no
-argument in the ifelse statement? Why?</p>
-<p>🎯 Restate the Goal. What are you trying to learn, check, or
-demonstrate?</p>
+<p>🗣 Add Comments: Which column contains height values in the
+<code>heights</code> data frame? Should <code>&quot;Tall&quot;</code> be assigned
+to the <code>yes</code> or <code>no</code> argument in the
+<code>ifelse()</code> statement? Why?</p>
+<p>🎯 Write the goal of this task in your own words.</p>
 <pre class="r"><code># ⚡ Code
 height_label &lt;- _____(
   test = _____$_____ &gt; 68, 
   yes = ______, 
-  no = ______)</code></pre>
+  no = ______
+)</code></pre>
+<p>🐱 This is a good place to wonder whether your new vector lines up
+with the original data. Check the length before trusting the result.</p>
 <pre class="r"><code># ✅ Check
-table(height_label)  # expect &quot;Tall&quot; and &quot;Not Tall&quot;</code></pre>
-<p>🗣 Comment on the output. Do you see the expected labels? How many
-“Tall” and “Not Tall” are there? / 🪞 What did you learn or notice from
-the output? Did the code work as expected? If you needed help, what kind
-of help did you use?</p>
+table(height_label)  # expect &quot;Tall&quot; and &quot;Not Tall&quot;
+length(height_label)
+nrow(heights)</code></pre>
+<p>🗣 Add Comments: Do you see the expected labels? How many
+<code>&quot;Tall&quot;</code> and <code>&quot;Not Tall&quot;</code> values are there?</p>
+<p>🪞 Reflect: Did <code>ifelse()</code> return one label for every row
+in <code>heights</code>? What evidence from your checks shows that
+nothing was dropped?</p>
+<p><strong>💡 Test knit.</strong></p>
 </div>
-<div id="task-3" class="section level2" number="8.4">
-<h2><span class="header-section-number">8.4</span> Task 3</h2>
+<div id="task-3" class="section level2" number="6.4">
+<h2><span class="header-section-number">6.4</span> Task 3</h2>
 <p>📊 <strong>Recode with <code>mutate()</code> and
 <code>case_when()</code></strong></p>
-<p>Create <code>mpg_class</code> with three labels using
-<code>case_when()</code>: “High MPG” if <code>mpg</code> greater than
-<code>25</code>; “Low MPG” if <code>mpg</code> less than
-<code>15</code>; otherwise “Medium MPG”.</p>
-<p>🎯 Restate the Goal. What are you trying to learn, check, or
-demonstrate?</p>
+<p>Create <code>mpg_recode</code> from <code>mtcars</code>. Add a new
+column called <code>mpg_class</code> with three labels:</p>
+<ul>
+<li><code>&quot;High MPG&quot;</code> if <code>mpg</code> is greater than
+<code>25</code></li>
+<li><code>&quot;Low MPG&quot;</code> if <code>mpg</code> is less than
+<code>15</code></li>
+<li><code>&quot;Medium MPG&quot;</code> otherwise</li>
+</ul>
+<p>🎯 Write the goal of this task in your own words.</p>
 <pre class="r"><code># ⚡ Code
 mpg_recode &lt;- mtcars %&gt;%
   ______(mpg_class = _____(
@@ -2466,72 +2734,145 @@ mpg_recode &lt;- mtcars %&gt;%
     TRUE     ~ &quot;_______&quot;
   ))</code></pre>
 <pre class="r"><code># ✅ Checks
-table(mpg_recode$____)  # expect 3 levels</code></pre>
-<p>🗣 Comment on the output. Do you see the expected labels? How many
-“High MPG”, “Medium MPG”, and “Low MPG” are there? 🪞 What did you learn
-or notice from the output? Did the code work as expected? If you needed
-help, what kind of help did you use?</p>
+table(mpg_recode$____)  # expect 3 labels
+head(mpg_recode)</code></pre>
+<p>🗣 Add Comments: Do you see the expected labels? How many
+<code>&quot;High MPG&quot;</code>, <code>&quot;Medium MPG&quot;</code>, and
+<code>&quot;Low MPG&quot;</code> values are there?</p>
+<p>🪞 Reflect: What did <code>mutate()</code> add to the data frame?
+What did <code>case_when()</code> decide for each row?</p>
+<p>🐱 If the counts surprise you, first ask whether the rule is doing
+what you told R to do.</p>
+<p><strong>💡 Test knit.</strong></p>
 </div>
-<div id="task-4" class="section level2" number="8.5">
-<h2><span class="header-section-number">8.5</span> Task 4</h2>
-<p>↔︎️<strong>Recode: Name Focus</strong></p>
-<p>With the dataset 🌟<code>stars</code> from the <code>dslabs</code>
-package, classify each <code>star</code> by temperature range in a new
-column called <code>temp_group</code>. Store the result as
+<div id="task-4" class="section level2" number="6.5">
+<h2><span class="header-section-number">6.5</span> Task 4</h2>
+<p>↔︎️ <strong>Recode: Name Focus</strong></p>
+<p>With the dataset 🌟 <code>stars</code> from the <code>dslabs</code>
+package, classify each star by temperature range in a new column called
+<code>temp_group</code>. Store the result as
 <code>stars_recode</code>.</p>
-<p>Use these rules: Temperatures</p>
+<p>Use these rules:</p>
 <ul>
-<li><p>less than 4,000 are “Cool”,</p></li>
-<li><p>between 4,000 and 7,500 are “Warm”, and</p></li>
-<li><p>all stars more than 7,500 are “Hot”.</p></li>
+<li>temperatures less than <code>4000</code> are
+<code>&quot;Cool&quot;</code></li>
+<li>temperatures from <code>4000</code> through <code>7500</code> are
+<code>&quot;Warm&quot;</code></li>
+<li>temperatures greater than <code>7500</code> are
+<code>&quot;Hot&quot;</code></li>
 </ul>
-<pre class="r"><code># ✅ pre-check
+<pre class="r"><code># ✅ Pre-check
 ?dslabs::stars
 stars &lt;- dslabs::stars
 
 # View(stars)
 colnames(stars)
 summary(stars$temp)</code></pre>
-<p>🗣 What column contains temperature values in the dataframe
-<code>stars</code>. Identify where the new output column name goes, left
-or right of the <code>=</code>?</p>
-<p>🎯 Restate the Goal. What are you trying to learn, check, or
-demonstrate?</p>
+<p>🗣 Add Comments: What column contains temperature values in the
+<code>stars</code> data frame? Where does the new output column name go
+in <code>mutate()</code>: left or right of the <code>=</code>?</p>
+<p>🎯 Write the goal of this task in your own words.</p>
 <pre class="r"><code># ⚡ Code
 ______ &lt;- _____ %&gt;%
   mutate(
     _____ = case_when(
       _____ &lt; 4000 ~ &quot;Cool&quot;,
       _____ &lt;= 7500 ~ &quot;Warm&quot;,
-      _____ ~ &quot;Hot&quot;
+      TRUE          ~ &quot;Hot&quot;
     )
   )</code></pre>
 <pre class="r"><code># ✅ Checks
-table(stars_recode$temp_group)  # expect 3 levels</code></pre>
-<p>🗣 Comment on the output. Do you see the expected labels? How many
-“Cool”, “Warm”, and “Hot” stars are there? 🪞 What did you learn or
-notice from the output? Did the code work as expected? If you needed
-help, what kind of help did you use?</p>
+table(stars_recode$temp_group)  # expect 3 labels
+head(stars_recode)</code></pre>
+<p>🗣 Add Comments: Do you see the expected labels? How many
+<code>&quot;Cool&quot;</code>, <code>&quot;Warm&quot;</code>, and <code>&quot;Hot&quot;</code> stars
+are there?</p>
+<p>🪞 Reflect: Why does the order of the temperature rules matter here?
+What could go wrong if the broader rule came before the more specific
+rule?</p>
+<p>🐱 A curious learner asks, “Do these labels match the cutoffs I meant
+to use?”</p>
+<p><strong>💡 Test knit.</strong></p>
 </div>
-<div id="task-5" class="section level2" number="8.6">
-<h2><span class="header-section-number">8.6</span> Task 5</h2>
+<div id="task-5" class="section level2" number="6.6">
+<h2><span class="header-section-number">6.6</span> Task 5</h2>
 <p>⚖️ <strong>Unit conversion with <code>mutate()</code></strong></p>
-<p>Create <code>international_friendly_heights</code> overwriting the
-<code>height</code> column. <em>💡 hint: inches × 2.54</em></p>
-<pre class="r"><code># ✅ pre-check
+<p>Create <code>international_friendly_heights</code> from
+<code>heights</code> by overwriting the <code>height</code> column.
+Convert the values from inches to centimeters.</p>
+<p>💡 <strong>Tip:</strong> inches × 2.54</p>
+<pre class="r"><code># ✅ Pre-check
 heights &lt;- dslabs::heights
-head(heights)</code></pre>
-<p>🎯 Restate the Goal. What are you trying to learn, check, or
-demonstrate?</p>
+head(heights)
+summary(heights$height)</code></pre>
+<p>🎯 Write the goal of this task in your own words.</p>
 <pre class="r"><code># ⚡ Code
 international_friendly_heights &lt;- heights %&gt;%
   mutate(_____ = _____ * _____)</code></pre>
 <pre class="r"><code># ✅ Checks
-head(international_friendly_heights)</code></pre>
-<p>🗣 Comment on the output. Do you see a new column? Do the values look
-correct for a unit conversion from inches to centimeters? 🪞 What did
-you learn or notice from the output? Did the code work as expected? If
-you needed help, what kind of help did you use?</p>
+head(international_friendly_heights)
+summary(international_friendly_heights$height)</code></pre>
+<p>🗣 Add Comments: Did this code create a new column or overwrite an
+existing column? How do you know?</p>
+<p>🪞 Reflect: Do the new height values look reasonable for centimeters?
+What changed between the original <code>heights</code> data frame and
+<code>international_friendly_heights</code>?</p>
+<p>🐱 Overwriting is a good place to slow down. Before changing a
+column, check the original values. After changing it, check again so you
+know exactly what changed.</p>
+<p><strong>💡 Test knit.</strong></p>
+</div>
+<div id="task-6" class="section level2" number="6.7">
+<h2><span class="header-section-number">6.7</span> Task 6</h2>
+<p><strong>Self-check checklist</strong></p>
+<p>For the file submission, make sure your <code>.qmd</code> renders to
+HTML without errors and that your report shows the required objects,
+checks, and memo notes:</p>
+<ul>
+<li><p><code>height_label</code> exists and includes both
+<code>&quot;Tall&quot;</code> and <code>&quot;Not Tall&quot;</code> labels.</p></li>
+<li><p><code>height_label</code> has the same number of values as rows
+in <code>heights</code>.</p></li>
+<li><p><code>mpg_recode</code> exists and includes a new column named
+<code>mpg_class</code>.</p></li>
+<li><p><code>mpg_recode$mpg_class</code> includes
+<code>&quot;High MPG&quot;</code>, <code>&quot;Medium MPG&quot;</code>, and
+<code>&quot;Low MPG&quot;</code>.</p></li>
+<li><p><code>stars_recode</code> exists and includes a new column named
+<code>temp_group</code>.</p></li>
+<li><p><code>stars_recode$temp_group</code> includes
+<code>&quot;Cool&quot;</code>, <code>&quot;Warm&quot;</code>, and
+<code>&quot;Hot&quot;</code>.</p></li>
+<li><p><code>international_friendly_heights</code> exists and has the
+<code>height</code> column converted from inches to
+centimeters.</p></li>
+<li><p>Your report includes short memo notes that show your goals,
+comments, checks, and reflections.</p></li>
+<li><p>All code in your Quarto document runs top-to-bottom without
+errors.</p></li>
+</ul>
+<p>🎯 Check your <code>.qmd</code> and rendered HTML for submission
+quality.</p>
+<p><strong>Step 1: Sweep your Environment.</strong> Click the 🧹
+<strong>broom icon</strong> in the Environment pane to clear
+objects.</p>
+<p><strong>Step 2: Run everything top-to-bottom.</strong> Use
+<strong>Run → Run All</strong> to execute every chunk in order.</p>
+<p><strong>Step 3: Render to HTML.</strong> Click
+<strong>Render</strong> and confirm that the HTML file is created
+without errors.</p>
+<p><strong>Step 4: Verify the required objects and checks.</strong> Use
+the checklist above to confirm that each object exists and contains the
+expected labels, columns, or converted values.</p>
+<p><strong>Step 5: Read your memo notes.</strong> Make sure your
+comments and reflections explain what your code did, what you checked,
+and what you learned. Verify any inline R code worked in your memos.
+Look for at least one place where you documented curiosity by noticing
+something interesting, asking how something worked, checking the output,
+or deciding to stay focused.</p>
+<p><strong>Step 6: Save and submit.</strong> After your Quarto document
+renders without errors, make sure your latest edits are saved. Submit
+the rendered <code>chapter12_practice.html</code> file as directed.</p>
 </div>
 </div>
 
