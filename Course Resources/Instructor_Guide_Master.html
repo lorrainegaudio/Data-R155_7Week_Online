@@ -1,0 +1,1457 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Lorraine Gaudio">
+
+<title>DATA-R 155 - Introduction to R</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="Instructor_Guide_Master_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Instructor_Guide_Master_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="Instructor_Guide_Master_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="Instructor_Guide_Master_files/libs/quarto-html/popper.min.js"></script>
+<script src="Instructor_Guide_Master_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Instructor_Guide_Master_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Instructor_Guide_Master_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Instructor_Guide_Master_files/libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Instructor_Guide_Master_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Instructor_Guide_Master_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Instructor_Guide_Master_files/libs/bootstrap/bootstrap-8ffd5f67044e5306d9846f29df41dda5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul class="collapse">
+  <li><a href="#purpose" id="toc-purpose" class="nav-link active" data-scroll-target="#purpose"><span class="header-section-number">1</span> Purpose</a></li>
+  <li><a href="#course-operating-principles" id="toc-course-operating-principles" class="nav-link" data-scroll-target="#course-operating-principles"><span class="header-section-number">2</span> Course Operating Principles</a>
+  <ul class="collapse">
+  <li><a href="#stable-assumptions-for-the-master-course" id="toc-stable-assumptions-for-the-master-course" class="nav-link" data-scroll-target="#stable-assumptions-for-the-master-course"><span class="header-section-number">2.1</span> Stable assumptions for the master course</a></li>
+  <li><a href="#course-design-in-one-paragraph" id="toc-course-design-in-one-paragraph" class="nav-link" data-scroll-target="#course-design-in-one-paragraph"><span class="header-section-number">2.2</span> Course design in one paragraph</a></li>
+  </ul></li>
+  <li><a href="#course-setup-and-launch" id="toc-course-setup-and-launch" class="nav-link" data-scroll-target="#course-setup-and-launch"><span class="header-section-number">3</span> Course Setup and Launch</a>
+  <ul class="collapse">
+  <li><a href="#request-and-copy-the-canvas-course-site" id="toc-request-and-copy-the-canvas-course-site" class="nav-link" data-scroll-target="#request-and-copy-the-canvas-course-site"><span class="header-section-number">3.1</span> Request and copy the Canvas course site</a></li>
+  <li><a href="#make-a-working-copy-of-this-guide" id="toc-make-a-working-copy-of-this-guide" class="nav-link" data-scroll-target="#make-a-working-copy-of-this-guide"><span class="header-section-number">3.2</span> Make a working copy of this guide</a></li>
+  <li><a href="#update-instructor-facing-and-student-facing-identity-pages" id="toc-update-instructor-facing-and-student-facing-identity-pages" class="nav-link" data-scroll-target="#update-instructor-facing-and-student-facing-identity-pages"><span class="header-section-number">3.3</span> Update instructor-facing and student-facing identity pages</a></li>
+  <li><a href="#set-up-dates-in-two-layers" id="toc-set-up-dates-in-two-layers" class="nav-link" data-scroll-target="#set-up-dates-in-two-layers"><span class="header-section-number">3.4</span> Set up dates in two layers</a></li>
+  <li><a href="#standard-release-and-lock-pattern" id="toc-standard-release-and-lock-pattern" class="nav-link" data-scroll-target="#standard-release-and-lock-pattern"><span class="header-section-number">3.5</span> Standard release and lock pattern</a></li>
+  <li><a href="#update-the-custom-html-course-calendar" id="toc-update-the-custom-html-course-calendar" class="nav-link" data-scroll-target="#update-the-custom-html-course-calendar"><span class="header-section-number">3.6</span> Update the custom HTML course calendar</a></li>
+  <li><a href="#review-module-content-before-launch" id="toc-review-module-content-before-launch" class="nav-link" data-scroll-target="#review-module-content-before-launch"><span class="header-section-number">3.7</span> Review module content before launch</a></li>
+  <li><a href="#check-quiz-settings" id="toc-check-quiz-settings" class="nav-link" data-scroll-target="#check-quiz-settings"><span class="header-section-number">3.8</span> Check quiz settings</a></li>
+  <li><a href="#verify-grading-architecture-before-students-begin" id="toc-verify-grading-architecture-before-students-begin" class="nav-link" data-scroll-target="#verify-grading-architecture-before-students-begin"><span class="header-section-number">3.9</span> Verify grading architecture before students begin</a></li>
+  <li><a href="#set-up-discussion-groups" id="toc-set-up-discussion-groups" class="nav-link" data-scroll-target="#set-up-discussion-groups"><span class="header-section-number">3.10</span> Set up discussion groups</a></li>
+  <li><a href="#validate-links" id="toc-validate-links" class="nav-link" data-scroll-target="#validate-links"><span class="header-section-number">3.11</span> Validate links</a></li>
+  <li><a href="#contact-students-before-the-course-starts" id="toc-contact-students-before-the-course-starts" class="nav-link" data-scroll-target="#contact-students-before-the-course-starts"><span class="header-section-number">3.12</span> Contact students before the course starts</a></li>
+  <li><a href="#launch-checklist" id="toc-launch-checklist" class="nav-link" data-scroll-target="#launch-checklist"><span class="header-section-number">3.13</span> Launch checklist</a></li>
+  </ul></li>
+  <li><a href="#weekly-instructor-workflow" id="toc-weekly-instructor-workflow" class="nav-link" data-scroll-target="#weekly-instructor-workflow"><span class="header-section-number">4</span> Weekly Instructor Workflow</a>
+  <ul class="collapse">
+  <li><a href="#weekly-grading-and-support-rhythm" id="toc-weekly-grading-and-support-rhythm" class="nav-link" data-scroll-target="#weekly-grading-and-support-rhythm"><span class="header-section-number">4.1</span> Weekly grading and support rhythm</a></li>
+  <li><a href="#weekly-grade-audit" id="toc-weekly-grade-audit" class="nav-link" data-scroll-target="#weekly-grade-audit"><span class="header-section-number">4.2</span> Weekly grade audit</a></li>
+  <li><a href="#live-course-edits-during-teaching" id="toc-live-course-edits-during-teaching" class="nav-link" data-scroll-target="#live-course-edits-during-teaching"><span class="header-section-number">4.3</span> Live course edits during teaching</a></li>
+  </ul></li>
+  <li><a href="#grading-specifications-grading-and-feedback" id="toc-grading-specifications-grading-and-feedback" class="nav-link" data-scroll-target="#grading-specifications-grading-and-feedback"><span class="header-section-number">5</span> Grading, Specifications Grading, and Feedback</a>
+  <ul class="collapse">
+  <li><a href="#specifications-grading-overview" id="toc-specifications-grading-overview" class="nav-link" data-scroll-target="#specifications-grading-overview"><span class="header-section-number">5.1</span> Specifications grading overview</a></li>
+  <li><a href="#status-labels" id="toc-status-labels" class="nav-link" data-scroll-target="#status-labels"><span class="header-section-number">5.2</span> Status labels</a></li>
+  <li><a href="#current-canvas-gradebook-setup-active-design-area" id="toc-current-canvas-gradebook-setup-active-design-area" class="nav-link" data-scroll-target="#current-canvas-gradebook-setup-active-design-area"><span class="header-section-number">5.3</span> Current Canvas gradebook setup: active design area</a></li>
+  <li><a href="#core-revision-tokens" id="toc-core-revision-tokens" class="nav-link" data-scroll-target="#core-revision-tokens"><span class="header-section-number">5.4</span> Core revision tokens</a></li>
+  <li><a href="#core-grading-expectations" id="toc-core-grading-expectations" class="nav-link" data-scroll-target="#core-grading-expectations"><span class="header-section-number">5.5</span> Core grading expectations</a></li>
+  <li><a href="#core-feedback-voice" id="toc-core-feedback-voice" class="nav-link" data-scroll-target="#core-feedback-voice"><span class="header-section-number">5.6</span> Core feedback voice</a></li>
+  <li><a href="#advanced-grading-expectations" id="toc-advanced-grading-expectations" class="nav-link" data-scroll-target="#advanced-grading-expectations"><span class="header-section-number">5.7</span> Advanced grading expectations</a></li>
+  <li><a href="#student-ai-use" id="toc-student-ai-use" class="nav-link" data-scroll-target="#student-ai-use"><span class="header-section-number">5.8</span> Student AI use</a></li>
+  <li><a href="#final-course-grade-audit" id="toc-final-course-grade-audit" class="nav-link" data-scroll-target="#final-course-grade-audit"><span class="header-section-number">5.9</span> Final course grade audit</a></li>
+  </ul></li>
+  <li><a href="#communication-and-student-support" id="toc-communication-and-student-support" class="nav-link" data-scroll-target="#communication-and-student-support"><span class="header-section-number">6</span> Communication and Student Support</a>
+  <ul class="collapse">
+  <li><a href="#canvas-communication-workflow" id="toc-canvas-communication-workflow" class="nav-link" data-scroll-target="#canvas-communication-workflow"><span class="header-section-number">6.1</span> Canvas communication workflow</a></li>
+  <li><a href="#week-1-participation-and-early-intervention" id="toc-week-1-participation-and-early-intervention" class="nav-link" data-scroll-target="#week-1-participation-and-early-intervention"><span class="header-section-number">6.2</span> Week 1 participation and early intervention</a></li>
+  <li><a href="#ongoing-student-check-ins" id="toc-ongoing-student-check-ins" class="nav-link" data-scroll-target="#ongoing-student-check-ins"><span class="header-section-number">6.3</span> Ongoing student check-ins</a></li>
+  <li><a href="#meetings-with-students" id="toc-meetings-with-students" class="nav-link" data-scroll-target="#meetings-with-students"><span class="header-section-number">6.4</span> Meetings with students</a></li>
+  </ul></li>
+  <li><a href="#discussion-groups" id="toc-discussion-groups" class="nav-link" data-scroll-target="#discussion-groups"><span class="header-section-number">7</span> Discussion Groups</a>
+  <ul class="collapse">
+  <li><a href="#group-setup-rules" id="toc-group-setup-rules" class="nav-link" data-scroll-target="#group-setup-rules"><span class="header-section-number">7.1</span> Group setup rules</a></li>
+  <li><a href="#whole-class-discussions" id="toc-whole-class-discussions" class="nav-link" data-scroll-target="#whole-class-discussions"><span class="header-section-number">7.2</span> Whole-class discussions</a></li>
+  </ul></li>
+  <li><a href="#week-specific-preparation-and-tasks" id="toc-week-specific-preparation-and-tasks" class="nav-link" data-scroll-target="#week-specific-preparation-and-tasks"><span class="header-section-number">8</span> Week-Specific Preparation and Tasks</a>
+  <ul class="collapse">
+  <li><a href="#before-each-module-opens" id="toc-before-each-module-opens" class="nav-link" data-scroll-target="#before-each-module-opens"><span class="header-section-number">8.1</span> Before each module opens</a></li>
+  <li><a href="#weekly-learning-skill-guide" id="toc-weekly-learning-skill-guide" class="nav-link" data-scroll-target="#weekly-learning-skill-guide"><span class="header-section-number">8.2</span> Weekly learning-skill guide</a></li>
+  <li><a href="#week-1-tenacity" id="toc-week-1-tenacity" class="nav-link" data-scroll-target="#week-1-tenacity"><span class="header-section-number">8.3</span> Week 1: Tenacity</a></li>
+  <li><a href="#week-2-transparency" id="toc-week-2-transparency" class="nav-link" data-scroll-target="#week-2-transparency"><span class="header-section-number">8.4</span> Week 2: Transparency</a></li>
+  <li><a href="#week-3-courage" id="toc-week-3-courage" class="nav-link" data-scroll-target="#week-3-courage"><span class="header-section-number">8.5</span> Week 3: Courage</a></li>
+  <li><a href="#week-4-autonomy" id="toc-week-4-autonomy" class="nav-link" data-scroll-target="#week-4-autonomy"><span class="header-section-number">8.6</span> Week 4: Autonomy</a></li>
+  <li><a href="#week-5-advanced-bridge-github-workflow" id="toc-week-5-advanced-bridge-github-workflow" class="nav-link" data-scroll-target="#week-5-advanced-bridge-github-workflow"><span class="header-section-number">8.7</span> Week 5: Advanced Bridge / GitHub Workflow</a></li>
+  <li><a href="#week-6-curiosity" id="toc-week-6-curiosity" class="nav-link" data-scroll-target="#week-6-curiosity"><span class="header-section-number">8.8</span> Week 6: Curiosity</a></li>
+  <li><a href="#week-7-thoroughness" id="toc-week-7-thoroughness" class="nav-link" data-scroll-target="#week-7-thoroughness"><span class="header-section-number">8.9</span> Week 7: Thoroughness</a></li>
+  </ul></li>
+  <li><a href="#help-resources" id="toc-help-resources" class="nav-link" data-scroll-target="#help-resources"><span class="header-section-number">9</span> Help Resources</a>
+  <ul class="collapse">
+  <li><a href="#technical-help" id="toc-technical-help" class="nav-link" data-scroll-target="#technical-help"><span class="header-section-number">9.1</span> Technical help</a></li>
+  <li><a href="#course-tool-resources" id="toc-course-tool-resources" class="nav-link" data-scroll-target="#course-tool-resources"><span class="header-section-number">9.2</span> Course tool resources</a></li>
+  <li><a href="#accessibility-copyright-privacy-and-academic-integrity" id="toc-accessibility-copyright-privacy-and-academic-integrity" class="nav-link" data-scroll-target="#accessibility-copyright-privacy-and-academic-integrity"><span class="header-section-number">9.3</span> Accessibility, copyright, privacy, and academic integrity</a></li>
+  <li><a href="#instructor-facing-support" id="toc-instructor-facing-support" class="nav-link" data-scroll-target="#instructor-facing-support"><span class="header-section-number">9.4</span> Instructor-facing support</a></li>
+  </ul></li>
+  <li><a href="#course-maintenance-and-change-memos" id="toc-course-maintenance-and-change-memos" class="nav-link" data-scroll-target="#course-maintenance-and-change-memos"><span class="header-section-number">10</span> Course Maintenance and Change Memos</a>
+  <ul class="collapse">
+  <li><a href="#running-change-memo" id="toc-running-change-memo" class="nav-link" data-scroll-target="#running-change-memo"><span class="header-section-number">10.1</span> Running change memo</a></li>
+  <li><a href="#what-to-document" id="toc-what-to-document" class="nav-link" data-scroll-target="#what-to-document"><span class="header-section-number">10.2</span> What to document</a></li>
+  </ul></li>
+  <li><a href="#announcement-and-outreach-resources" id="toc-announcement-and-outreach-resources" class="nav-link" data-scroll-target="#announcement-and-outreach-resources"><span class="header-section-number">11</span> Announcement and Outreach Resources</a>
+  <ul class="collapse">
+  <li><a href="#pre-course-welcome-communication" id="toc-pre-course-welcome-communication" class="nav-link" data-scroll-target="#pre-course-welcome-communication"><span class="header-section-number">11.1</span> Pre-course welcome communication</a></li>
+  <li><a href="#templates-and-chatbot-resources" id="toc-templates-and-chatbot-resources" class="nav-link" data-scroll-target="#templates-and-chatbot-resources"><span class="header-section-number">11.2</span> Templates and chatbot resources</a></li>
+  </ul></li>
+  <li><a href="#appendix-canvas-documentation-to-review-as-needed" id="toc-appendix-canvas-documentation-to-review-as-needed" class="nav-link" data-scroll-target="#appendix-canvas-documentation-to-review-as-needed"><span class="header-section-number">12</span> Appendix: Canvas Documentation to Review as Needed</a></li>
+  <li><a href="#revision-notes" id="toc-revision-notes" class="nav-link" data-scroll-target="#revision-notes"><span class="header-section-number">13</span> Revision Notes</a></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">DATA-R 155 - Introduction to R</h1>
+<p class="subtitle lead">Online Course Instructor Guide | Reusable Master Guide</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Lorraine Gaudio </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">Invalid Date</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="purpose" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Purpose</h1>
+<p>This guide explains how to prepare, launch, teach, grade, communicate in, and maintain DATA-R 155 as a 7-week online Canvas course. It is written for a future instructor inheriting the course,</p>
+<p>Use this guide with the live Canvas course. Canvas is the source of truth for content access, submissions, grades, announcements, dates, communication, and student-facing instructions. Do not rely on <a href="https://lorrainegaudio.github.io/data-r-155-summer-2026-site/">external planning websites</a> or draft artifacts as student-facing course infrastructure.</p>
+<p>Courses generally open to students the Friday before the first official day of class. This course moves quickly. Set aside time before launch to verify dates, module access, gradebook settings, rubrics, outcomes, discussion groups, and the custom HTML course calendar.</p>
+</section>
+<section id="course-operating-principles" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Course Operating Principles</h1>
+<p>DATA-R 155 is a 7-week online Introduction to R course built around repeated Core practice, optional Advanced choices, timely feedback, and specifications grading. The course is not low-touch. It depends on active instructor monitoring, fast Core grading, and proactive student outreach.</p>
+<section id="stable-assumptions-for-the-master-course" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="stable-assumptions-for-the-master-course"><span class="header-section-number">2.1</span> Stable assumptions for the master course</h2>
+<ul>
+<li><p>Canvas is the source of truth for course content, submissions, grading, announcements, dates, and student communication.</p></li>
+<li><p>The course should be copied forward from the most recent teaching site so successful live edits carry into the next offering.</p></li>
+<li><p>This guide currently describes the 7-week online version. In-person adaptations may be added later, but they are not part of this guide yet.</p></li>
+<li><p>This course usually runs multiple sections at the same time and it is cross-listed for ANTH 155, PSYC 155, SOC 155, BIOL 155, and ANTH 580. All enrollments are managed in one Canvas teaching site when institutionally allowed.</p></li>
+<li><p>Graduate students complete the same grading bundles as undergraduate students. Differentiation comes through Advanced activity options that graduate level students tend to want (e.g., Chapter 9 GitHub).</p></li>
+<li><p>Required student tools are Canvas, R, and RStudio Desktop. Other tools appear inside specific activities and should be reviewed where they affect setup or support. For example, quarto may not work on Newer Windows processors (ARMs), so the instructor should be prepared to support students who encounter that issue in a tool-specific activity.</p></li>
+</ul>
+</section>
+<section id="course-design-in-one-paragraph" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="course-design-in-one-paragraph"><span class="header-section-number">2.2</span> Course design in one paragraph</h2>
+<p>Students complete required Core work to build the foundation for R programming, reproducible workflow, and learning-skill development. Students who want a B or A add Advanced activities from a menu. Advanced activities allow students to choose work aligned with their goals, such as thesis research skill preparation verses the course being required for the degree. The instructor’s main role is to reinforce the weekly Core learning skill in custom and timely feedback and intervenes early when students fall behind.</p>
+</section>
+</section>
+<section id="course-setup-and-launch" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Course Setup and Launch</h1>
+<p>Complete this section before the course opens. Do not assume that copied Canvas content has the correct dates, links, group sets, gradebook settings, or page text for the new offering.</p>
+<section id="request-and-copy-the-canvas-course-site" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="request-and-copy-the-canvas-course-site"><span class="header-section-number">3.1</span> Request and copy the Canvas course site</h2>
+<ul class="task-list">
+<li><p><label><input type="checkbox">Request the Canvas course site through the university process used for the current term.</label></p></li>
+<li><p><label><input type="checkbox">When possible, create one Canvas teaching site for all relevant DATA-R 155 sections and cross-listed enrollments for the semester. Select the sections when creating the site.</label></p></li>
+<li><p><label><input type="checkbox">Copy the course forward from the most recent teaching site, not from an outdated draft, unless the department has identified a different master source.</label></p></li>
+<li><p><label><input type="checkbox">After import, confirm that all students are enrolled in the correct combined Canvas site and that section information is visible for administrative needs.</label></p></li>
+</ul>
+</section>
+<section id="make-a-working-copy-of-this-guide" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="make-a-working-copy-of-this-guide"><span class="header-section-number">3.2</span> Make a working copy of this guide</h2>
+<p>Keep a reusable master version of this guide, then make a term-specific working copy for checklist tracking, notes, and live teaching decisions. Do not overwrite the master without preserving a clean reusable copy.</p>
+</section>
+<section id="update-instructor-facing-and-student-facing-identity-pages" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="update-instructor-facing-and-student-facing-identity-pages"><span class="header-section-number">3.3</span> Update instructor-facing and student-facing identity pages</h2>
+<ul class="task-list">
+<li><p><label><input type="checkbox">Update the Instructor Information / Meet Your Instructor page with the current instructor name, photo, contact expectations, and teaching information.</label></p></li>
+<li><p><label><input type="checkbox">Update the Book a Meeting with the Instructor page. The current course design assumes students can book a 30-minute Zoom meeting through a Google Calendar appointment schedule, but a future instructor may use an equivalent meeting workflow.</label></p></li>
+<li><p><label><input type="checkbox">Do not remove or rename the meeting-booking page casually. It is linked from multiple course pages and buttons. If the workflow changes, update all links and run link validation.</label></p></li>
+<li><p><label><input type="checkbox">Update the syllabus and any orientation pages that name the instructor, term, calendar dates, office-hour/meeting workflow, or communication expectations.</label></p></li>
+</ul>
+</section>
+<section id="set-up-dates-in-two-layers" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="set-up-dates-in-two-layers"><span class="header-section-number">3.4</span> Set up dates in two layers</h2>
+<p>Use Canvas date adjustment or bulk date editing where it helps, but do not trust it as the whole job. DATA-R 155 has both Canvas setting dates and literal dates written into some course pages.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 79%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Date layer</strong></th>
+<th><strong>What to verify</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Canvas settings dates</td>
+<td>“Due Date,” “Available from,” and “Until date” on all module pages, assignments, quizzes, discussions</td>
+</tr>
+<tr class="even">
+<td>Text dates inside navigation pages</td>
+<td>Syllabus, all module overview pages, the custom Course Calendar page, Home pages, scheduled announcements, and Advanced Activities Tour.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="standard-release-and-lock-pattern" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="standard-release-and-lock-pattern"><span class="header-section-number">3.5</span> Standard release and lock pattern</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 79%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Item</strong></th>
+<th><strong>Standard pattern</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Course access</td>
+<td>Canvas opens to students at 12:00 a.m. Mountain Time on the Friday before the official Monday start.</td>
+</tr>
+<tr class="even">
+<td>Module access</td>
+<td>Each module opens at 12:00 a.m. Mountain Time on the Friday before its module week.</td>
+</tr>
+<tr class="odd">
+<td>Advanced access</td>
+<td>Advanced items also open on Friday but are only accessible to students who have earned Complete on the required prior module’s Core work.</td>
+</tr>
+<tr class="even">
+<td>Core due dates</td>
+<td>Generally Tuesday/Thursday; Module 1 exception.</td>
+</tr>
+<tr class="odd">
+<td>Core lock date</td>
+<td>Saturday night 11:59 p.m. for that week’s Core module.</td>
+</tr>
+<tr class="even">
+<td>Advanced lock date</td>
+<td>Sunday night 11:59 pm. for the prior week’s module.</td>
+</tr>
+<tr class="odd">
+<td>Time zone</td>
+<td>Always Mountain Time.</td>
+</tr>
+</tbody>
+</table>
+<blockquote class="blockquote">
+<p><strong>Important timing rule.</strong> Due dates and lock dates are not the same. The period between the due date and the lock date is primarily the student revision window after instructor feedback. Students may submit late during that window, but late first submissions submitted after the instructor grading pass may not receive feedback before the lock date, requiring a token for Core revision access. The instructor should grade on the stated rhythm and does not need to chase late submissions before the lock.</p>
+</blockquote>
+</section>
+<section id="update-the-custom-html-course-calendar" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="update-the-custom-html-course-calendar"><span class="header-section-number">3.6</span> Update the custom HTML course calendar</h2>
+<p>The Canvas homepage, among several others, directs students to the custom HTML course calendar as the student-facing schedule summary. Each term, update the calendar so the month/day numbers match the new offering. Preserve the structure and links unless there is a reason to redesign it. A chatbot may be used to revise the HTML dates cleanly, but the instructor must still verify the result in Canvas.</p>
+</section>
+<section id="review-module-content-before-launch" class="level2" data-number="3.7">
+<h2 data-number="3.7" class="anchored" data-anchor-id="review-module-content-before-launch"><span class="header-section-number">3.7</span> Review module content before launch</h2>
+<ul class="task-list">
+<li><p><label><input type="checkbox">Open each module in Canvas and review the module overview, Core pages, Advanced pages, quizzes, file uploads, discussions, rubrics, outcomes, prerequisites, requirements, due dates, and availability dates.</label></p></li>
+<li><p><label><input type="checkbox">Use Student View to verify what students can access when the module opens and what remains locked until the correct prerequisite is completed.</label></p></li>
+<li><p><label><input type="checkbox">If you add a page, assignment, quiz, discussion, or file upload, attach the correct requirement/rubric/outcome so students can track progress and the course completion logic remains intact.</label></p></li>
+<li><p><label><input type="checkbox">Verify that all student-facing content intended for the offering is published, and that old draft or instructor-only material is not visible to students.</label></p></li>
+</ul>
+</section>
+<section id="check-quiz-settings" class="level2" data-number="3.8">
+<h2 data-number="3.8" class="anchored" data-anchor-id="check-quiz-settings"><span class="header-section-number">3.8</span> Check quiz settings</h2>
+<p>Core Practice Space quizzes are mastery-style checks paired with a related file upload. They should remain unlimited-attempt within the availability window. When the quiz uses build-on-last-attempt behavior, students only redo missed questions. These quizzes support learning and reduce the amount of code-correctness grading needed in file submissions.</p>
+<section id="core-quiz-settings-include" class="level3" data-number="3.8.1">
+<h3 data-number="3.8.1" class="anchored" data-anchor-id="core-quiz-settings-include"><span class="header-section-number">3.8.1</span> Core quiz settings include:</h3>
+<ul>
+<li><p>Shuffle answers</p></li>
+<li><p>Allow clearing selection (Multiple Choice)</p></li>
+<li><p>Allow multiple attempts</p>
+<ul>
+<li>Keep Highest score</li>
+<li>Unlimited allowed attempts</li>
+<li>Enable build on last attempt</li>
+</ul></li>
+<li><p>Hide results from students</p>
+<ul>
+<li>Show questions
+<ul>
+<li>Show student responses: For all attempt
+<ul>
+<li>Indicate response as correct or incorrect.</li>
+</ul></li>
+<li>Show feedback</li>
+</ul></li>
+</ul></li>
+</ul>
+<p>[explain the rationale for these settings and how they support learning and grading efficiency]</p>
+</section>
+<section id="advanced-quiz-settings-may-vary" class="level3" data-number="3.8.2">
+<h3 data-number="3.8.2" class="anchored" data-anchor-id="advanced-quiz-settings-may-vary"><span class="header-section-number">3.8.2</span> Advanced quiz settings may vary</h3>
+<p>Some Advanced or review quizzes may be timed or single-attempt. Do not generalize the Core Practice Space quiz settings to every quiz in the course.</p>
+</section>
+</section>
+<section id="verify-grading-architecture-before-students-begin" class="level2" data-number="3.9">
+<h2 data-number="3.9" class="anchored" data-anchor-id="verify-grading-architecture-before-students-begin"><span class="header-section-number">3.9</span> Verify grading architecture before students begin</h2>
+<ul class="task-list">
+<li><p><label><input type="checkbox">Confirm the custom grading schemes for Core and Advanced items.</label></p></li>
+<li><p><label><input type="checkbox">Confirm rubrics and outcomes are attached to graded items.</label></p></li>
+<li><p><label><input type="checkbox">Confirm the Gradebook assignment groups: Core, Advanced, and Tokens, or the current equivalent if the course setup has changed.</label></p></li>
+<li><p><label><input type="checkbox">Confirm the Gradebook Notes column is visible so it can be used as a private communication log.</label></p></li>
+<li><p><label><input type="checkbox">Confirm the Learning Mastery Gradebook / outcomes setup if it is still used in the current course copy.</label></p></li>
+<li><p><label><input type="checkbox">Confirm that module prerequisites and requirements controlling Advanced access work as intended.</label></p></li>
+</ul>
+</section>
+<section id="set-up-discussion-groups" class="level2" data-number="3.10">
+<h2 data-number="3.10" class="anchored" data-anchor-id="set-up-discussion-groups"><span class="header-section-number">3.10</span> Set up discussion groups</h2>
+<p>Discussion groups may need to be recreated or checked each term. Do not assume imported group sets are ready. See the Discussion Groups section of this guide before creating groups.</p>
+<p>To check or edit the discussion groups, you go to People, and then you click on, I don’t know, the discussion group or group set.</p>
+<p>The discussion group should be titled “Data-R-155 🌳 Discussion Groups.” Discussion group names should be fun, like 📈 ggplot Gurus, 🤠 Data Wranglers, and 🪄 Pipe Dream Team.</p>
+<p>See the <a href="#discussion-groups">Discussion Groups section</a> of this guide for group setup rules and whole-class discussion recommendations. discussion-groups</p>
+</section>
+<section id="validate-links" class="level2" data-number="3.11">
+<h2 data-number="3.11" class="anchored" data-anchor-id="validate-links"><span class="header-section-number">3.11</span> Validate links</h2>
+<p>Run Canvas Accessibility Report and verify links after term setup and again after meaningful course edits. Some links may appear broken because they require login or point to intentionally unpublished content; review flagged links manually before changing them. If you remove or rename a page, check every linked button and module item that may point to it.</p>
+</section>
+<section id="contact-students-before-the-course-starts" class="level2" data-number="3.12">
+<h2 data-number="3.12" class="anchored" data-anchor-id="contact-students-before-the-course-starts"><span class="header-section-number">3.12</span> Contact students before the course starts</h2>
+<p>Send a welcome message before or when Canvas opens on the Friday before Week 1. The message should tell students when Canvas opens, how to start, where to find the syllabus and course calendar, how to get help, and that they can begin early.</p>
+</section>
+<section id="launch-checklist" class="level2" data-number="3.13">
+<h2 data-number="3.13" class="anchored" data-anchor-id="launch-checklist"><span class="header-section-number">3.13</span> Launch checklist</h2>
+<ul class="task-list">
+<li><p><label><input type="checkbox">Canvas teaching site created with all intended sections/cross-lists.</label></p></li>
+<li><p><label><input type="checkbox">Syllabus updated.</label></p></li>
+<li><p><label><input type="checkbox">Instructor Information page updated.</label></p></li>
+<li><p><label><input type="checkbox">Book a Meeting page updated and tested.</label></p></li>
+<li><p><label><input type="checkbox">Course calendar updated and checked.</label></p></li>
+<li><p><label><input type="checkbox">Module pages opening, due, and lock dates verified.</label></p></li>
+<li><p><label><input type="checkbox">Overview and home page text dates verified.</label></p></li>
+<li><p><label><input type="checkbox">Core/Advanced prerequisites and requirements checked (Module edit).</label></p></li>
+<li><p><label><input type="checkbox">Rubrics and outcomes match/link to assignments checked.</label></p></li>
+<li><p><label><input type="checkbox">Traditional Gradebook and Learning Mastery setup checked, if both are still used.</label></p></li>
+<li><p><label><input type="checkbox">Gradebook Notes column visible.</label></p></li>
+<li><p><label><input type="checkbox">Discussion groups planned or created as appropriate.</label></p></li>
+<li><p><label><input type="checkbox">All Canvas links validated and Accessibility Report passes at 99% or better.</label></p></li>
+<li><p><label><input type="checkbox">Student-facing content published; hidden/draft content reviewed.</label></p></li>
+<li><p><label><input type="checkbox">Pre-course welcome communication sent.</label></p></li>
+</ul>
+</section>
+</section>
+<section id="weekly-instructor-workflow" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Weekly Instructor Workflow</h1>
+<p>This course depends on a timely instructor rhythm. Core completion affects revision windows and Advanced access, so grading is part of the course structure. During active teaching, estimate 12-15 hours per week depending on enrollment, student support needs, and depth of feedback. The scheduled rhythm below is the minimum maintenance rhythm, not a guarantee of total workload.</p>
+<section id="weekly-grading-and-support-rhythm" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="weekly-grading-and-support-rhythm"><span class="header-section-number">4.1</span> Weekly grading and support rhythm</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 19%">
+<col style="width: 54%">
+<col style="width: 26%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Day</strong></th>
+<th><strong>Required instructor work</strong></th>
+<th><strong>Why it matters</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Wednesday</td>
+<td>Quick-grade submitted Core work, including early submissions when available. In Week 1, also contact students who have not logged in or submitted early work.</td>
+<td>Students need fast feedback while there is still time to revise before the Core lock.</td>
+</tr>
+<tr class="even">
+<td>Friday</td>
+<td>Grade submitted Core work and any submitted Advanced work. Conduct a weekly grade audit. Email/check in with students who are missing current Core work, appear stuck, or have not responded.</td>
+<td>This is the key intervention point before the Saturday Core lock.</td>
+</tr>
+<tr class="odd">
+<td>Monday</td>
+<td>Grade weekend/locked Advanced work. Review late/Not Ready Core items. Apply tokens when needed. Adjust student-specific dates. Conduct another grade audit. Submit academic alerts when appropriate.</td>
+<td>Advanced work has no token pathway. Monday is also the recovery-planning and escalation day.</td>
+</tr>
+<tr class="even">
+<td>Other days</td>
+<td>Monitor Canvas messages, assignment comments, and meeting bookings. Grade early submissions when it fits your workflow, but do not chase late submissions outside the stated rhythm.</td>
+<td>The course needs active monitoring, but the instructor also needs a sustainable boundary.</td>
+</tr>
+</tbody>
+</table>
+<blockquote class="blockquote">
+<p><strong>Boundary.</strong> If students submit after the Friday grading pass and the Core item locks Saturday, they risk needing a token if the submission is Not Ready. The instructor should grade on the stated rhythm; the instructor does not need to chase every late submission before the lock.</p>
+</blockquote>
+</section>
+<section id="weekly-grade-audit" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="weekly-grade-audit"><span class="header-section-number">4.2</span> Weekly grade audit</h2>
+<p>Every Friday and Monday, after grading, verify that grades, completion statuses, outcomes, and access logic match. In the current setup, this may require checking both the Traditional Gradebook and the Learning Mastery Gradebook/outcomes. The audit prevents students from being blocked from Advanced work or revisions because a status was not updated in the right place.</p>
+<ul class="task-list">
+<li><p><label><input type="checkbox">Check that Core submissions graded Complete are recorded as Complete in the current gradebook mechanism.</label></p></li>
+<li><p><label><input type="checkbox">Check that outstanding Not Ready Core submissions have clear feedback and that the student has resubmission access, if the original lock date has passed.</label></p></li>
+<li><p><label><input type="checkbox">Check that auto-graded Core quizzes are also marked appropriately in the outcome/Learning Mastery system.</label></p></li>
+<li><p><label><input type="checkbox">Check that Advanced Complete counts are updating correctly.</label></p></li>
+<li><p><label><input type="checkbox">Check that token use has been recorded and student-specific dates have been adjusted.</label></p></li>
+<li><p><label><input type="checkbox">Check that at-risk students have been contacted and notes are recorded in the Gradebook Notes column.</label></p></li>
+</ul>
+</section>
+<section id="live-course-edits-during-teaching" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="live-course-edits-during-teaching"><span class="header-section-number">4.3</span> Live course edits during teaching</h2>
+<p>When grading reveals repeated student confusion, make small clarifying edits in Canvas. This is a normal part of teaching the course. For larger changes, document the change in the running course-change memo. After meaningful page or link edits, run link validation.</p>
+</section>
+</section>
+<section id="grading-specifications-grading-and-feedback" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Grading, Specifications Grading, and Feedback</h1>
+<section id="specifications-grading-overview" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="specifications-grading-overview"><span class="header-section-number">5.1</span> Specifications grading overview</h2>
+<p>DATA-R 155 uses Specifications Grading. Students earn final grades by completing bundles of work to a professional standard. There is no partial-credit point chasing. Work either meets the specifications, needs revision, or does not count.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 75%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Final grade bundle</strong></th>
+<th><strong>Requirements</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>F</td>
+<td>Missing Core work or fewer than 25 Core items earn Complete.</td>
+</tr>
+<tr class="even">
+<td>D</td>
+<td>At least 25 Core items earn Complete.</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td>All Core work earns Complete.</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>All Core work earns Complete, plus at least 12 Advanced assignments earn Complete.</td>
+</tr>
+<tr class="odd">
+<td>A</td>
+<td>All Core work earns Complete, plus at least 18 Advanced assignments earn Complete.</td>
+</tr>
+<tr class="even">
+<td>A+</td>
+<td>All Core work earns Complete, plus at least 20 Advanced assignments earn Complete, and the student shows exceptional learning growth and engagement.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="status-labels" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="status-labels"><span class="header-section-number">5.2</span> Status labels</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 18%">
+<col style="width: 63%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Work type</strong></th>
+<th><strong>Status labels</strong></th>
+<th><strong>Instructor meaning</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Core</td>
+<td>Complete / Not Ready / Missing</td>
+<td>Core is required. Not Ready does not count until revised; for required Core work, Not Ready functions like Missing until the student fixes it.</td>
+</tr>
+<tr class="even">
+<td>Advanced</td>
+<td>Complete / Not Ready / No Submission</td>
+<td>Advanced is optional. No Submission means the student did not choose that option. Advanced work has deadlines and no revision tokens after lock date.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="current-canvas-gradebook-setup-active-design-area" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="current-canvas-gradebook-setup-active-design-area"><span class="header-section-number">5.3</span> Current Canvas gradebook setup: active design area</h2>
+<blockquote class="blockquote">
+<p><strong>Important.</strong> At the time this guide was drafted, the course used both the Traditional Gradebook and the Learning Mastery Gradebook. This may change in a future copy of the course. Follow the live Canvas configuration you inherit. The instructor must update grades timely in the Canvas gradebook(s) that control Core completion for Advanced module access.</p>
+</blockquote>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 76%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Component</strong></th>
+<th><strong>Current use</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Traditional Gradebook</td>
+<td>Graded items are worth 1 point: Complete = 1, Not Ready = 0.5, Missing / No Submission = 0. <em>Note: the threshold for Not Ready to Complete is set at 0.95, but when grading Not Ready, always enter 0.5</em></td>
+</tr>
+<tr class="even">
+<td>Custom grading schemes</td>
+<td>Core and Advanced use different display language so required missing work and optional non-selected work are not conflated.</td>
+</tr>
+<tr class="odd">
+<td>Learning Mastery Gradebook / Outcomes</td>
+<td>Used to track completion/outcomes and support bundle counting/access logic. Core quizzes may auto-grade traditionally but still require Learning Mastering manual entry.</td>
+</tr>
+<tr class="even">
+<td>Rubrics</td>
+<td>Rubrics are attached to assignments and outcomes. If adding an assignment: (1) create an outcome, (2) create matching rubric and attached outcome, and (3) a attach the correct rubric to assignment/quiz/discussion.</td>
+</tr>
+<tr class="odd">
+<td>Tokens</td>
+<td>Tracked in a non-grade-counting assignment group. Students begin with 3 Core revision tokens.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="core-revision-tokens" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="core-revision-tokens"><span class="header-section-number">5.4</span> Core revision tokens</h2>
+<p>Students begin with 3 Core revision tokens. Tokens are for Core work only. They are not used for Advanced work.</p>
+<ul>
+<li><p>A token reopens needed Core item(s) for a module group after the module items lock.</p></li>
+<li><p>If a student missed most or all of a Core module, adjust dates for past and current module so the student has a realistic path through the missed module and the next module.</p></li>
+<li><p>If the student only needs one revision, reopen the relevant item rather than redesigning the whole week.</p></li>
+<li><p>Token due dates may be flexible. Use student-specific dates to communicate the recovery plan.</p></li>
+<li><p>Early in the course, if a student clearly misunderstood that Not Ready requires revision, prioritize recovery and communication over rigid enforcement.</p></li>
+<li><p>When applying a token, update the token count, change the relevant student-specific due/availability dates, message the student, and log a private Gradebook note.</p></li>
+</ul>
+</section>
+<section id="core-grading-expectations" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="core-grading-expectations"><span class="header-section-number">5.5</span> Core grading expectations</h2>
+<p>Core file-submission assignments receive the most detailed feedback. The instructor should scan code enough to catch obvious problems, but the main grading focus is the student’s memos, documentation, file correctness, document formatting, evidence of learning, and submission of the correct artifact. Practice Space quizzes support code-checking because students can retry them to mastery.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 36%">
+<col style="width: 63%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Common Not Ready reason</strong></th>
+<th><strong>Instructor response</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Wrong file or missing file</td>
+<td>Mark Not Ready. Explain which artifact is required and request resubmission.</td>
+</tr>
+<tr class="even">
+<td>Incomplete file or old/failed HTML knit</td>
+<td>Mark Not Ready if the submitted artifact does not show the completed work. Explain how to verify the output before submitting.</td>
+</tr>
+<tr class="odd">
+<td>Missing/thin memos</td>
+<td>Mark Not Ready when memos do not show the learning process. Ask for concrete comments/reflections tied to the code.</td>
+</tr>
+<tr class="even">
+<td>Poor document formatting</td>
+<td>Use judgment. Mark Not Ready if unreadable or missing required structure; otherwise provide improvement feedback for next time.</td>
+</tr>
+<tr class="odd">
+<td>AI-generated or copied-looking work without evidence of student process</td>
+<td>Treat as a learning/revision issue first. Mark Not Ready, explain the concern, and require work that shows the student’s own process.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Use the SpeedGrader to enter traditional and rubric grade, write feedback. When the student earns “Not Ready”, click “Reassign Assignment” after leaving feedback.</strong></p>
+</section>
+<section id="core-feedback-voice" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="core-feedback-voice"><span class="header-section-number">5.6</span> Core feedback voice</h2>
+<p>Core feedback should be student-facing, specific, warm, and direct. On Complete work, name what the student did well and one or two ways to keep improving. On Not Ready work, explain what needs revision and communicate that high expectations are paired with confidence the student can meet them. The <a href="https://boisestate.ai/a/a1ee701d-ccbc-40db-ae5b-6d226076e7ca">Boise State AI feedback chatbot</a> may be used as a drafting aid, but the instructor remains the grader and must edit the feedback before posting.</p>
+</section>
+<section id="advanced-grading-expectations" class="level2" data-number="5.7">
+<h2 data-number="5.7" class="anchored" data-anchor-id="advanced-grading-expectations"><span class="header-section-number">5.7</span> Advanced grading expectations</h2>
+<p>Advanced work should be graded promptly but lightly. Most Advanced submissions should be marked Complete when there is good-faith completion. Do not give heavy feedback on every Advanced item. Save detailed coaching for Core work unless the Advanced submission needs correction.</p>
+<ul>
+<li><p>Use Not Ready for wrong uploads, major misunderstanding, very low-effort work, unclear evidence of completion, or work that does not appear to show the student’s own learning process.</p></li>
+<li><p>If the problem is a small submission issue caught early, message the student and make a reasonable correction window.</p></li>
+<li><p>Advanced work has no token pathway. Once locked, missing Advanced work stays locked.</p></li>
+<li><p>For discussions, monitor enough to protect the learning environment and clarify when needed, but let students talk to each other.</p></li>
+</ul>
+</section>
+<section id="student-ai-use" class="level2" data-number="5.8">
+<h2 data-number="5.8" class="anchored" data-anchor-id="student-ai-use"><span class="header-section-number">5.8</span> Student AI use</h2>
+<p>AI-use expectations are embedded in the student-facing pages, activities, rubrics, and course chatbots. The instructor’s role is to coach students toward better AI habits, especially early in the course when students may arrive with unproductive copy/paste habits.</p>
+<p>If a submission appears copied from AI and does not show the student’s own learning process, mark it Not Ready, explain the concern directly, and require revision. Do not over-invest in proving intent. Focus on whether the submission meets the learning, documentation, and artifact specifications.</p>
+</section>
+<section id="final-course-grade-audit" class="level2" data-number="5.9">
+<h2 data-number="5.9" class="anchored" data-anchor-id="final-course-grade-audit"><span class="header-section-number">5.9</span> Final course grade audit</h2>
+<p>During the final week, audit each student’s final bundle status before submitting official grades. Use a visible informational Final Grade assignment in Canvas so students can see the instructor-determined final grade before official submission. This assignment page is not published until final grading takes place.</p>
+<ul class="task-list">
+<li><p><label><input type="checkbox">Remaining Not Ready, Missing, or No Submission gradebook items filled out?</label></p></li>
+<li><p><label><input type="checkbox">Traditional Gradebook and Learning Mastery/outcomes reconciled if both are in use?</label></p></li>
+<li><p><label><input type="checkbox">All Core items Complete?</label></p></li>
+<li><p><label><input type="checkbox">Advanced Complete count: 12 or more for B, 18 or more for A?</label></p></li>
+<li><p><label><input type="checkbox">Token counts and student-specific extensions reviewed?</label></p></li>
+<li><p><label><input type="checkbox">Final grade communicated in Canvas before official submission?</label></p></li>
+</ul>
+</section>
+</section>
+<section id="communication-and-student-support" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Communication and Student Support</h1>
+<p>Student outreach should happen primarily through Canvas. There is no general Course Questions discussion forum in this course. Use Canvas Inbox/Gradebook messages, assignment comments, Gradebook Notes, and booked Zoom meetings as the main support channels.</p>
+<section id="canvas-communication-workflow" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="canvas-communication-workflow"><span class="header-section-number">6.1</span> Canvas communication workflow</h2>
+<ul class="task-list">
+<li><p><label><input type="checkbox">During grading, identify students who are missing Core work, appear stuck, have Not Ready work that needs attention, or have not responded to previous outreach.</label></p></li>
+<li><p><label><input type="checkbox">Message students from the Canvas Gradebook or Canvas Inbox so communication stays connected to the course context.</label></p></li>
+<li><p><label><input type="checkbox">After sending outreach, write a short private note in the Gradebook Notes column: date, reason, action.</label></p></li>
+<li><p><label><input type="checkbox">When a student uses a token, record the token use in the token assignment and document which assignments or module due-dates where adjusted in a SpeedGrader comment.</label></p></li>
+<li><p><label><input type="checkbox">When a student has not responded and an academic alert is needed, record the alert date and reason in Notes.</label></p></li>
+</ul>
+</section>
+<section id="week-1-participation-and-early-intervention" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="week-1-participation-and-early-intervention"><span class="header-section-number">6.2</span> Week 1 participation and early intervention</h2>
+<p>Week 1 is an early-success checkpoint. Participation means meaningful Canvas engagement and submitted work, not just enrollment.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 79%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Timing</strong></th>
+<th><strong>Action</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Wednesday of Week 1</td>
+<td>Contact students who have not logged in or submitted early work.</td>
+</tr>
+<tr class="even">
+<td>Friday of Week 1</td>
+<td>Send a second check-in if needed and continue normal Friday outreach for missing Core work.</td>
+</tr>
+<tr class="odd">
+<td>Monday of Week 2</td>
+<td>Submit academic alerts for students who have not participated meaningfully and have not responded to instructor outreach.</td>
+</tr>
+<tr class="even">
+<td>After Week 1</td>
+<td>Watch for students who stopped participating. Message them on Fridays and follow up on Mondays. Submit academic alerts for non-responding students on Mondays.</td>
+</tr>
+</tbody>
+</table>
+<blockquote class="blockquote">
+<p><strong>Late enrollment.</strong> Do not approve late-enrollment exceptions once the 7-week course has started. In this course, late entry usually sets students up to fail because the course moves too quickly and builds on early setup work.</p>
+</blockquote>
+</section>
+<section id="ongoing-student-check-ins" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="ongoing-student-check-ins"><span class="header-section-number">6.3</span> Ongoing student check-ins</h2>
+<p>Required outreach is focused on students who are inactive, missing Core work, falling behind, or not responding. A mid-course bundle-status check is recommended around the end of Week 3 or start of Week 4, especially in a term when students appear confused about Core/Advanced progress.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 63%">
+<col style="width: 18%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Level</strong></th>
+<th><strong>What the instructor does</strong></th>
+<th><strong>When to use it</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Minimum</td>
+<td>Contact only at-risk, inactive, or nonresponsive students.</td>
+<td>Always.</td>
+</tr>
+<tr class="even">
+<td>Targeted</td>
+<td>Contact students who are active but not excelling or seem frequently stuck.</td>
+<td>Recommended.</td>
+</tr>
+<tr class="odd">
+<td>Full</td>
+<td>Send every student a personalized status note: likely bundle path, what is going well, what to do next, and ask a reflection prompt.</td>
+<td>Excellent practice when time allows.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="meetings-with-students" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="meetings-with-students"><span class="header-section-number">6.4</span> Meetings with students</h2>
+<p>The current course design offers students a Book a Meeting page linked from multiple places in Canvas. The current workflow uses Google Calendar appointment scheduling for 30-minute Zoom meetings. A future instructor may change the workflow, but must preserve a clear meeting-booking pathway or update all related links and buttons.</p>
+</section>
+</section>
+<section id="discussion-groups" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Discussion Groups</h1>
+<p>Discussion groups support belonging, timing alignment, and manageable peer interaction. They should be large enough to create conversation but small enough to avoid overwhelming students in a combined Canvas site.</p>
+<section id="group-setup-rules" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="group-setup-rules"><span class="header-section-number">7.1</span> Group setup rules</h2>
+<ul>
+<li><p>Use stable Canvas discussion groups for peer-review and many reflection activities.</p></li>
+<li><p>Create groups near the start of Week 1 after observing early participation patterns.</p></li>
+<li><p>Set groups size to between 15-20 students.</p></li>
+<li><p>Week one set up group membership by student activity. Early submitters with early submitters, slower-starting students with slower-starting students. The purpose is timing alignment, not labeling students.</p></li>
+<li><p>Make sure one student is the only poster for their group and left in a empty room.</p></li>
+</ul>
+</section>
+<section id="whole-class-discussions" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="whole-class-discussions"><span class="header-section-number">7.2</span> Whole-class discussions</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 58%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Discussion type</strong></th>
+<th><strong>Recommended setup</strong></th>
+<th><strong>Reason</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Hack-A-Prompt</td>
+<td>Whole-class discussion</td>
+<td>The activity is optional Advanced work and already splits by pathway. Smaller groups can leave students alone in a discussion space.</td>
+</tr>
+<tr class="even">
+<td>Git/GitHub help-style discussion</td>
+<td>Whole-class discussion</td>
+<td>Participation is limited to students choosing that Advanced activity and the discussion functions partly as a support forum.</td>
+</tr>
+<tr class="odd">
+<td>Peer-review and reflections</td>
+<td>Stable discussion groups</td>
+<td>Students benefit from recurring peers and manageable feedback spaces.</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="week-specific-preparation-and-tasks" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> Week-Specific Preparation and Tasks</h1>
+<p>Use this section to prepare for the teaching focus of each week. Do not use it as a substitute for the live Canvas module. The instructor should inspect the live module before it opens and verify the actual assignments, due dates, rubrics, prerequisites, and requirements.</p>
+<section id="before-each-module-opens" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="before-each-module-opens"><span class="header-section-number">8.1</span> Before each module opens</h2>
+<ul class="task-list">
+<li><p><label><input type="checkbox">Review the module overview and all Core/Advanced pages students will see.</label></p></li>
+<li><p><label><input type="checkbox">Open the quizzes, file uploads, discussions, and rubrics. Verify dates and availability settings.</label></p></li>
+<li><p><label><input type="checkbox">Check prerequisites and requirements, especially anything controlling Advanced access.</label></p></li>
+<li><p><label><input type="checkbox">Use Student View when access logic is complicated.</label></p></li>
+<li><p><label><input type="checkbox">Identify the learning skill to model, point out, praise, and correct toward in feedback.</label></p></li>
+<li><p><label><input type="checkbox">Make small clarifying edits when you notice likely confusion, and document larger changes in the change memo.</label></p></li>
+</ul>
+</section>
+<section id="weekly-learning-skill-guide" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="weekly-learning-skill-guide"><span class="header-section-number">8.2</span> Weekly learning-skill guide</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 5%">
+<col style="width: 11%">
+<col style="width: 82%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Week / module</strong></th>
+<th><strong>Primary course focus</strong></th>
+<th><strong>Instructor emphasis</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Week 1 / Module 1</strong></td>
+<td><strong>Tenacity</strong> with <strong>Resilient Beginnings</strong> Advanced work</td>
+<td>Help students start strong with RStudio, basic R commands, scripts, comments, saved files, and early workflow habits. Reinforce that beginner errors are expected. Praise students who notice what happened, test a fix, document what changed, and keep going. Watch closely for non-participation, setup problems, and early AI copy/paste habits.</td>
+</tr>
+<tr class="even">
+<td><strong>Week 2 / Module 2</strong></td>
+<td><strong>Transparency</strong> with <strong>Innovation Nursery</strong> Advanced work</td>
+<td>Emphasize clear, reviewable R work: vectors, object structures, R Notebook habits, visible checks, resource citation, and written explanations. Praise students who leave a trail of what they ran, what output appeared, what they checked, and what they concluded. Watch for coercion confusion, indexing/name confusion, case-sensitivity errors, and thin documentation.</td>
+</tr>
+<tr class="odd">
+<td><strong>Week 3 / Module 3</strong></td>
+<td><strong>Courage</strong> with <strong>Hack-A-Prompt Round 1</strong> Advanced work</td>
+<td>Reinforce troubleshooting, help-seeking, missing-value decisions, and the courage to stop when output or rendering does not make sense. Praise students who read errors carefully, inspect missing values, document choices, and ask clear questions. Watch for failed renders, hidden <code>NA</code> problems, weak memos, and students moving ahead without understanding the issue.</td>
+</tr>
+<tr class="even">
+<td><strong>Week 4 / Module 4</strong></td>
+<td><strong>Autonomy</strong> with GitHub Advanced work opening</td>
+<td>Help students take more ownership of file management, importing data, selecting rows/columns/values, and verifying that objects are what they expect. Reinforce that autonomy means managing the workflow responsibly, not working in isolation. Watch for working-directory errors, wrong-file imports, indexing mistakes, and Git/GitHub setup issues for students choosing that Advanced path.</td>
+</tr>
+<tr class="odd">
+<td><strong>Week 5 / Advanced bridge week</strong></td>
+<td><strong>GitHub workflow and Hack-A-Prompt Round 2 preparation/launch</strong></td>
+<td>Support students who are continuing Git/GitHub setup and students who are choosing the tidyverse Hack-A-Prompt pathway. Emphasize verification checkpoints, careful reading of instructions, and realistic pacing on Advanced options. Watch for students who want a B/A bundle but are not yet completing enough Advanced work, and remind them that Advanced activities are choices, not a requirement to do everything.</td>
+</tr>
+<tr class="even">
+<td><strong>Week 6 / Module 6</strong></td>
+<td><strong>Curiosity</strong> with <strong>Hack-A-Prompt Round 2</strong> Advanced work</td>
+<td>Encourage students to ask clear data questions, recode deliberately, compare groups, and use summaries to investigate patterns. Praise useful questions, careful observations, and thoughtful interpretation of grouped results. Watch for students who create variables without checking them, summarize before verifying groups, or assume tidyverse pipelines are correct just because they run.</td>
+</tr>
+<tr class="odd">
+<td><strong>Week 7 / Module 7</strong></td>
+<td><strong>Thoroughness</strong> with <strong>Wildfire</strong> Advanced work</td>
+<td>Support finishing well: probability simulation, repeated outcomes, ggplot2 visualizations, rendered Quarto reports, peer feedback, revision, and final grade auditing. Praise students who check whether results make sense, choose appropriate visualizations, explain output clearly, and avoid superficial last-minute work. Watch for failed renders, incomplete files, weak interpretation, missing final reflections, and unresolved Not Ready/Core completion issues.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="week-1-tenacity" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="week-1-tenacity"><span class="header-section-number">8.3</span> Week 1: Tenacity</h2>
+<ul class="task-list">
+<li><p><label><input type="checkbox">Before launch, verify that all Module 1 setup, orientation, RStudio, and early script activities are dated correctly.</label></p></li>
+<li><p><label><input type="checkbox">Wednesday: contact students who have not logged in or submitted early work.</label></p></li>
+<li><p><label><input type="checkbox">Friday: send second outreach to non-participants and grade Core work quickly.</label></p></li>
+<li><p><label><input type="checkbox">Watch Chapter 2 / early script submissions for work that looks generated rather than practiced. Treat AI misuse as a revision/coaching issue.</label></p></li>
+<li><p><label><input type="checkbox">Create discussion groups after observing early participation patterns if group discussions will be used soon.</label></p></li>
+</ul>
+</section>
+<section id="week-2-transparency" class="level2" data-number="8.4">
+<h2 data-number="8.4" class="anchored" data-anchor-id="week-2-transparency"><span class="header-section-number">8.4</span> Week 2: Transparency</h2>
+<ul class="task-list">
+<li><p><label><input type="checkbox">Lean into feedback on memos, documentation, object checks, file organization, and reproducible notebook habits.</label></p></li>
+<li><p><label><input type="checkbox">Reinforce that students need to leave a clear trail: what they ran, what output appeared, what they checked, and what they concluded.</label></p></li>
+<li><p><label><input type="checkbox">Watch for coercion confusion, object-name/element-name confusion, indexing mistakes, case-sensitivity errors, and thin documentation.</label></p></li>
+<li><p><label><input type="checkbox">Confirm that Advanced Module 2 unlocked for students who completed the required prior Core work.</label></p></li>
+</ul>
+</section>
+<section id="week-3-courage" class="level2" data-number="8.5">
+<h2 data-number="8.5" class="anchored" data-anchor-id="week-3-courage"><span class="header-section-number">8.5</span> Week 3: Courage</h2>
+<ul class="task-list">
+<li><p><label><input type="checkbox">Model troubleshooting and normalize errors, failed renders, and missing-value problems as part of learning R.</label></p></li>
+<li><p><label><input type="checkbox">Reinforce how students should document questions, resources, error messages, missing-value decisions, and what helped.</label></p></li>
+<li><p><label><input type="checkbox">Watch for students who stopped after a Not Ready quiz attempt, rendering problem, or confusing error. Reach out early.</label></p></li>
+<li><p><label><input type="checkbox">Use whole-class discussion for Hack-A-Prompt Round 1 activities.</label></p></li>
+<li><p><label><input type="checkbox">Consider a targeted or full mid-course bundle-status check near the end of the week or start of Week 4.</label></p></li>
+</ul>
+</section>
+<section id="week-4-autonomy" class="level2" data-number="8.6">
+<h2 data-number="8.6" class="anchored" data-anchor-id="week-4-autonomy"><span class="header-section-number">8.6</span> Week 4: Autonomy</h2>
+<ul class="task-list">
+<li><p><label><input type="checkbox">Help students take ownership of file management, importing data, selecting rows/columns/values, and verifying object types and sizes.</label></p></li>
+<li><p><label><input type="checkbox">Reinforce that autonomy means managing the workflow responsibly, not working alone without support.</label></p></li>
+<li><p><label><input type="checkbox">Check for working-directory errors, wrong-file imports, indexing mistakes, and weak verification habits.</label></p></li>
+<li><p><label><input type="checkbox">Monitor Git/GitHub setup for students choosing that Advanced path. Use the whole-class Git/GitHub help-style discussion where appropriate.</label></p></li>
+<li><p><label><input type="checkbox">Continue Friday/Monday grade audits carefully as students begin making stronger bundle-path decisions.</label></p></li>
+</ul>
+</section>
+<section id="week-5-advanced-bridge-github-workflow" class="level2" data-number="8.7">
+<h2 data-number="8.7" class="anchored" data-anchor-id="week-5-advanced-bridge-github-workflow"><span class="header-section-number">8.7</span> Week 5: Advanced Bridge / GitHub Workflow</h2>
+<ul class="task-list">
+<li><p><label><input type="checkbox">Help students make realistic Advanced choices based on their goals, remaining time, and current bundle progress.</label></p></li>
+<li><p><label><input type="checkbox">Monitor students continuing Git/GitHub work and remind them to use verification checkpoints before moving ahead.</label></p></li>
+<li><p><label><input type="checkbox">Watch for students who want a B or A bundle but are not yet completing enough Advanced work. Communicate realistic next steps.</label></p></li>
+<li><p><label><input type="checkbox">If students are behind on Core, use token/date adjustments to create a clear recovery path rather than simply reopening everything without guidance.</label></p></li>
+<li><p><label><input type="checkbox">Remind students that Advanced activities are choices; they do not need to complete every Advanced item.</label></p></li>
+</ul>
+</section>
+<section id="week-6-curiosity" class="level2" data-number="8.8">
+<h2 data-number="8.8" class="anchored" data-anchor-id="week-6-curiosity"><span class="header-section-number">8.8</span> Week 6: Curiosity</h2>
+<ul class="task-list">
+<li><p><label><input type="checkbox">Encourage students to ask clear data questions, recode deliberately, compare groups, and interpret summaries.</label></p></li>
+<li><p><label><input type="checkbox">Praise useful questions, careful observations, thoughtful grouped comparisons, and good explanations of what the output shows.</label></p></li>
+<li><p><label><input type="checkbox">Watch for students who create variables without checking them, summarize before verifying groups, or assume tidyverse pipelines are correct just because they run.</label></p></li>
+<li><p><label><input type="checkbox">Use whole-class discussion for Hack-A-Prompt Round 2 activities.</label></p></li>
+<li><p><label><input type="checkbox">Audit Advanced counts and Core completion before final-week pressure arrives.</label></p></li>
+</ul>
+</section>
+<section id="week-7-thoroughness" class="level2" data-number="8.9">
+<h2 data-number="8.9" class="anchored" data-anchor-id="week-7-thoroughness"><span class="header-section-number">8.9</span> Week 7: Thoroughness</h2>
+<ul class="task-list">
+<li><p><label><input type="checkbox">Remind students to verify final files, rendered Quarto outputs, plots, simulations, and submission artifacts before deadlines.</label></p></li>
+<li><p><label><input type="checkbox">Support students in finishing well: checking whether results make sense, choosing appropriate visualizations, explaining output clearly, and avoiding superficial last-minute work.</label></p></li>
+<li><p><label><input type="checkbox">Grade final Core and Advanced work promptly and lightly where appropriate.</label></p></li>
+<li><p><label><input type="checkbox">Conduct the final course grade audit: Core completion, Advanced count, token status, Not Ready/Missing/No Submission items, extensions, and final bundle.</label></p></li>
+<li><p><label><input type="checkbox">Post or communicate a final grade indicator in Canvas if using that workflow before official grade submission.</label></p></li>
+<li><p><label><input type="checkbox">Record course-change notes for issues to fix before the next offering.</label></p></li>
+</ul>
+</section>
+</section>
+<section id="help-resources" class="level1" data-number="9">
+<h1 data-number="9"><span class="header-section-number">9</span> Help Resources</h1>
+<p>Keep university support information current. The items below are intentionally broad; verify contact information and institutional links each term.</p>
+<section id="technical-help" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="technical-help"><span class="header-section-number">9.1</span> Technical help</h2>
+<ul>
+<li><p>Boise State Help Desk for technical issues or questions: phone, email, and chat information should be verified each term.</p></li>
+<li><p>Canvas Help button in the Canvas global navigation menu.</p></li>
+<li><p>Canvas Instructor Guide and Canvas Student Guide.</p></li>
+<li><p>Boise State Learning Technology Solutions training, events, and Canvas knowledge-base articles.</p></li>
+</ul>
+</section>
+<section id="course-tool-resources" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="course-tool-resources"><span class="header-section-number">9.2</span> Course tool resources</h2>
+<p>Required tools are Canvas, R, and RStudio Desktop. Boise State AI, Git/GitHub, Zoom, Google Calendar/Drive, CSV files, and Excel files appear where specific activities use them. If a tool or support process changes, update the relevant activity instructions and the instructor notes.</p>
+<p>Third-party tools may not be fully supported by Boise State. Faculty and students should review privacy and accessibility policies for tools used in course activities.</p>
+</section>
+<section id="accessibility-copyright-privacy-and-academic-integrity" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="accessibility-copyright-privacy-and-academic-integrity"><span class="header-section-number">9.3</span> Accessibility, copyright, privacy, and academic integrity</h2>
+<ul>
+<li><p>Accommodations: direct students to the Educational Access Center and follow institutional accommodation procedures.</p></li>
+<li><p>Copyright: course materials are for enrolled students and course use only unless permission allows broader use.</p></li>
+<li><p>Online privacy: follow Boise State information privacy and data security policy for email, personal disclosures, data retained about students, online behavior, and publication/distribution of student work.</p></li>
+<li><p>Academic integrity: use the Academic Integrity Faculty resources if concerns arise. In this course, many early AI-use issues should first be handled as revision/coaching when appropriate.</p></li>
+</ul>
+</section>
+<section id="instructor-facing-support" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="instructor-facing-support"><span class="header-section-number">9.4</span> Instructor-facing support</h2>
+<p>If the course is being handed off, future instructors may contact Lorraine if available. Otherwise, consult the department chair, eCampus, OIT/Learning Technology Solutions, or the appropriate program support office. The live Canvas course is the authority; take ownership of it before teaching.</p>
+</section>
+</section>
+<section id="course-maintenance-and-change-memos" class="level1" data-number="10">
+<h1 data-number="10"><span class="header-section-number">10</span> Course Maintenance and Change Memos</h1>
+<p>This course is designed to improve over time. Instructors are encouraged to make small clarifying edits when student work reveals a repeated point of confusion. Larger or structural edits should be documented so the copied-forward course remains coherent.</p>
+<section id="running-change-memo" class="level2" data-number="10.1">
+<h2 data-number="10.1" class="anchored" data-anchor-id="running-change-memo"><span class="header-section-number">10.1</span> Running change memo</h2>
+<p>Maintain a running course-change memo. Each entry only needs to answer the following questions:</p>
+<ul>
+<li><p>Where was the change made?</p></li>
+<li><p>When was it changed?</p></li>
+<li><p>Why was it changed?</p></li>
+<li><p>What changed?</p></li>
+<li><p>Does this affect future offerings?</p></li>
+</ul>
+<p>Change memo/examples link: <a href="https://docs.google.com/document/d/1WqXmWNsxVcCdl5tmaWXvlXGmsj74Z7iItevZVRKuI6I/edit?tab=t.vwyxxncj089q">Change memo examples</a></p>
+</section>
+<section id="what-to-document" class="level2" data-number="10.2">
+<h2 data-number="10.2" class="anchored" data-anchor-id="what-to-document"><span class="header-section-number">10.2</span> What to document</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 48%">
+<col style="width: 51%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Change type</strong></th>
+<th><strong>Document?</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Tiny typo or punctuation correction</td>
+<td>Usually no.</td>
+</tr>
+<tr class="even">
+<td>Clarifying a confusing sentence, instruction, rubric language, or due-date wording</td>
+<td>If it affects student interpretation.</td>
+</tr>
+<tr class="odd">
+<td>Changing dates, locks, prerequisites, or module requirements</td>
+<td>Yes. Also verify access in Student View.</td>
+</tr>
+<tr class="even">
+<td>Adding/removing assignments, quizzes, discussions, rubrics, or outcomes</td>
+<td>Yes. This is structural.</td>
+</tr>
+<tr class="odd">
+<td>Changing grading logic, token policy, bundle requirements, or Advanced counts</td>
+<td>Yes. This affects the course model and must be reflected in student-facing materials.</td>
+</tr>
+<tr class="even">
+<td>Changing meeting-booking, communication, or announcement workflows</td>
+<td>Yes if linked from course pages. Run link validation.</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="announcement-and-outreach-resources" class="level1" data-number="11">
+<h1 data-number="11"><span class="header-section-number">11</span> Announcement and Outreach Resources</h1>
+<p>Weekly announcements are recommended but not required. They are most useful when they are customized to the current student group, the current module, common assignment trends, timely issues, and what students should do next. Do not rely on copied-forward announcements without reviewing them for the current term.</p>
+<section id="pre-course-welcome-communication" class="level2" data-number="11.1">
+<h2 data-number="11.1" class="anchored" data-anchor-id="pre-course-welcome-communication"><span class="header-section-number">11.1</span> Pre-course welcome communication</h2>
+<p>Send a welcome message before or when Canvas opens on the Friday before Week 1. It should welcome students, state when the Canvas course opens, tell students how to start, point them to the syllabus and custom HTML course calendar, explain how to get help, and invite them to begin early if they want.</p>
+</section>
+<section id="templates-and-chatbot-resources" class="level2" data-number="11.2">
+<h2 data-number="11.2" class="anchored" data-anchor-id="templates-and-chatbot-resources"><span class="header-section-number">11.2</span> Templates and chatbot resources</h2>
+<p>Do not duplicate every announcement or outreach message inside this guide. Use the existing chatbot and template resources, then customize the output before posting or sending.</p>
+<ul>
+<li><p>Announcement chatbot: [Insert announcement chatbot link]</p></li>
+<li><p>Announcement/template Google Doc: [Insert announcement/template Google Doc link]</p></li>
+<li><p>Student outreach templates: [Insert outreach template folder or document link]</p></li>
+<li><p>Boise State AI feedback/outreach chatbot: [Insert Boise State AI feedback/outreach chatbot link]</p></li>
+</ul>
+</section>
+</section>
+<section id="appendix-canvas-documentation-to-review-as-needed" class="level1" data-number="12">
+<h1 data-number="12"><span class="header-section-number">12</span> Appendix: Canvas Documentation to Review as Needed</h1>
+<p>This guide does not reproduce Canvas click-by-click documentation. Use current Canvas documentation for operational steps, especially when the interface changes.</p>
+<ul>
+<li><p><a href="https://community.instructure.com/t5/Instructor-Guide/tkb-p/Instructor">Canvas Instructor Guide</a></p></li>
+<li><p><a href="https://community.instructure.com/en/kb/articles/660932-how-do-i-use-the-learning-mastery-gradebook-to-view-outcome-results-in-a-course">Learning Mastery Gradebook</a></p></li>
+<li><p><a href="https://community.instructure.com/en/kb/articles/660897-how-do-i-add-requirements-to-a-module">Module requirements</a></p></li>
+<li><p><a href="https://community.instructure.com/en/kb/articles/664373-how-do-i-adjust-events-and-due-dates-in-a-course-import-in-canvas-career">Adjust events and due dates in a course import</a></p></li>
+<li><p><a href="https://community.instructure.com/t5/Instructor-Guide/How-do-I-validate-links-in-a-course/ta-p/1001">Canvas Link Validator</a></p></li>
+<li><p><a href="https://community.instructure.com/en/kb/articles/660849-how-do-i-send-a-message-to-students-from-the-gradebook">Message students from the Gradebook</a></p></li>
+<li><p><a href="https://community.instructure.com/en/kb/articles/660836-how-do-i-use-the-notes-column-in-the-gradebook">Gradebook Notes column</a></p></li>
+<li><p><a href="https://community.instructure.com/en/kb/articles/661173-how-do-i-use-a-rubric-to-grade-submissions-in-speedgrader">Use a rubric to grade in SpeedGrader</a></p></li>
+</ul>
+</section>
+<section id="revision-notes" class="level1" data-number="13">
+<h1 data-number="13"><span class="header-section-number">13</span> Revision Notes</h1>
+<p>This revised guide was drafted as a reusable master guide based on the existing DATA-R 155 Instructor Guide structure and the updated DATA-R 155 operating workflow described by the course designer, Lorraine Gaudio.</p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

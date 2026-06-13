@@ -1,0 +1,627 @@
+---
+title: "DATA-R 155 - Introduction to R"
+subtitle: "Online Course Instructor Guide | Reusable Master Guide"
+author: "Lorraine Gaudio"
+date: "Last updated: `r format(Sys.Date(), '%B %d, %Y')`"
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    number-sections: true
+    theme: cosmo
+editor: visual
+---
+
+# Purpose 
+
+This guide explains how to prepare, launch, teach, grade, communicate in, and maintain DATA-R 155 as a 7-week online Canvas course. It is written for a future instructor inheriting the course,
+
+Use this guide with the live Canvas course. Canvas is the source of truth for content access, submissions, grades, announcements, dates, communication, and student-facing instructions. Do not rely on [external planning websites](https://lorrainegaudio.github.io/data-r-155-summer-2026-site/) or draft artifacts as student-facing course infrastructure.
+
+Courses generally open to students the Friday before the first official day of class. This course moves quickly. Set aside time before launch to verify dates, module access, gradebook settings, rubrics, outcomes, discussion groups, and the custom HTML course calendar.
+
+# Course Operating Principles
+
+DATA-R 155 is a 7-week online Introduction to R course built around repeated Core practice, optional Advanced choices, timely feedback, and specifications grading. The course is not low-touch. It depends on active instructor monitoring, fast Core grading, and proactive student outreach.
+
+## Stable assumptions for the master course
+
+- Canvas is the source of truth for course content, submissions, grading, announcements, dates, and student communication.
+
+- The course should be copied forward from the most recent teaching site so successful live edits carry into the next offering.
+
+- This guide currently describes the 7-week online version. In-person adaptations may be added later, but they are not part of this guide yet.
+
+- This course usually runs multiple sections at the same time and it is cross-listed for ANTH 155, PSYC 155, SOC 155, BIOL 155, and ANTH 580. All enrollments are managed in one Canvas teaching site when institutionally allowed.
+
+- Graduate students complete the same grading bundles as undergraduate students. Differentiation comes through Advanced activity options that graduate level students tend to want (e.g., Chapter 9 GitHub).
+
+- Required student tools are Canvas, R, and RStudio Desktop. Other tools appear inside specific activities and should be reviewed where they affect setup or support. For example, quarto may not work on Newer Windows processors (ARMs), so the instructor should be prepared to support students who encounter that issue in a tool-specific activity.
+
+## Course design in one paragraph
+
+Students complete required Core work to build the foundation for R programming, reproducible workflow, and learning-skill development. Students who want a B or A add Advanced activities from a menu. Advanced activities allow students to choose work aligned with their goals, such as thesis research skill preparation verses the course being required for the degree. The instructor's main role is to reinforce the weekly Core learning skill in custom and timely feedback and intervenes early when students fall behind.
+
+# Course Setup and Launch
+
+Complete this section before the course opens. Do not assume that copied Canvas content has the correct dates, links, group sets, gradebook settings, or page text for the new offering.
+
+## Request and copy the Canvas course site
+
+- [ ] Request the Canvas course site through the university process used for the current term.
+
+- [ ] When possible, create one Canvas teaching site for all relevant DATA-R 155 sections and cross-listed enrollments for the semester. Select the sections when creating the site.
+
+- [ ] Copy the course forward from the most recent teaching site, not from an outdated draft, unless the department has identified a different master source.
+
+- [ ] After import, confirm that all students are enrolled in the correct combined Canvas site and that section information is visible for administrative needs.
+
+## Make a working copy of this guide
+
+Keep a reusable master version of this guide, then make a term-specific working copy for checklist tracking, notes, and live teaching decisions. Do not overwrite the master without preserving a clean reusable copy.
+
+## Update instructor-facing and student-facing identity pages
+
+- [ ] Update the Instructor Information / Meet Your Instructor page with the current instructor name, photo, contact expectations, and teaching information.
+
+- [ ] Update the Book a Meeting with the Instructor page. The current course design assumes students can book a 30-minute Zoom meeting through a Google Calendar appointment schedule, but a future instructor may use an equivalent meeting workflow.
+
+- [ ] Do not remove or rename the meeting-booking page casually. It is linked from multiple course pages and buttons. If the workflow changes, update all links and run link validation.
+
+- [ ] Update the syllabus and any orientation pages that name the instructor, term, calendar dates, office-hour/meeting workflow, or communication expectations.
+
+## Set up dates in two layers
+
+Use Canvas date adjustment or bulk date editing where it helps, but do not trust it as the whole job. DATA-R 155 has both Canvas setting dates and literal dates written into some course pages.
+
+| **Date layer** | **What to verify** |
+|---------------|---------------------------------------------------------|
+| Canvas settings dates | "Due Date," "Available from," and "Until date" on all module pages, assignments, quizzes, discussions |
+| Text dates inside navigation pages | Syllabus, all module overview pages, the custom Course Calendar page, Home pages, scheduled announcements, and Advanced Activities Tour. |
+
+## Standard release and lock pattern
+
+| **Item** | **Standard pattern** |
+|---------------|---------------------------------------------------------|
+| Course access | Canvas opens to students at 12:00 a.m. Mountain Time on the Friday before the official Monday start. |
+| Module access | Each module opens at 12:00 a.m. Mountain Time on the Friday before its module week. |
+| Advanced access | Advanced items also open on Friday but are only accessible to students who have earned Complete on the required prior module's Core work. |
+| Core due dates | Generally Tuesday/Thursday; Module 1 exception. |
+| Core lock date | Saturday night 11:59 p.m. for that week's Core module. |
+| Advanced lock date | Sunday night 11:59 pm. for the prior week's module. |
+| Time zone | Always Mountain Time. |
+
+> **Important timing rule.** Due dates and lock dates are not the same. The period between the due date and the lock date is primarily the student revision window after instructor feedback. Students may submit late during that window, but late first submissions submitted after the instructor grading pass may not receive feedback before the lock date, requiring a token for Core revision access. The instructor should grade on the stated rhythm and does not need to chase late submissions before the lock.
+
+## Update the custom HTML course calendar
+
+The Canvas homepage, among several others, directs students to the custom HTML course calendar as the student-facing schedule summary. Each term, update the calendar so the month/day numbers match the new offering. Preserve the structure and links unless there is a reason to redesign it. A chatbot may be used to revise the HTML dates cleanly, but the instructor must still verify the result in Canvas.
+
+## Review module content before launch
+
+- [ ] Open each module in Canvas and review the module overview, Core pages, Advanced pages, quizzes, file uploads, discussions, rubrics, outcomes, prerequisites, requirements, due dates, and availability dates.
+
+- [ ] Use Student View to verify what students can access when the module opens and what remains locked until the correct prerequisite is completed.
+
+- [ ] If you add a page, assignment, quiz, discussion, or file upload, attach the correct requirement/rubric/outcome so students can track progress and the course completion logic remains intact.
+
+- [ ] Verify that all student-facing content intended for the offering is published, and that old draft or instructor-only material is not visible to students.
+
+## Check quiz settings
+
+Core Practice Space quizzes are mastery-style checks paired with a related file upload. They should remain unlimited-attempt within the availability window. When the quiz uses build-on-last-attempt behavior, students only redo missed questions. These quizzes support learning and reduce the amount of code-correctness grading needed in file submissions.
+
+### Core quiz settings include: 
+
+- Shuffle answers
+
+- Allow clearing selection (Multiple Choice)
+
+- Allow multiple attempts
+  - Keep Highest score
+  - Unlimited allowed attempts
+  - Enable build on last attempt
+  
+- Hide results from students
+  - Show questions
+    - Show student responses: For all attempt
+      - Indicate response as correct or incorrect. 
+    - Show feedback
+    
+[explain the rationale for these settings and how they support learning and grading efficiency]
+    
+### Advanced quiz settings may vary
+
+Some Advanced or review quizzes may be timed or single-attempt. Do not generalize the Core Practice Space quiz settings to every quiz in the course. 
+
+## Verify grading architecture before students begin
+
+- [ ] Confirm the custom grading schemes for Core and Advanced items.
+
+- [ ] Confirm rubrics and outcomes are attached to graded items.
+
+- [ ] Confirm the Gradebook assignment groups: Core, Advanced, and Tokens, or the current equivalent if the course setup has changed.
+
+- [ ] Confirm the Gradebook Notes column is visible so it can be used as a private communication log.
+
+- [ ] Confirm the Learning Mastery Gradebook / outcomes setup if it is still used in the current course copy.
+
+- [ ] Confirm that module prerequisites and requirements controlling Advanced access work as intended.
+
+## Set up discussion groups
+
+Discussion groups may need to be recreated or checked each term. Do not assume imported group sets are ready. See the Discussion Groups section of this guide before creating groups.
+
+To check or edit the discussion groups, you go to People, and then you click on, I don't know, the discussion group or group set. 
+
+The discussion group should be titled "Data-R-155 🌳 Discussion Groups." Discussion group names should be fun, like  📈 ggplot Gurus,  🤠 Data Wranglers, and 🪄 Pipe Dream Team. 
+
+See the [Discussion Groups section](#discussion-groups) of this guide for group setup rules and whole-class discussion recommendations. discussion-groups
+
+## Validate links
+
+Run Canvas Accessibility Report and verify links after term setup and again after meaningful course edits. Some links may appear broken because they require login or point to intentionally unpublished content; review flagged links manually before changing them. If you remove or rename a page, check every linked button and module item that may point to it.
+
+## Contact students before the course starts
+
+Send a welcome message before or when Canvas opens on the Friday before Week 1. The message should tell students when Canvas opens, how to start, where to find the syllabus and course calendar, how to get help, and that they can begin early. 
+
+## Launch checklist
+
+- [ ] Canvas teaching site created with all intended sections/cross-lists.
+
+- [ ] Syllabus updated.
+
+- [ ] Instructor Information page updated.
+
+- [ ] Book a Meeting page updated and tested.
+
+- [ ] Course calendar updated and checked.
+
+- [ ] Module pages opening, due, and lock dates verified.
+
+- [ ] Overview and home page text dates verified.
+
+- [ ] Core/Advanced prerequisites and requirements checked (Module edit).
+
+- [ ] Rubrics and outcomes match/link to assignments checked.
+
+- [ ] Traditional Gradebook and Learning Mastery setup checked, if both are still used.
+
+- [ ] Gradebook Notes column visible.
+
+- [ ] Discussion groups planned or created as appropriate.
+
+- [ ] All Canvas links validated and Accessibility Report passes at 99% or better.
+
+- [ ] Student-facing content published; hidden/draft content reviewed.
+
+- [ ] Pre-course welcome communication sent.
+
+# Weekly Instructor Workflow
+
+This course depends on a timely instructor rhythm. Core completion affects revision windows and Advanced access, so grading is part of the course structure. During active teaching, estimate 12-15 hours per week depending on enrollment, student support needs, and depth of feedback. The scheduled rhythm below is the minimum maintenance rhythm, not a guarantee of total workload.
+
+## Weekly grading and support rhythm
+
+| **Day** | **Required instructor work** | **Why it matters** |
+|--------------|---------------------------------------|-------------------|
+| Wednesday | Quick-grade submitted Core work, including early submissions when available. In Week 1, also contact students who have not logged in or submitted early work. | Students need fast feedback while there is still time to revise before the Core lock. |
+| Friday | Grade submitted Core work and any submitted Advanced work. Conduct a weekly grade audit. Email/check in with students who are missing current Core work, appear stuck, or have not responded. | This is the key intervention point before the Saturday Core lock. |
+| Monday | Grade weekend/locked Advanced work. Review late/Not Ready Core items. Apply tokens when needed. Adjust student-specific dates. Conduct another grade audit. Submit academic alerts when appropriate. | Advanced work has no token pathway. Monday is also the recovery-planning and escalation day. |
+| Other days | Monitor Canvas messages, assignment comments, and meeting bookings. Grade early submissions when it fits your workflow, but do not chase late submissions outside the stated rhythm. | The course needs active monitoring, but the instructor also needs a sustainable boundary. |
+
+> **Boundary.** If students submit after the Friday grading pass and the Core item locks Saturday, they risk needing a token if the submission is Not Ready. The instructor should grade on the stated rhythm; the instructor does not need to chase every late submission before the lock.
+
+## Weekly grade audit
+
+Every Friday and Monday, after grading, verify that grades, completion statuses, outcomes, and access logic match. In the current setup, this may require checking both the Traditional Gradebook and the Learning Mastery Gradebook/outcomes. The audit prevents students from being blocked from Advanced work or revisions because a status was not updated in the right place.
+
+- [ ] Check that Core submissions graded Complete are recorded as Complete in the current gradebook mechanism.
+
+- [ ] Check that outstanding Not Ready Core submissions have clear feedback and that the student has resubmission access, if the original lock date has passed.
+
+- [ ] Check that auto-graded Core quizzes are also marked appropriately in the outcome/Learning Mastery system.
+
+- [ ] Check that Advanced Complete counts are updating correctly.
+
+- [ ] Check that token use has been recorded and student-specific dates have been adjusted.
+
+- [ ] Check that at-risk students have been contacted and notes are recorded in the Gradebook Notes column.
+
+## Live course edits during teaching
+
+When grading reveals repeated student confusion, make small clarifying edits in Canvas. This is a normal part of teaching the course. For larger changes, document the change in the running course-change memo. After meaningful page or link edits, run link validation.
+
+# Grading, Specifications Grading, and Feedback
+
+## Specifications grading overview
+
+DATA-R 155 uses Specifications Grading. Students earn final grades by completing bundles of work to a professional standard. There is no partial-credit point chasing. Work either meets the specifications, needs revision, or does not count.
+
+| **Final grade bundle** | **Requirements** |
+|------------------|------------------------------------------------------|
+| F | Missing Core work or fewer than 25 Core items earn Complete. |
+| D | At least 25 Core items earn Complete. |
+| C | All Core work earns Complete. |
+| B | All Core work earns Complete, plus at least 12 Advanced assignments earn Complete. |
+| A | All Core work earns Complete, plus at least 18 Advanced assignments earn Complete. |
+| A+ | All Core work earns Complete, plus at least 20 Advanced assignments earn Complete, and the student shows exceptional learning growth and engagement. |
+
+## Status labels
+
+| **Work type** | **Status labels** | **Instructor meaning** |
+|-------------|-------------|----------------------------------------------|
+| Core | Complete / Not Ready / Missing | Core is required. Not Ready does not count until revised; for required Core work, Not Ready functions like Missing until the student fixes it. |
+| Advanced | Complete / Not Ready / No Submission | Advanced is optional. No Submission means the student did not choose that option. Advanced work has deadlines and no revision tokens after lock date. |
+
+## Current Canvas gradebook setup: active design area
+
+> **Important.** At the time this guide was drafted, the course used both the Traditional Gradebook and the Learning Mastery Gradebook. This may change in a future copy of the course. Follow the live Canvas configuration you inherit. The instructor must update grades timely in the Canvas gradebook(s) that control Core completion for Advanced module access.
+
+| **Component** | **Current use** |
+|-----------------|-------------------------------------------------------|
+| Traditional Gradebook | Graded items are worth 1 point: Complete = 1, Not Ready = 0.5, Missing / No Submission = 0. *Note: the threshold for Not Ready to Complete is set at 0.95, but when grading Not Ready, always enter 0.5* |
+| Custom grading schemes | Core and Advanced use different display language so required missing work and optional non-selected work are not conflated. |
+| Learning Mastery Gradebook / Outcomes | Used to track completion/outcomes and support bundle counting/access logic. Core quizzes may auto-grade traditionally but still require Learning Mastering manual entry. |
+| Rubrics | Rubrics are attached to assignments and outcomes. If adding an assignment: (1) create an outcome, (2) create matching rubric and attached outcome, and (3) a attach the correct rubric to assignment/quiz/discussion. |
+| Tokens | Tracked in a non-grade-counting assignment group. Students begin with 3 Core revision tokens. |
+
+## Core revision tokens
+
+Students begin with 3 Core revision tokens. Tokens are for Core work only. They are not used for Advanced work.
+
+- A token reopens needed Core item(s) for a module group after the module items lock.
+
+- If a student missed most or all of a Core module, adjust dates for past and current module so the student has a realistic path through the missed module and the next module.
+
+- If the student only needs one revision, reopen the relevant item rather than redesigning the whole week.
+
+- Token due dates may be flexible. Use student-specific dates to communicate the recovery plan.
+
+- Early in the course, if a student clearly misunderstood that Not Ready requires revision, prioritize recovery and communication over rigid enforcement.
+
+- When applying a token, update the token count, change the relevant student-specific due/availability dates, message the student, and log a private Gradebook note.
+
+## Core grading expectations
+
+Core file-submission assignments receive the most detailed feedback. The instructor should scan code enough to catch obvious problems, but the main grading focus is the student’s memos, documentation, file correctness, document formatting, evidence of learning, and submission of the correct artifact. Practice Space quizzes support code-checking because students can retry them to mastery.
+
+| **Common Not Ready reason** | **Instructor response** |
+|--------------------------|----------------------------------------------|
+| Wrong file or missing file | Mark Not Ready. Explain which artifact is required and request resubmission. |
+| Incomplete file or old/failed HTML knit | Mark Not Ready if the submitted artifact does not show the completed work. Explain how to verify the output before submitting. |
+| Missing/thin memos | Mark Not Ready when memos do not show the learning process. Ask for concrete comments/reflections tied to the code. |
+| Poor document formatting | Use judgment. Mark Not Ready if unreadable or missing required structure; otherwise provide improvement feedback for next time. |
+| AI-generated or copied-looking work without evidence of student process | Treat as a learning/revision issue first. Mark Not Ready, explain the concern, and require work that shows the student’s own process. |
+
+**Use the SpeedGrader to enter traditional and rubric grade, write feedback. When the student earns "Not Ready", click "Reassign Assignment" after leaving feedback.**
+
+## Core feedback voice
+
+Core feedback should be student-facing, specific, warm, and direct. On Complete work, name what the student did well and one or two ways to keep improving. On Not Ready work, explain what needs revision and communicate that high expectations are paired with confidence the student can meet them. The [Boise State AI feedback chatbot](https://boisestate.ai/a/a1ee701d-ccbc-40db-ae5b-6d226076e7ca) may be used as a drafting aid, but the instructor remains the grader and must edit the feedback before posting.
+
+## Advanced grading expectations
+
+Advanced work should be graded promptly but lightly. Most Advanced submissions should be marked Complete when there is good-faith completion. Do not give heavy feedback on every Advanced item. Save detailed coaching for Core work unless the Advanced submission needs correction.
+
+- Use Not Ready for wrong uploads, major misunderstanding, very low-effort work, unclear evidence of completion, or work that does not appear to show the student’s own learning process.
+
+- If the problem is a small submission issue caught early, message the student and make a reasonable correction window.
+
+- Advanced work has no token pathway. Once locked, missing Advanced work stays locked.
+
+- For discussions, monitor enough to protect the learning environment and clarify when needed, but let students talk to each other.
+
+## Student AI use
+
+AI-use expectations are embedded in the student-facing pages, activities, rubrics, and course chatbots. The instructor’s role is to coach students toward better AI habits, especially early in the course when students may arrive with unproductive copy/paste habits.
+
+If a submission appears copied from AI and does not show the student’s own learning process, mark it Not Ready, explain the concern directly, and require revision. Do not over-invest in proving intent. Focus on whether the submission meets the learning, documentation, and artifact specifications.
+
+## Final course grade audit
+
+During the final week, audit each student’s final bundle status before submitting official grades. Use a visible informational Final Grade assignment in Canvas so students can see the instructor-determined final grade before official submission. This assignment page is not published until final grading takes place.
+
+- [ ] Remaining Not Ready, Missing, or No Submission gradebook items filled out?
+
+- [ ] Traditional Gradebook and Learning Mastery/outcomes reconciled if both are in use?
+
+- [ ] All Core items Complete?
+
+- [ ] Advanced Complete count: 12 or more for B, 18 or more for A?
+
+- [ ] Token counts and student-specific extensions reviewed?
+
+- [ ] Final grade communicated in Canvas before official submission?
+
+# Communication and Student Support
+
+Student outreach should happen primarily through Canvas. There is no general Course Questions discussion forum in this course. Use Canvas Inbox/Gradebook messages, assignment comments, Gradebook Notes, and booked Zoom meetings as the main support channels.
+
+## Canvas communication workflow
+
+- [ ] During grading, identify students who are missing Core work, appear stuck, have Not Ready work that needs attention, or have not responded to previous outreach.
+
+- [ ] Message students from the Canvas Gradebook or Canvas Inbox so communication stays connected to the course context.
+
+- [ ] After sending outreach, write a short private note in the Gradebook Notes column: date, reason, action.
+
+- [ ] When a student uses a token, record the token use in the token assignment and document which assignments or module due-dates where adjusted in a SpeedGrader comment. 
+
+- [ ] When a student has not responded and an academic alert is needed, record the alert date and reason in Notes.
+
+## Week 1 participation and early intervention
+
+Week 1 is an early-success checkpoint. Participation means meaningful Canvas engagement and submitted work, not just enrollment.
+
+| **Timing** | **Action** |
+|---------------|---------------------------------------------------------|
+| Wednesday of Week 1 | Contact students who have not logged in or submitted early work. |
+| Friday of Week 1 | Send a second check-in if needed and continue normal Friday outreach for missing Core work. |
+| Monday of Week 2 | Submit academic alerts for students who have not participated meaningfully and have not responded to instructor outreach. |
+| After Week 1 | Watch for students who stopped participating. Message them on Fridays and follow up on Mondays. Submit academic alerts for non-responding students on Mondays. |
+
+> **Late enrollment.** Do not approve late-enrollment exceptions once the 7-week course has started. In this course, late entry usually sets students up to fail because the course moves too quickly and builds on early setup work.
+
+## Ongoing student check-ins
+
+Required outreach is focused on students who are inactive, missing Core work, falling behind, or not responding. A mid-course bundle-status check is recommended around the end of Week 3 or start of Week 4, especially in a term when students appear confused about Core/Advanced progress.
+
+| **Level** | **What the instructor does** | **When to use it** |
+|-------------|----------------------------------------------|-------------|
+| Minimum | Contact only at-risk, inactive, or nonresponsive students. | Always. |
+| Targeted | Contact students who are active but not excelling or seem frequently stuck. | Recommended. |
+| Full | Send every student a personalized status note: likely bundle path, what is going well, what to do next, and ask a reflection prompt. | Excellent practice when time allows. |
+
+## Meetings with students
+
+The current course design offers students a Book a Meeting page linked from multiple places in Canvas. The current workflow uses Google Calendar appointment scheduling for 30-minute Zoom meetings. A future instructor may change the workflow, but must preserve a clear meeting-booking pathway or update all related links and buttons.
+
+# Discussion Groups {#discussion-groups}
+
+Discussion groups support belonging, timing alignment, and manageable peer interaction. They should be large enough to create conversation but small enough to avoid overwhelming students in a combined Canvas site.
+
+## Group setup rules
+
+- Use stable Canvas discussion groups for peer-review and many reflection activities.
+
+- Create groups near the start of Week 1 after observing early participation patterns.
+
+- Set groups size to between 15-20 students.
+
+- Week one set up group membership by student activity. Early submitters with early submitters, slower-starting students with slower-starting students. The purpose is timing alignment, not labeling students. 
+
+- Make sure one student is the only poster for their group and left in a empty room.
+
+## Whole-class discussions
+
+| **Discussion type** | **Recommended setup** | **Reason** |
+|---------------|---------------|------------------------------------------|
+| Hack-A-Prompt | Whole-class discussion | The activity is optional Advanced work and already splits by pathway. Smaller groups can leave students alone in a discussion space. |
+| Git/GitHub help-style discussion | Whole-class discussion | Participation is limited to students choosing that Advanced activity and the discussion functions partly as a support forum. |
+| Peer-review and reflections | Stable discussion groups | Students benefit from recurring peers and manageable feedback spaces. |
+
+# Week-Specific Preparation and Tasks
+
+Use this section to prepare for the teaching focus of each week. Do not use it as a substitute for the live Canvas module. The instructor should inspect the live module before it opens and verify the actual assignments, due dates, rubrics, prerequisites, and requirements.
+
+## Before each module opens
+
+- [ ] Review the module overview and all Core/Advanced pages students will see.
+
+- [ ] Open the quizzes, file uploads, discussions, and rubrics. Verify dates and availability settings.
+
+- [ ] Check prerequisites and requirements, especially anything controlling Advanced access.
+
+- [ ] Use Student View when access logic is complicated.
+
+- [ ] Identify the learning skill to model, point out, praise, and correct toward in feedback.
+
+- [ ] Make small clarifying edits when you notice likely confusion, and document larger changes in the change memo.
+
+## Weekly learning-skill guide
+
+| **Week / module**                 | **Primary course focus**                                         | **Instructor emphasis**                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| --------------------------------- | ---------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Week 1 / Module 1**             | **Tenacity** with **Resilient Beginnings** Advanced work         | Help students start strong with RStudio, basic R commands, scripts, comments, saved files, and early workflow habits. Reinforce that beginner errors are expected. Praise students who notice what happened, test a fix, document what changed, and keep going. Watch closely for non-participation, setup problems, and early AI copy/paste habits.                                                                                                                         |
+| **Week 2 / Module 2**             | **Transparency** with **Innovation Nursery** Advanced work       | Emphasize clear, reviewable R work: vectors, object structures, R Notebook habits, visible checks, resource citation, and written explanations. Praise students who leave a trail of what they ran, what output appeared, what they checked, and what they concluded. Watch for coercion confusion, indexing/name confusion, case-sensitivity errors, and thin documentation.                                                                                                |
+| **Week 3 / Module 3**             | **Courage** with **Hack-A-Prompt Round 1** Advanced work         | Reinforce troubleshooting, help-seeking, missing-value decisions, and the courage to stop when output or rendering does not make sense. Praise students who read errors carefully, inspect missing values, document choices, and ask clear questions. Watch for failed renders, hidden `NA` problems, weak memos, and students moving ahead without understanding the issue.                                                                                                 |
+| **Week 4 / Module 4**             | **Autonomy** with GitHub Advanced work opening                   | Help students take more ownership of file management, importing data, selecting rows/columns/values, and verifying that objects are what they expect. Reinforce that autonomy means managing the workflow responsibly, not working in isolation. Watch for working-directory errors, wrong-file imports, indexing mistakes, and Git/GitHub setup issues for students choosing that Advanced path.                                                                            |
+| **Week 5 / Advanced bridge week** | **GitHub workflow and Hack-A-Prompt Round 2 preparation/launch** | Support students who are continuing Git/GitHub setup and students who are choosing the tidyverse Hack-A-Prompt pathway. Emphasize verification checkpoints, careful reading of instructions, and realistic pacing on Advanced options. Watch for students who want a B/A bundle but are not yet completing enough Advanced work, and remind them that Advanced activities are choices, not a requirement to do everything.                                                   |
+| **Week 6 / Module 6**             | **Curiosity** with **Hack-A-Prompt Round 2** Advanced work       | Encourage students to ask clear data questions, recode deliberately, compare groups, and use summaries to investigate patterns. Praise useful questions, careful observations, and thoughtful interpretation of grouped results. Watch for students who create variables without checking them, summarize before verifying groups, or assume tidyverse pipelines are correct just because they run.                                                                          |
+| **Week 7 / Module 7**             | **Thoroughness** with **Wildfire** Advanced work                 | Support finishing well: probability simulation, repeated outcomes, ggplot2 visualizations, rendered Quarto reports, peer feedback, revision, and final grade auditing. Praise students who check whether results make sense, choose appropriate visualizations, explain output clearly, and avoid superficial last-minute work. Watch for failed renders, incomplete files, weak interpretation, missing final reflections, and unresolved Not Ready/Core completion issues. |
+
+## Week 1: Tenacity
+
+* [ ] Before launch, verify that all Module 1 setup, orientation, RStudio, and early script activities are dated correctly.
+
+* [ ] Wednesday: contact students who have not logged in or submitted early work.
+
+* [ ] Friday: send second outreach to non-participants and grade Core work quickly.
+
+* [ ] Watch Chapter 2 / early script submissions for work that looks generated rather than practiced. Treat AI misuse as a revision/coaching issue.
+
+* [ ] Create discussion groups after observing early participation patterns if group discussions will be used soon.
+
+## Week 2: Transparency
+
+* [ ] Lean into feedback on memos, documentation, object checks, file organization, and reproducible notebook habits.
+
+* [ ] Reinforce that students need to leave a clear trail: what they ran, what output appeared, what they checked, and what they concluded.
+
+* [ ] Watch for coercion confusion, object-name/element-name confusion, indexing mistakes, case-sensitivity errors, and thin documentation.
+
+* [ ] Confirm that Advanced Module 2 unlocked for students who completed the required prior Core work.
+
+## Week 3: Courage
+
+* [ ] Model troubleshooting and normalize errors, failed renders, and missing-value problems as part of learning R.
+
+* [ ] Reinforce how students should document questions, resources, error messages, missing-value decisions, and what helped.
+
+* [ ] Watch for students who stopped after a Not Ready quiz attempt, rendering problem, or confusing error. Reach out early.
+
+* [ ] Use whole-class discussion for Hack-A-Prompt Round 1 activities.
+
+* [ ] Consider a targeted or full mid-course bundle-status check near the end of the week or start of Week 4.
+
+## Week 4: Autonomy
+
+* [ ] Help students take ownership of file management, importing data, selecting rows/columns/values, and verifying object types and sizes.
+
+* [ ] Reinforce that autonomy means managing the workflow responsibly, not working alone without support.
+
+* [ ] Check for working-directory errors, wrong-file imports, indexing mistakes, and weak verification habits.
+
+* [ ] Monitor Git/GitHub setup for students choosing that Advanced path. Use the whole-class Git/GitHub help-style discussion where appropriate.
+
+* [ ] Continue Friday/Monday grade audits carefully as students begin making stronger bundle-path decisions.
+
+## Week 5: Advanced Bridge / GitHub Workflow
+
+* [ ] Help students make realistic Advanced choices based on their goals, remaining time, and current bundle progress.
+
+* [ ] Monitor students continuing Git/GitHub work and remind them to use verification checkpoints before moving ahead.
+
+* [ ] Watch for students who want a B or A bundle but are not yet completing enough Advanced work. Communicate realistic next steps.
+
+* [ ] If students are behind on Core, use token/date adjustments to create a clear recovery path rather than simply reopening everything without guidance.
+
+* [ ] Remind students that Advanced activities are choices; they do not need to complete every Advanced item.
+
+## Week 6: Curiosity
+
+* [ ] Encourage students to ask clear data questions, recode deliberately, compare groups, and interpret summaries.
+
+* [ ] Praise useful questions, careful observations, thoughtful grouped comparisons, and good explanations of what the output shows.
+
+* [ ] Watch for students who create variables without checking them, summarize before verifying groups, or assume tidyverse pipelines are correct just because they run.
+
+* [ ] Use whole-class discussion for Hack-A-Prompt Round 2 activities.
+
+* [ ] Audit Advanced counts and Core completion before final-week pressure arrives.
+
+## Week 7: Thoroughness
+
+* [ ] Remind students to verify final files, rendered Quarto outputs, plots, simulations, and submission artifacts before deadlines.
+
+* [ ] Support students in finishing well: checking whether results make sense, choosing appropriate visualizations, explaining output clearly, and avoiding superficial last-minute work.
+
+* [ ] Grade final Core and Advanced work promptly and lightly where appropriate.
+
+* [ ] Conduct the final course grade audit: Core completion, Advanced count, token status, Not Ready/Missing/No Submission items, extensions, and final bundle.
+
+* [ ] Post or communicate a final grade indicator in Canvas if using that workflow before official grade submission.
+
+* [ ] Record course-change notes for issues to fix before the next offering.
+
+
+# Help Resources
+
+Keep university support information current. The items below are intentionally broad; verify contact information and institutional links each term.
+
+## Technical help
+
+- Boise State Help Desk for technical issues or questions: phone, email, and chat information should be verified each term.
+
+- Canvas Help button in the Canvas global navigation menu.
+
+- Canvas Instructor Guide and Canvas Student Guide.
+
+- Boise State Learning Technology Solutions training, events, and Canvas knowledge-base articles.
+
+## Course tool resources
+
+Required tools are Canvas, R, and RStudio Desktop. Boise State AI, Git/GitHub, Zoom, Google Calendar/Drive, CSV files, and Excel files appear where specific activities use them. If a tool or support process changes, update the relevant activity instructions and the instructor notes.
+
+Third-party tools may not be fully supported by Boise State. Faculty and students should review privacy and accessibility policies for tools used in course activities.
+
+## Accessibility, copyright, privacy, and academic integrity
+
+- Accommodations: direct students to the Educational Access Center and follow institutional accommodation procedures.
+
+- Copyright: course materials are for enrolled students and course use only unless permission allows broader use.
+
+- Online privacy: follow Boise State information privacy and data security policy for email, personal disclosures, data retained about students, online behavior, and publication/distribution of student work.
+
+- Academic integrity: use the Academic Integrity Faculty resources if concerns arise. In this course, many early AI-use issues should first be handled as revision/coaching when appropriate.
+
+## Instructor-facing support
+
+If the course is being handed off, future instructors may contact Lorraine if available. Otherwise, consult the department chair, eCampus, OIT/Learning Technology Solutions, or the appropriate program support office. The live Canvas course is the authority; take ownership of it before teaching.
+
+# Course Maintenance and Change Memos
+
+This course is designed to improve over time. Instructors are encouraged to make small clarifying edits when student work reveals a repeated point of confusion. Larger or structural edits should be documented so the copied-forward course remains coherent.
+
+## Running change memo
+
+Maintain a running course-change memo. Each entry only needs to answer the following questions:
+
+- Where was the change made?
+
+- When was it changed?
+
+- Why was it changed?
+
+- What changed?
+
+- Does this affect future offerings?
+
+Change memo/examples link: [Change memo examples](https://docs.google.com/document/d/1WqXmWNsxVcCdl5tmaWXvlXGmsj74Z7iItevZVRKuI6I/edit?tab=t.vwyxxncj089q)
+
+## What to document
+
+| **Change type** | **Document?** |
+|-----------------------------------|-------------------------------------|
+| Tiny typo or punctuation correction | Usually no. |
+| Clarifying a confusing sentence, instruction, rubric language, or due-date wording | If it affects student interpretation. |
+| Changing dates, locks, prerequisites, or module requirements | Yes. Also verify access in Student View. |
+| Adding/removing assignments, quizzes, discussions, rubrics, or outcomes | Yes. This is structural. |
+| Changing grading logic, token policy, bundle requirements, or Advanced counts | Yes. This affects the course model and must be reflected in student-facing materials. |
+| Changing meeting-booking, communication, or announcement workflows | Yes if linked from course pages. Run link validation. |
+
+# Announcement and Outreach Resources
+
+Weekly announcements are recommended but not required. They are most useful when they are customized to the current student group, the current module, common assignment trends, timely issues, and what students should do next. Do not rely on copied-forward announcements without reviewing them for the current term.
+
+## Pre-course welcome communication
+
+Send a welcome message before or when Canvas opens on the Friday before Week 1. It should welcome students, state when the Canvas course opens, tell students how to start, point them to the syllabus and custom HTML course calendar, explain how to get help, and invite them to begin early if they want.
+
+## Templates and chatbot resources
+
+Do not duplicate every announcement or outreach message inside this guide. Use the existing chatbot and template resources, then customize the output before posting or sending.
+
+- Announcement chatbot: \[Insert announcement chatbot link\]
+
+- Announcement/template Google Doc: \[Insert announcement/template Google Doc link\]
+
+- Student outreach templates: \[Insert outreach template folder or document link\]
+
+- Boise State AI feedback/outreach chatbot: \[Insert Boise State AI feedback/outreach chatbot link\]
+
+# Appendix: Canvas Documentation to Review as Needed
+
+This guide does not reproduce Canvas click-by-click documentation. Use current Canvas documentation for operational steps, especially when the interface changes.
+
+- [Canvas Instructor Guide](https://community.instructure.com/t5/Instructor-Guide/tkb-p/Instructor)
+
+- [Learning Mastery Gradebook](https://community.instructure.com/en/kb/articles/660932-how-do-i-use-the-learning-mastery-gradebook-to-view-outcome-results-in-a-course)
+
+- [Module requirements](https://community.instructure.com/en/kb/articles/660897-how-do-i-add-requirements-to-a-module)
+
+- [Adjust events and due dates in a course import](https://community.instructure.com/en/kb/articles/664373-how-do-i-adjust-events-and-due-dates-in-a-course-import-in-canvas-career)
+
+- [Canvas Link Validator](https://community.instructure.com/t5/Instructor-Guide/How-do-I-validate-links-in-a-course/ta-p/1001)
+
+- [Message students from the Gradebook](https://community.instructure.com/en/kb/articles/660849-how-do-i-send-a-message-to-students-from-the-gradebook)
+
+- [Gradebook Notes column](https://community.instructure.com/en/kb/articles/660836-how-do-i-use-the-notes-column-in-the-gradebook)
+
+- [Use a rubric to grade in SpeedGrader](https://community.instructure.com/en/kb/articles/661173-how-do-i-use-a-rubric-to-grade-submissions-in-speedgrader)
+
+# Revision Notes
+
+This revised guide was drafted as a reusable master guide based on the existing DATA-R 155 Instructor Guide structure and the updated DATA-R 155 operating workflow described by the course designer, Lorraine Gaudio. 

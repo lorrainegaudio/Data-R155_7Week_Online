@@ -1,0 +1,826 @@
+Hack-A-Prompt Student Code Bank
+
+CODE_GROUP_START
+Round: 1
+Code ID: R1-001
+Topic tags: factor, vector class, bracket indexing
+Difficulty level: Medium
+
+STUDENT_CODE:
+poodle_size_raw <- c("standard", "toy", "miniature", "toy", "standard")
+poodle_size <- factor(poodle_size_raw, levels = c("tea cup", "toy", "miniature", "standard", "king"))
+small_poodles <- poodle_size[c(2, 3, 4)]
+poodle_size_class <- class(poodle_size)
+
+CHECK_CODE:
+small_poodles
+levels(poodle_size)
+poodle_size_class
+
+STUDENT_CONTEXT:
+This code stores poodle-size labels and checks selected entries.
+CODE_GROUP_END
+
+CODE_GROUP_START
+Round: 1
+Code ID: R1-002
+Topic tags: data.frame, conditional assignment, simulated data
+Difficulty level: Medium-Hard
+
+STUDENT_CODE:
+set.seed(8)
+bird_status <- sample(c(rep("Untagged", 16), rep("Tagged", 4)))
+band_color <- ifelse(bird_status == "Untagged", "None", sample(c("Red", "Blue", "Green", "Yellow"), length(bird_status), replace = TRUE))
+field_sightings <- data.frame(bird_status, band_color)
+
+CHECK_CODE:
+class(field_sightings)
+length(bird_status)
+head(field_sightings)
+
+STUDENT_CONTEXT:
+This code simulates a small field-sighting record for birds.
+CODE_GROUP_END
+
+CODE_GROUP_START
+Round: 1
+Code ID: R1-003
+Topic tags: data.frame, conditional assignment, simulated data
+Difficulty level: Medium-Hard
+
+STUDENT_CODE:
+set.seed(12)
+find_type <- sample(c(rep("Plain_Shard", 18), rep("Decorated_Shard", 5)))
+motif <- ifelse(find_type == "Plain_Shard", "Undecorated", sample(c("Incised_Lines", "Cross_Hatching", "Cord_Marked"), length(find_type), replace = TRUE))
+sherd_catalog <- data.frame(find_type, motif)
+
+CHECK_CODE:
+class(sherd_catalog)
+length(find_type)
+head(sherd_catalog)
+
+STUDENT_CONTEXT:
+This code simulates a small pottery-shard catalog.
+CODE_GROUP_END
+
+CODE_GROUP_START
+Round: 1
+Code ID: R1-004
+Topic tags: logical indexing, nested function, bracket indexing
+Difficulty level: Medium
+
+STUDENT_CODE:
+study_year <- seq(1995, 2024, 1)
+first_egg_day <- c(136, 134, 133, 135, 132, 131, 130, 128, 129, 127, 126, 125, 127, 124, 123, 122, 121, 123, 120, 119, 118, 120, 117, 116, 118, 115, 114, 116, 113, 112)
+early_years <- study_year[first_egg_day < 120]
+mean_early_day <- mean(first_egg_day[first_egg_day < 120])
+
+CHECK_CODE:
+early_years
+mean_early_day
+length(early_years)
+
+STUDENT_CONTEXT:
+This code checks earlier Mountain Bluebird first-egg dates across a long-term record.
+CODE_GROUP_END
+
+CODE_GROUP_START
+Round: 1
+Code ID: R1-005
+Topic tags: factor, logical indexing, logical summary
+Difficulty level: Medium
+
+STUDENT_CODE:
+triage_raw <- c("urgent", "routine", "critical", "urgent", "routine")
+triage_level <- factor(triage_raw, levels = c("routine", "urgent", "critical"))
+high_priority <- triage_level[triage_level != "routine"]
+high_priority_count <- sum(triage_level != "routine")
+
+CHECK_CODE:
+high_priority
+high_priority_count
+levels(triage_level)
+
+STUDENT_CONTEXT:
+This code stores a small emergency-response triage record.
+CODE_GROUP_END
+
+CODE_GROUP_START
+Round: 1
+Code ID: R1-006
+Topic tags: coercion, vector class, bracket indexing
+Difficulty level: Medium
+
+STUDENT_CODE:
+coffee_notes <- c("latte", 3, "cold_brew", 2)
+coffee_class <- class(coffee_notes)
+latte_count <- sum(coffee_notes == "latte")
+number_like_entry <- coffee_notes[2]
+
+CHECK_CODE:
+coffee_class
+latte_count
+number_like_entry
+
+STUDENT_CONTEXT:
+This code checks a small coffee-shop note vector.
+CODE_GROUP_END
+
+CODE_GROUP_START
+Round: 1
+Code ID: R1-007
+Topic tags: vector class, logical indexing, nested function
+Difficulty level: Medium
+
+STUDENT_CODE:
+quiz_scores <- c(82, 90, 76, 88, 95)
+strong_scores <- quiz_scores[quiz_scores >= 85]
+strong_mean <- mean(quiz_scores[quiz_scores >= 85])
+score_class <- class(strong_scores)
+
+CHECK_CODE:
+length(strong_scores)
+strong_mean
+score_class
+
+STUDENT_CONTEXT:
+This code checks a small set of quiz scores.
+CODE_GROUP_END
+
+CODE_GROUP_START
+Round: 1
+Code ID: R1-008
+Topic tags: named indexing, bracket indexing, vector class
+Difficulty level: Medium
+
+STUDENT_CODE:
+unit_scores <- c(unit1 = 8, unit2 = 10, unit3 = 9, unit4 = 7)
+selected_units <- unit_scores[c("unit1", "unit3")]
+score_change <- selected_units[2] - selected_units[1]
+selected_class <- class(selected_units)
+
+CHECK_CODE:
+selected_units
+score_change
+selected_class
+
+STUDENT_CONTEXT:
+This code works with named scores from a short course record.
+CODE_GROUP_END
+
+CODE_GROUP_START
+Round: 1
+Code ID: R1-009
+Topic tags: factor, bracket indexing, vector class
+Difficulty level: Medium
+
+STUDENT_CODE:
+confidence_raw <- c("low", "high", "medium", "high")
+confidence <- factor(confidence_raw, levels = c("low", "medium", "high"))
+selected_confidence <- confidence[c(2, 4)]
+confidence_class <- class(confidence)
+
+CHECK_CODE:
+levels(confidence)
+selected_confidence
+confidence_class
+
+STUDENT_CONTEXT:
+This code stores a few confidence responses.
+CODE_GROUP_END
+
+CODE_GROUP_START
+Round: 1
+Code ID: R1-010
+Topic tags: missing values, nested function, vector class
+Difficulty level: Medium
+
+STUDENT_CODE:
+reading_times <- c(30, NA, 60, NA, 40)
+missing_places <- which(is.na(reading_times))
+missing_total <- sum(is.na(reading_times))
+reading_class <- class(reading_times)
+
+CHECK_CODE:
+missing_places
+missing_total
+reading_class
+
+STUDENT_CONTEXT:
+This code checks a short reading-time record.
+CODE_GROUP_END
+
+CODE_GROUP_START
+Round: 1
+Code ID: R1-011
+Topic tags: coercion, vector class, logical summary
+Difficulty level: Medium
+
+STUDENT_CODE:
+lab_culture_labels <- c(4, 5, "contaminated", 6)
+culture_class <- class(lab_culture_labels)
+contaminated_count <- sum(lab_culture_labels == "contaminated")
+five_count <- sum(lab_culture_labels == "5")
+
+CHECK_CODE:
+culture_class
+contaminated_count
+five_count
+
+STUDENT_CONTEXT:
+This code checks how R stored a short lab-culture record.
+CODE_GROUP_END
+
+CODE_GROUP_START
+Round: 1
+Code ID: R1-012
+Topic tags: logical summary, vector class, comparison operators
+Difficulty level: Medium
+
+STUDENT_CODE:
+spore_counts <- c(8, 12, 3, 15, 9)
+viable_spores <- spore_counts >= 10
+not_viable_spores <- !viable_spores
+viable_total <- sum(viable_spores)
+viable_share <- mean(viable_spores)
+spore_class <- class(viable_spores)
+
+CHECK_CODE:
+viable_total
+viable_share
+spore_class
+
+STUDENT_CONTEXT:
+This code checks which lab samples meet a viability cutoff.
+CODE_GROUP_END
+
+CODE_GROUP_START
+Round: 1
+Code ID: R1-013
+Topic tags: factor, logical indexing, bracket indexing
+Difficulty level: Medium
+
+STUDENT_CODE:
+risk_raw <- c("watch", "safe", "urgent", "watch")
+risk <- factor(risk_raw, levels = c("safe", "watch", "urgent"))
+flagged_risk <- risk[risk != "safe"]
+risk_levels <- levels(risk)
+
+CHECK_CODE:
+flagged_risk
+risk_levels
+length(flagged_risk)
+
+STUDENT_CONTEXT:
+This code stores short risk labels and keeps some entries.
+CODE_GROUP_END
+
+CODE_GROUP_START
+Round: 1
+Code ID: R1-014
+Topic tags: missing values, logical indexing, nested function
+Difficulty level: Medium
+
+STUDENT_CODE:
+points <- c(10, 15, NA, 20, 5)
+clean_points <- points[is.na(points) == FALSE]
+good_points <- clean_points[clean_points >= 10]
+good_count <- sum(clean_points >= 10)
+
+CHECK_CODE:
+clean_points
+good_points
+good_count
+
+STUDENT_CONTEXT:
+This code separates usable point values before checking a cutoff.
+CODE_GROUP_END
+
+CODE_GROUP_START
+Round: 1
+Code ID: R1-015
+Topic tags: factor, data.frame, vector class
+Difficulty level: Medium
+
+STUDENT_CODE:
+belonging_raw <- c("agree", "strongly agree", "neutral", "disagree", "agree", "strongly disagree", "neutral", "agree")
+belonging <- factor(belonging_raw, levels = c("strongly disagree", "disagree", "neutral", "agree", "strongly agree"))
+student_id <- c("S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8")
+belonging_survey <- data.frame(student_id, belonging)
+
+CHECK_CODE:
+class(belonging_survey)
+levels(belonging)
+length(student_id)
+
+STUDENT_CONTEXT:
+This code creates a small classroom belonging survey record.
+CODE_GROUP_END
+
+CODE_GROUP_START
+Round: 1
+Code ID: R1-016
+Topic tags: factor, data.frame, vector class
+Difficulty level: Medium
+
+STUDENT_CODE:
+plant_type <- c("succulents", "cacti", "monstera", "hoyas", "ferns", "carnivorous plants", "pothos", "philodendrons")
+pot_count <- c(12, 7, 1, 9, 6, 3, 8, 4)
+plant_size <- factor(c("small", "medium", "large", "medium", "medium", "small", "medium", "medium"),
+                    levels = c("small", "medium", "large"))
+plant_inventory <- data.frame(plant_type, pot_count, plant_size)
+
+CHECK_CODE:
+class(plant_inventory)
+levels(plant_size)
+sum(pot_count)
+
+STUDENT_CONTEXT:
+This code creates a small houseplant inventory grouped by plant type.
+CODE_GROUP_END
+
+CODE_GROUP_START
+Round: 1
+Code ID: R1-017
+Topic tags: seq, bracket indexing, nested function
+Difficulty level: Medium
+
+STUDENT_CODE:
+practice_days <- seq(2, 10, 2)
+selected_days <- practice_days[c(1, 3, 5)]
+day_range <- range(selected_days)
+day_total <- sum(selected_days)
+
+CHECK_CODE:
+practice_days
+day_range
+day_total
+
+STUDENT_CONTEXT:
+This code creates and checks a short practice-day sequence.
+CODE_GROUP_END
+
+CODE_GROUP_START
+Round: 1
+Code ID: R1-018
+Topic tags: factor, nested function, vector class
+Difficulty level: Medium
+
+STUDENT_CODE:
+comfort_raw <- c("unsure", "ready", "stuck", "ready")
+comfort <- factor(comfort_raw, levels = c("stuck", "unsure", "ready"))
+comfort_level_count <- length(levels(comfort))
+comfort_class <- class(factor(comfort_raw, levels = c("stuck", "unsure", "ready")))
+
+CHECK_CODE:
+comfort_level_count
+comfort_class
+levels(comfort)
+
+STUDENT_CONTEXT:
+This code stores comfort labels and checks their category structure.
+CODE_GROUP_END
+
+CODE_GROUP_START
+Round: 1
+Code ID: R1-019
+Topic tags: named indexing, logical indexing, bracket indexing
+Difficulty level: Medium
+
+STUDENT_CODE:
+task_points <- c(notes = 6, quiz = 9, practice = 8, project = 10)
+high_tasks <- task_points[task_points >= 8]
+high_task_names <- names(high_tasks)
+high_task_mean <- mean(high_tasks)
+
+CHECK_CODE:
+high_tasks
+high_task_names
+high_task_mean
+
+STUDENT_CONTEXT:
+This code checks which named tasks meet a point cutoff.
+CODE_GROUP_END
+
+CODE_GROUP_START
+Round: 1
+Code ID: R1-020
+Topic tags: missing values, logical summary, nested function
+Difficulty level: Medium
+
+STUDENT_CODE:
+fossil_depth_cm <- c(18, NA, 24, 31, NA)
+missing_depths <- sum(is.na(fossil_depth_cm))
+missing_depth_share <- mean(is.na(fossil_depth_cm))
+depths_have_missing <- anyNA(fossil_depth_cm)
+
+CHECK_CODE:
+missing_depths
+missing_depth_share
+depths_have_missing
+
+STUDENT_CONTEXT:
+This code checks missing depth measurements from a small fossil-dig record.
+CODE_GROUP_END
+
+CODE_GROUP_START
+Round: 1
+Code ID: R1-021
+Topic tags: factor, logical indexing, logical summary
+Difficulty level: Medium
+
+STUDENT_CODE:
+readiness_raw <- c("ready", "stuck", "unsure", "ready")
+readiness <- factor(readiness_raw, levels = c("stuck", "unsure", "ready"))
+ready_values <- readiness[readiness == "ready"]
+ready_total <- sum(readiness == "ready")
+
+CHECK_CODE:
+ready_values
+ready_total
+levels(readiness)
+
+STUDENT_CONTEXT:
+This code stores readiness labels and checks one label.
+CODE_GROUP_END
+
+CODE_GROUP_START
+Round: 1
+Code ID: R1-022
+Topic tags: coercion, bracket indexing, vector class
+Difficulty level: Medium
+
+STUDENT_CODE:
+foothills_ride_notes <- c(2, 4, "walked", 5, 3, "walked", 6, 4)
+selected_ride_notes <- foothills_ride_notes[c(1, 3, 6, 8)]
+ride_note_class <- class(foothills_ride_notes)
+walked_count <- sum(foothills_ride_notes == "walked")
+
+CHECK_CODE:
+selected_ride_notes
+ride_note_class
+walked_count
+
+STUDENT_CONTEXT:
+This code records a short set of mountain biking notes from foothills rides.
+CODE_GROUP_END
+
+CODE_GROUP_START
+Round: 1
+Code ID: R1-023
+Topic tags: missing values, logical indexing, nested function
+Difficulty level: Medium
+
+STUDENT_CODE:
+draft_lengths <- c(120, NA, 150, 90, NA)
+complete_lengths <- draft_lengths[is.na(draft_lengths) == FALSE]
+average_length <- mean(complete_lengths)
+missing_count <- sum(is.na(draft_lengths))
+
+CHECK_CODE:
+complete_lengths
+average_length
+missing_count
+
+STUDENT_CONTEXT:
+This code checks usable draft-length values.
+CODE_GROUP_END
+
+CODE_GROUP_START
+Round: 1
+Code ID: R1-024
+Topic tags: factor, data.frame, vector class
+Difficulty level: Medium
+
+STUDENT_CODE:
+file_name <- c("syllabus.pdf", "bird_data.csv", "map_tiles.zip", "field_notes.docx", "photos.zip", "survey.csv", "slides.pptx", "backup.rds")
+download_raw <- c("queued", "downloading", "complete", "failed", "downloading", "complete", "queued", "complete")
+download_status <- factor(download_raw, levels = c("queued", "downloading", "failed", "complete"))
+download_log <- data.frame(file_name, download_status)
+
+CHECK_CODE:
+class(download_log)
+levels(download_status)
+length(file_name)
+
+STUDENT_CONTEXT:
+This code creates a small download-status log.
+CODE_GROUP_END
+
+CODE_GROUP_START
+Round: 1
+Code ID: R1-025
+Topic tags: coercion, logical summary, vector class
+Difficulty level: Medium
+
+STUDENT_CODE:
+lane_closure_codes <- c(TRUE, FALSE, 2, 3, TRUE, 4, FALSE, 1)
+closure_class <- class(lane_closure_codes)
+closure_total <- sum(lane_closure_codes)
+multi_lane_closures <- lane_closure_codes[lane_closure_codes > 1]
+
+CHECK_CODE:
+closure_class
+closure_total
+multi_lane_closures
+
+STUDENT_CONTEXT:
+This code checks a short road-construction lane-closure record.
+CODE_GROUP_END
+
+CODE_GROUP_START
+Round: 1
+Code ID: R1-026
+Topic tags: factor, data.frame, bracket indexing
+Difficulty level: Medium
+
+STUDENT_CODE:
+stage_raw <- c("draft", "revise", "submit", "revise")
+selected_stage_raw <- stage_raw[c(1, 3, 4)]
+stage <- factor(selected_stage_raw, levels = c("draft", "revise", "submit"))
+stage_sheet <- data.frame(stage)
+
+CHECK_CODE:
+selected_stage_raw
+levels(stage)
+class(stage_sheet)
+
+STUDENT_CONTEXT:
+This code creates a small workflow-stage record.
+CODE_GROUP_END
+
+CODE_GROUP_START
+Round: 1
+Code ID: R1-027
+Topic tags: logical indexing, logical summary, bracket indexing
+Difficulty level: Medium
+
+STUDENT_CODE:
+cat_naps <- c(0, 2, 4, 6, 8)
+long_naps <- cat_naps >= 4
+selected_naps <- cat_naps[long_naps]
+long_nap_share <- mean(long_naps)
+
+CHECK_CODE:
+selected_naps
+long_nap_share
+length(selected_naps)
+
+STUDENT_CONTEXT:
+This code checks which cat naps meet a cutoff.
+CODE_GROUP_END
+
+CODE_GROUP_START
+Round: 1
+Code ID: R1-028
+Topic tags: missing values, nested function, vector class
+Difficulty level: Medium
+
+STUDENT_CODE:
+boise_float_times <- c(2.1, 2.4, NA, 2.0, 2.3)
+float_has_missing <- anyNA(boise_float_times)
+average_float_time <- mean(boise_float_times, na.rm = TRUE)
+float_time_range <- range(boise_float_times, na.rm = TRUE)
+
+CHECK_CODE:
+float_has_missing
+average_float_time
+float_time_range
+
+STUDENT_CONTEXT:
+This code summarizes a few Boise River float times.
+CODE_GROUP_END
+
+CODE_GROUP_START
+Round: 1
+Code ID: R1-029
+Topic tags: factor, vector class
+Difficulty level: Medium
+
+STUDENT_CODE:
+poodle_size_raw <- c("standard", "toy", "miniature", "toy", "king", "tea cup", "miniature")
+poodle_size_auto <- factor(poodle_size_raw)
+poodle_size_set <- factor(
+ poodle_size_raw,
+ levels = c("tea cup", "toy", "miniature", "standard", "king")
+)
+poodle_size_class <- class(poodle_size_set)
+
+CHECK_CODE:
+levels(poodle_size_auto)
+levels(poodle_size_set)
+poodle_size_class
+
+STUDENT_CONTEXT:
+This code compares two ways of storing poodle-size labels.
+CODE_GROUP_END
+
+CODE_GROUP_START
+Round: 1
+Code ID: R1-030
+Topic tags: coercion, data.frame, vector class
+Difficulty level: Medium
+
+STUDENT_CODE:
+coffee_order_mix <- c("latte", 12, "cold brew")
+coffee_class <- class(coffee_order_mix)
+coffee_shop <- c("A", "B", "C")
+coffee_sheet <- data.frame(coffee_shop, coffee_order_mix)
+
+CHECK_CODE:
+coffee_class
+class(coffee_sheet)
+length(coffee_shop)
+
+STUDENT_CONTEXT:
+This code creates a small coffee-order sheet from mixed values.
+CODE_GROUP_END
+
+CODE_GROUP_START
+Round: 1
+Code ID: R1-031
+Topic tags: logical indexing, nested function, bracket indexing
+Difficulty level: Medium
+
+STUDENT_CODE:
+travel_days <- c(4, 9, 12, 7, 15)
+long_trips <- travel_days[travel_days >= 9]
+longest_trip <- max(travel_days[travel_days >= 9])
+median_long_trip <- median(long_trips)
+
+CHECK_CODE:
+length(long_trips)
+longest_trip
+median_long_trip
+
+STUDENT_CONTEXT:
+This code focuses on longer trips from a short travel list.
+CODE_GROUP_END
+
+CODE_GROUP_START
+Round: 1
+Code ID: R1-032
+Topic tags: named indexing, bracket indexing, nested function
+Difficulty level: Medium
+
+STUDENT_CODE:
+bacteria_counts <- c(plate_A = 3, plate_B = 5, plate_C = 4, plate_D = 2)
+selected_plates <- bacteria_counts[c("plate_A", "plate_C")]
+plate_product <- prod(bacteria_counts[c("plate_A", "plate_C")])
+plate_names <- names(selected_plates)
+
+CHECK_CODE:
+selected_plates
+plate_product
+plate_names
+
+STUDENT_CONTEXT:
+This code checks selected values from a named bacteria-plate record.
+CODE_GROUP_END
+
+CODE_GROUP_START
+Round: 1
+Code ID: R1-033
+Topic tags: missing values, logical summary, nested function
+Difficulty level: Medium
+
+STUDENT_CODE:
+emergency_response <- c("arrived", "delayed", "arrived", NA, "arrived")
+missing_response <- sum(is.na(emergency_response))
+arrived_count <- sum(emergency_response == "arrived", na.rm = TRUE)
+response_has_na <- anyNA(emergency_response)
+
+CHECK_CODE:
+missing_response
+arrived_count
+response_has_na
+
+STUDENT_CONTEXT:
+This code checks a short emergency-response record.
+CODE_GROUP_END
+
+CODE_GROUP_START
+Round: 1
+Code ID: R1-034
+Topic tags: factor, nested function, vector class
+Difficulty level: Medium
+
+STUDENT_CODE:
+legal_case_raw <- c("pending", "closed", "appealed", "closed")
+legal_case <- factor(legal_case_raw, levels = c("pending", "appealed", "closed"))
+case_check <- class(factor(legal_case_raw, levels = c("pending", "appealed", "closed")))
+case_levels <- levels(legal_case)
+
+CHECK_CODE:
+case_check
+case_levels
+length(legal_case)
+
+STUDENT_CONTEXT:
+This code stores a small legal-case status record.
+CODE_GROUP_END
+
+CODE_GROUP_START
+Round: 1
+Code ID: R1-035
+Topic tags: logical indexing, nested function, vector class
+Difficulty level: Medium
+
+STUDENT_CODE:
+bluebird_first_egg_day <- c(132, 128, 125, 130, 122, 119)
+earlier_lay_dates <- bluebird_first_egg_day[bluebird_first_egg_day < 126]
+earlier_lay_range <- range(bluebird_first_egg_day[bluebird_first_egg_day < 126])
+earlier_lay_average <- mean(earlier_lay_dates)
+
+CHECK_CODE:
+earlier_lay_dates
+earlier_lay_range
+earlier_lay_average
+
+STUDENT_CONTEXT:
+This code checks earlier Mountain Bluebird first-egg lay dates from a long-term record.
+CODE_GROUP_END
+
+CODE_GROUP_START
+Round: 1
+Code ID: R1-036
+Topic tags: named indexing, logical summary, bracket indexing
+Difficulty level: Medium
+
+STUDENT_CODE:
+race_times <- c(warmup = 12, mile1 = 8, mile2 = 10, cooldown = 14)
+race_segment_times <- race_times[c("mile1", "mile2")]
+fast_segment_count <- sum(race_times <= 10)
+race_segment_mean <- mean(race_segment_times)
+
+CHECK_CODE:
+race_segment_times
+fast_segment_count
+race_segment_mean
+
+STUDENT_CONTEXT:
+This code checks selected running segments and one race-time cutoff.
+CODE_GROUP_END
+
+CODE_GROUP_START
+Round: 1
+Code ID: R1-037
+Topic tags: named indexing, bracket indexing, nested function
+Difficulty level: Medium
+
+STUDENT_CODE:
+supply_counts <- c(pens = 3, cards = 5, clips = 4, folders = 2)
+desk_supplies <- supply_counts[c("pens", "clips")]
+supply_product <- prod(supply_counts[c("pens", "clips")])
+desk_names <- names(desk_supplies)
+
+CHECK_CODE:
+desk_supplies
+supply_product
+desk_names
+
+STUDENT_CONTEXT:
+This code checks selected values from a named supply record.
+CODE_GROUP_END
+
+CODE_GROUP_START
+Round: 1
+Code ID: R1-038
+Topic tags: missing values, logical summary, nested function
+Difficulty level: Medium
+
+STUDENT_CODE:
+chapter7_guided_activity <- c("complete", "not complete", "complete", NA, "complete", "not complete", "complete")
+missing_chapter7 <- sum(is.na(chapter7_guided_activity))
+complete_count <- sum(chapter7_guided_activity == "complete", na.rm = TRUE)
+chapter7_has_na <- anyNA(chapter7_guided_activity)
+
+CHECK_CODE:
+missing_chapter7
+complete_count
+chapter7_has_na
+
+STUDENT_CONTEXT:
+This code checks a short Chapter 7 guided-activity completion record.
+CODE_GROUP_END
+
+CODE_GROUP_START
+Round: 1
+Code ID: R1-039
+Topic tags: factor, nested function, vector class
+Difficulty level: Medium
+
+STUDENT_CODE:
+satisfaction_raw <- c("ok", "good", "poor", "good")
+satisfaction <- factor(satisfaction_raw, levels = c("poor", "ok", "good"))
+satisfaction_check <- class(factor(satisfaction_raw, levels = c("poor", "ok", "good")))
+satisfaction_levels <- levels(satisfaction)
+
+CHECK_CODE:
+satisfaction_check
+satisfaction_levels
+length(satisfaction)
+
+STUDENT_CONTEXT:
+This code stores a small satisfaction record.
+CODE_GROUP_END
