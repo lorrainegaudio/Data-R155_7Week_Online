@@ -724,7 +724,7 @@ You also practiced curiosity as a learning habit. The 🐱 notes modeled how to 
 
 **Vectorized conditional**: A function or expression that evaluates a condition element-by-element across a vector and returns an output for every element, producing a new vector of the same length. Unlike subsetting, which keeps some values and drops others, vectorized conditionals such as `ifelse()` and `case_when()` keep all positions and assign each one a result based on the condition.
 
-#📝 Practice Space
+# 📝 Practice Space
 
 In this Practice Space, you will use vectorized conditional functions to create clearer variables. You will practice `ifelse()` for a simple two-way label, `case_when()` for multiple rules, and `mutate()` to create new columns or overwrite existing ones. You will also keep practicing Quarto as a reproducible workspace for code, output, checks, and memo notes.
 
