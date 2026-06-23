@@ -132,7 +132,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **File Menu**: The top-left menu in RStudio that provides commands for creating, opening, saving, exporting, and printing files and projects. It’s where you start new items (for example, a new R Script), open existing files, manage recent files/projects, and access project-level actions. 
 
-**Files Pane** and Help – Tabs/panes used to navigate your project folders and view supporting information. Files lets you browse, open, rename, and manage files; Help shows documentation for functions and packages (including searchable help pages).
+**Files Pane**: Tabs/panes used to navigate your project folders and view supporting information. Files lets you browse, open, rename, and manage files.
 
 **File Path**: A text “address” that tells the computer (and R) where a file or folder is located. Paths can be absolute (the full location from the start of the file system) or relative (interpreted relative to your current working directory). In R, `getwd()` shows the current working directory that relative paths are based on, and `file.path()` helps build paths in an operating-system-safe way.
 

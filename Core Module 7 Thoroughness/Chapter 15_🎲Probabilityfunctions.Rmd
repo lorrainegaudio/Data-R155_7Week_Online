@@ -4,15 +4,20 @@ subtitle: "🎲 Probability functions"
 author: "by Lorraine Gaudio"
 date:   "`r paste('Version', format(Sys.Date(), '%B %d, %Y'))`"
 team: "Summer 2026"
-output:
-  pdf_document:
-    toc: true
-    toc_depth: 2
-    number_sections: true
-    fig_caption: true
-    latex_engine: xelatex
-    pandoc_args:
-      - "--lua-filter=../assets/strip-emoji.lua"
+output: 
+  html_document: # To create an HTML document from R Markdown
+    toc: false # Table of contents (TOC)
+    toc_depth: 1 #(meaning that level 1, 2, and 3 headers will be included in the table of contents
+    toc_float: # Float the table of contents to the left of the main document
+      collapsed: false # Collapsed (defaults to TRUE) controls whether the TOC appears with only the top-level
+      smooth_scroll: true # controls whether page scrolls are animated when TOC items are navigated to via mouse clicks.
+    number_sections: true # Numbering starts with "#" (H1). Without H1 headers, the H2 headers ("##") will be numbered with 0.1, 0.2, and so on.
+    css: ../assets/styles.css # This is the name of the CSS file to style the HTML document with Boise State Brand. The CSS file must be in the same directory as the R Markdown file.
+    fig_caption: true #Whether figures are rendered with captions.
+    df_print: paged # Printing data frames with interactivne scrolling
+    includes:
+      in_header: ../assets/header.html
+      after_body: ../assets/footer.html
 ---
 
 ```{r setup, include=FALSE}
@@ -781,11 +786,10 @@ You will submit your `chapter15_practice.qmd`, your rendered `chapter15_practice
 
 ## Setup
 
-1. Create a **new Quarto file** in your course folder and save it as:
+1. Create a **new Quarto file** in your course folder and save it as `chapter15_practice.qmd`.
 
-- Create a new Quarto file in your course folder and save it as: `chapter15_practice.qmd`
 - Test Render your document often so you can catch formatting problems and code errors early.
-- Option to submit the rendered file `chapter15_practice.html`.
+- You may submit the rendered file `chapter15_practice.html` if you successfully create it, but the HTML file is optional.
 
 2. Use the heading structure taught earlier in the chapter.
 
@@ -847,31 +851,31 @@ ___
 set.seed(2025)
 ```
 
-🗣  Explain how `set.seed()` supports reproducibility in your own words. What does this need to be at the top of your document before any simulation code?
+🗣 Explain how `set.seed()` supports reproducibility in your own words. Why does it need to be near the top of your document before any simulation code?
 
 ## Task 1
 
 💭 Scenario. 🧙‍♂️🗡️📜 Your friend shows up to your DnD game with a big 3D printed 20-sided die and claims it is fair. You decide to test it. For practice, you will simulate what 300 rolls of a fair 20-sided die can look like, then check whether the results look roughly fair overall. [How to Make Fair DnD Dice from ANY Shape](https://www.youtube.com/watch?v=-gp7AbYD9NI)
 
-🎯  Simulate 300 rolls of a loaded or fair 20‑sided die (values `1:20`) and store in **`big_die`**
+🎯 Simulate 300 rolls of a fair 20-sided die using the values `1:20` and store the result in **`big_die`**.
 
 ```{r , eval=FALSE}
 # ⚡ 
-big_die <- sample(`___`, size = `___`, replace = `___`)
+big_die <- sample(___, size = ___, replace = ___)
 
 big_die_counts <- table(big_die)
 
 # Did you roll a 20?
 round(prop.table(big_die_counts), 3)
 range(big_die_counts)
-mean(big_die == `___`)
+mean(big_die == ___)
 ```
 
 🗣 Comment: Does this simulated die look roughly fair? Explain using the overall pattern of counts, not just whether a 20 appeared. A fair die should have counts that are similar but not exactly equal.
 
 ## Task 2
 
-💭 Scenario. A game store is running a weekend probability demo and asks you to help analyze two kinds of random outcomes. First, they want to know whether a 20-sided die behaves the way a fair die should over many rolls. Then, a local hospital asks for help thinking through newborn blanket sizing by using simulated baby lengths. In both parts, your job is to simulate realistic outcomes, check the results, and decide whether the patterns you see seem reasonable.
+💭 Scenario. A game store is running a weekend probability demo and asks you to help analyze whether a 20-sided die behaves the way a fair die should over many rolls. Your job is to simulate many D20 rolls, check the results, and decide whether the pattern looks reasonable for a fair die.
 
 ### Step 1
 
@@ -881,7 +885,7 @@ mean(big_die == `___`)
 
 ```{r, eval=FALSE}
 # ⚡ 
-boring_weekend <- sample(`___`, size = `___`, replace = `___`)
+boring_weekend <- sample(___, size = ___, replace = ___)
 ```
 
 🗣 What do you expect the distribution of rolls to look like? Will the values be exactly equal? Have a normal distribution? Something else? Type your answer before working ahead. *Keep whatever you typed, even if you are wrong. That's the integrity of science!*
@@ -894,7 +898,7 @@ boring_weekend <- sample(`___`, size = `___`, replace = `___`)
 
 ```{r, eval=FALSE}
 # ⚡ 
-d20_counts <- `__(_______)`
+d20_counts <- __(_______)
 ```
 
 ```{r, eval=FALSE}
@@ -912,12 +916,14 @@ print(d20_counts)
 
 ```{r, eval=FALSE}
 # ✅  
-mean(boring_weekend == `___`)
+mean(boring_weekend == ___)
 
-abs(mean(boring_weekend == `___`) - 0.05)
+abs(mean(boring_weekend == ___) - 0.05)
 ```
 
-🗣 Comment: Based on both the full frequency table from Step 2 and the natural-20 rate here, does the die appear to be fair? Explain why.💡 **Tip:** A fair die should have counts that are roughly even overall and a natural-20 rate close to 0.05, but not perfectly exact.
+🗣 Comment: Based on both the full frequency table from Step 2 and the natural-20 rate here, does the die appear to be fair? Explain why.
+
+💡 **Tip:** A fair die should have counts that are roughly even overall and a natural-20 rate close to 0.05, but not perfectly exact.
 
 ## Task 3
 
@@ -931,7 +937,7 @@ abs(mean(boring_weekend == `___`) - 0.05)
 
 ```{r, eval=FALSE}
 # ⚡ 
-blanketed_babies <- rnorm(`___`, mean = `___`, sd = `___`)
+blanketed_babies <- rnorm(___, mean = ___, sd = ___)
 ```
 
 🗣 Comment: What do you expect the distribution of baby lengths to look like? Will the values be exactly equal? Have a normal distribution? Something else? Type your answer before working ahead. *Keep whatever you typed, even if you are wrong. That's the integrity of science!*
@@ -944,9 +950,9 @@ blanketed_babies <- rnorm(`___`, mean = `___`, sd = `___`)
 
 ```{r, eval=FALSE}
 # ✅  
-any(`________________`)
+any(________________)
 
-sum(`________________`)
+sum(________________)
 ```
 
 🗣 Comment: Yes or No — based on this simulation, does the hospital appear to need longer blankets?
@@ -959,7 +965,7 @@ sum(`________________`)
 🎯 Repeat Steps 1 and 2 for 1000 simulated weeks. Store a vector named `weeks_too_long` that records, for each simulated week, **how many babies were longer than 23 inches**. Hint: use `replicate()`.
 
 ```{r, eval=FALSE}
-weeks_too_long <- replicate(`___`, sum(rnorm(`___`, mean = `___`, sd = `___`) `>` `___`))
+weeks_too_long <- replicate(___, sum(rnorm(___, mean = ___, sd = ___) > ___))
 ```
 
 ```{r, eval=FALSE}
@@ -976,9 +982,10 @@ max(weeks_too_long)
 
 🤔 **Reflect**
 
-📝 Write a short paragraph reflecting on what the utility of `replicate()` was in task 3, step 3?
+📝 Write a short paragraph reflecting on the utility of `replicate()` in the week-to-week risk simulation from Task 3, Step 3.
 
 ✍️ EXPLANATION: `"___"`
+
 
 ## Save and Upload
 
